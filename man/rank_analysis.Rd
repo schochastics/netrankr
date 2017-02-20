@@ -24,8 +24,9 @@ a list containing
 \item{g.lattice}{igraph object. The lattice of ideals}
 }
 \description{
+Performes a complete Rank analysis of a network.
 Calculates Expected Rankings, (Mutual) Rank Probabilities and number of possible rankings.
-Works best with small networks
+Works best with small networks.
 }
 \details{
 TODO

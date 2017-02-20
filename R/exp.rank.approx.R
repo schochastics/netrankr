@@ -1,4 +1,4 @@
-rank_approximation=function(P,method="lpom"){
+approx_rank_expected=function(P,method="lpom"){
   #' @title Approximation of expected rankings
   #' @description  Implements a variety of functions to approximate expected ranks in large partially ordered sets
   #'
@@ -74,3 +74,46 @@ rank_approximation=function(P,method="lpom"){
 .sl.approx=function(sx,sy,lx,ly){
   ((sx+1)*(ly+1))/((sx+1)*(ly+1)+(sy+1)*(lx+1))
 }
+#############################
+approx_rank_mutual=function(P){
+  #' @title Approximation of mutual rank probabilities
+  #' @description  Mutual Rank approximation
+  #'
+  #' @param P a partial order as matrix object
+  #' @details TODO
+  #'
+  #' @return a matrix containing approximation of mutual rank probabilities
+  #' @seealso [rank_analysis]
+  #' @examples
+  #' ###TODO
+  #' @export
+  MSE=which((P+t(P))==2,arr.ind=T)
+  if(length(MSE)>=1){
+    MSE<-t(apply(MSE,1,sort))
+    MSE<-MSE[!duplicated(MSE),]
+    g<-igraph::graph.empty()
+    g<-igraph::add.vertices(g,nrow(P))
+    g<-igraph::add.edges(g,c(t(MSE)))
+    g<-igraph::as.undirected(g)
+    MSE<-igraph::clusters(g)$membership
+    equi<-which(duplicated(MSE))
+    P<-P[-equi,-equi]
+  }
+  n=nrow(P)
+  g.dom <- igraph::graph_from_adjacency_matrix(P,"directed")
+  deg.in <- degree(g.dom,mode="in")
+  deg.out <- degree(g.dom,mode="out")
+  nom <- outer(deg.in+1,deg.out+1,"*")
+  denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
+  mutual.rank <- nom/denom
+  mutual.rank <- mutual.rank-diag(diag(mutual.rank))
+  # mutual.rank=matrix(0,n,n)
+  # for(i in 1:(n-1)){
+  #   for(j in (i+1):n){
+  #     mutual.rank[i,j]=(deg.in[i]+1)*(deg.out[j]+1)/((deg.in[i]+1)*(deg.out[j]+1)+(deg.in[j]+1)*(deg.out[i]+1))
+  #     mutual.rank[j,i] <- 1-mutual.rank[i,j]
+  #   }
+  # }
+  return(mutual.rank)
+}
+  

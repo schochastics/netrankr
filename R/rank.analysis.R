@@ -1,7 +1,8 @@
 rank_analysis=function(P,method="bfs",print.level=0){
   #' @title Rank Analysis of networks
-  #' @description  Calculates Expected Rankings, (Mutual) Rank Probabilities and number of possible rankings.
-  #'  Works best with small networks
+  #' @description  Performes a complete Rank analysis of a network.
+  #' Calculates Expected Rankings, (Mutual) Rank Probabilities and number of possible rankings.
+  #' Works best with small networks.
   #'
   #' @param P a partial order as matrix object
   #' @param method string indicating method to get all possible rankings. Default should not be changed
@@ -33,6 +34,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
     g<-igraph::as.undirected(g)
     MSE<-igraph::clusters(g)$membership
     equi<-which(duplicated(MSE))
+    # P.full <- P
     P<-P[-equi,-equi]
   }
   else{
@@ -43,7 +45,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   m <- length(names)
   ###############################LATTICEOFIDEALS
   #calculate lattice of ideals
-  g.ideals=.lattice.of.ideals(P)
+  g.ideals=.lattice_of_ideals(P)
   if(print.level==1){
     print("lattice done")
     print(c(igraph::vcount(g.ideals),igraph::ecount(g.ideals)))
@@ -55,7 +57,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   ###############################TOPDOWN
   visited<<-rep(0,n)
   lef.g<<-rep(0,n)
-  e<-.AssignTopDown(1,g.ideals)
+  e<-.assign_top_down(1,g.ideals)
   lef<-lef.g
   rm(list=c("lef.g","visited"),pos = ".GlobalEnv")
   if(print.level==1){
@@ -64,7 +66,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   }
   ###############################BottomUp
   visited<<-rep(0,n)
-  lei<-.AssignBottomUp(g.ideals,m,method)
+  lei<-.assign_bottom_up(g.ideals,m,method)
   rm(visited,pos = ".GlobalEnv")
   if(print.level==1){
     print("Bottom Up done")
@@ -72,7 +74,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   ###############################RankProb
   rp.g<<-matrix(0,m,m)
   visited<<-rep(0,n)
-  .ComputeRankProb(g.ideals,1,1,lei,lef,e)#g,v,h,lei,lef,e
+  .compute_rank_prob(g.ideals,1,1,lei,lef,e)#g,v,h,lei,lef,e
   rp=rp.g
   rm(list=c("visited","rp.g"),pos = ".GlobalEnv")
   if(print.level==1){
@@ -82,7 +84,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   visited<<-rep(0,n)
   visitedElement<<-rep(0,n)
   mrp.g<<-matrix(0,m,m)
-  .ComputeMutualRankProb(g.ideals,1,1,lei,lef,e,m)
+  .compute_mutual_rank_prob(g.ideals,1,1,lei,lef,e,m)
   mrp=mrp.g
   rm(list=c("visited","visitedElement","mrp.g"),pos = ".GlobalEnv")
   if(print.level==1){
@@ -115,7 +117,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
               g.lattice=g.ideals))
 }
 #############################################################################################HELPER
-.AssignTopDown=function(v,g){
+.assign_top_down=function(v,g){
   visited[v]<<-1
   e=0
   nv=igraph::neighborhood(g,1,v,"out",1)[[1]]
@@ -126,7 +128,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
     }
     else{
       if(visited[w]==0){
-        e=e+.AssignTopDown(w,g)
+        e=e+.assign_top_down(w,g)
       }
       else{
         e=e+lef.g[w]
@@ -137,7 +139,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   return(e)
 }
 
-.AssignBottomUp=function(g,m,method){
+.assign_bottom_up=function(g,m,method){
   if(method=="matrix"){
     A=igraph::get.adjacency(g,sparse=F)
     lei=A[1,]
@@ -177,7 +179,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   return(lei)
 }
 
-.ComputeRankProb=function(g,v,h,lei,lef,e){
+.compute_rank_prob=function(g,v,h,lei,lef,e){
   visited[v]<<-1
   nv=igraph::neighborhood(g,1,v,"out",1)[[1]]
   for(w in nv){
@@ -185,12 +187,12 @@ rank_analysis=function(P,method="bfs",print.level=0){
     x=igraph::get.edge.attribute(g,"label",idx)
     rp.g[x,h]<<-rp.g[x,h]+(lei[v]*lef[w])/e
     if(w!=vcount(g) & visited[w]==0){
-      .ComputeRankProb(g,w,h+1,lei,lef,e)
+      .compute_rank_prob(g,w,h+1,lei,lef,e)
     }
   }
 }
 
-.ComputeMutualRankProb=function(g,v,h,lei,lef,e,m){
+.compute_mutual_rank_prob=function(g,v,h,lei,lef,e,m){
   visited[v]<<-1
   nv=neighborhood(g,1,v,"out",1)[[1]]
   for(w in nv){
@@ -205,13 +207,13 @@ rank_analysis=function(P,method="bfs",print.level=0){
       idx=igraph::get.edge.ids(g,c(v,w))
       x=igraph::get.edge.attribute(g,"label",idx)
       visitedElement[x]<<-1
-      .ComputeMutualRankProb(g,w,h+1,lei,lef,e,m)
+      .compute_mutual_rank_prob(g,w,h+1,lei,lef,e,m)
       visitedElement[x]<<-0
     }
   }
 }
 
-.lattice.of.ideals=function(P,print.level=0){ #P_ij=1 i<j
+.lattice_of_ideals=function(P,print.level=0){ #P_ij=1 i<j
   n=nrow(P)
   g=igraph::graph.empty()
   g=igraph::add.vertices(g,1,attr=list(name="empty"))
