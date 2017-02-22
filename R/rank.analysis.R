@@ -13,7 +13,7 @@ rank_analysis=function(P,method="bfs",names="",print.level=0){
   #' \item{n.ext}{Number of Linear Extensions of P}
   #' \item{mse}{Array indicating equivalent nodes}
   #' \item{rank.prob}{Matrix containing rank probabilities \code{rank.prob[i,k]} is the probability that i has rank k}
-  #' \item{mutual.rank}{Matrix containing mutual rank probabilities. \code{mutual.rank[i,j]} is the probability that i is ranked higher than j}
+  #' \item{mutual.rank}{Matrix containing mutual rank probabilities. \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}
   #' \item{expected.rank}{Expected Ranking of nodes in any centrality ranking}
   #' \item{rank.spread}{???}
   #' \item{g.lattice}{igraph object. The lattice of ideals}
@@ -128,7 +128,7 @@ rank_analysis=function(P,method="bfs",names="",print.level=0){
               names=rownames(P.full),
               mse=MSE,
               rank.prob=rp.full,
-              mutual.rank.prob=mrp.full,
+              mutual.rank.prob=t(mrp.full),
               expected.rank=expected.full,
               rank.spread=sqrt(rank.spread.full),
               g.lattice=g.ideals))

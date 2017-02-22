@@ -14,7 +14,7 @@ approx_rank_mutual(P, iterative = T, num.iter = 10)
 \item{num.iter}{number of iterations to be used. defaults to 10 (see Details)}
 }
 \value{
-a matrix containing approximation of mutual rank probabilities
+a matrix containing approximation of mutual rank probabilities. \code{mutual.rank[i,j]} is the probability that i is ranked lower than j
 }
 \description{
 Mutual Rank approximation
