@@ -85,7 +85,8 @@ approx_rank_mutual=function(P,iterative=T,num.iter=10){
   #' @details The iterative approach generally gives better approximations than the non iterative, yet only slightly.
   #' more than 10 iterations do not seem to significantly improve the accuracy
   #'
-  #' @return a matrix containing approximation of mutual rank probabilities. \code{mutual.rank[i,j]} is the probability that i is ranked lower than j
+  #' @return a matrix containing approximation of mutual rank probabilities. 
+  #' \code{mutual.rank[i,j]} is the probability that i is ranked lower than j
   #' @seealso [rank_analysis]
   #' @references \insertRef{ddd-pmrppos-08}{netrankr}
   #' @examples
