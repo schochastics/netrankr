@@ -4,12 +4,14 @@
 \alias{rank_analysis}
 \title{Rank Analysis of networks}
 \usage{
-rank_analysis(P, method = "bfs", print.level = 0)
+rank_analysis(P, method = "bfs", names = "", print.level = 0)
 }
 \arguments{
 \item{P}{a partial order as matrix object}
 
 \item{method}{string indicating method to get all possible rankings. Default should not be changed}
+
+\item{names}{optional argument for names if P does not have row/column names}
 
 \item{print.level}{should diagnostics be printed (1) or not (0). Defaults to 0}
 }

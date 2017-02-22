@@ -29,7 +29,7 @@ rank_plots=function(df,method=""){
       ggplot2::theme(axis.text.x = ggplot2::element_text(angle=45,hjust=1))
   }
   else if(method=="prob"){
-    data.frame(idx=rep(df$names,length(df$names)),rank=rep(1:length(df$names),each=length(df$names)),p=c(df$rank.prob)) %>%
+    data.frame(idx=rep(df$names,ncol(df$rank.prob)),rank=rep(1:ncol(df$rank.prob),each=length(df$names)),p=c(df$rank.prob)) %>%
       ggplot2::ggplot(aes(y=idx,x=rank,fill=p))+
       ggplot2::geom_tile()+
       ggplot2::scale_fill_gradient(low="white",high="black")+

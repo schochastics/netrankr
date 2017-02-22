@@ -1,4 +1,4 @@
-rank_analysis=function(P,method="bfs",print.level=0){
+rank_analysis=function(P,method="bfs",names="",print.level=0){
   #' @title Rank Analysis of networks
   #' @description  Performes a complete Rank analysis of a network.
   #' Calculates Expected Rankings, (Mutual) Rank Probabilities and number of possible rankings.
@@ -6,6 +6,7 @@ rank_analysis=function(P,method="bfs",print.level=0){
   #'
   #' @param P a partial order as matrix object
   #' @param method string indicating method to get all possible rankings. Default should not be changed
+  #' @param names optional argument for names if P does not have row/column names
   #' @param print.level should diagnostics be printed (1) or not (0). Defaults to 0
   #' @details TODO
   #' @return a list containing
@@ -20,9 +21,14 @@ rank_analysis=function(P,method="bfs",print.level=0){
   #' @examples
   #' ###TODO
   #' @export
-  if(is.null(rownames(P))){
+  if(is.null(rownames(P)) & length(names)!=nrow(P)){
     rownames(P)=1:nrow(P)
   }
+  else if(is.null(rownames(P)) & length(names)==nrow(P)){
+    rownames(P)=names
+  }
+  n.full <- nrow(P)
+  P.full <- P
   ###############################Equivalence
   MSE=which((P+t(P))==2,arr.ind=T)
   if(length(MSE)>=1){
@@ -34,7 +40,6 @@ rank_analysis=function(P,method="bfs",print.level=0){
     g<-igraph::as.undirected(g)
     MSE<-igraph::clusters(g)$membership
     equi<-which(duplicated(MSE))
-    # P.full <- P
     P<-P[-equi,-equi]
   }
   else{
@@ -96,24 +101,36 @@ rank_analysis=function(P,method="bfs",print.level=0){
   gc()
   expected=c(expected)
   ###############################
-  #Insert equivalent nodes again
-  # for(i in sort(unique(MSE))){
-  #   idx <- which(MSE==i)
-  #   if(length(idx)>1){
-  #     group.head <- idx[1]
-  #     idx <- idx[-1]
-  #     names=c(names,idx)
-  #     rp.add=
-  #   }
-  # }
+  # Insert equivalent nodes again
+  rp.full=matrix(0,n.full,ncol(rp))
+  mrp.full=matrix(0,n.full,n.full)
+  expected.full=c(0,n.full)
+  rank.spread.full=rep(0,n.full)
+  for(i in sort(unique(MSE))){
+    idx <- which(MSE==i)
+    if(length(idx)>1){
+      group.head <- i
+      rp.full[idx,]  <- do.call(rbind, replicate(length(idx), rp[group.head,], simplify=FALSE))
+      mrp.full[idx,] <- do.call(rbind, replicate(length(idx), mrp[group.head,MSE], simplify=FALSE))
+      expected.full[idx] <- expected[group.head]
+      rank.spread.full[idx] <- rank.spread[group.head]
+    }
+    else if(length(idx)==1){
+      rp.full[idx,] <- rp[i,]
+
+      mrp.full[idx,] <- mrp[i,MSE]
+      expected.full[idx] <- expected[i]
+      rank.spread.full[idx] <- rank.spread[i]
+    }
+  }
   ###############################
   return(list(lin.ext=e,
-              names=names,
+              names=rownames(P.full),
               mse=MSE,
-              rank.prob=rp,
-              mutual.rank.prob=mrp,
-              expected.rank=expected,
-              rank.spread=sqrt(rank.spread),
+              rank.prob=rp.full,
+              mutual.rank.prob=mrp.full,
+              expected.rank=expected.full,
+              rank.spread=sqrt(rank.spread.full),
               g.lattice=g.ideals))
 }
 #############################################################################################HELPER

@@ -4,10 +4,14 @@
 \alias{approx_rank_mutual}
 \title{Approximation of mutual rank probabilities}
 \usage{
-approx_rank_mutual(P)
+approx_rank_mutual(P, iterative = T, num.iter = 10)
 }
 \arguments{
 \item{P}{a partial order as matrix object}
+
+\item{iterative}{boolean. TRUE(default) if iterative approximation should be used. FALSE if not.}
+
+\item{num.iter}{number of iterations to be used. defaults to 10 (see Details)}
 }
 \value{
 a matrix containing approximation of mutual rank probabilities
@@ -16,10 +20,14 @@ a matrix containing approximation of mutual rank probabilities
 Mutual Rank approximation
 }
 \details{
-TODO
+The iterative approach generally gives better approximations than the non iterative, yet only slightly.
+more than 10 iterations do not seem to significantly improve the accuracy
 }
 \examples{
 ###TODO
+}
+\references{
+\insertRef{ddd-pmrppos-08}{netrankr}
 }
 \seealso{
 \link{rank_analysis}
