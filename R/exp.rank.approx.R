@@ -75,19 +75,24 @@ approx_rank_expected=function(P,method="lpom"){
   ((sx+1)*(ly+1))/((sx+1)*(ly+1)+(sy+1)*(lx+1))
 }
 #############################
-approx_rank_mutual=function(P){
+approx_rank_mutual=function(P,iterative=T,num.iter=10){
   #' @title Approximation of mutual rank probabilities
   #' @description  Mutual Rank approximation
   #'
   #' @param P a partial order as matrix object
-  #' @details TODO
+  #' @param iterative boolean. TRUE(default) if iterative approximation should be used. FALSE if not.
+  #' @param num.iter number of iterations to be used. defaults to 10 (see Details)
+  #' @details The iterative approach generally gives better approximations than the non iterative, yet only slightly.
+  #' more than 10 iterations do not seem to significantly improve the accuracy
   #'
   #' @return a matrix containing approximation of mutual rank probabilities
   #' @seealso [rank_analysis]
+  #' @references \insertRef{ddd-pmrppos-08}{netrankr}
   #' @examples
   #' ###TODO
   #' @export
   MSE=which((P+t(P))==2,arr.ind=T)
+  P.full <- P
   if(length(MSE)>=1){
     MSE<-t(apply(MSE,1,sort))
     MSE<-MSE[!duplicated(MSE),]
@@ -107,13 +112,39 @@ approx_rank_mutual=function(P){
   denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
   mutual.rank <- nom/denom
   mutual.rank <- mutual.rank-diag(diag(mutual.rank))
-  # mutual.rank=matrix(0,n,n)
-  # for(i in 1:(n-1)){
-  #   for(j in (i+1):n){
-  #     mutual.rank[i,j]=(deg.in[i]+1)*(deg.out[j]+1)/((deg.in[i]+1)*(deg.out[j]+1)+(deg.in[j]+1)*(deg.out[i]+1))
-  #     mutual.rank[j,i] <- 1-mutual.rank[i,j]
-  #   }
-  # }
-  return(mutual.rank)
+  mutual.rank[t(P)==1] <- 1
+  mutual.rank[(P)==1] <- 0
+  mutual.rank[mutual.rank==1 & t(mutual.rank)==1] <-  0
+  if(iterative){
+    for(i in 1:(num.iter-1)){
+      g.dom <- igraph::graph_from_adjacency_matrix(t(mutual.rank),weighted = T)
+      deg.in <- graph.strength(g.dom,mode="in")
+      deg.out <- graph.strength(g.dom,mode="out")
+      nom <- outer(deg.in+1,deg.out+1,"*")
+      denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
+      mutual.rank <- nom/denom
+      mutual.rank <- mutual.rank-diag(diag(mutual.rank))
+      mutual.rank[t(P)==1] <- 1
+      mutual.rank[(P)==1] <- 0
+      mutual.rank[mutual.rank==1 & t(mutual.rank)==1] <-  0
+    }
+  }
+  mrp.full=matrix(0,length(MSE),length(MSE))
+  for(i in sort(unique(MSE))){
+    idx <- which(MSE==i)
+    if(length(idx)>1){
+      group.head <- i
+      mrp.full[idx,] <- do.call(rbind, replicate(length(idx), mutual.rank[group.head,MSE], simplify=FALSE))
+    }
+    else if(length(idx)==1){
+      group.head <- idx
+      mrp.full[group.head,] <- mutual.rank[i,MSE]
+    }
+  }
+  # mrp.full[t(P.full)==1] <- 1
+  # mrp.full[(P.full)==1] <- 0
+  # mrp.full[mrp.full==1 & t(mrp.full)==1] <-  0
+  diag(mrp.full) <- 0
+  return(mrp.full)
 }
   
