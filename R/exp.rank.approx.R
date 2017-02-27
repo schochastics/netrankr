@@ -148,4 +148,28 @@ approx_rank_mutual=function(P,iterative=T,num.iter=10){
   diag(mrp.full) <- 0
   return(t(mrp.full))
 }
-  
+
+freeman_hierarchy=function(P){
+  #' @title Freemans Hierarchy measure
+  #' @description A Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix 
+  #' \deqn{Z=\frac{P^T-P}{2}}{(P^T-P)/2}
+  #'
+  #' @param P a partial order as matrix object
+  #' @details TODO
+  #'
+  #' @return a matrix with four columns containing Freemans hierarchy.
+  #' @seealso [rank_analysis],[approx_rank_expected]
+  #' @references \insertRef{f-uoh-97}{netrankr}
+  #' @examples
+  #' ###TODO
+  #' @export  
+  n=nrow(P)
+  Z=(t(P)-P)*0.5
+  d=svd(Z)$d[1]
+  r.all=sqrt(2*d/n)
+  x=sqrt(d)*svd(Z)$u[,2]
+  y=sqrt(d)*svd(Z)$u[,1]
+  r.indiv=sqrt(x^2+y^2)
+  height=atan2(y,x)
+  return(cbind(x,y,r.indiv,height))
+}
