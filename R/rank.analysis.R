@@ -230,7 +230,7 @@ rank_analysis=function(P,method="bfs",names="",print.level=0){
   }
 }
 
-.lattice_of_ideals=function(P,print.level=0){ #P_ij=1 i<j
+.lattice_of_ideals=function(P){ #P_ij=1 i<j
   n=nrow(P)
   g=igraph::graph.empty()
   g=igraph::add.vertices(g,1,attr=list(name="empty"))
@@ -251,9 +251,6 @@ rank_analysis=function(P,method="bfs",names="",print.level=0){
     P.del=P
     rownames(P.del)=1:nrow(P)
     colnames(P.del)=1:nrow(P)
-    if(print.level==1){
-      print(c(length(L),vcount(g)))
-    }
     I=L[[1]]
     L[[1]]<-NULL
     idx.del=which(rownames(P.del)%in%I)

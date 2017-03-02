@@ -165,11 +165,12 @@ freeman_hierarchy=function(P){
   #' @export  
   n=nrow(P)
   Z=(t(P)-P)*0.5
-  d=svd(Z)$d[1]
+  svdZ=svd(Z)
+  d=svdZ$d[1]
   r.all=sqrt(2*d/n)
-  x=sqrt(d)*svd(Z)$u[,2]
-  y=sqrt(d)*svd(Z)$u[,1]
+  x=sqrt(d)*svdZ$u[,2]
+  y=sqrt(d)*svdZ$u[,1]
   r.indiv=sqrt(x^2+y^2)
   height=atan2(y,x)
-  return(cbind(x,y,r.indiv,height))
+  return(list(res=as.data.frame(cbind(x,y,r.indiv,height)),r=sqrt(2*d/n),var=sum(svdZ$d[1:2])/sum(svdZ$d)))
 }
