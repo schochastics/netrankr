@@ -17,8 +17,8 @@ rank_plots=function(df,method=""){
       ggplot2::scale_y_continuous(breaks=pretty(1:length(df$names)))+
       ggplot2::geom_errorbar(aes(ymin=e-sd,ymax=e+sd))+
       ggthemes::theme_tufte(ticks=F)+
-      ggplot2::theme(axis.text.x=ggplot2::element_text(angle=45,hjust=1))+
-      ggplot2::labs(x="",y="")
+      #ggplot2::theme(axis.text.x=ggplot2::element_text(angle=45,hjust=1))+
+      ggplot2::labs(x="",y="")+coord_flip()
   }
   else if(method=="mutual"){
     data.frame(idx=rep(df$names,length(df$names)),idy=rep(df$names,each=length(df$names)),p=c(df$mutual.rank.prob)) %>%
