@@ -4,30 +4,33 @@
 \alias{rank_analysis}
 \title{Rank Analysis of networks}
 \usage{
-rank_analysis(P, method = "bfs", names = "", print.level = 0)
+rank_analysis(P, method = "bfs", names = "", only.results = T,
+  verbose = F)
 }
 \arguments{
-\item{P}{a partial order as matrix object}
+\item{P}{matrix representing a partial ranking}
 
-\item{method}{string indicating method to get all possible rankings. Default should not be changed}
+\item{method}{string indicating method to get all possible rankings. (Default should not be changed)}
 
 \item{names}{optional argument for names if P does not have row/column names}
 
-\item{print.level}{should diagnostics be printed (1) or not (0). Defaults to 0}
+\item{only.results}{logical. wether only results (default) or additionally the ideal tree and lattice should be returned}
+
+\item{verbose}{logical. should diagnostics be printed. Defaults to F}
 }
 \value{
-a list containing
-\item{n.ext}{Number of Linear Extensions of P}
+\item{n.ext}{Number of possible centrality rankings}
 \item{mse}{Array indicating equivalent nodes}
-\item{rank.prob}{Matrix containing rank probabilities \code{rank.prob[i,k]} is the probability that i has rank k}
-\item{mutual.rank}{Matrix containing mutual rank probabilities. \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}
-\item{expected.rank}{Expected Ranking of nodes in any centrality ranking}
-\item{rank.spread}{???}
-\item{g.lattice}{igraph object. The lattice of ideals}
+\item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
+\item{mutual.rank}{Matrix containing relative rank probabilities: \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}
+\item{expected.rank}{Expected ranks of nodes in any centrality ranking}
+\item{rank.spread}{Variance of the ranking probabilities}
+\item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
+\item{tree}{igraph object. The tree of ideals (if only.results=F)}
 }
 \description{
 Performes a complete Rank analysis of a network.
-Calculates Expected Rankings, (Mutual) Rank Probabilities and number of possible rankings.
+Calculates Expected Rankings, (Relative) Rank Probabilities and number of possible rankings.
 Works best with small networks.
 }
 \details{
@@ -38,4 +41,7 @@ TODO
 }
 \references{
 \insertRef{ddd-elirp-06}{netrankr}
+}
+\seealso{
+\link{approx_rank_mutual}, \link{approx_rank_expected}
 }

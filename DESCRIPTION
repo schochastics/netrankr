@@ -1,13 +1,13 @@
 Package: netrankr
 Type: Package
 Title: A package for centrality analyses without Indices
-Version: 0.1.0
+Version: 0.2.0
 Author: David Schoch
 Authors@R: person("David", "Schoch", , "david.schoch@uni-konstanz.de", c("aut", "cre"))
 Maintainer: David Schoch <david.schoch@uni-konstanz.de>
 Description: This package implements functions that can be used for Centrality Analyses without relying on indices, e.g. expected rankings
-URL: http://github.com/d-mathlete/netrankr
-BugReports: http://github.com/d-mathlete/netrankr/issues
+URL: http://github.com/schochastics/netrankr
+BugReports: http://github.com/schochastics/netrankr/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
