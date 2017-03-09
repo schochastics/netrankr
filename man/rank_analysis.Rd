@@ -20,6 +20,7 @@ rank_analysis(P, method = "bfs", names = "", only.results = T,
 }
 \value{
 \item{n.ext}{Number of possible centrality rankings}
+\item{topo.order}{Random Ranking used to build the lattice of ideals}
 \item{mse}{Array indicating equivalent nodes}
 \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
 \item{mutual.rank}{Matrix containing relative rank probabilities: \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}

@@ -12,6 +12,7 @@ rank_analysis=function(P,method="bfs",names="",only.results=T,verbose=F){
   #' @details TODO
   #' @return 
   #' \item{n.ext}{Number of possible centrality rankings}
+  #' \item{topo.order}{Random Ranking used to build the lattice of ideals}
   #' \item{mse}{Array indicating equivalent nodes}
   #' \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
   #' \item{mutual.rank}{Matrix containing relative rank probabilities: \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}
@@ -155,6 +156,7 @@ rank_analysis=function(P,method="bfs",names="",only.results=T,verbose=F){
   ###############################
   if(only.results){
     return(list(lin.ext=e,
+                topo.order=topo.order,
                 names=rownames(P.full),
                 mse=MSE,
                 rank.prob=rp.full,
@@ -163,6 +165,7 @@ rank_analysis=function(P,method="bfs",names="",only.results=T,verbose=F){
                 rank.spread=sqrt(rank.spread.full)))
   } else{
     return(list(lin.ext=e,
+                topo.order=topo.order,
                 names=rownames(P.full),
                 mse=MSE,
                 rank.prob=rp.full,

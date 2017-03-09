@@ -18,9 +18,13 @@ a vector containing approximation of expected ranks
 Implements a variety of functions to approximate expected ranks in large partially ordered sets
 }
 \details{
-The \emph{method} parameter can be set to \emph{lpom}(simplest, most accurate for tiny networks),
-\emph{glpom}(most accurate for tiny networks),\emph{loof1}(more accurate for large networks) or
-\emph{loof2}(even more accurate for large networks)
+The \emph{method} parameter can be set to
+\describe{
+\item{lpom}{ simplest, most accurate for tiny networks}
+\item{glpom}{ most accurate for tiny networks}
+\item{loof1}{ more accurate for large networks}
+\item{loof2}{ even more accurate for large networks}
+}
 }
 \examples{
 ###TODO

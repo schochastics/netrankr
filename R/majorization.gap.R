@@ -12,7 +12,7 @@ majorization_gap=function(g,norm=TRUE){
   #' g=graph.star(5,"undirected")
   #' majorization_gap(g) #0 since star graphs are threshold graphs
   #'
-  #' g=erdos.renyi.game(100,0.1)
+  #' g=sample_gnp(100,0.15)
   #' majorization_gap(g,norm=TRUE) #fraction of reverse unit transformation
   #' majorization_gap(g,norm=FALSE) #number of reverse unit transformation
   #' @export

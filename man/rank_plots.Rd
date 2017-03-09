@@ -4,12 +4,14 @@
 \alias{rank_plots}
 \title{Visualize expected ranks and rank probabilities}
 \usage{
-rank_plots(df, method = "")
+rank_plots(df, method = "", legend.pos = "right")
 }
 \arguments{
 \item{df}{a dataframe as returned from rank.analysis}
 
 \item{method}{string, see details}
+
+\item{legend.pos}{string, position of legend. "none" to turn of legend}
 }
 \value{
 ggplot object
