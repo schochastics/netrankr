@@ -58,3 +58,22 @@ dependency_transform <- function(g) {
   }
   return(C)
 }
+
+distance_transform <- function(g,mode="all") {
+  #' @title Distances between nodes
+  #' @description  Calculates distances between pairs of nodes. The values are commonly used for closeness centrality.
+  #' @param g igraph object
+  #' @param mode Character constant, gives whether the distances to or from the given vertices 
+  #' should be calculated for directed graphs. 
+  #' If out then the shortest paths from the vertex, 
+  #' if in then to it will be considered. 
+  #' If all, the default, then the corresponding undirected graph will be used, ie. not directed paths are searched. 
+  #' @details #TODO
+  #'
+  #' @return a matrix containing distances
+  #' @seealso [positional_dominance]
+  #' @examples
+  #' ###TODO
+  #' @export
+  return(igraph::distances(g,mode=mode))
+}

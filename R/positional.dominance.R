@@ -21,8 +21,15 @@ positional_dominance=function(A,map=F,benefit=T){
   for(i in 1:n){
     for(j in 1:n){
       if(i!=j){
-        if(all((c*(A[i,]-A[j,]))<=0)){
-          D[i,j]=1
+        if(!map){
+          if(all((c*(A[i,-c(i,j)]-A[j,-c(i,j)]))<=0)){
+            D[i,j]=1
+          }
+        }
+        else{
+          if(all((c*(A[i,]-A[j,]))<=0)){
+            D[i,j]=1
+          }
         }
       }
     }
