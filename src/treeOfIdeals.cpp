@@ -62,8 +62,9 @@ namespace
 
 		d.parent[r] = root;
 
-		right(i, r, root, d);
 		add_child(root, r, d);
+		right(i, r, root, d);
+		
 
 		return root;
 	}

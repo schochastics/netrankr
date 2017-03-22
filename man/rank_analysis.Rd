@@ -23,8 +23,8 @@ rank_analysis(P, names = "", only.results = T, verbose = F)
 \item{mutual.rank}{Matrix containing relative rank probabilities: \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}
 \item{expected.rank}{Expected ranks of nodes in any centrality ranking}
 \item{rank.spread}{Variance of the ranking probabilities}
-\item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
 \item{tree}{igraph object. The tree of ideals (if only.results=F)}
+\item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
 }
 \description{
 Performes a complete Rank analysis of a network.
@@ -35,7 +35,8 @@ Works best with small networks.
 TODO
 }
 \examples{
-###TODO
+P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=T)
+res=rank_analysis(P)
 }
 \references{
 \insertRef{ddd-elirp-06}{netrankr}

@@ -22,7 +22,6 @@ std::vector<std::vector<int> > listingIdeals(std::vector<std::vector<int> > P, i
       S[0].push_back(k);  
     }
   }
-  
   std::list<int> Code;
   while(i>=0){
     Rcpp::checkUserInterrupt();
@@ -34,6 +33,8 @@ std::vector<std::vector<int> > listingIdeals(std::vector<std::vector<int> > P, i
       I.erase(position);
       S[i].erase(S[i].begin());
       ifound+=1;
+
+      std::sort(I.begin(), I.end());
       Ideals.at(ifound)=I;
 
       /*Remove x from P*/

@@ -61,7 +61,7 @@ void ComputeRankProb(int v,int h, NumericMatrix &rp,
                      IntegerVector &visited,
                      IntegerVector &lei,
                      IntegerVector &lef,
-                     int e){
+                     int &e){
   visited[v]=1;
   for(int j=0;j<ImSucc[v].size();++j){
     int vPrime=ImSucc[v][j];
@@ -69,7 +69,6 @@ void ComputeRankProb(int v,int h, NumericMatrix &rp,
     std::set_difference(ideals[vPrime].begin(), ideals[vPrime].end(),
                         ideals[v].begin(), ideals[v].end(), &x);
     rp(x,h)=rp(x,h)+double(lei[v])*double(lef[vPrime])/double(e);
-
     if(vPrime!=0 & visited[vPrime]==0){
       ComputeRankProb(vPrime,h+1,rp,ImSucc,ideals,visited,lei,lef,e);
     }
@@ -77,7 +76,7 @@ void ComputeRankProb(int v,int h, NumericMatrix &rp,
   
 }
 
-void ComputeMutualRankProb(int v,int h, int nElem,
+void ComputeMutualRankProb(int v,int h, int &nElem,
                            NumericMatrix &mrp,
                            std::vector<std::vector<int> > &ImSucc,
                            std::vector<std::vector<int> > &ideals,
@@ -85,7 +84,7 @@ void ComputeMutualRankProb(int v,int h, int nElem,
                            IntegerVector &visitedElem,
                            IntegerVector &lei,
                            IntegerVector &lef,
-                           int e){
+                           int &e){
   visited[v]=1;
   for(int j=0;j<ImSucc[v].size();++j){
     int vPrime=ImSucc[v][j];
@@ -134,12 +133,11 @@ Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred,
   for(int i=0;i<nIdeals;++i){
     std::sort(ImSucc[i].begin(), ImSucc[i].end());
   }
-  
   /*calculate number of path*/
   e=AssignTopDown(nElem, lef,visited,ImSucc);
   std::fill(visited.begin(), visited.end(), 0);
   AssignBottomUp(nElem,lei,visited,ImSucc);
-  
+
   /*rank probabilities*/
   std::fill(visited.begin(), visited.end(), 0);
   NumericMatrix rp(nElem,nElem);
@@ -149,7 +147,6 @@ Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred,
   std::fill(visited.begin(), visited.end(), 0);
   NumericMatrix mrp(nElem,nElem);
   ComputeMutualRankProb(nElem,1,nElem,mrp,ImSucc,ideals,visited,visitedElem,lei,lef,e);
-  
   return Rcpp::List::create(Rcpp::Named("linext") = e, 
                             Rcpp::Named("rp")=rp,
                             Rcpp::Named("mrp")=mrp);

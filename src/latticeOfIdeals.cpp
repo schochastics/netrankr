@@ -16,6 +16,7 @@ std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > ch
   }
   for(int k=nElem-1;k>=0;--k){
     for(int i=0; i<Ek[k].size(); ++i){
+      Rcpp::checkUserInterrupt();
       int v=Ek[k][i];
       int vPrime =ImPred[parent[v]][0];
       int j=0;

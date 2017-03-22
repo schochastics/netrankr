@@ -19,12 +19,13 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
   #' \item{mutual.rank}{Matrix containing relative rank probabilities: \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}
   #' \item{expected.rank}{Expected ranks of nodes in any centrality ranking}
   #' \item{rank.spread}{Variance of the ranking probabilities}
-  #' \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
   #' \item{tree}{igraph object. The tree of ideals (if only.results=F)}
+  #' \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
   #' @references \insertRef{ddd-elirp-06}{netrankr}
   #' @seealso [approx_rank_mutual], [approx_rank_expected]
   #' @examples
-  #' ###TODO
+  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=T)
+  #' res=rank_analysis(P)
   #' @export
   if(is.null(rownames(P)) & length(names)!=nrow(P)){
     rownames(P)=1:nrow(P)
@@ -60,7 +61,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
     igraph::topological.sort() %>% 
     as.vector()
   P<-P[topo.order,topo.order]
-  
+  print(topo.order)
   ImPred<-
     P %>% graph_from_adjacency_matrix("directed") %>% 
     get.adjlist("in")
@@ -71,31 +72,38 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
     get.adjlist("out")
   ImSucc=lapply(ImSucc,function(x) as.vector(x)-1)
   # TREEOFIDEALS ----------------------------------------------------  
+  if(verbose==T){
+    print("building tree of ideals")
+  }
   tree<-treeOfIdeals(ImPred)
-  
+  nIdeals=length(tree$label)
   if(verbose==T){
     print("tree of ideals built")
   }
-  Ek=map(0:(nrow(P)-1),function(x){which(tree$label==x)-1})
-  tree$child=lapply(tree$child,function(x) {idx=order(tree$label[x+1],decreasing=T);x[idx]})
-  latofI=LatticeOfIdeals(tree$child,tree$parent,Ek,nrow(P),length(tree$label))
-  
+  Ek=map(0:(nElem-1),function(x){which(tree$label==x)-1})
+  # tree$child=lapply(tree$child,function(x) {idx=order(tree$label[x+1],decreasing=T);x[idx]})
+  if(verbose==T){
+    print("building lattice of Ideals")
+  }
+  latofI=LatticeOfIdeals(tree$child,tree$parent,Ek,nElem,nIdeals)
+
   if(verbose==T){
     print("lattice of ideals built")
   }
+  ideallist=listingIdeals(ImSucc,nElem,nIdeals)
+  # ideallist=lapply(ideallist,sort)
   
-  ideallist=listingIdeals(ImSucc,nrow(P),length(latofI))
   if(verbose==T){
     print("ideals listed")
   }
- 
-  if(verbose==T){
-    print(paste("No of ideals:",length(ideallist)))
-  }
+  # return(ideallist)
   
-  # ImPred<-lapply(latofI,function(x) x-1)
+  if(verbose==T){
+    print(paste("No of ideals:",nIdeals))
+  }
+  # return(list(tree=latofI,ideals=ideallist))
   #number of ideals
-  nIdeals=length(ideallist)
+
   res=rankprobs(latofI,ideallist,nElem,nIdeals)
   ###############################END
   expected=res$rp%*%1:nElem
@@ -123,9 +131,10 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
       rank.spread.full[idx] <- rank.spread[i]
     }
   }
+
   ###############################
   if(only.results){
-    return(list(lin.ext=res$e,
+    return(list(lin.ext=res$linext,
                 topo.order=topo.order,
                 names=rownames(P.full),
                 mse=MSE,
@@ -141,7 +150,9 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
                 rank.prob=rp.full,
                 mutual.rank.prob=t(mrp.full),
                 expected.rank=expected.full,
-                rank.spread=sqrt(rank.spread.full)))
+                rank.spread=sqrt(rank.spread.full),
+                tree=tree,
+                lattice=latofI))
   }
   ###############################
 }
