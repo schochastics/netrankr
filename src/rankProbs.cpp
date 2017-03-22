@@ -1,13 +1,16 @@
 #include <Rcpp.h>
+#include <cstddef>
 using namespace Rcpp;
 
-int AssignTopDown(int v, 
-                  IntegerVector &lef, 
+// typedef int_least64_t linex;
+
+double AssignTopDown(int v, 
+                  NumericVector &lef, 
                   IntegerVector &visited,
                   std::vector<std::vector<int> > &ImSucc
                   ){
   visited[v]=1;
-  int e=0;
+  double e=0;
   for(int i=0; i<ImSucc[v].size(); ++i){
     int vPrime=ImSucc[v][i];
     if(vPrime==0){
@@ -28,7 +31,7 @@ int AssignTopDown(int v,
 }
 
 void AssignBottomUp(int nElem,
-                    IntegerVector &lei, 
+                    NumericVector &lei, 
                     IntegerVector &visited,
                     std::vector<std::vector<int> > &ImSucc){
   std::vector<int> Q;
@@ -59,9 +62,9 @@ void ComputeRankProb(int v,int h, NumericMatrix &rp,
                      std::vector<std::vector<int> > &ImSucc,
                      std::vector<std::vector<int> > &ideals,
                      IntegerVector &visited,
-                     IntegerVector &lei,
-                     IntegerVector &lef,
-                     int &e){
+                     NumericVector &lei,
+                     NumericVector &lef,
+                     double &e){
   visited[v]=1;
   for(int j=0;j<ImSucc[v].size();++j){
     int vPrime=ImSucc[v][j];
@@ -82,9 +85,9 @@ void ComputeMutualRankProb(int v,int h, int &nElem,
                            std::vector<std::vector<int> > &ideals,
                            IntegerVector &visited,
                            IntegerVector &visitedElem,
-                           IntegerVector &lei,
-                           IntegerVector &lef,
-                           int &e){
+                           NumericVector &lei,
+                           NumericVector &lef,
+                           double &e){
   visited[v]=1;
   for(int j=0;j<ImSucc[v].size();++j){
     int vPrime=ImSucc[v][j];
@@ -115,9 +118,9 @@ Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred,
                      std::vector<std::vector<int> > ideals,
                      int nElem,
                      int nIdeals){
-  int e;
-  IntegerVector lei(nIdeals);
-  IntegerVector lef(nIdeals);
+  double e;
+  NumericVector lei(nIdeals);
+  NumericVector lef(nIdeals);
   IntegerVector visited(nIdeals);
   IntegerVector visitedElem(nElem);
   

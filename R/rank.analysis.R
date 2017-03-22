@@ -56,20 +56,13 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
   nElem <- length(names)
 #Prepare Data structures---------------------
   n<-nrow(P)
-  topo.order<-P %>% 
-    igraph::graph_from_adjacency_matrix("directed") %>% 
-    igraph::topological.sort() %>% 
-    as.vector()
+  topo.order<-as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P,"directed")))
+  
   P<-P[topo.order,topo.order]
-  print(topo.order)
-  ImPred<-
-    P %>% graph_from_adjacency_matrix("directed") %>% 
-    get.adjlist("in")
+  ImPred<-igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P,"directed"),"in")
   ImPred=lapply(ImPred,function(x) as.vector(x)-1)
   
-  ImSucc<-
-    P %>% graph_from_adjacency_matrix("directed") %>% 
-    get.adjlist("out")
+  ImSucc<-igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P,"directed"),"out")
   ImSucc=lapply(ImSucc,function(x) as.vector(x)-1)
   # TREEOFIDEALS ----------------------------------------------------  
   if(verbose==T){
@@ -100,11 +93,15 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
   
   if(verbose==T){
     print(paste("No of ideals:",nIdeals))
+    print("Calculating Rank Probabilities")
   }
-  # return(list(tree=latofI,ideals=ideallist))
-  #number of ideals
 
   res=rankprobs(latofI,ideallist,nElem,nIdeals)
+  if(verbose==T){
+    print(paste("No. of possible Rankings: ",res$linext))
+  }
+  res$rp=res$rp[order(topo.order),]
+  res$mrp=res$mrp[order(topo.order),]
   ###############################END
   expected=res$rp%*%1:nElem
   rank.spread=rowSums((matrix(rep(1:nElem,each=nElem),nElem,nElem)-c(expected))^2*res$rp)
