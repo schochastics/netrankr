@@ -16,28 +16,8 @@ compare_ranks=function(x,y){
   if(length(x)!=length(y)){
     stop("x and y must have the same length")
   }
-  Con=0
-  Dis=0
-  Tie=0
-  Undef=0
-  n=length(x)
-  for(i in 1:(n-1)){
-    for(j in (i+1):n){
-      if((x[i]>x[j] & y[i]>y[j]) | (x[i]<x[j] & y[i]<y[j])){
-        Con=Con+1
-      }
-      else if((x[i]>x[j] & y[i]<y[j]) | (x[i]<x[j] & y[i]>y[j])){
-        Dis=Dis+1
-      }
-      else if(x[i]==x[j] & y[i]==y[j]){
-        Tie=Tie+1
-      }
-      else{
-        Undef=Undef+1
-      }
+  res=checkPairs(x,y)
 
-    }
-  }
-  return(list(c=Con,d=Dis,t=Tie,u=Undef))
+  return(list(c=res$concordant,d=res$discordant,t=res$tied,u=res$undef))
 }
 

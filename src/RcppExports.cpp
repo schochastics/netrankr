@@ -6,6 +6,18 @@
 
 using namespace Rcpp;
 
+// checkPairs
+Rcpp::List checkPairs(NumericVector x, NumericVector y);
+RcppExport SEXP netrankr_checkPairs(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(checkPairs(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // LatticeOfIdeals
 std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > child, std::vector<int> parent, std::vector<std::vector<int> > Ek, int nElem, int nIdeals);
 RcppExport SEXP netrankr_LatticeOfIdeals(SEXP childSEXP, SEXP parentSEXP, SEXP EkSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
