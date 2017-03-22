@@ -1,7 +1,7 @@
 Package: netrankr
 Type: Package
 Title: A package for centrality analyses without Indices
-Version: 0.2.0
+Version: 0.0.2
 Author: David Schoch
 Authors@R: person("David", "Schoch", , "david.schoch@uni-konstanz.de", c("aut", "cre"))
 Maintainer: David Schoch <david.schoch@uni-konstanz.de>
@@ -15,7 +15,10 @@ Depends: R (>= 3.0.1)
 Imports: igraph (>= 1.0.1),
     expm,
     ggplot2(>= 2.2.1),
-    ggthemes(>= 3.2.0)
+    ggthemes(>= 3.2.0),
+    Rcpp(>= 0.12.9)
+LinkingTo: Rcpp,RcppArmadillo
+SystemRequirements: C++11
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 RdMacros: Rdpack

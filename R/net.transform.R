@@ -13,8 +13,9 @@ dependency_transform <- function(g) {
   #' @examples
   #' ###TODO
   #' @export
-  A=get.adjacency(g,"both")
-  n <- nrow(A)
+  # A=get.adjacency(g,"both")
+  A=get.adjlist(g,"all")
+  n <- vcount(g)
   C<-matrix(0,n,n)
   s.ind=0
   for (s in 1:n) {
@@ -31,7 +32,8 @@ dependency_transform <- function(g) {
       Q <- Q[-1]
       S <- c(v, S)
       
-      neighbors <- which(A[v,] > 0)
+      # neighbors <- which(A[v,] > 0)
+      neighbors<-A[[v]]
       for (w in neighbors) {
         if (d[w] < 0) {
           Q <- c(Q, w)

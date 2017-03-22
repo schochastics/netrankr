@@ -4,13 +4,10 @@
 \alias{rank_analysis}
 \title{Rank Analysis of networks}
 \usage{
-rank_analysis(P, method = "bfs", names = "", only.results = T,
-  verbose = F)
+rank_analysis(P, names = "", only.results = T, verbose = F)
 }
 \arguments{
 \item{P}{matrix representing a partial ranking}
-
-\item{method}{string indicating method to get all possible rankings. (Default should not be changed)}
 
 \item{names}{optional argument for names if P does not have row/column names}
 

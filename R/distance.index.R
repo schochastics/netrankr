@@ -3,7 +3,7 @@ distance_index=function(g,type="ros",alpha=1){
 #' @description Indices that are based on distances
 #' @param g An igraph object
 #' @param type character specifying the used index. See details for possibilities
-#' @param delta numeric value for parametrized indices. See details
+#' @param alpha numeric value for parametrized indices. See details
 #' @return Numeric vector with scores of the specified index
 #' @details The \emph{type} parameter can be set to 
 #' \describe{
@@ -27,10 +27,10 @@ distance_index=function(g,type="ros",alpha=1){
          sor={R=1/D
          diag(R)=0
          rowSums(R)},
-         dpow={R=(D^-delta)
+         dpow={R=(D^-alpha)
          diag(R)=0
          rowSums(R)},
-         powd={rowSums(delta^D)},
+         powd={rowSums(alpha^D)},
          int={rowSums(1-(D-1)/diam)},
          pow2={rowSums(2^-D)}
   )         

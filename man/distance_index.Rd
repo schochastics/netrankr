@@ -11,7 +11,7 @@ distance_index(g, type = "ros", alpha = 1)
 
 \item{type}{character specifying the used index. See details for possibilities}
 
-\item{delta}{numeric value for parametrized indices. See details}
+\item{alpha}{numeric value for parametrized indices. See details}
 }
 \value{
 Numeric vector with scores of the specified index
