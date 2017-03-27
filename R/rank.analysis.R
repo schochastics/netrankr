@@ -1,4 +1,4 @@
-rank_analysis=function(P,names="",only.results=T,verbose=F){
+rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #' @title Rank Analysis of networks
   #' @description  Performes a complete Rank analysis of a network.
   #' Calculates Expected Rankings, (Relative) Rank Probabilities and number of possible rankings.
@@ -10,6 +10,8 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
   #' @param names optional argument for names if P does not have row/column names
   #' @param only.results logical. wether only results (default) or additionally the ideal tree and lattice should be returned
   #' @param verbose logical. should diagnostics be printed. Defaults to F
+  #' @param force logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs .
+  #' Only change if you know what you are doing. 
   #' @details TODO
   #' @return 
   #' \item{n.ext}{Number of possible centrality rankings}
@@ -27,6 +29,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
   #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=T)
   #' res=rank_analysis(P)
   #' @export
+  # Check for names ------------------------------------------------
   if(is.null(rownames(P)) & length(names)!=nrow(P)){
     rownames(P)=1:nrow(P)
   }
@@ -54,6 +57,10 @@ rank_analysis=function(P,names="",only.results=T,verbose=F){
   names <- rownames(P)
   #number of Elements
   nElem <- length(names)
+# sanity check if applicable ------------------------------------------------
+  if(nrows(P)>50 & comparable_pairs(P)<0.2 & force==F){
+    stop("Input data too big. Use approximations or set force=T if you know what you are doing")
+  }
 #Prepare Data structures---------------------
   n<-nrow(P)
   topo.order<-as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P,"directed")))

@@ -4,7 +4,7 @@
 \alias{rank_analysis}
 \title{Rank Analysis of networks}
 \usage{
-rank_analysis(P, names = "", only.results = T, verbose = F)
+rank_analysis(P, names = "", only.results = T, verbose = F, force = F)
 }
 \arguments{
 \item{P}{matrix representing a partial ranking}
@@ -14,6 +14,9 @@ rank_analysis(P, names = "", only.results = T, verbose = F)
 \item{only.results}{logical. wether only results (default) or additionally the ideal tree and lattice should be returned}
 
 \item{verbose}{logical. should diagnostics be printed. Defaults to F}
+
+\item{force}{logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs .
+Only change if you know what you are doing.}
 }
 \value{
 \item{n.ext}{Number of possible centrality rankings}
