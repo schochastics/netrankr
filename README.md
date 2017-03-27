@@ -19,8 +19,6 @@ The main function is `rank_analysis` which performs a complete analysis of a giv
 
 `neighborhood_inclusion` and `positional_dominance` can be used to construct partial orders on a network. While `neighborhood_inclusion` is very specific (undirected, unweighted networks), `positional_dominance` can be used with any kind of input network. If cost variables (e.g. distances) are used, set `benefit=F`. If actor identities don't matter set `map=T`.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
 Caveats
 -------
 
