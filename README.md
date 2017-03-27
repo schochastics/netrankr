@@ -1,5 +1,3 @@
-R package netrankr
-================
 
 Overview
 --------
