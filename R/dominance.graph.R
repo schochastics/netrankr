@@ -3,7 +3,7 @@ dominance_graph=function(g){
   #' @description Displays the neighborhood inclusion preorder as a directed graph
   #'
   #' @param g igraph object
-  #' @return directed igraph object with dominacne relations
+  #' @return directed igraph object with dominance relations
   #' @examples
   #' require(igraph)
   #' g <- erdos.renyi.game(100,0.1)

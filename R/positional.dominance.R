@@ -1,6 +1,6 @@
 positional_dominance=function(A,map=F,benefit=T){
   #' @title Generalized Dominance in Graphs
-  #' @description generealized dominance relations. More to come
+  #' @description generalized dominance relations. More to come
   #'
   #' @param A matrix containing attributes
   #' @param map boolean if rows can be sorted or not(default)

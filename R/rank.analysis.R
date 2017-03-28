@@ -1,7 +1,7 @@
 rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #' @title Rank Analysis of networks
-  #' @description  Performes a complete Rank analysis of a network.
-  #' Calculates Expected Rankings, (Relative) Rank Probabilities and number of possible rankings.
+  #' @description  Performes a complete rank analysis of a network.
+  #' Calculates expected rankings, (relative) rank probabilities and number of possible rankings.
   #' Works best with small networks.
   #' @importFrom Rcpp evalCpp
   #' @useDynLib netrankr
@@ -26,6 +26,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #' @seealso [approx_rank_mutual], [approx_rank_expected]
   #' @examples
   #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+  #' P
   #' res=rank_analysis(P)
   #' @export
   # Check for names ------------------------------------------------
