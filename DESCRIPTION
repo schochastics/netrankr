@@ -5,7 +5,7 @@ Version: 0.0.3
 Author: David Schoch
 Authors@R: person("David", "Schoch", , "david.schoch@uni-konstanz.de", c("aut", "cre"))
 Maintainer: David Schoch <david.schoch@uni-konstanz.de>
-Description: This package implements functions that can be used for Centrality Analyses without relying on indices, e.g. expected rankings
+Description: This package implements functions that can be used for centrality analyses without relying on indices, e.g. expected rankings.
 URL: http://github.com/schochastics/netrankr
 BugReports: http://github.com/schochastics/netrankr/issues
 License: GPL-3
