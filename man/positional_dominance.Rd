@@ -17,7 +17,7 @@ positional_dominance(A, map = F, benefit = T)
 dominance relations
 }
 \description{
-generealized dominance relations. More to come
+generalized dominance relations. More to come
 }
 \examples{
 ###TODO

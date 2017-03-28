@@ -30,8 +30,8 @@ Only change if you know what you are doing.}
 \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
 }
 \description{
-Performes a complete Rank analysis of a network.
-Calculates Expected Rankings, (Relative) Rank Probabilities and number of possible rankings.
+Performes a complete rank analysis of a network.
+Calculates expected rankings, (relative) rank probabilities and number of possible rankings.
 Works best with small networks.
 }
 \details{
@@ -39,6 +39,7 @@ TODO
 }
 \examples{
 P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P
 res=rank_analysis(P)
 }
 \seealso{

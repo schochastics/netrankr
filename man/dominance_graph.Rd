@@ -10,7 +10,7 @@ dominance_graph(g)
 \item{g}{igraph object}
 }
 \value{
-directed igraph object with dominacne relations
+directed igraph object with dominance relations
 }
 \description{
 Displays the neighborhood inclusion preorder as a directed graph
