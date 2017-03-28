@@ -78,9 +78,9 @@ approx_rank_expected=function(P,method="lpom"){
   ((sx+1)*(ly+1))/((sx+1)*(ly+1)+(sy+1)*(lx+1))
 }
 #############################
-approx_rank_mutual=function(P,iterative=T,num.iter=10){
-  #' @title Approximation of mutual rank probabilities
-  #' @description  Mutual Rank approximation
+approx_rank_relative=function(P,iterative=T,num.iter=10){
+  #' @title Approximation of relative rank probabilities
+  #' @description  Relative Rank approximation
   #'
   #' @param P a partial order as matrix object
   #' @param iterative boolean. TRUE(default) if iterative approximation should be used. FALSE if not.
