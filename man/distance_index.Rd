@@ -2,7 +2,7 @@
 % Please edit documentation in R/distance.index.R
 \name{distance_index}
 \alias{distance_index}
-\title{Distance-based Centrality Indices}
+\title{Distance-based centrality indices}
 \usage{
 distance_index(g, type = "ros", alpha = 1)
 }
@@ -17,22 +17,23 @@ distance_index(g, type = "ros", alpha = 1)
 Numeric vector with scores of the specified index
 }
 \description{
-Indices that are based on distances
+Implements a variety of centrality indices that are based on geodesic distances.
 }
 \details{
 The \emph{type} parameter can be set to
 \describe{
 \item{ros}{"reciprocal of sum". \deqn{c(u)=\frac{1}{\sum_{t \in V} dist(i,t)}}}
 \item{sor}{"sum of reciprocals". \deqn{c(u)=\sum_{t \in V} \frac{1}{dist(i,t)}}}
-\item{dpow}{"". \deqn{c(u)=\sum_{t \in V} dist(i,t)^{-\alpha} \quad \alpha\geq 0}}
-\item{powd}{"". \deqn{c(u)=\sum_{t \in V} \alpha^{-dist(i,t)} \quad \alpha \in (0,1)}}
-\item{int}{"". \deqn{c(u)=\sum_{t \in V} 1-\frac{dist(i,t)-1}{diameter(G)}}}
-\item{pow2}{"". \deqn{c(u)=\sum_{t \in V} 2^{-dist(i,t)}}}
+\item{dpow}{"distance to the power of". \deqn{c(u)=\sum_{t \in V} dist(i,t)^{-\alpha} \quad \alpha\geq 0}}
+\item{powd}{"to the power of distance". \deqn{c(u)=\sum_{t \in V} \alpha^{-dist(i,t)} \quad \alpha \in (0,1)}}
+\item{int}{"integration". \deqn{c(u)=\sum_{t \in V} 1-\frac{dist(i,t)-1}{diameter(G)}}}
+\item{pow2}{"distance to the power of 2". \deqn{c(u)=\sum_{t \in V} 2^{-dist(i,t)}}}
 }
 }
 \examples{
 require(igraph)
 g=sample_gnp(100,0.1)
-distance_index(g,type="ros")
-distance_index(g,type="sor")
+d_ros <- distance_index(g,type="ros")
+d_sor <- distance_index(g,type="sor")
+compare_ranks(d_ros,d_sor) #compare rankings
 }

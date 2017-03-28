@@ -14,7 +14,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #' Only change if you know what you are doing. 
   #' @details TODO
   #' @return 
-  #' \item{n.ext}{Number of possible centrality rankings}
+  #' \item{lin.ext}{Number of possible centrality rankings}
   #' \item{topo.order}{Random Ranking used to build the lattice of ideals}
   #' \item{mse}{Array indicating equivalent nodes}
   #' \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
@@ -23,6 +23,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #' \item{rank.spread}{Variance of the ranking probabilities}
   #' \item{tree}{igraph object. The tree of ideals (if only.results=F)}
   #' \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
+  #' \item{ideals}{list. order ideals (if only.results=F)}
   #' @seealso [approx_rank_mutual], [approx_rank_expected]
   #' @examples
   #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
@@ -156,7 +157,8 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
                 expected.rank=expected.full,
                 rank.spread=sqrt(rank.spread.full),
                 tree=tree,
-                lattice=latofI))
+                lattice=latofI,
+                ideals=ideallist))
   }
   ###############################
 }

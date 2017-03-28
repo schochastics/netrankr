@@ -19,7 +19,7 @@ rank_analysis(P, names = "", only.results = T, verbose = F, force = F)
 Only change if you know what you are doing.}
 }
 \value{
-\item{n.ext}{Number of possible centrality rankings}
+\item{lin.ext}{Number of possible centrality rankings}
 \item{topo.order}{Random Ranking used to build the lattice of ideals}
 \item{mse}{Array indicating equivalent nodes}
 \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
@@ -28,6 +28,7 @@ Only change if you know what you are doing.}
 \item{rank.spread}{Variance of the ranking probabilities}
 \item{tree}{igraph object. The tree of ideals (if only.results=F)}
 \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
+\item{ideals}{list. order ideals (if only.results=F)}
 }
 \description{
 Performes a complete rank analysis of a network.
