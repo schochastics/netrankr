@@ -14,7 +14,6 @@ threshold_graph<-function(n,p){
   #' degree(g)
   #' closeness(g)
   #' cor(degree(g),closeness(g),method="kendall")
-  #' @references \insertRef{mp-tgrt-95}{netrankr}
   #' @export
   vschedule=rep(0,n)
   pvals=stats::runif(n)

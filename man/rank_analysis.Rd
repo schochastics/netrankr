@@ -38,11 +38,8 @@ Works best with small networks.
 TODO
 }
 \examples{
-P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=T)
+P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 res=rank_analysis(P)
-}
-\references{
-\insertRef{ddd-elirp-06}{netrankr}
 }
 \seealso{
 \link{approx_rank_mutual}, \link{approx_rank_expected}

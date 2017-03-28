@@ -27,6 +27,3 @@ degree(g)
 closeness(g)
 cor(degree(g),closeness(g),method="kendall")
 }
-\references{
-\insertRef{mp-tgrt-95}{netrankr}
-}

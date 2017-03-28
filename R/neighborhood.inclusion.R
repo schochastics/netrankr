@@ -30,8 +30,8 @@ neighborhood_inclusion=function(g){
   #     }
   #   }
   # }
-  adj=lapply(get.adjlist(g),function(x) x-1)
-  deg=degree(g)
+  adj=lapply(igraph::get.adjlist(g),function(x) x-1)
+  deg=igraph::degree(g)
   dom=nialgo(adj,deg)
   return(dom)
 }

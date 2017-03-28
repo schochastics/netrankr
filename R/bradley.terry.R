@@ -12,7 +12,7 @@ bradley_terry=function(P,sparse.correct=0,max.iter=100,tol=10^-8,print.level=0){
   #' @examples
   #' ###TODO
   #' @export
-  g=graph_from_adjacency_matrix(t(P),"directed")
+  g=igraph::graph_from_adjacency_matrix(t(P),"directed")
   sparse.corrected=F
   P=t(P)
   n=nrow(P)
@@ -24,7 +24,7 @@ bradley_terry=function(P,sparse.correct=0,max.iter=100,tol=10^-8,print.level=0){
   }
 
   # sparse correction
-  if(!is.connected(g,mode = "strong")){
+  if(!igraph::is.connected(g,mode = "strong")){
     P=P+matrix(eps,n,n)-diag(eps,n)
     sparse.corrected=T
   }
@@ -49,9 +49,9 @@ bradley_terry=function(P,sparse.correct=0,max.iter=100,tol=10^-8,print.level=0){
   }
   df.players=data.frame(name=names(w_0),
                         merit=unname(w_0),
-                        dominating=unname(degree(g,mode="out")),
-                        dominated=unname(degree(g,mode="in")),
-                        comparable=unname(degree(g,mode="all")))
+                        dominating=unname(igraph::degree(g,mode="out")),
+                        dominated=unname(igraph::degree(g,mode="in")),
+                        comparable=unname(igraph::degree(g,mode="all")))
   return(list(res=df.players,
               iter=iter,
               sparse.corrected=sparse.corrected

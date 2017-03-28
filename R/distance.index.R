@@ -20,8 +20,8 @@ distance_index=function(g,type="ros",alpha=1){
 #' distance_index(g,type="ros")
 #' distance_index(g,type="sor")
 #' @export
-  D=distances(g)
-  diam=diameter(g)
+  D=igraph::distances(g)
+  diam=igraph::diameter(g)
   switch(type,
          ros={1/rowSums(D)},
          sor={R=1/D

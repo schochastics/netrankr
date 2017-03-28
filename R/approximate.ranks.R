@@ -20,7 +20,7 @@ approx_rank_expected=function(P,method="lpom"){
   n=nrow(P)
   if(method=="lpom"){
     sx=igraph::degree(g,mode="in")
-    ix=n-1-igraph::degree(g,mode="all")
+    ix=(n-1)-igraph::degree(g,mode="all")
     r.approx=(sx+1)*(n+1)/(n+1-ix)
   }
   else if(method=="glpom"){
@@ -91,7 +91,6 @@ approx_rank_mutual=function(P,iterative=T,num.iter=10){
   #' @return a matrix containing approximation of mutual rank probabilities. 
   #' \code{mutual.rank[i,j]} is the probability that i is ranked lower than j
   #' @seealso [rank_analysis]
-  #' @references \insertRef{ddd-pmrppos-08}{netrankr}
   #' @examples
   #' ###TODO
   #' @export
@@ -110,8 +109,8 @@ approx_rank_mutual=function(P,iterative=T,num.iter=10){
   }
   n=nrow(P)
   g.dom <- igraph::graph_from_adjacency_matrix(P,"directed")
-  deg.in <- degree(g.dom,mode="in")
-  deg.out <- degree(g.dom,mode="out")
+  deg.in <- igraph::degree(g.dom,mode="in")
+  deg.out <- igraph::degree(g.dom,mode="out")
   nom <- outer(deg.in+1,deg.out+1,"*")
   denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
   mutual.rank <- nom/denom
@@ -122,8 +121,8 @@ approx_rank_mutual=function(P,iterative=T,num.iter=10){
   if(iterative){
     for(i in 1:(num.iter-1)){
       g.dom <- igraph::graph_from_adjacency_matrix(t(mutual.rank),weighted = T)
-      deg.in <- graph.strength(g.dom,mode="in")
-      deg.out <- graph.strength(g.dom,mode="out")
+      deg.in <- igraph::graph.strength(g.dom,mode="in")
+      deg.out <- igraph::graph.strength(g.dom,mode="out")
       nom <- outer(deg.in+1,deg.out+1,"*")
       denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
       mutual.rank <- nom/denom
@@ -162,7 +161,6 @@ freeman_hierarchy=function(P){
   #'
   #' @return a matrix with four columns containing Freemans hierarchy.
   #' @seealso [rank_analysis],[approx_rank_expected]
-  #' @references \insertRef{f-uoh-97}{netrankr}
   #' @examples
   #' ###TODO
   #' @export  

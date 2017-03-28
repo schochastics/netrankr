@@ -23,10 +23,9 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #' \item{rank.spread}{Variance of the ranking probabilities}
   #' \item{tree}{igraph object. The tree of ideals (if only.results=F)}
   #' \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
-  #' @references \insertRef{ddd-elirp-06}{netrankr}
   #' @seealso [approx_rank_mutual], [approx_rank_expected]
   #' @examples
-  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=T)
+  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   #' res=rank_analysis(P)
   #' @export
   # Check for names ------------------------------------------------
@@ -58,7 +57,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #number of Elements
   nElem <- length(names)
 # sanity check if applicable ------------------------------------------------
-  if(nrows(P)>50 & comparable_pairs(P)<0.2 & force==F){
+  if(nrow(P)>50 & comparable_pairs(P)<0.2 & force==F){
     stop("Input data too big. Use approximations or set force=T if you know what you are doing")
   }
 #Prepare Data structures---------------------
@@ -80,7 +79,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   if(verbose==T){
     print("tree of ideals built")
   }
-  Ek=map(0:(nElem-1),function(x){which(tree$label==x)-1})
+  Ek=sapply(0:(nElem-1),function(x){which(tree$label==x)-1})
   # tree$child=lapply(tree$child,function(x) {idx=order(tree$label[x+1],decreasing=T);x[idx]})
   if(verbose==T){
     print("building lattice of Ideals")
@@ -147,7 +146,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
                 expected.rank=expected.full,
                 rank.spread=sqrt(rank.spread.full)))
   } else{
-    return(list(lin.ext=e,
+    return(list(lin.ext=res$linext,
                 topo.order=topo.order,
                 names=rownames(P.full),
                 mse=MSE,
