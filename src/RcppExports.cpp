@@ -71,6 +71,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rankings
+IntegerMatrix rankings(std::vector<std::vector<int> > paths, std::vector<std::vector<int> > ideals, int nRank, int nElem);
+RcppExport SEXP netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type paths(pathsSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type ideals(idealsSEXP);
+    Rcpp::traits::input_parameter< int >::type nRank(nRankSEXP);
+    Rcpp::traits::input_parameter< int >::type nElem(nElemSEXP);
+    rcpp_result_gen = Rcpp::wrap(rankings(paths, ideals, nRank, nElem));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rankprobs
 Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred, std::vector<std::vector<int> > ideals, int nElem, int nIdeals);
 RcppExport SEXP netrankr_rankprobs(SEXP ImPredSEXP, SEXP idealsSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
