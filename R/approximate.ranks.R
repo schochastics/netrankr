@@ -107,6 +107,9 @@ approx_rank_relative=function(P,iterative=T,num.iter=10){
     equi<-which(duplicated(MSE))
     P<-P[-equi,-equi]
   }
+  else{
+    MSE<-1:nrow(P)
+  }
   n=nrow(P)
   g.dom <- igraph::graph_from_adjacency_matrix(P,"directed")
   deg.in <- igraph::degree(g.dom,mode="in")

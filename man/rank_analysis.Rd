@@ -44,5 +44,5 @@ P
 res=rank_analysis(P)
 }
 \seealso{
-\link{approx_rank_mutual}, \link{approx_rank_expected}
+\link{approx_rank_relative}, \link{approx_rank_expected}
 }

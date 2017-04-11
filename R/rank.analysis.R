@@ -24,7 +24,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   #' \item{tree}{igraph object. The tree of ideals (if only.results=F)}
   #' \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
   #' \item{ideals}{list. order ideals (if only.results=F)}
-  #' @seealso [approx_rank_mutual], [approx_rank_expected]
+  #' @seealso [approx_rank_relative], [approx_rank_expected]
   #' @examples
   #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   #' P
