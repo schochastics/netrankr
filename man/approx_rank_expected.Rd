@@ -12,7 +12,7 @@ approx_rank_expected(P, method = "lpom")
 \item{method}{string indicating method to be used. see details}
 }
 \value{
-a vector containing approximation of expected ranks
+a vector containing approximations of expected ranks
 }
 \description{
 Implements a variety of functions to approximate expected ranks in large partially ordered sets
@@ -30,5 +30,5 @@ The \emph{method} parameter can be set to
 ###TODO
 }
 \seealso{
-\link{rank_analysis}
+\link{rank_analysis},\link{bradley_terry}
 }

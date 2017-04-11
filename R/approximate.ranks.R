@@ -11,8 +11,8 @@ approx_rank_expected=function(P,method="lpom"){
   #' \item{loof1}{ more accurate for large networks}
   #' \item{loof2}{ even more accurate for large networks}
   #' }
-  #' @return a vector containing approximation of expected ranks
-  #' @seealso [rank_analysis]
+  #' @return a vector containing approximations of expected ranks
+  #' @seealso [rank_analysis],[bradley_terry]
   #' @examples
   #' ###TODO
   #' @export
@@ -80,7 +80,7 @@ approx_rank_expected=function(P,method="lpom"){
 #############################
 approx_rank_relative=function(P,iterative=T,num.iter=10){
   #' @title Approximation of relative rank probabilities
-  #' @description  Relative Rank approximation
+  #' @description approximate relative rank probabilites 
   #'
   #' @param P a partial order as matrix object
   #' @param iterative boolean. TRUE(default) if iterative approximation should be used. FALSE if not.
@@ -89,10 +89,13 @@ approx_rank_relative=function(P,iterative=T,num.iter=10){
   #' more than 10 iterations do not seem to significantly improve the accuracy
   #'
   #' @return a matrix containing approximation of mutual rank probabilities. 
-  #' \code{mutual.rank[i,j]} is the probability that i is ranked lower than j
+  #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
   #' @seealso [rank_analysis]
   #' @examples
-  #' ###TODO
+  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+  #' P
+  #' approx_rank_relative(P,iterative=FALSE) 
+  #' approx_rank_relative(P,iterative=TRUE)
   #' @export
   MSE=which((P+t(P))==2,arr.ind=T)
   P.full <- P
@@ -116,23 +119,23 @@ approx_rank_relative=function(P,iterative=T,num.iter=10){
   deg.out <- igraph::degree(g.dom,mode="out")
   nom <- outer(deg.in+1,deg.out+1,"*")
   denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
-  mutual.rank <- nom/denom
-  mutual.rank <- mutual.rank-diag(diag(mutual.rank))
-  mutual.rank[t(P)==1] <- 1
-  mutual.rank[(P)==1] <- 0
-  mutual.rank[mutual.rank==1 & t(mutual.rank)==1] <-  0
+  relative.rank <- nom/denom
+  relative.rank <- relative.rank-diag(diag(relative.rank))
+  relative.rank[t(P)==1] <- 1
+  relative.rank[(P)==1] <- 0
+  relative.rank[relative.rank==1 & t(relative.rank)==1] <-  0
   if(iterative){
     for(i in 1:(num.iter-1)){
-      g.dom <- igraph::graph_from_adjacency_matrix(t(mutual.rank),weighted = T)
+      g.dom <- igraph::graph_from_adjacency_matrix(t(relative.rank),weighted = T)
       deg.in <- igraph::graph.strength(g.dom,mode="in")
       deg.out <- igraph::graph.strength(g.dom,mode="out")
       nom <- outer(deg.in+1,deg.out+1,"*")
       denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
-      mutual.rank <- nom/denom
-      mutual.rank <- mutual.rank-diag(diag(mutual.rank))
-      mutual.rank[t(P)==1] <- 1
-      mutual.rank[(P)==1] <- 0
-      mutual.rank[mutual.rank==1 & t(mutual.rank)==1] <-  0
+      relative.rank <- nom/denom
+      relative.rank <- relative.rank-diag(diag(relative.rank))
+      relative.rank[t(P)==1] <- 1
+      relative.rank[(P)==1] <- 0
+      relative.rank[relative.rank==1 & t(relative.rank)==1] <-  0
     }
   }
   mrp.full=matrix(0,length(MSE),length(MSE))
@@ -140,11 +143,11 @@ approx_rank_relative=function(P,iterative=T,num.iter=10){
     idx <- which(MSE==i)
     if(length(idx)>1){
       group.head <- i
-      mrp.full[idx,] <- do.call(rbind, replicate(length(idx), mutual.rank[group.head,MSE], simplify=FALSE))
+      mrp.full[idx,] <- do.call(rbind, replicate(length(idx), relative.rank[group.head,MSE], simplify=FALSE))
     }
     else if(length(idx)==1){
       group.head <- idx
-      mrp.full[group.head,] <- mutual.rank[i,MSE]
+      mrp.full[group.head,] <- relative.rank[i,MSE]
     }
   }
   # mrp.full[t(P.full)==1] <- 1

@@ -15,6 +15,14 @@ the neighborhood-inclusion preorder of an undirected graph g
 \description{
 Calculates the neighborhood-inclusion preorder of an undirected graph
 }
+\details{
+neighborhood-inclusion is formally defined as
+\deqn{N(u)\subseteq N[v]}
+where \eqn{N(u)} is the neighborhood of \eqn{u} and \eqn{N[v]=N(v)\cup \{v\}} is the closed neighborhood of \eqn{v}.
+The importance of the neighborhood-inclusion is due to the following relation:
+\deqn{N(u)\subseteq N[v] \implies c(u) \leq c(v)},
+where \eqn{c} is an arbitrary centrality index. Neighborhood-inclusion is thus preserved in any centrality ranking.
+}
 \examples{
 require(igraph)
 g=graph.star(5,"undirected")

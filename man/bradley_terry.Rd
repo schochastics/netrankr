@@ -10,22 +10,23 @@ bradley_terry(P, sparse.correct = 0, max.iter = 100, tol = 10^-8,
 \arguments{
 \item{P}{a matrix with partial order information}
 
-\item{sparse.correct}{eps to correct for weak connectivity}
+\item{sparse.correct}{numeric, correcting for weak connectivity. Set to 0 for internal choice}
 
 \item{max.iter}{integer, maximum number of MLE iterations}
 
 \item{tol}{double, convergence criterion}
 
-\item{print.level}{binary, should diagnostics be printed or not}
+\item{print.level}{binary, should diagnostics be printed or not(Default)}
 }
 \value{
-data frame
+data frame of merrits and diagnostics
 }
 \description{
-Calculate merrits from dominance relations via BM
+Implements the standard Bradley-Terry (Luce) model
 }
 \details{
-TODO
+Used to estimate the merrits \eqn{\pi_u} with
+\deqn{P(u<v)=\frac{\pi_v}{\pi_u+\pi_v}}
 }
 \examples{
 ###TODO

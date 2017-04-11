@@ -15,17 +15,20 @@ approx_rank_relative(P, iterative = T, num.iter = 10)
 }
 \value{
 a matrix containing approximation of mutual rank probabilities.
-\code{mutual.rank[i,j]} is the probability that i is ranked lower than j
+\code{relative.rank[i,j]} is the probability that i is ranked lower than j
 }
 \description{
-Relative Rank approximation
+approximate relative rank probabilites
 }
 \details{
 The iterative approach generally gives better approximations than the non iterative, yet only slightly.
 more than 10 iterations do not seem to significantly improve the accuracy
 }
 \examples{
-###TODO
+P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P
+approx_rank_relative(P,iterative=FALSE) 
+approx_rank_relative(P,iterative=TRUE)
 }
 \seealso{
 \link{rank_analysis}
