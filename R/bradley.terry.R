@@ -28,10 +28,8 @@ bradley_terry=function(P,sparse.correct=0,max.iter=100,tol=10^-8,print.level=0){
     P=P+matrix(eps,n,n)-diag(eps,n)
     sparse.corrected=T
   }
-  #no "games" between players
-  N=P+t(P)
 
-  #no of wins for each player
+  N=P+t(P)
   W=rowSums(P)
 
   #initialisation
@@ -47,8 +45,7 @@ bradley_terry=function(P,sparse.correct=0,max.iter=100,tol=10^-8,print.level=0){
       print(sqrt(sum((w_old-w_0)^2)))
     }
   }
-  df.players=data.frame(name=names(w_0),
-                        merit=unname(w_0),
+  df.players=data.frame(merit=w_0,
                         dominating=unname(igraph::degree(g,mode="out")),
                         dominated=unname(igraph::degree(g,mode="in")),
                         comparable=unname(igraph::degree(g,mode="all")))
