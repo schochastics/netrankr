@@ -27,6 +27,6 @@ TODO
 \examples{
 require(igraph)
 tg=threshold_graph(100,0.2)
-compare_Ranks(degree(tg),closeness(tg)) #only concordant pairs
-compare_Ranks(degree(tg),betweenness(tg)) #no discordant pairs
+compare_ranks(degree(tg),closeness(tg)) #only concordant pairs
+compare_ranks(degree(tg),betweenness(tg)) #no discordant pairs
 }
