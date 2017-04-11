@@ -5,13 +5,16 @@ compare_ranks=function(x,y){
   #' @param x a ranking vector
   #' @param y a ranking vector with the same length as \emph{x}
   #' @return a list containing
-  #' \item{c}{number of concordant pairs}
-  #' \item{d}{number of discordant pairs}
-  #' \item{t}{number of tied pairs}
-  #' \item{u}{number of left and right ties}
-  #' @details This function allows
+  #' \item{c}{number of concordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}>\code{y[j]}}
+  #' \item{d}{number of discordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}<\code{y[j]}}
+  #' \item{t}{number of tied pairs:  \code{x[i]}=\code{x[j]} and \code{y[i]}=\code{y[j]}}
+  #' \item{u}{number of left and right ties: \code{x[i]}=\code{x[j]} and \code{y[i]}>\code{y[j]}}
+  #' @details TODO
   #' @examples
-  #' ###TODO
+  #' require(igraph)
+  #' tg=threshold_graph(100,0.2)
+  #' compare_Ranks(degree(tg),closeness(tg)) #only concordant pairs
+  #' compare_Ranks(degree(tg),betweenness(tg)) #no discordant pairs
   #' @export
   if(length(x)!=length(y)){
     stop("x and y must have the same length")

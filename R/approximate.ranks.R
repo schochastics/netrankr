@@ -1,9 +1,9 @@
 approx_rank_expected=function(P,method="lpom"){
-  #' @title Approximation of expected rankings
+  #' @title Approximation of expected ranks
   #' @description  Implements a variety of functions to approximate expected ranks in large partially ordered sets
   #'
   #' @param P a partial order as matrix object
-  #' @param method string indicating method to be used. see details
+  #' @param method string indicating method to be used. see Details
   #' @details The \emph{method} parameter can be set to 
   #' \describe{
   #' \item{lpom}{ simplest, most accurate for tiny networks}
@@ -12,9 +12,13 @@ approx_rank_expected=function(P,method="lpom"){
   #' \item{loof2}{ even more accurate for large networks}
   #' }
   #' @return a vector containing approximations of expected ranks
-  #' @seealso [rank_analysis],[bradley_terry]
+  #' @seealso [approx_rank_relative],[rank_analysis],[bradley_terry]
   #' @examples
-  #' ###TODO
+  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+  #' #Exact result
+  #' rank_analysis(P)$expected.rank
+  #' #simplest approximation, suited for tiny matrices
+  #' approx_rank_expected(P,"lpom")
   #' @export
   g=igraph::graph_from_adjacency_matrix(P,"directed")
   n=nrow(P)
@@ -86,7 +90,7 @@ approx_rank_relative=function(P,iterative=T,num.iter=10){
   #' @param iterative boolean. TRUE(default) if iterative approximation should be used. FALSE if not.
   #' @param num.iter number of iterations to be used. defaults to 10 (see Details)
   #' @details The iterative approach generally gives better approximations than the non iterative, yet only slightly.
-  #' more than 10 iterations do not seem to significantly improve the accuracy
+  #' More than 10 iterations do not improve the accuracy significantly.
   #'
   #' @return a matrix containing approximation of mutual rank probabilities. 
   #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j

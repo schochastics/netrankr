@@ -23,7 +23,7 @@ Only change if you know what you are doing.}
 \item{topo.order}{Random Ranking used to build the lattice of ideals}
 \item{mse}{Array indicating equivalent nodes}
 \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
-\item{mutual.rank}{Matrix containing relative rank probabilities: \code{mutual.rank[i,j]} is the probability that i is ranked lower than j}
+\item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[i,j]} is the probability that i is ranked lower than j}
 \item{expected.rank}{Expected ranks of nodes in any centrality ranking}
 \item{rank.spread}{Variance of the ranking probabilities}
 \item{tree}{igraph object. The tree of ideals (if only.results=F)}

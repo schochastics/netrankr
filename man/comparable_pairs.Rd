@@ -21,4 +21,8 @@ require(igraph)
 g=erdos.renyi.game(100,0.1)
 P=neighborhood_inclusion(g)
 comparable_pairs(P)
+# All pairs of vertices are comparable in a threshold graph
+tg=threshold_graph(100,0.3)
+P=neighborhood_inclusion(g)
+comparable_pairs(P)
 }

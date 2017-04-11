@@ -2,14 +2,14 @@
 % Please edit documentation in R/approximate.ranks.R
 \name{approx_rank_expected}
 \alias{approx_rank_expected}
-\title{Approximation of expected rankings}
+\title{Approximation of expected ranks}
 \usage{
 approx_rank_expected(P, method = "lpom")
 }
 \arguments{
 \item{P}{a partial order as matrix object}
 
-\item{method}{string indicating method to be used. see details}
+\item{method}{string indicating method to be used. see Details}
 }
 \value{
 a vector containing approximations of expected ranks
@@ -27,8 +27,12 @@ The \emph{method} parameter can be set to
 }
 }
 \examples{
-###TODO
+P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+#Exact result
+rank_analysis(P)$expected.rank
+#simplest approximation, suited for tiny matrices
+approx_rank_expected(P,"lpom")
 }
 \seealso{
-\link{rank_analysis},\link{bradley_terry}
+\link{approx_rank_relative},\link{rank_analysis},\link{bradley_terry}
 }

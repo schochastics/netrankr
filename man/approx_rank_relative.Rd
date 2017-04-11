@@ -22,7 +22,7 @@ approximate relative rank probabilites
 }
 \details{
 The iterative approach generally gives better approximations than the non iterative, yet only slightly.
-more than 10 iterations do not seem to significantly improve the accuracy
+More than 10 iterations do not improve the accuracy significantly.
 }
 \examples{
 P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
