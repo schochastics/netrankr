@@ -1,6 +1,6 @@
 get_rankings=function(lattice,ideals,linext,mse,force=F){
   #' @title All rankings of a partial ranking
-  #' @description Returns all possibloe rankings of a partial ranking using the lattice of ideals.
+  #' @description Returns all possible rankings of a partial ranking using the lattice of ideals.
   #'
   #' @param lattice adjacency list of predecessors in lattice of ideal. This list is returned if [rank_analysis] 
   #' is run with `only.results=FALSE`
@@ -21,14 +21,15 @@ get_rankings=function(lattice,ideals,linext,mse,force=F){
   if(linext>10000 & !force){
     stop("number of linear extensions to high. Use force=F if you know what you are doing.")
   }
-  n=length(unique(mse))
+  n <- length(unique(mse))
   lattice <- lapply(lattice,function(x)x+1)
-  g=igraph::graph_from_adj_list(lattice,mode="in")
-  paths=igraph::all_shortest_paths(g,from=n+1,to=1)
+  g <- igraph::graph_from_adj_list(lattice,mode="in")
+  paths <- igraph::all_shortest_paths(g,from=n+1,to=1)
   
-  paths=lapply(paths$res,function(x) as.vector(x)-1)
-  rks=rankings(paths, ideals, linext, n)
-  rks=rks+1
-  rks=rks[mse,]
+  paths <- lapply(paths$res,function(x) as.vector(x)-1)
+  rks <- rankings(paths, ideals, linext, n)
+  rks <- rks+1
+  rks <- rks[order(topo.order),]
+  rks <- rks[mse,]
   return(rks)
 }
