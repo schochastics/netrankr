@@ -19,8 +19,7 @@ compare_ranks=function(x,y){
   if(length(x)!=length(y)){
     stop("x and y must have the same length")
   }
-  res=checkPairs(x,y)
-
-  return(list(c=res$concordant,d=res$discordant,t=res$tied,u=res$undef))
+  res <- checkPairs(x,y)
+  return(res)
 }
 

@@ -4,7 +4,7 @@
 \alias{get_rankings}
 \title{All rankings of a partial ranking}
 \usage{
-get_rankings(lattice, ideals, linext, mse, force = F)
+get_rankings(lattice, ideals, topo.order, linext, mse, force = F)
 }
 \arguments{
 \item{lattice}{adjacency list of predecessors in lattice of ideal. This list is returned if \link{rank_analysis}
@@ -13,18 +13,20 @@ is run with \code{only.results=FALSE}}
 \item{ideals}{list of ideals. This list is returned if \link{rank_analysis}
 is run with \code{only.results=FALSE}}
 
-\item{linext}{number of possible rankings}
+\item{topo.order}{topological order used in \link{rank_analysis}}
+
+\item{linext}{number of possible rankings. returned by rank_analysis}
 
 \item{mse}{equivalence classes of rankings. returned by \link{rank_analysis}}
 
 \item{force}{boolean. stops function if the number of rankings is too large.
-Only change to TRUE if you know what you are doing.}
+Only change to TRUE if you know what you are doing}
 }
 \value{
 a matrix containing all ranking positions of nodes
 }
 \description{
-Returns all possibloe rankings of a partial ranking using the lattice of ideals.
+Returns all possible rankings of a partial ranking using the lattice of ideals.
 }
 \examples{
 P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
