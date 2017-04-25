@@ -29,9 +29,9 @@ a matrix containing all ranking positions of nodes
 Returns all possible rankings of a partial ranking using the lattice of ideals.
 }
 \examples{
-P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 P
 res <- rank_analysis(P,only.results=FALSE)
 get_rankings(res$lattice,res$ideals,res$topo.order,res$lin.ext,res$mse)
-###TODO
+
 }

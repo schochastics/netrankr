@@ -4,21 +4,22 @@
 \alias{approx_rank_relative}
 \title{Approximation of relative rank probabilities}
 \usage{
-approx_rank_relative(P, iterative = T, num.iter = 10)
+approx_rank_relative(P, iterative = TRUE, num.iter = 10)
 }
 \arguments{
-\item{P}{a partial order as matrix object}
+\item{P}{a partial order as matrix object.}
 
-\item{iterative}{boolean. TRUE(default) if iterative approximation should be used. FALSE if not.}
+\item{iterative}{boolean. TRUE (default) if iterative approximation should be used. FALSE if not.}
 
-\item{num.iter}{number of iterations to be used. defaults to 10 (see Details)}
+\item{num.iter}{number of iterations to be used. defaults to 10 (see Details).}
 }
 \value{
 a matrix containing approximation of mutual rank probabilities.
 \code{relative.rank[i,j]} is the probability that i is ranked lower than j
 }
 \description{
-approximate relative rank probabilites
+Approximate relative rank probabilites \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
+gives the probability that u is less central than v, given the partial ranking P.
 }
 \details{
 The iterative approach generally gives better approximations than the non iterative, yet only slightly.

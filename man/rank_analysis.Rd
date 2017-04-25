@@ -2,46 +2,46 @@
 % Please edit documentation in R/rank.analysis.R
 \name{rank_analysis}
 \alias{rank_analysis}
-\title{Rank Analysis of networks}
+\title{Rank Probabilities of a partial ranking}
 \usage{
 rank_analysis(P, names = "", only.results = T, verbose = F, force = F)
 }
 \arguments{
-\item{P}{matrix representing a partial ranking}
+\item{P}{matrix representing a partial ranking.}
 
-\item{names}{optional argument for names if P does not have row/column names}
+\item{names}{optional argument for names if P does not have row/column names.}
 
-\item{only.results}{logical. wether only results (default) or additionally the ideal tree and lattice should be returned}
+\item{only.results}{logical. wether only results (default) or additionally the ideal tree and lattice should be returned.}
 
-\item{verbose}{logical. should diagnostics be printed. Defaults to F}
+\item{verbose}{logical. should diagnostics be printed. Defaults to \code{FALSE}.}
 
-\item{force}{logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs .
+\item{force}{logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs.
 Only change if you know what you are doing.}
 }
 \value{
-\item{lin.ext}{Number of possible centrality rankings}
-\item{topo.order}{Random Ranking used to build the lattice of ideals}
-\item{mse}{Array indicating equivalent nodes}
-\item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
-\item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[i,j]} is the probability that i is ranked lower than j}
-\item{expected.rank}{Expected ranks of nodes in any centrality ranking}
-\item{rank.spread}{Variance of the ranking probabilities}
-\item{tree}{igraph object. The tree of ideals (if only.results=F)}
-\item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
-\item{ideals}{list. order ideals (if only.results=F)}
+\item{lin.ext}{Number of possible rankings.}
+\item{mse}{Array indicating equivalent nodes.}
+\item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k.}
+\item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[i,j]} is the probability that i is ranked lower than j.}
+\item{expected.rank}{Expected ranks of nodes in any centrality ranking.}
+\item{rank.spread}{Variance of the ranking probabilities.}
+\item{topo.order}{Random ranking used to build the lattice of ideals (if \code{only.results=FALSE}).}
+\item{tree}{igraph object. The tree of ideals (if \code{only.results=FALSE}).}
+\item{lattice}{igraph object. The lattice of ideals (if \code{only.results=FALSE}).}
+\item{ideals}{list. order ideals (if \code{only.results=FALSE}).}
 }
 \description{
-Performes a complete rank analysis of a network.
-Calculates expected rankings, (relative) rank probabilities and number of possible rankings.
-Works best with small networks.
+Performs a complete rank analysis of a given partial ranking.
 }
 \details{
-TODO
+The function derives rank probabilities from a given partial ranking
+(for instance returned by \link{neighborhood_inclusion} or \link{positional_dominance}). This includes the
+calculation of expected ranks, (relative) rank probabilities and the number of possible rankings.
 }
 \examples{
-P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 P
-res=rank_analysis(P)
+res <- rank_analysis(P)
 }
 \seealso{
 \link{approx_rank_relative}, \link{approx_rank_expected}

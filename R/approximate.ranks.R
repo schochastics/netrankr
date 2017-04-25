@@ -1,9 +1,9 @@
 approx_rank_expected=function(P,method="lpom"){
   #' @title Approximation of expected ranks
-  #' @description  Implements a variety of functions to approximate expected ranks in large partially ordered sets
+  #' @description  Implements a variety of functions to approximate expected ranks in large partially ordered sets.
   #'
-  #' @param P a partial order as matrix object
-  #' @param method string indicating method to be used. see Details
+  #' @param P a partial order as matrix object.
+  #' @param method string indicating method to be used. see Details.
   #' @details The \emph{method} parameter can be set to 
   #' \describe{
   #' \item{lpom}{ simplest, most accurate for tiny networks}
@@ -11,8 +11,8 @@ approx_rank_expected=function(P,method="lpom"){
   #' \item{loof1}{ more accurate for large networks}
   #' \item{loof2}{ even more accurate for large networks}
   #' }
-  #' @return a vector containing approximations of expected ranks
-  #' @seealso [approx_rank_relative],[rank_analysis],[bradley_terry]
+  #' @return a vector containing approximations of expected ranks.
+  #' @seealso [approx_rank_relative], [rank_analysis], [bradley_terry]
   #' @examples
   #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   #' #Exact result
@@ -82,13 +82,13 @@ approx_rank_expected=function(P,method="lpom"){
   ((sx+1)*(ly+1))/((sx+1)*(ly+1)+(sy+1)*(lx+1))
 }
 #############################
-approx_rank_relative=function(P,iterative=T,num.iter=10){
+approx_rank_relative=function(P,iterative=TRUE,num.iter=10){
   #' @title Approximation of relative rank probabilities
-  #' @description approximate relative rank probabilites 
-  #'
-  #' @param P a partial order as matrix object
-  #' @param iterative boolean. TRUE(default) if iterative approximation should be used. FALSE if not.
-  #' @param num.iter number of iterations to be used. defaults to 10 (see Details)
+  #' @description Approximate relative rank probabilites \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
+  #' gives the probability that u is less central than v, given the partial ranking P.
+  #' @param P a partial order as matrix object.
+  #' @param iterative boolean. TRUE (default) if iterative approximation should be used. FALSE if not.
+  #' @param num.iter number of iterations to be used. defaults to 10 (see Details).
   #' @details The iterative approach generally gives better approximations than the non iterative, yet only slightly.
   #' More than 10 iterations do not improve the accuracy significantly.
   #'
@@ -163,14 +163,14 @@ approx_rank_relative=function(P,iterative=T,num.iter=10){
 
 freeman_hierarchy=function(P){
   #' @title Freemans Hierarchy measure
-  #' @description A Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix 
-  #' \deqn{Z=\frac{P^T-P}{2}}{(P^T-P)/2}
+  #' @description Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix 
+  #' \deqn{Z=\frac{P^T-P}{2}}{(P^T-P)/2}.
   #'
-  #' @param P a partial order as matrix object
+  #' @param P a partial order as matrix object.
   #' @details TODO
   #'
   #' @return a matrix with four columns containing Freemans hierarchy.
-  #' @seealso [rank_analysis],[approx_rank_expected]
+  #' @seealso [rank_analysis], [approx_rank_expected]
   #' @examples
   #' ###TODO
   #' @export  

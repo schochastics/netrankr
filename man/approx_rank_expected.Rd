@@ -7,15 +7,15 @@
 approx_rank_expected(P, method = "lpom")
 }
 \arguments{
-\item{P}{a partial order as matrix object}
+\item{P}{a partial order as matrix object.}
 
-\item{method}{string indicating method to be used. see Details}
+\item{method}{string indicating method to be used. see Details.}
 }
 \value{
-a vector containing approximations of expected ranks
+a vector containing approximations of expected ranks.
 }
 \description{
-Implements a variety of functions to approximate expected ranks in large partially ordered sets
+Implements a variety of functions to approximate expected ranks in large partially ordered sets.
 }
 \details{
 The \emph{method} parameter can be set to
@@ -34,5 +34,5 @@ rank_analysis(P)$expected.rank
 approx_rank_expected(P,"lpom")
 }
 \seealso{
-\link{approx_rank_relative},\link{rank_analysis},\link{bradley_terry}
+\link{approx_rank_relative}, \link{rank_analysis}, \link{bradley_terry}
 }

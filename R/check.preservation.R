@@ -1,16 +1,24 @@
 check_preservation=function(P,scores){
-  #' @title Checks if a partial ranking is preserved 
-  #' @description Checks if a partial ranking is preserved in the ranking induced by scores
-  #' @param P a partial ranking as a matrix object
-  #' @param scores scores for each element
+  #' @title Checks if a partial ranking is preserved
+  #' @description Checks if a partial ranking is preserved in the ranking induced by scores.
+  #' @param P a partial ranking as a matrix object.
+  #' @param scores scores for each element.
   #' @details In order for a score vector to preserve a partial ranking, the following 
   #' condition must be fulfilled:
-  #' \code{P[u,v]==1 & scores[i]<=scores[j]}
-  #' @return a boolean 
+  #' \code{P[u,v]==1 & scores[i]<=scores[j]}.
+  #' @return a boolean that is TRUE if \code{scores} preserves the relations in \code{P}.
   #' @examples
+  #' 
   #' require(igraph)
-  #' g=graph.star(5,"undirected")
-  #' neighborhood_inclusion(g)
+  #' ### standard measures of centrality preserve the neighborhood inclusion preorder
+  #' g <- graph.empty(n=11,directed = FALSE)
+  #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+  #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+  #' P<-neighborhood_inclusion(g)
+  #' 
+  #' check_preservation(P,degree(g))
+  #' check_preservation(P,betweenness(g))
+  #' check_preservation(P,closeness(g))
   #' @export
   
   P.idx=which(P==1,arr.ind=T)

@@ -7,10 +7,10 @@
 comparable_pairs(P)
 }
 \arguments{
-\item{P}{matrix containing comparability relation}
+\item{P}{matrix containing comparability relation.}
 }
 \value{
-fraction of comparable pairs in P
+fraction of comparable pairs in P.
 }
 \description{
 Calculates the fraction of comparable pairs in a partial order. This fraction is identical to
@@ -18,11 +18,11 @@ the density of the induced undirected graph of P.
 }
 \examples{
 require(igraph)
-g=erdos.renyi.game(100,0.1)
-P=neighborhood_inclusion(g)
+g <- erdos.renyi.game(100,0.1)
+P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 # All pairs of vertices are comparable in a threshold graph
-tg=threshold_graph(100,0.3)
-P=neighborhood_inclusion(g)
+tg <- threshold_graph(100,0.3)
+P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 }

@@ -9,22 +9,30 @@ majorization_gap(g, norm = TRUE)
 \arguments{
 \item{g}{An igraph object}
 
-\item{norm}{True(Default) if the normalized majorization gap should be returned.}
+\item{norm}{True (Default) if the normalized majorization gap should be returned.}
 }
 \value{
 majorization gap of an undirected graph.
 }
 \description{
 Calculates the (normalized) majorization gap of a graph. The majorization gap indicates how far the
-degree sequence of a graph is from a threshold sequence. The distance is measured by the number of \emph{reverse unit
-transformations} necessaray to turn the degree sequence into a threshold sequence.
+degree sequence of a graph is from a threshold sequence.
+}
+\details{
+The distance is measured by the number of \emph{reverse unit
+transformations} necessary to turn the degree sequence into a threshold sequence.
+First, the \emph{corrected conjugated degree sequence} d' is calculated from the degree sequence d as follows:
+\deqn{d'_k= |\{ i : i<k \land d_i\geq k-1 \} | + 
+| \{ i : i>k \land d_i\geq k \} |.}
+the majorization gap is then defined as
+\deqn{1/2 \sum_{k=1}^n \max\{d'_k - d_k,0\}}
 }
 \examples{
 require(igraph)
-g=graph.star(5,"undirected")
+g <- graph.star(5,"undirected")
 majorization_gap(g) #0 since star graphs are threshold graphs
 
-g=sample_gnp(100,0.15)
+g <- sample_gnp(100,0.15)
 majorization_gap(g,norm=TRUE) #fraction of reverse unit transformation
 majorization_gap(g,norm=FALSE) #number of reverse unit transformation
 }

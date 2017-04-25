@@ -7,26 +7,32 @@
 compare_ranks(x, y)
 }
 \arguments{
-\item{x}{a ranking vector}
+\item{x}{a ranking vector.}
 
-\item{y}{a ranking vector with the same length as \emph{x}}
+\item{y}{a ranking vector with the same length as \code{x}.}
 }
 \value{
 a list containing
-\item{c}{number of concordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}>\code{y[j]}}
-\item{d}{number of discordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}<\code{y[j]}}
-\item{t}{number of tied pairs:  \code{x[i]}=\code{x[j]} and \code{y[i]}=\code{y[j]}}
-\item{u}{number of left and right ties: \code{x[i]}=\code{x[j]} and \code{y[i]}>\code{y[j]}}
+\item{concordant}{number of concordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}>\code{y[j]}}
+\item{discordant}{number of discordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}<\code{y[j]}}
+\item{ties}{number of tied pairs:  \code{x[i]}=\code{x[j]} and \code{y[i]}=\code{y[j]}}
+\item{left}{number of left: \code{x[i]}=\code{x[j]} and \code{y[i]}!=\code{y[j]}}
+\item{right}{number of right: \code{x[i]}!=\code{x[j]} and \code{y[i]}=\code{y[j]}}
 }
 \description{
-Counts the number of Concordant, Discordant, Tied and Unknown between two rankings
+Counts the number of Concordant, Discordant and (Left/Right) Ties between two rankings.
 }
 \details{
-TODO
+Explicitly calculating the number of occuring cases is more robust than using correlation
+indices as given in the \code{cor} function. Especially left and right ties can significantly alter an
+intuitively high correlation (See example).
 }
 \examples{
 require(igraph)
-tg=threshold_graph(100,0.2)
+tg <- threshold_graph(100,0.2)
 compare_ranks(degree(tg),closeness(tg)) #only concordant pairs
 compare_ranks(degree(tg),betweenness(tg)) #no discordant pairs
+## Rank Correlation
+cor(degree(tg),closeness(tg)) #1
+cor(degree(tg),betweenness(tg)) #not 1, although no discordant pairs
 }

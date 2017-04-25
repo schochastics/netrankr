@@ -8,25 +8,25 @@ bradley_terry(P, sparse.correct = 0, max.iter = 100, tol = 10^-8,
   print.level = 0)
 }
 \arguments{
-\item{P}{a matrix with partial order information}
+\item{P}{a matrix with partial order information.}
 
-\item{sparse.correct}{numeric, correcting for weak connectivity. Set to 0 for internal choice}
+\item{sparse.correct}{numeric, correcting for weak connectivity. Set to 0 for internal choice.}
 
-\item{max.iter}{integer, maximum number of MLE iterations}
+\item{max.iter}{integer, maximum number of MLE iterations.}
 
-\item{tol}{double, convergence criterion}
+\item{tol}{double, convergence criterion.}
 
-\item{print.level}{binary, should diagnostics be printed or not(Default)}
+\item{print.level}{binary, should diagnostics be printed or not (Default).}
 }
 \value{
-data frame of merrits and diagnostics
+data frame of merits and diagnostics.
 }
 \description{
-Implements the standard Bradley-Terry (Luce) model
+Implements the standard Bradley-Terry (Luce) model.
 }
 \details{
-Used to estimate the merrits \eqn{\pi_u} with
-\deqn{P(u<v)=\frac{\pi_v}{\pi_u+\pi_v}}
+Used to estimate the merits \eqn{\pi_u} with
+\deqn{Prob(u<v)=\frac{\pi_v}{\pi_u+\pi_v}}.
 }
 \examples{
 ###TODO

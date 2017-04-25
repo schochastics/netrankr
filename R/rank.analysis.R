@@ -1,34 +1,35 @@
 rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
-  #' @title Rank Analysis of networks
-  #' @description  Performes a complete rank analysis of a network.
-  #' Calculates expected rankings, (relative) rank probabilities and number of possible rankings.
-  #' Works best with small networks.
+  #' @title Rank Probabilities of a partial ranking
+  #' @description  Performs a complete rank analysis of a given partial ranking. 
+  #' 
   #' @importFrom Rcpp evalCpp
   #' @useDynLib netrankr
   #' 
-  #' @param P matrix representing a partial ranking
-  #' @param names optional argument for names if P does not have row/column names
-  #' @param only.results logical. wether only results (default) or additionally the ideal tree and lattice should be returned
-  #' @param verbose logical. should diagnostics be printed. Defaults to F
-  #' @param force logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs .
+  #' @param P matrix representing a partial ranking.
+  #' @param names optional argument for names if P does not have row/column names.
+  #' @param only.results logical. wether only results (default) or additionally the ideal tree and lattice should be returned.
+  #' @param verbose logical. should diagnostics be printed. Defaults to \code{FALSE}.
+  #' @param force logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs.
   #' Only change if you know what you are doing. 
-  #' @details TODO
+  #' @details The function derives rank probabilities from a given partial ranking 
+  #' (for instance returned by [neighborhood_inclusion] or [positional_dominance]). This includes the
+  #' calculation of expected ranks, (relative) rank probabilities and the number of possible rankings.
   #' @return 
-  #' \item{lin.ext}{Number of possible centrality rankings}
-  #' \item{topo.order}{Random Ranking used to build the lattice of ideals}
-  #' \item{mse}{Array indicating equivalent nodes}
-  #' \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k}
-  #' \item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[i,j]} is the probability that i is ranked lower than j}
-  #' \item{expected.rank}{Expected ranks of nodes in any centrality ranking}
-  #' \item{rank.spread}{Variance of the ranking probabilities}
-  #' \item{tree}{igraph object. The tree of ideals (if only.results=F)}
-  #' \item{lattice}{igraph object. The lattice of ideals (if only.results=F)}
-  #' \item{ideals}{list. order ideals (if only.results=F)}
+  #' \item{lin.ext}{Number of possible rankings.}
+  #' \item{mse}{Array indicating equivalent nodes.}
+  #' \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k.}
+  #' \item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[i,j]} is the probability that i is ranked lower than j.}
+  #' \item{expected.rank}{Expected ranks of nodes in any centrality ranking.}
+  #' \item{rank.spread}{Variance of the ranking probabilities.}
+  #' \item{topo.order}{Random ranking used to build the lattice of ideals (if \code{only.results=FALSE}).}
+  #' \item{tree}{igraph object. The tree of ideals (if \code{only.results=FALSE}).}
+  #' \item{lattice}{igraph object. The lattice of ideals (if \code{only.results=FALSE}).}
+  #' \item{ideals}{list. order ideals (if \code{only.results=FALSE}).}
   #' @seealso [approx_rank_relative], [approx_rank_expected]
   #' @examples
-  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+  #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   #' P
-  #' res=rank_analysis(P)
+  #' res <- rank_analysis(P)
   #' @export
   # Check for names ------------------------------------------------
   if(is.null(rownames(P)) & length(names)!=nrow(P)){
@@ -140,7 +141,6 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
   ###############################
   if(only.results){
     return(list(lin.ext=res$linext,
-                topo.order=topo.order,
                 names=rownames(P.full),
                 mse=MSE,
                 rank.prob=rp.full,
@@ -156,6 +156,7 @@ rank_analysis=function(P,names="",only.results=T,verbose=F,force=F){
                 relative.rank=t(mrp.full),
                 expected.rank=expected.full,
                 rank.spread=sqrt(rank.spread.full),
+                topo.order=topo.order,
                 tree=tree,
                 lattice=latofI,
                 ideals=ideallist))

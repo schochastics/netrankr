@@ -1,14 +1,14 @@
 bradley_terry=function(P,sparse.correct=0,max.iter=100,tol=10^-8,print.level=0){
   #' @title Bradley Terry Model
-  #' @description  Implements the standard Bradley-Terry (Luce) model
-  #' @param P a matrix with partial order information
-  #' @param max.iter integer, maximum number of MLE iterations
-  #' @param sparse.correct numeric, correcting for weak connectivity. Set to 0 for internal choice
-  #' @param tol double, convergence criterion
-  #' @param print.level binary, should diagnostics be printed or not(Default)
-  #' @return data frame of merrits and diagnostics
-  #' @details Used to estimate the merrits \eqn{\pi_u} with
-  #' \deqn{P(u<v)=\frac{\pi_v}{\pi_u+\pi_v}}
+  #' @description  Implements the standard Bradley-Terry (Luce) model.
+  #' @param P a matrix with partial order information.
+  #' @param max.iter integer, maximum number of MLE iterations.
+  #' @param sparse.correct numeric, correcting for weak connectivity. Set to 0 for internal choice.
+  #' @param tol double, convergence criterion.
+  #' @param print.level binary, should diagnostics be printed or not (Default).
+  #' @return data frame of merits and diagnostics.
+  #' @details Used to estimate the merits \eqn{\pi_u} with
+  #' \deqn{Prob(u<v)=\frac{\pi_v}{\pi_u+\pi_v}}.
   #' @examples
   #' ###TODO
   #' @export

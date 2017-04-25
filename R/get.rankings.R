@@ -13,11 +13,11 @@ get_rankings=function(lattice,ideals,topo.order,linext,mse,force=F){
   #' Only change to TRUE if you know what you are doing
   #' @return a matrix containing all ranking positions of nodes
   #' @examples
-  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+  #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   #' P
   #' res <- rank_analysis(P,only.results=FALSE)
   #' get_rankings(res$lattice,res$ideals,res$topo.order,res$lin.ext,res$mse)
-  #' ###TODO
+  #' 
   #' @export
   if(linext>10000 & !force){
     stop("number of linear extensions to high. Use force=F if you know what you are doing.")

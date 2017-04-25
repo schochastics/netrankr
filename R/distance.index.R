@@ -16,7 +16,7 @@ distance_index=function(g,type="ros",alpha=1){
 #' }
 #' @examples
 #' require(igraph)
-#' g=sample_gnp(100,0.1)
+#' g <- sample_gnp(100,0.1)
 #' d_ros <- distance_index(g,type="ros")
 #' d_sor <- distance_index(g,type="sor")
 #' compare_ranks(d_ros,d_sor) #compare rankings

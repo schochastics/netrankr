@@ -7,14 +7,14 @@
 freeman_hierarchy(P)
 }
 \arguments{
-\item{P}{a partial order as matrix object}
+\item{P}{a partial order as matrix object.}
 }
 \value{
 a matrix with four columns containing Freemans hierarchy.
 }
 \description{
-A Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix
-\deqn{Z=\frac{P^T-P}{2}}{(P^T-P)/2}
+Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix
+\deqn{Z=\frac{P^T-P}{2}}{(P^T-P)/2}.
 }
 \details{
 TODO
@@ -23,5 +23,5 @@ TODO
 ###TODO
 }
 \seealso{
-\link{rank_analysis},\link{approx_rank_expected}
+\link{rank_analysis}, \link{approx_rank_expected}
 }
