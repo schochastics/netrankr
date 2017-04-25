@@ -1,0 +1,130 @@
+---
+title: "The role of neighborhood-inclusion"
+author: "David Schoch"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{neighborhood inclusion and centrality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+This vignette describes the concept of neighborhood-inclusion, its connection with network centrality and gives some example use cases with the `netrankr` package. 
+
+## Theoretical Background
+In an undirected graph $G=(V,E)$, the *neighborhood* of a node $u \in V$ is defined as
+$$N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace$$
+and its *closed neighborhood* as $N[v]=N(v) \cup \lbrace v \rbrace$. If the neighborhood of a node $u$ is a subset of the closed neighborhood of a node $v$, $N(u)\subseteq N[v]$, we speak of *neighborhood inclusion*. This concept defines a dominance relation among nodes in a network. We say that $u$ is *dominated* by $v$ if $N(u)\subseteq N[v]$. Neighborhood inclusion induces a partial ranking on the vertices of a network. That is, (usually) some pairs of vertices are incomparable, that is neither 
+$N(u)\subseteq N[v]$ nor $N(v)\subseteq N[u]$ holds. There is, however, a special graph class where all pairs are comparable (found in [this](threshold_graph.html) vignette).
+
+The importance of the neighborhood inclusion is given by the following result:
+
+$$
+N(u)\subseteq N[v] \implies c(u)\leq c(v),
+$$
+where $c$ is a centrality index. 
+
+Very informally, if $u$ is dominated by $v$, then u is **always** less central than $v$ no matter which centrality index is used. This very short description leaves out many theoretical details and concepts. These and more can be found in 
+
+> Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks.
+*European Journal of Appplied Mathematics*, **27**(6), 971–985.
+([link](https://doi.org/10.1017/S0956792516000401))
+
+## Neighborhood Inclusion in the `netrankr` Package
+
+```{r setup}
+library(netrankr)
+library(igraph)
+library(ggraph) #for better graph viz in R
+set.seed(1886) #for reproducibility
+```
+
+We work with the following simple graph.
+```{r simple graph, fig.align='center', fig.width=5}
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+V(g)$name <- 1:11
+
+#layout calculated with visone (visone.info)
+coords <- data.frame(x=c(99.90,1.50,101.44,21.60,82.99,62.83,71.15,42.04,59.33,54.08,86.57),
+  y=c(-1.50,-20.45,-35.25,-22.01,-42.32,-10.44,-25.88,-23.63,-43.01,-27.35,-18.80))
+
+ggraph(g,layout = "manual",node.positions=coords)+
+  geom_edge_link()+
+  geom_node_point(size=5,shape=21,stroke=1,colour="white",fill="black")+
+  geom_node_text(aes(label = name),col="white",size=3)+
+  ggforce::theme_no_axes()
+
+```
+
+We can compare neighborhoods manually with the `neighborhood` function of the `igraph` package. Note the `mindist` parameter to distinguish between open and closed neighborhood.
+```{r neighborhood}
+u <- 3
+v <- 5
+Nu <- neighborhood(g,order=1,nodes=u,mindist = 1)[[1]] #N(u) 
+Nv <- neighborhood(g,order=1,nodes=v,mindist = 0)[[1]] #N[v] 
+
+Nu
+Nv
+```
+Although it is obvious that `Nu` is a subset of `Nv`, we can verify it with `R`. 
+
+```{r inclusion}
+all(Nu%in%Nv)
+```
+
+Checking all pairs of nodes can efficiently be done with the `neighborhood_inclusion` function from the `netrankr` package.  
+
+```{r neighborhood inclusion}
+P <- neighborhood_inclusion(g)
+P
+```
+  
+If an entry `P[u,v]` is equal to one, we have $N(u)\subseteq N[v]$.  
+
+The function `dominance_graph` can alternatively be used to visualize the neighborhood inclusion as a directed graph..
+
+```{r dominance graph,fig.align='center',fig.width=5}
+g.dom <- dominance_graph(g)
+
+coords[2,2] <- coords[2,2]+10 #otherwise the edge 2->8 is hidden
+
+ggraph(g.dom,layout = "manual",node.positions=coords)+
+  geom_edge_link(arrow=arrow(type="closed",length = unit(0.2,"cm")),
+                 end_cap = circle(3, 'mm'))+
+  geom_node_point(size=5,shape=21,stroke=1,colour="white",fill="black")+
+  geom_node_text(aes(label = name),col="white",size=3)+
+  ggforce::theme_no_axes()
+
+```
+
+### Centrality and Neighborhood Inclusion
+We start by calculating some standard measures of centrality found in the `ìgraph` package for our example network.
+```{r indices}
+cent.df <- data.frame(
+  vertex=1:11,
+  degree=degree(g),
+  betweenness=betweenness(g),
+  closeness=closeness(g),
+  eigenvector=eigen_centrality(g)$vector,
+  subgraph=subgraph_centrality(g)
+)
+
+#rounding for better readability
+cent.df.rounded <- round(cent.df,4) 
+knitr::kable(cent.df.rounded)
+```
+
+We now check if the partial ranking induced by neighborhood inclusion is preserved in all index based rankings. In our example, we considered vertex $3$ and $5$, where $3$ was dominated by $5$. It is easy to verify that all centrality scores of $5$ are in fact greater than the ones of $3$ by inspecting the respective rows in the table.
+
+To check all pairs, we use the function `check_preservation`. The function takes a partial ranking, as induced by neighborhood inclusion, and a score vector of a centrality index and checks if
+`P[i,j]==1 & scores[i]>scores[j]` is `FALSE` for all pairs `i` and `j`.
+
+```{r rank preserved}
+apply(cent.df[,2:6],2,function(x) check_preservation(P,x))
+```
+All considered indices preserve the neighborhood inclusion preorder on the example network. 
+
+**NOTE**: Preserving neighborhood inclusion on **one** network does not guarantee that an index preserves it on **all** networks. For more details refer to the paper cited in the first section.
