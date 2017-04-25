@@ -12,5 +12,8 @@ dominance_graph=function(g){
   #' @export
   P=neighborhood_inclusion(g)
   d=igraph::graph_from_adjacency_matrix(P,"directed")
+  if(!is.null(igraph::V(g)$name)){
+    igraph::V(d)$name <- igraph::V(g)$name
+  }
   return(d)
 }

@@ -15,15 +15,25 @@ threshold_graph(n, p)
 a threshold graph as igraph object
 }
 \description{
-A threshold graph is a graph where all centrality indices give the same ranking.
+A threshold graph is a graph where the neighborhood inclusion preorder is complete.
+}
+\details{
+Threshold graphs can be constructed with a binary sequence. For each 0, an isolated
+vertex is inserted and for each 1, a vertex is inserted that contects to all previously inserted
+vertices. An important property of threshold graphs is, that all centrality indices induce the same ranking.
 }
 \examples{
+require(igraph)
 g <- threshold_graph(10,0.3)
 plot(g)
-
+### star graphs and complete graphs are threshold graphs
+complete <- threshold_graph(10,1) #complete graph
+plot(complete)
+star <- threshold_graph(10,0) #star graph
+plot(star)
 ###Compare induced rankings
-require(igraph)
-degree(g)
-closeness(g)
 cor(degree(g),closeness(g),method="kendall")
+}
+\seealso{
+\link{neighborhood_inclusion},\link{positional_dominance}
 }

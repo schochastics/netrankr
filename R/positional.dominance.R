@@ -1,40 +1,36 @@
-positional_dominance=function(A,map=F,benefit=T){
+positional_dominance=function(A,map=FALSE,benefit=TRUE){
   #' @title Generalized Dominance in Graphs
   #' @description generalized dominance relations. More to come
   #'
-  #' @param A matrix containing attributes
-  #' @param map boolean if rows can be sorted or not(default)
+  #' @param A matrix containing attributes or relations
+  #' @param map boolean if rows can be sorted or not (default)
   #' @param benefit boolean if higher values(default) or lower values are better
-  #' @return dominance relations
+  #' @details positional dominance is a generalization of neighborhood inclusion. 
+  #' In the default case, it checks for all pairs \eqn{i,j} if \eqn{A_{it} \geq A_{jt}} holds for all \eqn{t}.
+  #' If \code{map=TRUE}, the rows of \eqn{A} are sorted decreasingly (\code{benefit=TRUE}) or increasingly
+  #' (\code{benefit=FALSE}) and then the dominance condition is checked.
+  #' @return dominance relations as matrix object.
+  #' @seealso [neighborhood_inclusion],[check_preservation]
   #' @examples
-  #' ###TODO
+  #' ###
+  #' require(igraph)
+  #' 
+  #' g <- graph.empty(n=11,directed = FALSE)
+  #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+  #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+  #' P<-neighborhood_inclusion(g)
+  #' comparable_pairs(P)
+  #' 
+  #' dist <- distances(g)
+  #' D <- positional_dominance(dist,map=TRUE,benefit=FALSE) #lower distances are better
+  #' comparable_pairs(D) #more comparables than P
+  #' ### all distance based indices preserve the partial ranking D
+  #' check_preservation(D,distance_index(g,type="sor"))
+  #' check_preservation(D,distance_index(g,type="ros"))
+  #' check_preservation(D,distance_index(g,type="pow2"))
+  #' check_preservation(D,distance_index(g,type="int"))
   #' @export
   
   D=matdom(A,map,benefit)
-  # if(map){
-  #   A=t(apply(A,1,function(x)sort(x,decreasing=T)))
-  # }
-  # c=1
-  # if(!benefit){
-  #   c=-1
-  # }
-  # n=nrow(A)
-  # D=matrix(0,n,n)
-  # for(i in 1:n){
-  #   for(j in 1:n){
-  #     if(i!=j){
-  #       if(!map){
-  #         if(all((c*(A[i,-c(i,j)]-A[j,-c(i,j)]))<=0)){
-  #           D[i,j]=1
-  #         }
-  #       }
-  #       else{
-  #         if(all((c*(A[i,]-A[j,]))<=0)){
-  #           D[i,j]=1
-  #         }
-  #       }
-  #     }
-  #   }
-  # }
   return(D)
 }

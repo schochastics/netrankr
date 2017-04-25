@@ -10,10 +10,10 @@ neighborhood_inclusion(g)
 \item{g}{An igraph object}
 }
 \value{
-the neighborhood-inclusion preorder of an undirected graph g
+the neighborhood-inclusion preorder of an undirected graph g as matrix object
 }
 \description{
-Calculates the neighborhood-inclusion preorder of an undirected graph
+Calculates the neighborhood-inclusion preorder of an undirected graph.
 }
 \details{
 neighborhood-inclusion is formally defined as
@@ -24,6 +24,20 @@ where \eqn{c} is an arbitrary centrality index. Neighborhood-inclusion is thus p
 }
 \examples{
 require(igraph)
+###the neighborhood inclusion preorder of a star graph is complete
 g=graph.star(5,"undirected")
-neighborhood_inclusion(g)
+P <- neighborhood_inclusion(g)
+comparable_pairs(P)
+
+###standard centrality indices preserve the partial ranking of neighborhood inclusion
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+P<-neighborhood_inclusion(g)
+check_preservation(P,degree(g))
+check_preservation(P,closeness(g))
+check_preservation(P,betweenness(g))
+}
+\seealso{
+\link{positional_dominance},\link{check_preservation}
 }
