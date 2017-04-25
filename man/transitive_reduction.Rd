@@ -17,7 +17,7 @@ Calculates the transitive reduction of a directed graph.
 }
 \examples{
 require(igraph)
-g=erdos.renyi.game(100,0.1)
+g <- sample_gnp(100,0.1)
 P<-neighborhood_inclusion(g)
 sum(P)
 T<-transitive_reduction(P)

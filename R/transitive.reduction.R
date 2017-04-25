@@ -6,20 +6,20 @@ transitive_reduction=function(P){
   #' @return transitive reduction of P
   #' @examples
   #' require(igraph)
-  #' g=erdos.renyi.game(100,0.1)
+  #' g <- sample_gnp(100,0.1)
   #' P<-neighborhood_inclusion(g)
   #' sum(P)
   #' T<-transitive_reduction(P)
   #' sum(T)
   #' @export
-  B=P
-  n=nrow(B)
+  B <- P
+  n <- nrow(B)
   for (j in 1:n){
     for (i in 1:n){
       if (B[i,j]==1){
         for (k in 1:n)
           if (B[j,k]==1){
-            B[i,k] = 0
+            B[i,k] <- 0
           }
       }
     }
