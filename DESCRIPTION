@@ -1,13 +1,13 @@
 Package: netrankr
 Type: Package
-Title: A package for centrality analyses without Indices
+Title: A package for centrality analyses of networks
 Version: 0.0.3
 Author: David Schoch
 Authors@R: person("David", "Schoch", , "david.schoch@uni-konstanz.de", c("aut", "cre"))
 Maintainer: David Schoch <david.schoch@uni-konstanz.de>
-Description: This package implements functions that can be used for centrality analyses without relying on indices, e.g. expected rankings.
-URL: http://github.com/schochastics/netrankr
-BugReports: http://github.com/schochastics/netrankr/issues
+Description: This package implements functions that can be used for network centrality related analyses of networks. While the package implements some indices, its main focus lies on index-free assessment of centrality. This includes probabilistic methods like expected node ranks and relative rank probabilities (how likely is it that a node is more central than another?).
+URL: https://github.com/schochastics/netrankr
+BugReports: https://github.com/schochastics/netrankr/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -18,5 +18,5 @@ LinkingTo: Rcpp,RcppArmadillo
 SystemRequirements: C++11
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
-Suggests: knitr, rmarkdown, ggraph, ggforce
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
