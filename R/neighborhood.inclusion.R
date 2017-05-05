@@ -1,4 +1,3 @@
-neighborhood_inclusion=function(g){
 #' @title Neighborhood-Inclusion Preorder
 #' @description Calculates the neighborhood-inclusion preorder of an undirected graph.
 #' @param g An igraph object
@@ -25,9 +24,9 @@ neighborhood_inclusion=function(g){
 #' check_preservation(P,closeness(g))
 #' check_preservation(P,betweenness(g))
 #' @export
-
-  adj=lapply(igraph::get.adjlist(g),function(x) x-1)
-  deg=igraph::degree(g)
-  dom=nialgo(adj,deg)
+neighborhood_inclusion <- function(g){
+  adj <- lapply(igraph::get.adjlist(g),function(x) x-1)
+  deg <- igraph::degree(g)
+  dom <- nialgo(adj,deg)
   return(dom)
 }

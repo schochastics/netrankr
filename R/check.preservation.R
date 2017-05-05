@@ -1,4 +1,3 @@
-check_preservation=function(P,scores){
   #' @title Checks if a partial ranking is preserved
   #' @description Checks if a partial ranking is preserved in the ranking induced by scores.
   #' @param P a partial ranking as a matrix object.
@@ -20,9 +19,10 @@ check_preservation=function(P,scores){
   #' check_preservation(P,betweenness(g))
   #' check_preservation(P,closeness(g))
   #' @export
+check_preservation <- function(P,scores){
   
-  P.idx=which(P==1,arr.ind=T)
-  preserved=all(!apply(P.idx,1,function(x){scores[x[1]]>scores[x[2]]}))
+  P.idx <- which(P==1,arr.ind=TRUE)
+  preserved <- all(!apply(P.idx,1,function(x){scores[x[1]]>scores[x[2]]}))
   
   return(preserved)
 }

@@ -1,4 +1,3 @@
-distance_index=function(g,type="ros",alpha=1){
 #' @title Distance-based centrality indices
 #' @description Implements a variety of centrality indices that are based on geodesic distances. 
 #' @param g An igraph object
@@ -21,8 +20,9 @@ distance_index=function(g,type="ros",alpha=1){
 #' d_sor <- distance_index(g,type="sor")
 #' compare_ranks(d_ros,d_sor) #compare rankings
 #' @export
-  D=igraph::distances(g)
-  diam=igraph::diameter(g)
+distance_index <- function(g,type="ros",alpha=1){
+  D <- igraph::distances(g)
+  diam <- igraph::diameter(g)
   switch(type,
          ros={1/rowSums(D)},
          sor={R=1/D
