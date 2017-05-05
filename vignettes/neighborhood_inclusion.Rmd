@@ -36,12 +36,11 @@ Very informally, if $u$ is dominated by $v$, then u is **always** less central t
 ```{r setup}
 library(netrankr)
 library(igraph)
-library(ggraph) #for better graph viz in R
 set.seed(1886) #for reproducibility
 ```
 
 We work with the following simple graph.
-```{r simple graph, fig.align='center', fig.width=5}
+```{r simple graph, fig.align='center', fig.width=3}
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -51,12 +50,10 @@ V(g)$name <- 1:11
 coords <- data.frame(x=c(99.90,1.50,101.44,21.60,82.99,62.83,71.15,42.04,59.33,54.08,86.57),
   y=c(-1.50,-20.45,-35.25,-22.01,-42.32,-10.44,-25.88,-23.63,-43.01,-27.35,-18.80))
 
-ggraph(g,layout = "manual",node.positions=coords)+
-  geom_edge_link()+
-  geom_node_point(size=5,shape=21,stroke=1,colour="white",fill="black")+
-  geom_node_text(aes(label = name),col="white",size=3)+
-  ggforce::theme_no_axes()
-
+plot(g,layout=as.matrix(coords),
+     vertex.color="black",vertex.label.color="white", vertex.size=16,
+     edge.color="black",
+     margin=0,asp=0.5)
 ```
 
 We can compare neighborhoods manually with the `neighborhood` function of the `igraph` package. Note the `mindist` parameter to distinguish between open and closed neighborhood.
@@ -91,13 +88,10 @@ g.dom <- dominance_graph(g)
 
 coords[2,2] <- coords[2,2]+10 #otherwise the edge 2->8 is hidden
 
-ggraph(g.dom,layout = "manual",node.positions=coords)+
-  geom_edge_link(arrow=arrow(type="closed",length = unit(0.2,"cm")),
-                 end_cap = circle(3, 'mm'))+
-  geom_node_point(size=5,shape=21,stroke=1,colour="white",fill="black")+
-  geom_node_text(aes(label = name),col="white",size=3)+
-  ggforce::theme_no_axes()
-
+plot(g.dom,layout=as.matrix(coords),
+     vertex.color="black",vertex.label.color="white", vertex.size=16,
+     edge.color="black",
+     margin=0,asp=0.5)
 ```
 
 ### Centrality and Neighborhood Inclusion
