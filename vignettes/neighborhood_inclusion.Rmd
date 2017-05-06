@@ -1,5 +1,5 @@
 ---
-title: "The role of neighborhood-inclusion"
+title: "The concept of neighborhood-inclusion"
 author: "David Schoch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -10,7 +10,8 @@ vignette: >
 ---
 
 
-This vignette describes the concept of neighborhood-inclusion, its connection with network centrality and gives some example use cases with the `netrankr` package. 
+This vignette describes the concept of neighborhood-inclusion, its connection 
+with network centrality and gives some example use cases with the `netrankr` package. 
 
 ## Theoretical Background
 In an undirected graph $G=(V,E)$, the *neighborhood* of a node $u \in V$ is defined as
@@ -51,7 +52,7 @@ coords <- data.frame(x=c(99.90,1.50,101.44,21.60,82.99,62.83,71.15,42.04,59.33,5
   y=c(-1.50,-20.45,-35.25,-22.01,-42.32,-10.44,-25.88,-23.63,-43.01,-27.35,-18.80))
 
 plot(g,layout=as.matrix(coords),
-     vertex.color="black",vertex.label.color="white", vertex.size=16,
+     vertex.color="black",vertex.label.color="white", vertex.size=16,vertex.label.cex=0.75,
      edge.color="black",
      margin=0,asp=0.5)
 ```
@@ -89,7 +90,7 @@ g.dom <- dominance_graph(g)
 coords[2,2] <- coords[2,2]+10 #otherwise the edge 2->8 is hidden
 
 plot(g.dom,layout=as.matrix(coords),
-     vertex.color="black",vertex.label.color="white", vertex.size=16,
+     vertex.color="black",vertex.label.color="white", vertex.size=16, vertex.label.cex=0.75,
      edge.color="black",
      margin=0,asp=0.5)
 ```
