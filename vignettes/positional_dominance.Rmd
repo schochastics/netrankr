@@ -1,0 +1,22 @@
+---
+title: "Positional dominance in networks"
+author: "David Schoch"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{positional dominance in networks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette describes the concept of positional dominance, the generalization 
+of neighborhood-inclusion for arbitrary network and attribute data. Additionally, 
+some use cases with the `netrankr` package are given.
+
+## Theoretical Background
+
+More about the positional approach to network analysis can be found in
+
+> Brandes, Ulrik. (2016). Network Positions.
+*Methodological Innovations*, **9**, 2059799116630650.
+([link](http://dx.doi.org/10.1177/2059799116630650))
