@@ -22,7 +22,7 @@
 #' #indirect realtion used by subgraph_centrality
 #' walk  <- indirect_relations(g,"walks",gamma=factorial(1:10))
 #' @export
-indirect_relation <- function(g,relation="distances",
+indirect_relations <- function(g,relation="distances",
                               walk_length=10,
                               gamma=factorial(1:walk_length)){
   if(relation=="distances"){
