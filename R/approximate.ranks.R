@@ -1,4 +1,4 @@
-approx_rank_expected=function(P,method="lpom"){
+approx_rank_expected <- function(P,method="lpom"){
   #' @title Approximation of expected ranks
   #' @description  Implements a variety of functions to approximate expected ranks in large partially ordered sets.
   #'
@@ -20,69 +20,69 @@ approx_rank_expected=function(P,method="lpom"){
   #' #simplest approximation, suited for tiny matrices
   #' approx_rank_expected(P,"lpom")
   #' @export
-  g=igraph::graph_from_adjacency_matrix(P,"directed")
-  n=nrow(P)
+  g <- igraph::graph_from_adjacency_matrix(P,"directed")
+  n <- nrow(P)
   if(method=="lpom"){
-    sx=igraph::degree(g,mode="in")
-    ix=(n-1)-igraph::degree(g,mode="all")
+    sx <- igraph::degree(g,mode="in")
+    ix <- (n-1)-igraph::degree(g,mode="all")
     r.approx=(sx+1)*(n+1)/(n+1-ix)
   }
   else if(method=="glpom"){
-    P=P+diag(1,n)
-    sx=igraph::degree(g,mode="in")
+    P <- P+diag(1,n)
+    sx <- igraph::degree(g,mode="in")
     r.approx=sx+1
     for(x in 1:n){
-      Ix=which(P[x,]==0 & P[,x]==0)
-      Sx=setdiff(which(P[,x]==1),x)
+      Ix <- which(P[x,]==0 & P[,x]==0)
+      Sx <- setdiff(which(P[,x]==1),x)
       for(y in Ix){
-        Iy=which(P[y,]==0 & P[,y]==0)
+        Iy <- which(P[y,]==0 & P[,y]==0)
         r.approx[x]=r.approx[x]+(length(intersect(Sx,Iy))+1)/(length(setdiff(Iy,Ix))+1)
       }
     }
   }
   else if(method=="loof1"){
-    P=P+diag(1,n)
-    s=igraph::degree(g,mode="in")
-    l=igraph::degree(g,mode="out")
+    P <- P+diag(1,n)
+    s <- igraph::degree(g,mode="in")
+    l <- igraph::degree(g,mode="out")
     r.approx=s+1
     for(x in 1:n){
-      Ix=which(P[x,]==0 & P[,x]==0)
+      Ix <- which(P[x,]==0 & P[,x]==0)
       for(y in Ix){
-        r.approx[x]=r.approx[x]+((s[x]+1)*(l[y]+1))/((s[x]+1)*(l[y]+1)+(s[y]+1)*(l[x]+1))
+        r.approx[x] <- r.approx[x]+((s[x]+1)*(l[y]+1))/((s[x]+1)*(l[y]+1)+(s[y]+1)*(l[x]+1))
       }
     }
   }
   else if(method=="loof2"){
-    P=P+diag(1,n)
-    s=igraph::degree(g,mode="in")
-    l=igraph::degree(g,mode="out")
-    s.approx=s
-    l.approx=l
+    P <- P+diag(1,n)
+    s <- igraph::degree(g,mode="in")
+    l <- igraph::degree(g,mode="out")
+    s.approx <- s
+    l.approx <- l
     for(x in 1:n){
-      Ix=which(P[x,]==0 & P[,x]==0)
+      Ix <- which(P[x,]==0 & P[,x]==0)
       for(y in Ix){
-        s.approx[x]=s.approx[x]+.sl.approx(s[x],s[y],l[x],l[y])
-        l.approx[x]=l.approx[x]+.sl.approx(s[y],s[x],l[y],l[x])
+        s.approx[x] <- s.approx[x]+.sl.approx(s[x],s[y],l[x],l[y])
+        l.approx[x] <- l.approx[x]+.sl.approx(s[y],s[x],l[y],l[x])
       }
     }
-    r.approx=s+1
-    s=s.approx
-    l=l.approx
+    r.approx <- s+1
+    s <- s.approx
+    l <- l.approx
     for(x in 1:n){
-      Ix=which(P[x,]==0 & P[,x]==0)
+      Ix <- which(P[x,]==0 & P[,x]==0)
       for(y in Ix){
-        r.approx[x]=r.approx[x]+((s[x]+1)*(l[y]+1))/((s[x]+1)*(l[y]+1)+(s[y]+1)*(l[x]+1))
+        r.approx[x] <- r.approx[x]+((s[x]+1)*(l[y]+1))/((s[x]+1)*(l[y]+1)+(s[y]+1)*(l[x]+1))
       }
     }
   }
   return(r.approx)
 }
 
-.sl.approx=function(sx,sy,lx,ly){
+.sl.approx <- function(sx,sy,lx,ly){
   ((sx+1)*(ly+1))/((sx+1)*(ly+1)+(sy+1)*(lx+1))
 }
 #############################
-approx_rank_relative=function(P,iterative=TRUE,num.iter=10){
+approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
   #' @title Approximation of relative rank probabilities
   #' @description Approximate relative rank probabilites \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
   #' gives the probability that u is less central than v, given the partial ranking P.
@@ -104,20 +104,19 @@ approx_rank_relative=function(P,iterative=TRUE,num.iter=10){
   MSE=which((P+t(P))==2,arr.ind=T)
   P.full <- P
   if(length(MSE)>=1){
-    MSE<-t(apply(MSE,1,sort))
-    MSE<-MSE[!duplicated(MSE),]
-    g<-igraph::graph.empty()
-    g<-igraph::add.vertices(g,nrow(P))
-    g<-igraph::add.edges(g,c(t(MSE)))
-    g<-igraph::as.undirected(g)
-    MSE<-igraph::clusters(g)$membership
-    equi<-which(duplicated(MSE))
-    P<-P[-equi,-equi]
-  }
-  else{
+    MSE <- t(apply(MSE,1,sort))
+    MSE <- MSE[!duplicated(MSE),]
+    g <- igraph::graph.empty()
+    g <- igraph::add.vertices(g,nrow(P))
+    g <- igraph::add.edges(g,c(t(MSE)))
+    g <- igraph::as.undirected(g)
+    MSE <- igraph::clusters(g)$membership
+    equi <- which(duplicated(MSE))
+    P <- P[-equi,-equi]
+  } else{
     MSE<-1:nrow(P)
   }
-  n=nrow(P)
+  n <- nrow(P)
   g.dom <- igraph::graph_from_adjacency_matrix(P,"directed")
   deg.in <- igraph::degree(g.dom,mode="in")
   deg.out <- igraph::degree(g.dom,mode="out")
@@ -161,7 +160,7 @@ approx_rank_relative=function(P,iterative=TRUE,num.iter=10){
   return(t(mrp.full))
 }
 
-freeman_hierarchy=function(P){
+freeman_hierarchy <- function(P){
   #' @title Freemans Hierarchy measure
   #' @description Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix 
   #' \deqn{Z=\frac{P^T-P}{2}}{(P^T-P)/2}.
@@ -174,14 +173,16 @@ freeman_hierarchy=function(P){
   #' @examples
   #' ###TODO
   #' @export  
-  n=nrow(P)
-  Z=(t(P)-P)*0.5
-  svdZ=svd(Z)
-  d=svdZ$d[1]
-  r.all=sqrt(2*d/n)
-  x=sqrt(d)*svdZ$u[,2]
-  y=sqrt(d)*svdZ$u[,1]
-  r.indiv=sqrt(x^2+y^2)
-  height=atan2(y,x)
-  return(list(res=as.data.frame(cbind(x,y,r.indiv,height)),r=sqrt(2*d/n),var=sum(svdZ$d[1:2])/sum(svdZ$d)))
+  n <- nrow(P)
+  Z <- (t(P)-P)*0.5
+  svdZ <- svd(Z)
+  d <- svdZ$d[1]
+  r.all <- sqrt(2*d/n)
+  x <- sqrt(d)*svdZ$u[,2]
+  y <- sqrt(d)*svdZ$u[,1]
+  r.indiv <- sqrt(x^2+y^2)
+  height <- atan2(y,x)
+  return(list(res=as.data.frame(cbind(x,y,r.indiv,height)),
+              r=sqrt(2*d/n),
+              var=sum(svdZ$d[1:2])/sum(svdZ$d)))
 }
