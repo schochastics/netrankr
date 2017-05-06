@@ -5,6 +5,10 @@ checkPairs <- function(x, y) {
     .Call('netrankr_checkPairs', PACKAGE = 'netrankr', x, y)
 }
 
+dependency <- function(adj) {
+    .Call('netrankr_dependency', PACKAGE = 'netrankr', adj)
+}
+
 LatticeOfIdeals <- function(child, parent, Ek, nElem, nIdeals) {
     .Call('netrankr_LatticeOfIdeals', PACKAGE = 'netrankr', child, parent, Ek, nElem, nIdeals)
 }

@@ -18,6 +18,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dependency
+NumericMatrix dependency(std::vector<std::vector<int> > adj);
+RcppExport SEXP netrankr_dependency(SEXP adjSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type adj(adjSEXP);
+    rcpp_result_gen = Rcpp::wrap(dependency(adj));
+    return rcpp_result_gen;
+END_RCPP
+}
 // LatticeOfIdeals
 std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > child, std::vector<int> parent, std::vector<std::vector<int> > Ek, int nElem, int nIdeals);
 RcppExport SEXP netrankr_LatticeOfIdeals(SEXP childSEXP, SEXP parentSEXP, SEXP EkSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
