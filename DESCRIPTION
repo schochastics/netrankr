@@ -13,7 +13,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.0.1)
 Imports: igraph (>= 1.0.1),
-    Rcpp(>= 0.12.9)
+    Rcpp(>= 0.12.8)
 LinkingTo: Rcpp,RcppArmadillo
 SystemRequirements: C++11
 RoxygenNote: 6.0.1
