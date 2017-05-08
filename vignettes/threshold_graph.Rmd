@@ -1,15 +1,16 @@
 ---
-title: "The role of threshold graphs"
+title: "Uniquely ranked graphs"
 author: "David Schoch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{threshold graphs and centrality}
+  %\VignetteIndexEntry{Uniquely ranked graphs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette explains the role of threshold graph for network centrality and introduces relevant functions from the `netrankr` package to work with this class of graphs. 
+This vignette introduces *threshold graphs*, a class of graphs with a unique centrality ranking and
+relevant functions from the `netrankr` package to work with this class of graphs. 
 
 ## Theoretical Background
 
@@ -18,22 +19,20 @@ $$
 \forall u,v \in V: N(u) \subseteq N[v] \; \lor \; N(v) \subseteq N[u].
 $$
 
-From the [first](neighborhood_inclusion.html) vignette, it is thus clear that all centrality indices induce the same ranking on a threshold graph. More technical details on threshold graphs and results related to centrality can be found in
+According to [this](neighborhood_inclusion.html) vignette, it is thus clear that all centrality indices induce the same ranking on a threshold graph. More technical details on threshold graphs and results related to centrality can be found in
 
 > Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
 and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
 
-## Threshold Graphs in the `netrankr` package
+## Uniquely Ranked Graphs in the `netrankr` Package
 
-```{r setup}
+```{r setup, warning=FALSE,message=FALSE}
 library(netrankr)
 library(igraph)
 set.seed(1886) #for reproducibility
 ```
 Threshold graphs on $n$ vertices can be constructed iteratively with a sequence of $0$'s and $1$'s.
-For each $0$, an isolated vertex is inserted and for each $1$ a vertex that connects to all previously inserted one's.
-
-The `threshold_graph` function in the `netrankr` package can be used to construct arbitrary threshold graphs. The parameter `n` is used to set the desired number of vertices. Parameter `p` is the probability that a dominated vertex is inserted in each step. This parameter roughly equates to the density of the network.
+For each $0$, an isolated vertex is inserted and for each $1$ a vertex that connects to all previously inserted one's. This iterative process is implemented in the `threshold_graph` function. The parameter `n` is used to set the desired number of vertices. The parameter `p` is the probability that a dominated vertex is inserted in each step. This parameter roughly equates to the density of the network.
 ```{r tg creation}
  g1 <- threshold_graph(500,0.4)
  g2 <- threshold_graph(500,0.05)
@@ -41,7 +40,7 @@ The `threshold_graph` function in the `netrankr` package can be used to construc
  c(round(graph.density(g1),2), round(graph.density(g2),2))
 ```
 
-The class of threshold graphs includes various well-known classes, for instance star shaped and complete networks. This graphs can be constructed with extrem values `p=0` and `p=1` respectively.
+The class of threshold graphs includes various well-known graphs, for instance star shaped and complete networks. This graphs can be constructed with `p=0` and `p=1` respectively.
 ```{r tg example,fig.show='hold'}
 star <- threshold_graph(6,0) 
 complete <- threshold_graph(6,1)
@@ -49,7 +48,7 @@ plot(star,vertex.label=NA,vertex.color="black")
 plot(complete,vertex.label=NA,vertex.color="black")
 ```
 
-To check that all pairs are comparable by neighborhood inclusion, we can use the function `comparable_pairs` which computes the fraction of pairs comparable by neighborhood inclusion.
+To check that all pairs are comparable by neighborhood inclusion, we can use the function `comparable_pairs`. The function computes the density of the underlying undirected graph induced by the neighborhood-inclusion relation.
 ```{r tg complete}
 g <- threshold_graph(10,0.4)
 P <- neighborhood_inclusion(g)
@@ -70,22 +69,25 @@ cent.df <- data.frame(
 )
 ```
 
-We expect, that all indices are perfectly rank correlated.
+We expect, that all indices are perfectly rank correlated since all pairs of nodes are comparable by neighborhood-inclusion.
 ```{r cor tg}
 cor.mat <- cor(round(cent.df,8),method="kendall")
 cor.mat <- round(cor.mat,2)
 cor.mat
 ```
 
-We, however, obtain correlations that are not equal to one. This is due to the definition of Kendall's tie corrected $\tau$. The following cases can arise when comparing two scores of indices `x` and `y`.
+We, however, obtain correlations that are not equal to one. This is due to the definition of Kendall's (tie corrected) $\tau$. 
+
+The following cases can arise when comparing two scores of indices `x` and `y`.
 
 * concordant: `x[i]>x[j] & y[i]>y[j]` or `x[i]<x[j] & y[i]<y[j]`
 * discordant: `x[i]>x[j] & y[i]<y[j]` or `x[i]>x[j] & y[i]<y[j]`
 * tied: `x[i]=x[j] & y[i]=y[j]`
 * left/right ties: `x[i]=x[j] & y[i]!=y[j]` or `x[i]!=x[j] & y[i]=y[j]`
-Kendall's $\tau$ considers left and right ties as negative, that is they reduce correlations. Left and right ties are, however, not forbidden according to the neighborhood inclusion property. The only forbidden case are discordant pairs. That is, $N(u)\subseteq N[v]$ does not result in $c(u)>c(v)$
 
-The function `compare_ranks` can be used to calculate the number of occurences for each case. As an example take degree and betweenness.
+Kendall's $\tau$ considers left and right ties as a correlation reducing. Left and right ties are, however, not forbidden according to the neighborhood inclusion property. The only forbidden case are discordant pairs. That is, $N(u)\subseteq N[v]$ can not result in $c(u)>c(v)$ but it may result in $c(u)=c(v)$.
+
+The function `compare_ranks` can be used to calculate the number of occurences for each case. 
 
 ```{R compare ranks}
 comp <- compare_ranks(cent.df$degree,cent.df$betweenness)
@@ -96,10 +98,18 @@ Notice that there is a high number of right ties which influences the correlatio
 
 ```{r discordant}
 dis.pairs <- matrix(0,5,5)
-dis.pairs[1,] <- apply(cent.df,2,function(x)compare_ranks(cent.df$degree,x)$discordant)
-dis.pairs[2,] <- apply(cent.df,2,function(x)compare_ranks(cent.df$betweenness,x)$discordant)
-dis.pairs[3,] <- apply(cent.df,2,function(x)compare_ranks(cent.df$closeness,x)$discordant)
-dis.pairs[4,] <- apply(cent.df,2,function(x)compare_ranks(cent.df$eigenvector,x)$discordant)
-dis.pairs[5,] <- apply(cent.df,2,function(x)compare_ranks(cent.df$subgraph,x)$discordant)
+dis.pairs[1,] <- apply(cent.df,2,
+                       function(x)compare_ranks(cent.df$degree,x)$discordant)
+dis.pairs[2,] <- apply(cent.df,2,
+                       function(x)compare_ranks(cent.df$betweenness,x)$discordant)
+dis.pairs[3,] <- apply(cent.df,2,
+                       function(x)compare_ranks(cent.df$closeness,x)$discordant)
+dis.pairs[4,] <- apply(cent.df,2,
+                       function(x)compare_ranks(cent.df$eigenvector,x)$discordant)
+dis.pairs[5,] <- apply(cent.df,2,
+                       function(x)compare_ranks(cent.df$subgraph,x)$discordant)
 dis.pairs
 ```
+
+Although Kendall's $\tau$ suggests that the correlations among indices can be low,
+we see that there do not exist any discordant pairs on threshold graphs.

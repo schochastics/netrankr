@@ -10,13 +10,56 @@ vignette: >
 ---
 
 This vignette describes the concept of positional dominance, the generalization 
-of neighborhood-inclusion for arbitrary network and attribute data. Additionally, 
+of [neighborhood-inclusion](neighborhood_inclusion.html) for arbitrary network and attribute data. Additionally, 
 some use cases with the `netrankr` package are given.
 
 ## Theoretical Background
 
-More about the positional approach to network analysis can be found in
+
+
+More about the positional dominance and the positional approach to network analysis can be found in
 
 > Brandes, Ulrik. (2016). Network Positions.
 *Methodological Innovations*, **9**, 2059799116630650.
 ([link](http://dx.doi.org/10.1177/2059799116630650))
+
+## Positional Dominance in the `netrankr` Package
+
+```{r setup, warning=FALSE,message=FALSE}
+library(netrankr)
+library(igraph)
+library(magrittr)
+set.seed(1886) #for reproducibility
+```
+
+The function `positional_dominance` can be used to check 
+In accordance with the analytic pipeline of centrality[REF HERE] we use the `%>%` operator from the 
+`magrittr` package.
+
+```{r pos dom}
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+V(g)$name <- 1:11
+
+#neighborhood inclusion can be expressed with the analytic pipeline
+D <- g %>% indirect_relations(relation="identity") %>% positional_dominance()
+
+#without %>% operator:
+# rel <- indirect_relations(g,relation="identity")
+# D <- positional_dominance(rel)
+
+identical(D,neighborhood_inclusion(g))
+```
+
+the `map` parameter of `positional_dominance` allows to distinguish between dominance
+under *total heterogeneity* (`map=FALSE`) and *total homogeneity* (`map=TRUE`). 
+Dominance under total homogeneity yields a ranking, if the relation is binary (e.g. connected or not).  
+
+```{r homo and hetero}
+D <- g %>% indirect_relations(relation="identity") %>% positional_dominance(map=TRUE)
+
+comparable_pairs(D)
+```
+
+

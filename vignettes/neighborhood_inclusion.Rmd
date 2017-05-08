@@ -19,7 +19,7 @@ $$N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace$$
 and its *closed neighborhood* as $N[v]=N(v) \cup \lbrace v \rbrace$. If the neighborhood of a node $u$ is a subset of the closed neighborhood of a node $v$, $N(u)\subseteq N[v]$, we speak of *neighborhood inclusion*. This concept defines a dominance relation among nodes in a network. We say that $u$ is *dominated* by $v$ if $N(u)\subseteq N[v]$. Neighborhood inclusion induces a partial ranking on the vertices of a network. That is, (usually) some pairs of vertices are incomparable, that is neither 
 $N(u)\subseteq N[v]$ nor $N(v)\subseteq N[u]$ holds. There is, however, a special graph class where all pairs are comparable (found in [this](threshold_graph.html) vignette).
 
-The importance of the neighborhood inclusion is given by the following result:
+The importance of the neighborhood-inclusion is given by the following result:
 
 $$
 N(u)\subseteq N[v] \implies c(u)\leq c(v),
@@ -32,9 +32,9 @@ Very informally, if $u$ is dominated by $v$, then u is **always** less central t
 *European Journal of Appplied Mathematics*, **27**(6), 971–985.
 ([link](https://doi.org/10.1017/S0956792516000401))
 
-## Neighborhood Inclusion in the `netrankr` Package
+## Neighborhood-Inclusion in the `netrankr` Package
 
-```{r setup}
+```{r setup, warning=FALSE,message=FALSE}
 library(netrankr)
 library(igraph)
 set.seed(1886) #for reproducibility
@@ -109,7 +109,7 @@ cent.df <- data.frame(
 
 #rounding for better readability
 cent.df.rounded <- round(cent.df,4) 
-knitr::kable(cent.df.rounded)
+cent.df.rounded
 ```
 
 We now check if the partial ranking induced by neighborhood inclusion is preserved in all index based rankings. In our example, we considered vertex $3$ and $5$, where $3$ was dominated by $5$. It is easy to verify that all centrality scores of $5$ are in fact greater than the ones of $3$ by inspecting the respective rows in the table.
@@ -122,4 +122,4 @@ apply(cent.df[,2:6],2,function(x) check_preservation(P,x))
 ```
 All considered indices preserve the neighborhood inclusion preorder on the example network. 
 
-**NOTE**: Preserving neighborhood inclusion on **one** network does not guarantee that an index preserves it on **all** networks. For more details refer to the paper cited in the first section.
+*NOTE*: Preserving neighborhood inclusion on **one** network does not guarantee that an index preserves it on **all** networks. For more details refer to the paper cited in the first section.
