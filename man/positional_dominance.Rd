@@ -17,12 +17,13 @@ positional_dominance(A, map = FALSE, benefit = TRUE)
 dominance relations as matrix object.
 }
 \description{
-generalized dominance relations. More to come
+generalized dominance relations.
 }
 \details{
-positional dominance is a generalization of neighborhood inclusion.
-In the default case, it checks for all pairs \eqn{i,j} if \eqn{A_{it} \geq A_{jt}} holds for all \eqn{t}.
-If \code{map=TRUE}, the rows of \eqn{A} are sorted decreasingly (\code{benefit=TRUE}) or increasingly
+Positional dominance is a generalization of neighborhood-inclusion for
+arbitrary network data. In the default case, it checks for all pairs \eqn{i,j} if
+\eqn{A_{it} \geq A_{jt}} holds for all \eqn{t}. If \code{map=TRUE},
+the rows of \eqn{A} are sorted decreasingly (\code{benefit=TRUE}) or increasingly
 (\code{benefit=FALSE}) and then the dominance condition is checked.
 }
 \examples{
@@ -36,14 +37,18 @@ P<-neighborhood_inclusion(g)
 comparable_pairs(P)
 
 dist <- distances(g)
-D <- positional_dominance(dist,map=TRUE,benefit=FALSE) #lower distances are better
+D <- positional_dominance(dist,map=FALSE,benefit=FALSE) 
+comparable_pairs(D) #same as P
+
+D <- positional_dominance(dist,map=TRUE,benefit=FALSE) 
 comparable_pairs(D) #more comparables than P
-### all distance based indices preserve the partial ranking D
+
+### all distance based indices preserve positional dominance
 check_preservation(D,distance_index(g,type="sor"))
 check_preservation(D,distance_index(g,type="ros"))
 check_preservation(D,distance_index(g,type="pow2"))
 check_preservation(D,distance_index(g,type="int"))
 }
 \seealso{
-\link{neighborhood_inclusion},\link{check_preservation}
+\link{neighborhood_inclusion}, \link{check_preservation}
 }
