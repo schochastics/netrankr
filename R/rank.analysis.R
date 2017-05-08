@@ -108,7 +108,7 @@ rank_analysis <- function(P,names="",only.results=T,verbose=F,force=F){
     print(paste("No. of possible Rankings: ",res$linext))
   }
   res$rp <- res$rp[order(topo.order),]
-  res$mrp <- res$mrp[order(topo.order),]
+  res$mrp <- res$mrp[order(topo.order),order(topo.order)]
   ###############################END
   expected <- res$rp%*%1:nElem
   rank.spread <- rowSums((matrix(rep(1:nElem,each=nElem),nElem,nElem)-c(expected))^2*res$rp)
