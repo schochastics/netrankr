@@ -1,11 +1,24 @@
 #' @title Indirect relations of a network
 #' @description Derive indirect relations, for instance distances, for a given network. 
 #' @param g igraph object. The network for which relations should be derived
-#' @param relation string. giving the relation to be calculated. See details for options.
+#' @param relation string. giving the relation to be calculated. See Details for options.
 #' @param walk_length integer. maximum length of walks to be considered if relation="walks"
-#' @param gamma vector. weighting of walks if relation="walks".
-#' @details the following relations
-#' @return a matrix containing the derived relations
+#' @param gamma vector of weights if relation = "walks". See Details.
+#' @details The \emph{relation} parameter can be set to 
+#' \describe{
+#' \item{identity}{returns the adjacency matrix of the network.}
+#' \item{distances}{calculated geodesic distances between all pairs of nodes.}
+#' \item{dependencies}{returns dyadic dependencies 
+#' \deqn{\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}}
+#' where \eqn{\sigma(s,t|u)} is the number of shortest paths from s to t that include u and
+#' \eqn{\sigma(s,t)} is the total number of shortest (s,t)-paths. The row sums of the resulting matrix 
+#' is equal to the betweenness scores.
+#'  }
+#' \item{walks}{returns weighted walk counts of the form}
+#' \deqn{\sum_{i=0}^k \gamma_i A^i.}
+#' k is set by the `walk_length` parameter and \eqn{\gamma} by the vector provided by `gamma`.
+#' }
+#' @return a matrix containing indirect relations.
 #' @examples
 #' 
 #' require(igraph)
@@ -22,7 +35,7 @@
 #' 
 #' #indirect realtion for subgraph_centrality
 #' walk  <- indirect_relations(g,"walks",gamma=factorial(1:10))
-#' 
+#' plot(rowSums(walk),subgraph_centrality(g))
 #' @export
 indirect_relations <- function(g,relation="distances",
                               walk_length=10,
