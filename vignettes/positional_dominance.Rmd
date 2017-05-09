@@ -49,6 +49,7 @@ D <- g %>% indirect_relations(relation="identity") %>% positional_dominance()
 # rel <- indirect_relations(g,relation="identity")
 # D <- positional_dominance(rel)
 
+#positional dominance with the identity relation is identical to neighborhood
 identical(D,neighborhood_inclusion(g))
 ```
 
