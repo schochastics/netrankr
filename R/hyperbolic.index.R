@@ -23,9 +23,9 @@ hyperbolic_index <- function(g,type="odd"){
   if(type=="even"){
     ENW <- rep(0,n)
     for(v in 1:n){
-      Nv <- neighborhood(g,1,v)[[1]]
-      g1 <- induced.subgraph(g,Nv)
-      C <- get.adjacency(g1,type="both")
+      Nv <- igraph::neighborhood(g,1,v)[[1]]
+      g1 <- igraph::induced.subgraph(g,Nv)
+      C <- igraph::get.adjacency(g1,type="both")
       eig.decomp <- eigen(C,symmetric=TRUE)
       V <- (eig.decomp$vectors)^2
       lambda <- eig.decomp$values
@@ -35,9 +35,9 @@ hyperbolic_index <- function(g,type="odd"){
   else if(type=="odd"){
     ENW <- rep(0,n)
     for(v in 1:n){
-      Nv <- neighborhood(g,1,v)[[1]]
-      g1 <- induced.subgraph(g,Nv)
-      C <- get.adjacency(g1,type="both")
+      Nv <- igraph::neighborhood(g,1,v)[[1]]
+      g1 <- igraph::induced.subgraph(g,Nv)
+      C <- igraph::get.adjacency(g1,type="both")
       eig.decomp <- eigen(C,symmetric=TRUE)
       V <- (eig.decomp$vectors)^2
       lambda <- eig.decomp$values
