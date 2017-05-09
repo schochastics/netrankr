@@ -7,6 +7,11 @@ netrankr is an R package that can be used for centrality analyses of networks. A
 Install
 -------
 
+``` r
+require(devtools)
+install_github("schochastics/netrankr")
+```
+
 Details
 -------
 

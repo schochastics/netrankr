@@ -15,6 +15,11 @@ whenever partial rankings have to be analysed
 
 ## Install
 
+```{r install, eval=FALSE}
+require(devtools)
+install_github("schochastics/netrankr")
+```
+
 ## Details
 
 Some features of the package are: 
