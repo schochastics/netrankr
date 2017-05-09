@@ -58,6 +58,27 @@ rank_analysis <- function(P,names="",only.results=T,verbose=F,force=F){
   names <- rownames(P)
   #number of Elements
   nElem <- length(names)
+  
+# check for linear order ---------------------------------------------
+  if(comparable_pairs(P)==1){
+    warning("P is already a ranking.\nExpected Ranks correspond to the only possible ranking.")
+    expected.full <- rank(colSums(P.full),ties.method = "max")
+    rank.spread.full <- rep(0,nrow(P.full))
+    mrp.full <- P.full
+    rp.full=matrix(0,nrow(P.full),nrow(P.full))
+    for(i in 1:nrow(P.full)){
+      rp.full[i,expected.full[i]] <- 1
+    }
+
+    return(list(lin.ext=1,
+                names=rownames(P.full),
+                mse=MSE,
+                rank.prob=rp.full,
+                relative.rank=t(mrp.full),
+                expected.rank=expected.full,
+                rank.spread=rank.spread.full))
+  }
+  
 # sanity check if applicable ------------------------------------------------
   if(nrow(P)>50 & comparable_pairs(P)<0.2 & force==F){
     stop("Input data too big. Use approximations or set force=T if you know what you are doing")
