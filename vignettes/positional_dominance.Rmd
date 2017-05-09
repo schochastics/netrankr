@@ -33,7 +33,7 @@ set.seed(1886) #for reproducibility
 ```
 
 The function `positional_dominance` can be used to check 
-In accordance with the analytic pipeline of centrality[REF HERE] we use the `%>%` operator from the 
+In accordance with the analytic pipeline of centrality[REF NEEDED] we use the `%>%` operator from the 
 `magrittr` package.
 
 ```{r pos dom}
