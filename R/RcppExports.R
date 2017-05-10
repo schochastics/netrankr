@@ -33,6 +33,10 @@ rankprobs <- function(ImPred, ideals, nElem, nIdeals) {
     .Call('netrankr_rankprobs', PACKAGE = 'netrankr', ImPred, ideals, nElem, nIdeals)
 }
 
+resistanceDistance <- function(C, n) {
+    .Call('netrankr_resistanceDistance', PACKAGE = 'netrankr', C, n)
+}
+
 treeOfIdeals <- function(imPred) {
     .Call('netrankr_treeOfIdeals', PACKAGE = 'netrankr', imPred)
 }

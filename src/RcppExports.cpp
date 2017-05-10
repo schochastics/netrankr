@@ -110,6 +110,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// resistanceDistance
+NumericMatrix resistanceDistance(NumericMatrix C, int n);
+RcppExport SEXP netrankr_resistanceDistance(SEXP CSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type C(CSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(resistanceDistance(C, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // treeOfIdeals
 Rcpp::List treeOfIdeals(Rcpp::List imPred);
 RcppExport SEXP netrankr_treeOfIdeals(SEXP imPredSEXP) {
