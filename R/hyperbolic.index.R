@@ -19,7 +19,7 @@
 #' 
 #' @export
 hyperbolic_index <- function(g,type="odd"){
-  n <- vcount(g)
+  n <- igraph::vcount(g)
   if(type=="even"){
     ENW <- rep(0,n)
     for(v in 1:n){
@@ -29,7 +29,7 @@ hyperbolic_index <- function(g,type="odd"){
       eig.decomp <- eigen(C,symmetric=TRUE)
       V <- (eig.decomp$vectors)^2
       lambda <- eig.decomp$values
-      ENW[v] <- sum(V%*%cosh(lambda))*graph.density(g1)   #cosh(x)
+      ENW[v] <- sum(V%*%cosh(lambda))*igraph::graph.density(g1)   #cosh(x)
     }
   }
   else if(type=="odd"){
@@ -41,7 +41,7 @@ hyperbolic_index <- function(g,type="odd"){
       eig.decomp <- eigen(C,symmetric=TRUE)
       V <- (eig.decomp$vectors)^2
       lambda <- eig.decomp$values
-      ENW[v] <- sum(V%*%sinh(lambda))*graph.density(g1)   #cosh(x)
+      ENW[v] <- sum(V%*%sinh(lambda))*igraph::graph.density(g1)   #cosh(x)
     }
   }
   else{
