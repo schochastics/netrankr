@@ -4,55 +4,52 @@
 \alias{indirect_relations}
 \title{Indirect relations of a network}
 \usage{
-indirect_relations(g, relation = "distances", walk_length = 10,
-  gamma = factorial(1:walk_length))
+indirect_relations(g, relation = "geodesic", FUN = identity, ...)
 }
 \arguments{
 \item{g}{igraph object. The network for which relations should be derived}
 
-\item{relation}{string. giving the relation to be calculated. See Details for options.}
+\item{relation}{string. giving the relation to be calculated. One of "identity",
+"distances", "dependencies" or "walks". See Details.}
 
-\item{walk_length}{integer. maximum length of walks to be considered if relation="walks"}
+\item{FUN}{a weighting function. See Details.}
 
-\item{gamma}{vector of weights if relation = "walks". See Details.}
+\item{...}{additional arguments passed to the function FUN.}
 }
 \value{
-a matrix containing indirect relations.
+a matrix containing indirect relations in a network.
 }
 \description{
-Derive indirect relations, for instance distances, for a given network.
+Derive indirect relations like distances, for a given network. This function
+can be used to calculate a variety of centrality indices.
 }
 \details{
-The \emph{relation} parameter can be set to
-\describe{
-\item{identity}{returns the adjacency matrix of the network.}
-\item{distances}{calculated geodesic distances between all pairs of nodes.}
-\item{dependencies}{returns dyadic dependencies
+The \emph{relation} parameter has the following options.
+
+\emph{"identity"} returns the adjacency matrix of the network.
+
+\emph{"distances"} returns geodesic distances between all pairs of nodes.
+
+\emph{"dependencies"} returns dyadic dependencies
 \deqn{\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}}
 where \eqn{\sigma(s,t|u)} is the number of shortest paths from s to t that include u and
 \eqn{\sigma(s,t)} is the total number of shortest (s,t)-paths. The row sums of the resulting matrix
 is equal to the betweenness scores.
-}
-\item{walks}{returns weighted walk counts of the form}
-\deqn{\sum_{i=0}^k \gamma_i A^i.}
-k is set by the \code{walk_length} parameter and \eqn{\gamma} by the vector provided by \code{gamma}.
-}
+
+\emph{"walks"} returns walk counts between pairs of nodes, usually they are
+weighted decreasingly in their lengths or other properties which can be done by adding
+a function in \code{FUN}.
+
+\emph{"resistance"} returns the resistance distance between all pairs of vertices.
+
+The function \code{FUN} is used to further specify the indirect
+relation. see \code{?transform_relations} for predefined functions.
 }
 \examples{
 
 require(igraph)
 
-g <- graph.empty(n=11,directed = FALSE)
-g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
-                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-#same as distances(g,mode="all")
-dist <- indirect_relations(g,"distances") 
-dep  <- indirect_relations(g,"dependencies")
-
-#rowSums of dep equals 2*betweenness(g)
-rowSums(dep)-2*betweenness(g)
-
-#indirect realtion for subgraph_centrality
-walk  <- indirect_relations(g,"walks",gamma=factorial(1:10))
-plot(rowSums(walk),subgraph_centrality(g))
+}
+\author{
+David Schoch
 }
