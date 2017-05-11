@@ -4,6 +4,7 @@
 #' @param type character specifying the used index. See details for possibilities
 #' @param alpha numeric value for parametrized indices. See details
 #' @return Numeric vector with scores of the specified index
+#' @author David Schoch
 #' @details The \emph{type} parameter can be set to 
 #' \describe{
 #' \item{ros}{"reciprocal of sum". \deqn{c(u)=\frac{1}{\sum_{t \in V} dist(i,t)}}}

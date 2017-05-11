@@ -37,3 +37,6 @@ d_ros <- distance_index(g,type="ros")
 d_sor <- distance_index(g,type="sor")
 compare_ranks(d_ros,d_sor) #compare rankings
 }
+\author{
+David Schoch
+}

@@ -31,3 +31,6 @@ Used to estimate the merits \eqn{\pi_u} with
 \examples{
 ###TODO
 }
+\author{
+David Schoch
+}

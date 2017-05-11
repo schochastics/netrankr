@@ -23,3 +23,6 @@ sum(P)
 T<-transitive_reduction(P)
 sum(T)
 }
+\author{
+David Schoch
+}

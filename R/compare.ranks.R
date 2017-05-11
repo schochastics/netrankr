@@ -12,6 +12,7 @@
 #' @details Explicitly calculating the number of occuring cases is more robust than using correlation 
 #' indices as given in the \code{cor} function. Especially left and right ties can significantly alter an
 #' intuitively high correlation (See example).
+#' @author David Schoch
 #' @examples
 #' require(igraph)
 #' tg <- threshold_graph(100,0.2)

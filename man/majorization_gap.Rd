@@ -36,3 +36,6 @@ g <- sample_gnp(100,0.15)
 majorization_gap(g,norm=TRUE) #fraction of reverse unit transformation
 majorization_gap(g,norm=FALSE) #number of reverse unit transformation
 }
+\author{
+David Schoch
+}

@@ -41,3 +41,6 @@ check_preservation(P,betweenness(g))
 \seealso{
 \link{positional_dominance},\link{check_preservation}
 }
+\author{
+David Schoch
+}

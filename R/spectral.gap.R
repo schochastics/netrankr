@@ -5,6 +5,7 @@
 #' @param g igraph object
 #' @param method a string, either "frac" or "abs"
 #' @return numeric value
+#' @author David Schoch
 #' @examples
 #' #The spectral gap of a threshold graph is usually quite big
 #' g=threshold_graph(10,0.3)

@@ -23,3 +23,6 @@ of the adjacency matrix. To compare spectral gaps across networks, the fraction 
 g=threshold_graph(10,0.3)
 spectral_gap(g,method="fraction")
 }
+\author{
+David Schoch
+}

@@ -3,6 +3,7 @@
 #'
 #' @param P matrix containing relations
 #' @return transitive reduction of P
+#' @author David Schoch
 #' @examples
 #' require(igraph)
 #' g <- sample_gnp(100,0.1)

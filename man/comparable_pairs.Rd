@@ -26,3 +26,6 @@ tg <- threshold_graph(100,0.3)
 P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 }
+\author{
+David Schoch
+}

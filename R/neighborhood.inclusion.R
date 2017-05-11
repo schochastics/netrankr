@@ -7,6 +7,7 @@
 #' \eqn{N(u) \subseteq N[v]} implies that \eqn{c(u) \leq c(v)},
 #' where \eqn{c} is an arbitrary centrality index. Neighborhood-inclusion is thus preserved in any centrality ranking.
 #' @return the neighborhood-inclusion preorder of an undirected graph g as matrix object
+#' @author David Schoch
 #' @seealso [positional_dominance],[check_preservation]
 #' @examples
 #' require(igraph)

@@ -36,3 +36,6 @@ compare_ranks(degree(tg),betweenness(tg)) #no discordant pairs
 cor(degree(tg),closeness(tg)) #1
 cor(degree(tg),betweenness(tg)) #not 1, although no discordant pairs
 }
+\author{
+David Schoch
+}

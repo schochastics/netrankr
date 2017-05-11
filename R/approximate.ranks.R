@@ -1,25 +1,26 @@
+#' @title Approximation of expected ranks
+#' @description  Implements a variety of functions to approximate expected ranks in large partially ordered sets.
+#'
+#' @param P a partial order as matrix object.
+#' @param method string indicating method to be used. see Details.
+#' @details The \emph{method} parameter can be set to 
+#' \describe{
+#' \item{lpom}{ simplest, most accurate for tiny networks}
+#' \item{glpom}{ most accurate for tiny networks}
+#' \item{loof1}{ more accurate for large networks}
+#' \item{loof2}{ even more accurate for large networks}
+#' }
+#' @return a vector containing approximations of expected ranks.
+#' @author David Schoch
+#' @seealso [approx_rank_relative], [rank_analysis], [bradley_terry]
+#' @examples
+#' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+#' #Exact result
+#' rank_analysis(P)$expected.rank
+#' #simplest approximation, suited for tiny matrices
+#' approx_rank_expected(P,"lpom")
+#' @export
 approx_rank_expected <- function(P,method="lpom"){
-  #' @title Approximation of expected ranks
-  #' @description  Implements a variety of functions to approximate expected ranks in large partially ordered sets.
-  #'
-  #' @param P a partial order as matrix object.
-  #' @param method string indicating method to be used. see Details.
-  #' @details The \emph{method} parameter can be set to 
-  #' \describe{
-  #' \item{lpom}{ simplest, most accurate for tiny networks}
-  #' \item{glpom}{ most accurate for tiny networks}
-  #' \item{loof1}{ more accurate for large networks}
-  #' \item{loof2}{ even more accurate for large networks}
-  #' }
-  #' @return a vector containing approximations of expected ranks.
-  #' @seealso [approx_rank_relative], [rank_analysis], [bradley_terry]
-  #' @examples
-  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
-  #' #Exact result
-  #' rank_analysis(P)$expected.rank
-  #' #simplest approximation, suited for tiny matrices
-  #' approx_rank_expected(P,"lpom")
-  #' @export
   g <- igraph::graph_from_adjacency_matrix(P,"directed")
   n <- nrow(P)
   if(method=="lpom"){

@@ -12,6 +12,7 @@
 #' the majorization gap is then defined as
 #' \deqn{1/2 \sum_{k=1}^n \max\{d'_k - d_k,0\}}
 #' @return majorization gap of an undirected graph.
+#' @author David Schoch
 #' @examples
 #' require(igraph)
 #' g <- graph.star(5,"undirected")

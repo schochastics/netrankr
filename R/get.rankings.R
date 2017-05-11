@@ -11,6 +11,7 @@
 #' @param force boolean. stops function if the number of rankings is too large.
 #' Only change to TRUE if you know what you are doing
 #' @return a matrix containing all ranking positions of nodes
+#' @author David Schoch
 #' @examples
 #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #' P

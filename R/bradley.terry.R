@@ -6,6 +6,7 @@
 #' @param tol double, convergence criterion.
 #' @param print.level binary, should diagnostics be printed or not (Default).
 #' @return data frame of merits and diagnostics.
+#' @author David Schoch
 #' @details Used to estimate the merits \eqn{\pi_u} with
 #' \deqn{Prob(u<v)=\frac{\pi_v}{\pi_u+\pi_v}}.
 #' @examples

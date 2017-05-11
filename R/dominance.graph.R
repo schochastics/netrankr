@@ -3,6 +3,7 @@
 #'
 #' @param g igraph object
 #' @return directed igraph object with dominance relations
+#' @author David Schoch
 #' @examples
 #' require(igraph)
 #' g <- erdos.renyi.game(100,0.1)

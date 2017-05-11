@@ -35,3 +35,6 @@ check_preservation(P,degree(g))
 check_preservation(P,betweenness(g))
 check_preservation(P,closeness(g))
 }
+\author{
+David Schoch
+}

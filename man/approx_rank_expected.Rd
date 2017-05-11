@@ -36,3 +36,6 @@ approx_rank_expected(P,"lpom")
 \seealso{
 \link{approx_rank_relative}, \link{rank_analysis}, \link{bradley_terry}
 }
+\author{
+David Schoch
+}

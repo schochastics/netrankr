@@ -37,3 +37,6 @@ cor(degree(g),closeness(g),method="kendall")
 \seealso{
 \link{neighborhood_inclusion},\link{positional_dominance}
 }
+\author{
+David Schoch
+}

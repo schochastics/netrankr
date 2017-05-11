@@ -21,3 +21,6 @@ g <- erdos.renyi.game(100,0.1)
 d <- dominance_graph(g)
 plot(d)
 }
+\author{
+David Schoch
+}

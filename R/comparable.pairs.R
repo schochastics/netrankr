@@ -4,6 +4,7 @@
 #'
 #' @param P matrix containing comparability relation.
 #' @return fraction of comparable pairs in P.
+#' @author David Schoch
 #' @examples
 #' require(igraph)
 #' g <- erdos.renyi.game(100,0.1)

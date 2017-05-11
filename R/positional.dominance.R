@@ -10,6 +10,7 @@
 #' the rows of \eqn{A} are sorted decreasingly (\code{benefit=TRUE}) or increasingly
 #' (\code{benefit=FALSE}) and then the dominance condition is checked.
 #' @return dominance relations as matrix object.
+#' @author David Schoch
 #' @seealso [neighborhood_inclusion], [check_preservation]
 #' @examples
 #' ###

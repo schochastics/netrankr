@@ -52,3 +52,6 @@ check_preservation(D,distance_index(g,type="int"))
 \seealso{
 \link{neighborhood_inclusion}, \link{check_preservation}
 }
+\author{
+David Schoch
+}

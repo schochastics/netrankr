@@ -6,6 +6,7 @@
 #' vertex is inserted and for each 1, a vertex is inserted that contects to all previously inserted 
 #' vertices. An important property of threshold graphs is, that all centrality indices induce the same ranking.
 #' @return a threshold graph as igraph object
+#' @author David Schoch
 #' @seealso [neighborhood_inclusion],[positional_dominance]
 #' @examples
 #' require(igraph)

@@ -9,6 +9,7 @@
 #' not be used for any serious analysis. Its purpose is to show that with enough mathematical 
 #' trickery, any desired result can be obtained when centrality indices are used.
 #' @return a vector containing centrality scores.
+#' @author David Schoch
 #' @examples
 #' 
 #' require(igraph)

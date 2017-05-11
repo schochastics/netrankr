@@ -35,3 +35,6 @@ res <- rank_analysis(P,only.results=FALSE)
 get_rankings(res$lattice,res$ideals,res$topo.order,res$lin.ext,res$mse)
 
 }
+\author{
+David Schoch
+}
