@@ -53,6 +53,7 @@ dist_2pow <- function(x) {2^(-x)}
 dist_inv <- function(x) {
   y<-x^(-1)
   y[is.infinite(y)] <- 0
+  return(y)
 }
 
 #' @rdname transform_relations
