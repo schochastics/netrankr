@@ -24,7 +24,7 @@
 #' \item{tree}{igraph object. The tree of ideals (if \code{only.results=FALSE}).}
 #' \item{lattice}{igraph object. The lattice of ideals (if \code{only.results=FALSE}).}
 #' \item{ideals}{list. order ideals (if \code{only.results=FALSE}).}
-#' @author David Schoch
+#' @author David Schoch, Julian Müller
 #' @seealso [approx_rank_relative], [approx_rank_expected]
 #' @examples
 #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)

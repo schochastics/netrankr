@@ -47,5 +47,5 @@ res <- rank_analysis(P)
 \link{approx_rank_relative}, \link{approx_rank_expected}
 }
 \author{
-David Schoch
+David Schoch, Julian Müller
 }
