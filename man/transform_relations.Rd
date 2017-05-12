@@ -2,30 +2,18 @@
 % Please edit documentation in R/transform.relations.R
 \name{transform_relations}
 \alias{transform_relations}
-\alias{walks_limit_prop}
-\alias{walks_even_exp}
-\alias{walks_odd_exp}
-\alias{walks_exp}
-\alias{walks_attenuated}
-\alias{walks_uptok}
 \alias{dist_2pow}
 \alias{dist_inv}
 \alias{dist_dpow}
 \alias{dist_powd}
+\alias{walks_limit_prop}
+\alias{walks_exp}
+\alias{walks_exp_even}
+\alias{walks_exp_odd}
+\alias{walks_attenuated}
+\alias{walks_uptok}
 \title{transformation of indirect relations}
 \usage{
-walks_limit_prop(x)
-
-walks_even_exp(x, alpha = 1)
-
-walks_odd_exp(x, alpha = 1)
-
-walks_exp(x, alpha = 1)
-
-walks_attenuated(x, alpha = 1/max(x) * 0.99)
-
-walks_uptok(x, alpha = 1, k = 3)
-
 dist_2pow(x)
 
 dist_inv(x)
@@ -33,6 +21,18 @@ dist_inv(x)
 dist_dpow(x, alpha = 1)
 
 dist_powd(x, alpha = 0.5)
+
+walks_limit_prop(x)
+
+walks_exp(x, alpha = 1)
+
+walks_exp_even(x, alpha = 1)
+
+walks_exp_odd(x, alpha = 1)
+
+walks_attenuated(x, alpha = 1/max(x) * 0.99)
+
+walks_uptok(x, alpha = 1, k = 3)
 }
 \arguments{
 \item{x}{matrix of transformed relations.}
@@ -45,9 +45,42 @@ dist_powd(x, alpha = 0.5)
 transformed relations as matrix
 }
 \description{
-Mostly wrapper functions to transform indirect relations.
+Mostly wrapper functions that can be used in conjunction
+with \link{indirect_relations} to fine tune indirect relations.
+}
+\details{
+The predefined functions follow the naming scheme \code{relation_transformation}.
+Predifined functions \code{walks_*} are thus best used with relation="walks" in
+\link{indirect_relations}. Theoretically, however, any transformation can be used with any relation.
+Yet the results might not be interpretable.
 
-This functions can be used in conjunction with \link{indirect_relations}.
+The follwing functions are implemented:
+
+\code{dist_2pow} returns \eqn{2^-x}
+
+\code{dist_inv} returns \eqn{1/x}
+
+\code{dist_dpow} returns \eqn{x^{-\alpha}} where \eqn{\alpha} should be chosen greater than 0.
+
+\code{dist_powd} returns \eqn{\alpha^x} where \eqn{\alpha} should be chosen between 0 and 1.
+
+\code{walks_limit_prop} returns the limit proportion of walks between pairs of nodes. Calculating
+rowSums of this relation will result in the principle eigenvector of the network.
+
+\code{walks_exp} returns \eqn{\sum_{k=0}^\infty \frac{A^k}{k!}}
+
+\code{walks_exp_even} returns \eqn{\sum_{k=0}^\infty \frac{A^{2k}}{(2k)!}}
+
+\code{walks_exp_odd} returns \eqn{\sum_{k=0}^\infty \frac{A^{2k+1}}{(2k+1)!}}
+
+\code{walks_attenuated} returns \eqn{\sum_{k=0}^\infty \alpha^k A^k}
+
+\code{walks_uptok} returns \eqn{\sum_{j=0}^k \alpha^j A^j}
+
+Walk based transformation are defined on the eigen decomposition of the
+adjacency matrix using the fact that
+\deqn{f(A)=Xf(\Lambda)X^T.}
+Care has to be taken when using user defined functions.
 }
 \author{
 David Schoch
