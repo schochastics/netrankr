@@ -58,7 +58,11 @@ dist_inv <- function(x) {
 
 #' @rdname transform_relations
 #' @export
-dist_dpow <- function(x,alpha=1){x^(-alpha)}
+dist_dpow <- function(x,alpha=1){
+  x <- x^(-alpha)
+  diag(x) <- 0
+  return(x)
+}
 
 #' @rdname transform_relations
 #' @export
