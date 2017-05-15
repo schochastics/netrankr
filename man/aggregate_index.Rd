@@ -9,7 +9,7 @@
 \alias{aggregate_min}
 \alias{aggregate_invsum}
 \alias{aggregate_self}
-\title{aggregation functions of relations}
+\title{quantification of (indirect) relations}
 \usage{
 aggregate_sum(tau_x)
 
@@ -36,19 +36,38 @@ used aggregation function.
 functions to aggregate indirect relations to construct centrality
 scores from indirect relations calculated by \link{indirect_relations}.
 }
+\details{
+The predefined functions are mainly wrappers around base R functions.
+\code{aggregate_sum()}, for instance, is equivalent to \code{rowSums()}. A non-base functions is
+\code{aggregate_invsum()} which calculates the inverse of \code{aggregate_sum()}.
+\code{aggregate_self()} is mostly usefull for walk based relations, e.g. to count closed walks.
+}
 \examples{
 require(igraph)
 require(magrittr)
+
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 
 #closeness centrality
-g \%>\% indirect_relations(g,relation="geodesic") \%>\% aggregate_invsum()
+g \%>\% indirect_relations(relation="geodesic") \%>\% 
+  aggregate_invsum()
+  
 #betweenness centrality
-g \%>\% indirect_relations(g,relation="dependencies") \%>\% aggregate_sum()
+g \%>\% indirect_relations(relation="dependencies") \%>\% 
+  aggregate_sum()
+  
 #eigenvector centrality
-g \%>\% indirect_relations(g,relation="walks",FUN=walks_limit_prop) \%>\% aggregate_invsum()
+g \%>\% indirect_relations(relation="walks",FUN=walks_limit_prop) \%>\% 
+  aggregate_sum()
+
+#subgraph centrality
+g \%>\% indirect_relations(relation="walks",FUN=walks_exp) \%>\% 
+  aggregate_self()
+}
+\seealso{
+\link{indirect_relations}, \link{transform_relations}
 }
 \author{
 David Schoch

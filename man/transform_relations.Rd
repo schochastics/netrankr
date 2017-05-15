@@ -35,7 +35,7 @@ walks_attenuated(x, alpha = 1/max(x) * 0.99)
 walks_uptok(x, alpha = 1, k = 3)
 }
 \arguments{
-\item{x}{matrix of transformed relations.}
+\item{x}{matrix of relations.}
 
 \item{alpha}{weighting factor.}
 

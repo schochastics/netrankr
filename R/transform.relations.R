@@ -1,7 +1,7 @@
 #' @title transformation of indirect relations 
 #' @description Mostly wrapper functions that can be used in conjunction 
 #' with [indirect_relations] to fine tune indirect relations.
-#' @param x matrix of transformed relations.
+#' @param x matrix of relations.
 #' @param alpha weighting factor.
 #' @param k for walk counts up to a certain length.
 #' @details The predefined functions follow the naming scheme `relation_transformation`.
