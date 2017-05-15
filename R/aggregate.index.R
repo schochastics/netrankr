@@ -5,6 +5,19 @@
 #' @name aggregate_index
 #' @return scores for the index defined by the indirect relation \code{tau_x} and the 
 #' used aggregation function.
+#' @examples
+#' require(igraph)
+#' require(magrittr)
+#' g <- graph.empty(n=11,directed = FALSE)
+#' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+#'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+#'
+#' #closeness centrality
+#' g %>% indirect_relations(g,relation="geodesic") %>% aggregate_invsum()
+#' #betweenness centrality
+#' g %>% indirect_relations(g,relation="dependencies") %>% aggregate_sum()
+#' #eigenvector centrality
+#' g %>% indirect_relations(g,relation="walks",FUN=walks_limit_prop) %>% aggregate_invsum()
 #' @author David Schoch
 NULL
 
