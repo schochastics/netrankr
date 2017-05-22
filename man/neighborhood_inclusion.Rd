@@ -38,8 +38,15 @@ check_preservation(P,degree(g))
 check_preservation(P,closeness(g))
 check_preservation(P,betweenness(g))
 }
+\references{
+Brandes, U. Heine, M., Müller, J. and Ortmann, M., 2017.
+Positional Dominance: Concepts and Algorithms. \emph{Conference on Algorithms and Discrete Applied Mathematics}, 60-71.
+
+Schoch, D. and Brandes, U., 2016. Re-conceptualizing centrality in social networks.
+\emph{European Journal of Applied Mathematics} 27(6), 971-985.
+}
 \seealso{
-\link{positional_dominance},\link{check_preservation}
+\link{positional_dominance}, \link{check_preservation}
 }
 \author{
 David Schoch

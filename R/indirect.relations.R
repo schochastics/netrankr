@@ -63,6 +63,6 @@ indirect_relations <- function(g,type="geodesic",
     C <- solve(A)
     rel <- resistanceDistance(C,n)
     rel <- FUN(rel,...)
-  }else stop(paste(relation,"is not defined as indirect relation"))
+  }else stop(paste(type,"is not defined as indirect relation"))
   return(rel)
 }

@@ -8,7 +8,14 @@
 #' where \eqn{c} is an arbitrary centrality index. Neighborhood-inclusion is thus preserved in any centrality ranking.
 #' @return the neighborhood-inclusion preorder of an undirected graph g as matrix object
 #' @author David Schoch
-#' @seealso [positional_dominance],[check_preservation]
+#' @references Brandes, U. Heine, M., Müller, J. and Ortmann, M., 2017.
+#' Positional Dominance: Concepts and Algorithms. *Conference on Algorithms and Discrete Applied Mathematics*, 60-71.
+#' 
+#' Schoch, D. and Brandes, U., 2016. Re-conceptualizing centrality in social networks. 
+#' *European Journal of Applied Mathematics* 27(6), 971-985.
+#' 
+#' 
+#' @seealso [positional_dominance], [check_preservation]
 #' @examples
 #' require(igraph)
 #' ###the neighborhood inclusion preorder of a star graph is complete

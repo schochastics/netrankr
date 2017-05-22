@@ -11,6 +11,11 @@
 #' (\code{benefit=FALSE}) and then the dominance condition is checked.
 #' @return dominance relations as matrix object.
 #' @author David Schoch
+#' #' @references Brandes, U. Heine, M., Müller, J. and Ortmann, M., 2017.
+#' Positional Dominance: Concepts and Algorithms. *Conference on Algorithms and Discrete Applied Mathematics*, 60-71.
+#' 
+#' Schoch, D. and Brandes, U., 2016. Re-conceptualizing centrality in social networks. 
+#' *European Journal of Applied Mathematics* 27(6), 971-985.
 #' @seealso [neighborhood_inclusion], [check_preservation]
 #' @examples
 #' ###

@@ -54,4 +54,9 @@ check_preservation(D,distance_index(g,type="int"))
 }
 \author{
 David Schoch
+#' @references Brandes, U. Heine, M., Müller, J. and Ortmann, M., 2017.
+Positional Dominance: Concepts and Algorithms. \emph{Conference on Algorithms and Discrete Applied Mathematics}, 60-71.
+
+Schoch, D. and Brandes, U., 2016. Re-conceptualizing centrality in social networks.
+\emph{European Journal of Applied Mathematics} 27(6), 971-985.
 }
