@@ -1,10 +1,10 @@
 #' @title Indirect relations of a network
 #' @description Derive indirect relations like distances for a given network. 
 #' @param g igraph object. The network for which relations should be derived.
-#' @param relation string. giving the relation to be calculated. See Details for options.
+#' @param type string. giving the relation to be calculated. See Details for options.
 #' @param FUN a function that allows the transformation of relations. See Details.
 #' @param ... additional arguments passed to FUN.
-#' @details The \emph{relation} parameter has the following options.  
+#' @details The `type` parameter has the following options.  
 #' 
 #' \emph{"identity"} returns the adjacency matrix of the network.  
 #' 
@@ -34,29 +34,29 @@
 #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #' #geodesic distances
-#' D <- indirect_relations(g,relation="geodesic") 
+#' D <- indirect_relations(g,type="geodesic") 
 #' #dyadic dependencies
-#' D <- indirect_relations(g,relation="dependencies")
+#' D <- indirect_relations(g,type="dependencies")
 #' 
 #' @export
-indirect_relations <- function(g,relation="geodesic",
+indirect_relations <- function(g,type="geodesic",
                                FUN=identity,...){
-  if(relation=="geodesic"){
+  if(type=="geodesic"){
     rel <- igraph::distances(g,mode = "all")
     rel <- FUN(rel,...)
-  } else if(relation=="identity"){
+  } else if(type=="identity"){
       rel <- igraph::get.adjacency(g,type="both",sparse=FALSE)
       rel <- FUN(rel,...)
       diag(rel) <- 0
-  } else if(relation=="dependencies"){
+  } else if(type=="dependencies"){
       adj <- lapply(igraph::get.adjlist(g),function(x)x-1)
       rel <- dependency(adj)
-  } else if(relation=="walks"){
+  } else if(type=="walks"){
       eigen.decomp <- eigen(igraph::get.adjacency(g,type="both"))
       lambda <- eigen.decomp$values
       X <- eigen.decomp$vectors
       rel <- X%*%diag(FUN(lambda,...))%*%t(X)
-  } else if(relation=="resistance"){
+  } else if(type=="resistance"){
     L <- igraph::graph.laplacian(g,sparse=FALSE)
     n <- igraph::vcount(g)
     A <- L+matrix(1/n,n,n)

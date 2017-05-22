@@ -4,12 +4,12 @@
 \alias{indirect_relations}
 \title{Indirect relations of a network}
 \usage{
-indirect_relations(g, relation = "geodesic", FUN = identity, ...)
+indirect_relations(g, type = "geodesic", FUN = identity, ...)
 }
 \arguments{
 \item{g}{igraph object. The network for which relations should be derived.}
 
-\item{relation}{string. giving the relation to be calculated. See Details for options.}
+\item{type}{string. giving the relation to be calculated. See Details for options.}
 
 \item{FUN}{a function that allows the transformation of relations. See Details.}
 
@@ -22,7 +22,7 @@ a matrix containing indirect relations in a network.
 Derive indirect relations like distances for a given network.
 }
 \details{
-The \emph{relation} parameter has the following options.
+The \code{type} parameter has the following options.
 
 \emph{"identity"} returns the adjacency matrix of the network.
 
@@ -49,9 +49,9 @@ g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #geodesic distances
-D <- indirect_relations(g,relation="geodesic") 
+D <- indirect_relations(g,type="geodesic") 
 #dyadic dependencies
-D <- indirect_relations(g,relation="dependencies")
+D <- indirect_relations(g,type="dependencies")
 
 }
 \seealso{

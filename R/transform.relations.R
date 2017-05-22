@@ -5,7 +5,7 @@
 #' @param alpha weighting factor.
 #' @param k for walk counts up to a certain length.
 #' @details The predefined functions follow the naming scheme `relation_transformation`.
-#' Predifined functions `walks_*` are thus best used with relation="walks" in
+#' Predifined functions `walks_*` are thus best used with type="walks" in
 #' [indirect_relations]. Theoretically, however, any transformation can be used with any relation.
 #' Yet the results might not be interpretable.
 #' 
