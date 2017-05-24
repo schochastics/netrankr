@@ -15,7 +15,7 @@
 #' *European Journal of Applied Mathematics* 27(6), 971-985.
 #' 
 #' 
-#' @seealso [positional_dominance], [check_preservation]
+#' @seealso [positional_dominance], [is_preserved]
 #' @examples
 #' require(igraph)
 #' ###the neighborhood inclusion preorder of a star graph is complete
@@ -28,9 +28,9 @@
 #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #' P<-neighborhood_inclusion(g)
-#' check_preservation(P,degree(g))
-#' check_preservation(P,closeness(g))
-#' check_preservation(P,betweenness(g))
+#' is_preserved(P,degree(g))
+#' is_preserved(P,closeness(g))
+#' is_preserved(P,betweenness(g))
 #' @export
 neighborhood_inclusion <- function(g){
   adj <- lapply(igraph::get.adjlist(g),function(x) x-1)

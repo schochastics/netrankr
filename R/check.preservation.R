@@ -16,11 +16,11 @@
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #' P<-neighborhood_inclusion(g)
 #' 
-#' check_preservation(P,degree(g))
-#' check_preservation(P,betweenness(g))
-#' check_preservation(P,closeness(g))
+#' is_preserved(P,degree(g))
+#' is_preserved(P,betweenness(g))
+#' is_preserved(P,closeness(g))
 #' @export
-check_preservation <- function(P,scores){
+is_preserved <- function(P,scores){
   n <- nrow(P)
   preserved <- preserve(P,scores,n)==0
   # preserved <- all(!apply(P.idx,1,function(x){scores[x[1]]>scores[x[2]]}))

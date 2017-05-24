@@ -16,7 +16,7 @@
 #' 
 #' Schoch, D. and Brandes, U., 2016. Re-conceptualizing centrality in social networks. 
 #' *European Journal of Applied Mathematics* 27(6), 971-985.
-#' @seealso [neighborhood_inclusion], [check_preservation]
+#' @seealso [neighborhood_inclusion], [is_preserved]
 #' @examples
 #' ###
 #' require(igraph)
@@ -35,10 +35,10 @@
 #' comparable_pairs(D) #more comparables than P
 #' 
 #' ### all distance based indices preserve positional dominance
-#' check_preservation(D,distance_index(g,type="sor"))
-#' check_preservation(D,distance_index(g,type="ros"))
-#' check_preservation(D,distance_index(g,type="pow2"))
-#' check_preservation(D,distance_index(g,type="int"))
+#' is_preserved(D,distance_index(g,type="sor"))
+#' is_preserved(D,distance_index(g,type="ros"))
+#' is_preserved(D,distance_index(g,type="pow2"))
+#' is_preserved(D,distance_index(g,type="int"))
 #' @export
 
 positional_dominance <- function(A,map=FALSE,benefit=TRUE){

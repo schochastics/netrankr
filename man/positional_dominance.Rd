@@ -44,13 +44,13 @@ D <- positional_dominance(dist,map=TRUE,benefit=FALSE)
 comparable_pairs(D) #more comparables than P
 
 ### all distance based indices preserve positional dominance
-check_preservation(D,distance_index(g,type="sor"))
-check_preservation(D,distance_index(g,type="ros"))
-check_preservation(D,distance_index(g,type="pow2"))
-check_preservation(D,distance_index(g,type="int"))
+is_preserved(D,distance_index(g,type="sor"))
+is_preserved(D,distance_index(g,type="ros"))
+is_preserved(D,distance_index(g,type="pow2"))
+is_preserved(D,distance_index(g,type="int"))
 }
 \seealso{
-\link{neighborhood_inclusion}, \link{check_preservation}
+\link{neighborhood_inclusion}, \link{is_preserved}
 }
 \author{
 David Schoch
