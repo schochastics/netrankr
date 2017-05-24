@@ -82,6 +82,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// preserve
+int preserve(IntegerMatrix P, NumericVector s, int n);
+RcppExport SEXP netrankr_preserve(SEXP PSEXP, SEXP sSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type P(PSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type s(sSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(preserve(P, s, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rankings
 IntegerMatrix rankings(std::vector<std::vector<int> > paths, std::vector<std::vector<int> > ideals, int nRank, int nElem);
 RcppExport SEXP netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {

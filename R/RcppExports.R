@@ -25,6 +25,10 @@ matdom <- function(A, map, benefit) {
     .Call('netrankr_matdom', PACKAGE = 'netrankr', A, map, benefit)
 }
 
+preserve <- function(P, s, n) {
+    .Call('netrankr_preserve', PACKAGE = 'netrankr', P, s, n)
+}
+
 rankings <- function(paths, ideals, nRank, nElem) {
     .Call('netrankr_rankings', PACKAGE = 'netrankr', paths, ideals, nRank, nElem)
 }

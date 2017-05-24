@@ -21,9 +21,9 @@
 #' check_preservation(P,closeness(g))
 #' @export
 check_preservation <- function(P,scores){
-  
-  P.idx <- which(P==1,arr.ind=TRUE)
-  preserved <- all(!apply(P.idx,1,function(x){scores[x[1]]>scores[x[2]]}))
+  n <- nrow(P)
+  preserved <- preserve(P,scores,n)==0
+  # preserved <- all(!apply(P.idx,1,function(x){scores[x[1]]>scores[x[2]]}))
   
   return(preserved)
 }
