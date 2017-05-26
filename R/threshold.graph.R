@@ -28,8 +28,13 @@ threshold_graph<-function(n,p){
   vschedule[n] <- 1
   vschedule[1] <- 0
   dom_vertices <- which(vschedule==1)
-  edgelist <- do.call(rbind,sapply(dom_vertices,function(v)cbind(rep(v,(v-1)),seq(1,(v-1)))))
-  
+  if(length(dom_vertices)!=1){
+    edgelist <- do.call(rbind,sapply(dom_vertices,function(v)cbind(rep(v,(v-1)),seq(1,(v-1)))))
+    
+  } else{
+    edgelist <- cbind(rep(n,(n-1)),seq(1,(n-1)))
+  }
   g <- igraph::graph_from_edgelist(edgelist, directed=FALSE)
+  
   return(g)
 }
