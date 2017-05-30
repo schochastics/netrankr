@@ -1,7 +1,5 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-// using namespace std;
-//glpom
 
 // [[Rcpp::export]]
 NumericVector approx_glpom(NumericMatrix P) {

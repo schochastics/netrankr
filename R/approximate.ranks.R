@@ -29,17 +29,18 @@ approx_rank_expected <- function(P,method="lpom"){
     r.approx=(sx+1)*(n+1)/(n+1-ix)
   }
   else if(method=="glpom"){
-    P <- P+diag(1,n)
-    sx <- igraph::degree(g,mode="in")
-    r.approx=sx+1
-    for(x in 1:n){
-      Ix <- which(P[x,]==0 & P[,x]==0)
-      Sx <- setdiff(which(P[,x]==1),x)
-      for(y in Ix){
-        Iy <- which(P[y,]==0 & P[,y]==0)
-        r.approx[x]=r.approx[x]+(length(intersect(Sx,Iy))+1)/(length(setdiff(Iy,Ix))+1)
-      }
-    }
+    r.approx <- approx_glpom(P)
+    # P <- P+diag(1,n)
+    # sx <- igraph::degree(g,mode="in")
+    # r.approx=sx+1
+    # for(x in 1:n){
+    #   Ix <- which(P[x,]==0 & P[,x]==0)
+    #   Sx <- setdiff(which(P[,x]==1),x)
+    #   for(y in Ix){
+    #     Iy <- which(P[y,]==0 & P[,y]==0)
+    #     r.approx[x]=r.approx[x]+(length(intersect(Sx,Iy))+1)/(length(setdiff(Iy,Ix))+1)
+    #   }
+    # }
   }
   else if(method=="loof1"){
     P <- P+diag(1,n)

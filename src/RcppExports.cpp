@@ -6,6 +6,17 @@
 
 using namespace Rcpp;
 
+// approx_glpom
+NumericVector approx_glpom(NumericMatrix P);
+RcppExport SEXP netrankr_approx_glpom(SEXP PSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type P(PSEXP);
+    rcpp_result_gen = Rcpp::wrap(approx_glpom(P));
+    return rcpp_result_gen;
+END_RCPP
+}
 // checkPairs
 Rcpp::List checkPairs(NumericVector x, NumericVector y);
 RcppExport SEXP netrankr_checkPairs(SEXP xSEXP, SEXP ySEXP) {
@@ -132,6 +143,17 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type C(CSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     rcpp_result_gen = Rcpp::wrap(resistanceDistance(C, n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// transreduct
+IntegerMatrix transreduct(IntegerMatrix M);
+RcppExport SEXP netrankr_transreduct(SEXP MSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type M(MSEXP);
+    rcpp_result_gen = Rcpp::wrap(transreduct(M));
     return rcpp_result_gen;
 END_RCPP
 }
