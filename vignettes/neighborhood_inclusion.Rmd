@@ -26,7 +26,8 @@ N(u)\subseteq N[v] \implies c(u)\leq c(v),
 $$
 where $c$ is a centrality index. 
 
-Very informally, if $u$ is dominated by $v$, then u is **always** less central than $v$ no matter which centrality index is used. This very short description leaves out many theoretical details and concepts. These and more can be found in 
+Very informally, if $u$ is dominated by $v$, then u is **always** less central than $v$ no matter which centrality index is used. 
+While this is the key result, this short result leaves out many theoretical considerations. These and more can be found in 
 
 > Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks.
 *European Journal of Appplied Mathematics*, **27**(6), 971–985.
@@ -82,7 +83,7 @@ P
   
 If an entry `P[u,v]` is equal to one, we have $N(u)\subseteq N[v]$.  
 
-The function `dominance_graph` can alternatively be used to visualize the neighborhood inclusion as a directed graph..
+The function `dominance_graph` can alternatively be used to visualize the neighborhood inclusion as a directed graph.
 
 ```{r dominance graph,fig.align='center',fig.width=5}
 g.dom <- dominance_graph(g)
@@ -112,13 +113,20 @@ cent.df.rounded <- round(cent.df,4)
 cent.df.rounded
 ```
 
-We now check if the partial ranking induced by neighborhood inclusion is preserved in all index based rankings. In our example, we considered vertex $3$ and $5$, where $3$ was dominated by $5$. It is easy to verify that all centrality scores of $5$ are in fact greater than the ones of $3$ by inspecting the respective rows in the table.
+Notice how for each centrality index, different vertices are considered to be the most central node. The most central from degree to subgraph centrality are $11$, $8$, $6$, $7$ and $10$. Note that only *undominated* vertices can achieve the highest score for any reasonable index. As soon as a vertex is dominated by at least one other, it will always be ranked below the dominator. We can check for undominated vertices simply by forming the row Sums in `P`.
+```{r undominated}
+which(rowSums(P)==0)
+```
+`r length(which(rowSums(P)==0))` nodes are undominated in the graph. It is thus entirely possible to find indices that would also rank 
+$4, 5$ and $9$ on top.
 
-To check all pairs, we use the function `check_preservation`. The function takes a partial ranking, as induced by neighborhood inclusion, and a score vector of a centrality index and checks if
+Besides the top ranked nodes, we can check if the entire partial ranking `P` is preserved in each centrality ranking. If there exists a pair $u$ and $v$ and index $c()$ such that $N(u)\subseteq N[v]$ but $c(v)>c(u)$, we do not consider $c$ to be a vaild index.
+
+In our example, we considered vertex $3$ and $5$, where $3$ was dominated by $5$. It is easy to verify that all centrality scores of $5$ are in fact greater than the ones of $3$ by inspecting the respective rows in the table. To check all pairs, we use the function `is_preserved`. The function takes a partial ranking, as induced by neighborhood inclusion, and a score vector of a centrality index and checks if
 `P[i,j]==1 & scores[i]>scores[j]` is `FALSE` for all pairs `i` and `j`.
 
 ```{r rank preserved}
-apply(cent.df[,2:6],2,function(x) check_preservation(P,x))
+apply(cent.df[,2:6],2,function(x) is_preserved(P,x))
 ```
 All considered indices preserve the neighborhood inclusion preorder on the example network. 
 

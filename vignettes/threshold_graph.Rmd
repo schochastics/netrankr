@@ -76,18 +76,16 @@ cor.mat <- round(cor.mat,2)
 cor.mat
 ```
 
-We, however, obtain correlations that are not equal to one. This is due to the definition of Kendall's (tie corrected) $\tau$. 
-
-The following cases can arise when comparing two scores of indices `x` and `y`.
+We, however, obtain correlations that are not equal to one. This is due to the definition of Kendall's (tie corrected) $\tau$. Before going into detail, consider the following cases which can arise when comparing two scores of indices `x` and `y`.
 
 * concordant: `x[i]>x[j] & y[i]>y[j]` or `x[i]<x[j] & y[i]<y[j]`
 * discordant: `x[i]>x[j] & y[i]<y[j]` or `x[i]>x[j] & y[i]<y[j]`
 * tied: `x[i]=x[j] & y[i]=y[j]`
 * left/right ties: `x[i]=x[j] & y[i]!=y[j]` or `x[i]!=x[j] & y[i]=y[j]`
 
-Kendall's $\tau$ considers left and right ties as a correlation reducing. Left and right ties are, however, not forbidden according to the neighborhood inclusion property. The only forbidden case are discordant pairs. That is, $N(u)\subseteq N[v]$ can not result in $c(u)>c(v)$ but it may result in $c(u)=c(v)$.
+Kendall's $\tau$ considers left and right ties as correlation reducing. That is if two vertices are tied in one ranking, but not the other, the correlations is weakend. Left and right ties are, however, not forbidden according to the neighborhood inclusion property. The only forbidden case are discordant pairs. That is, $N(u)\subseteq N[v]$ can not result in $c(u)>c(v)$ but it may result in $c(u)=c(v)$. Also, one can argue that left and right ties distinguish between fine/coarse grained indices.  
 
-The function `compare_ranks` can be used to calculate the number of occurences for each case. 
+`netrankr` comes with a function called `compare_ranks` which calculates all occurences of the above cases. Simply counting the cases instead of aggregating them will help circumvent the problem of possibly missinterpreting correlation measures.
 
 ```{R compare ranks}
 comp <- compare_ranks(cent.df$degree,cent.df$betweenness)
@@ -113,3 +111,34 @@ dis.pairs
 
 Although Kendall's $\tau$ suggests that the correlations among indices can be low,
 we see that there do not exist any discordant pairs on threshold graphs.
+
+## Distances from a threshold graph
+
+As it is always the case with artificial graph structures, it is rather unlikely to encounter threshold graphs in the wild. The best we can hope for is to be *close* to a threshold graph. This is based on the intuition that the closer a graph is to be a threshold graph, the more of its properties resemble one. The closer we are, the more correlated we assume centrality indices to be. The further away we are, the more disagreement we will find among indices. The problematic point is: how do we define *being close to a threshold graph*.
+An in depth discussion of possible measures can be found in the paper mentioned at the beginning of this vignette. 
+
+`netrankr` implements one function that can be used to assess the distance of arbitrary graphs to threshold graphs.
+The so called *majorization gap* operates solely on the degree sequence and determines the number of entries that have to be changed in order to obtain the degree sequence of a threshold graph. Changing can, however, not be done arbitrarily. The only allowed operation is to lower the degree of one vertex and simultaneously increase the degree of another. For threshold graphs, this measure is necessarily zero.
+
+```{r major_gap}
+tg <- threshold_graph(200,0.2)
+majorization_gap(g)
+```
+
+By default, `majorization_gap` is normalized by the number of edges (or equivalently with twice the sum of all degrees). 
+
+```{r major_gap_ex_norm}
+
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+majorization_gap(g)
+```
+
+In this example, around `r round(majorization_gap(g)*100)`% of all entries have to be changed in order to obtain a threshold graph. The normalization is done to compare the majorization gap across networks with different sizes. To obtain the raw number of changes, set `norm=FALSE`.
+```{r major_gap_ex_not_norm}
+majorization_gap(g,norm = FALSE)
+```
+
+The majorization gap serves as an indicator for how much variance we can expect in the rankings of different centrality indices. The lower it is, the closer we are to a threshold graph where only one ranking is possible. The further away we are, the more degrees of freedom exist to rank nodes differently and we will generally observe lower correlations. For more details, again, refer to the mentioned paper at the beginning.
+
