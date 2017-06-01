@@ -56,6 +56,10 @@ rank_analysis <- function(P,names="",only.results=T,verbose=F,force=F){
   } else{
     MSE <- 1:nrow(P)
   }
+  if(is.null(nrow(P))){
+    warning("all elements are structurally equivalent and have the same rank")
+    return()
+  }
   names <- rownames(P)
   #number of Elements
   nElem <- length(names)
