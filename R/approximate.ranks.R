@@ -91,12 +91,14 @@ approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
   #' @param P a partial order as matrix object.
   #' @param iterative boolean. TRUE (default) if iterative approximation should be used. FALSE if not.
   #' @param num.iter number of iterations to be used. defaults to 10 (see Details).
-  #' @details The iterative approach generally gives better approximations than the non iterative, yet only slightly.
-  #' More than 10 iterations do not improve the accuracy significantly.
+  #' @details The iterative approach generally gives better approximations than the non iterative, if only slightly.
+  #' The default number of iterations is based on the observation, that the approximation does not improve
+  #' significantly beyond this value. This observation, however, is based on very small networks such that
+  #' increasing it for large network may yield better results.
   #'
   #' @return a matrix containing approximation of mutual rank probabilities. 
   #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
-  #' @seealso [rank_analysis]
+  #' @seealso [rank_analysis] for exact computations
   #' @examples
   #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   #' P
@@ -119,30 +121,7 @@ approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
     MSE<-1:nrow(P)
   }
   n <- nrow(P)
-  g.dom <- igraph::graph_from_adjacency_matrix(P,"directed")
-  deg.in <- igraph::degree(g.dom,mode="in")
-  deg.out <- igraph::degree(g.dom,mode="out")
-  nom <- outer(deg.in+1,deg.out+1,"*")
-  denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
-  relative.rank <- nom/denom
-  relative.rank <- relative.rank-diag(diag(relative.rank))
-  relative.rank[t(P)==1] <- 1
-  relative.rank[(P)==1] <- 0
-  relative.rank[relative.rank==1 & t(relative.rank)==1] <-  0
-  if(iterative){
-    for(i in 1:(num.iter-1)){
-      g.dom <- igraph::graph_from_adjacency_matrix(t(relative.rank),weighted = T)
-      deg.in <- igraph::graph.strength(g.dom,mode="in")
-      deg.out <- igraph::graph.strength(g.dom,mode="out")
-      nom <- outer(deg.in+1,deg.out+1,"*")
-      denom <- outer(deg.in+1,deg.out+1,"*")+t(outer(deg.in+1,deg.out+1,"*"))
-      relative.rank <- nom/denom
-      relative.rank <- relative.rank-diag(diag(relative.rank))
-      relative.rank[t(P)==1] <- 1
-      relative.rank[(P)==1] <- 0
-      relative.rank[relative.rank==1 & t(relative.rank)==1] <-  0
-    }
-  }
+  relative.rank <- approx_relative(colSums(P),rowSums(P),P,iterative,num.iter)
   mrp.full=matrix(0,length(MSE),length(MSE))
   for(i in sort(unique(MSE))){
     idx <- which(MSE==i)
@@ -155,11 +134,9 @@ approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
       mrp.full[group.head,] <- relative.rank[i,MSE]
     }
   }
-  # mrp.full[t(P.full)==1] <- 1
-  # mrp.full[(P.full)==1] <- 0
-  # mrp.full[mrp.full==1 & t(mrp.full)==1] <-  0
+
   diag(mrp.full) <- 0
-  return(t(mrp.full))
+  return(mrp.full)
 }
 
 freeman_hierarchy <- function(P){

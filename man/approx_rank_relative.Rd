@@ -22,8 +22,10 @@ Approximate relative rank probabilites \eqn{Prob(u<v)}. In a network context, \e
 gives the probability that u is less central than v, given the partial ranking P.
 }
 \details{
-The iterative approach generally gives better approximations than the non iterative, yet only slightly.
-More than 10 iterations do not improve the accuracy significantly.
+The iterative approach generally gives better approximations than the non iterative, if only slightly.
+The default number of iterations is based on the observation, that the approximation does not improve
+significantly beyond this value. This observation, however, is based on very small networks such that
+increasing it for large network may yield better results.
 }
 \examples{
 P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
@@ -32,5 +34,5 @@ approx_rank_relative(P,iterative=FALSE)
 approx_rank_relative(P,iterative=TRUE)
 }
 \seealso{
-\link{rank_analysis}
+\link{rank_analysis} for exact computations
 }

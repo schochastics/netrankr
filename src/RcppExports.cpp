@@ -17,6 +17,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// approx_relative
+NumericMatrix approx_relative(NumericVector Nu, NumericVector Nd, IntegerMatrix P, bool iterative, int max_iter);
+RcppExport SEXP netrankr_approx_relative(SEXP NuSEXP, SEXP NdSEXP, SEXP PSEXP, SEXP iterativeSEXP, SEXP max_iterSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type Nu(NuSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Nd(NdSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type P(PSEXP);
+    Rcpp::traits::input_parameter< bool >::type iterative(iterativeSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
+    rcpp_result_gen = Rcpp::wrap(approx_relative(Nu, Nd, P, iterative, max_iter));
+    return rcpp_result_gen;
+END_RCPP
+}
 // checkPairs
 Rcpp::List checkPairs(NumericVector x, NumericVector y);
 RcppExport SEXP netrankr_checkPairs(SEXP xSEXP, SEXP ySEXP) {
@@ -167,4 +182,27 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(treeOfIdeals(imPred));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"netrankr_approx_glpom", (DL_FUNC) &netrankr_approx_glpom, 1},
+    {"netrankr_approx_relative", (DL_FUNC) &netrankr_approx_relative, 5},
+    {"netrankr_checkPairs", (DL_FUNC) &netrankr_checkPairs, 2},
+    {"netrankr_dependency", (DL_FUNC) &netrankr_dependency, 1},
+    {"netrankr_LatticeOfIdeals", (DL_FUNC) &netrankr_LatticeOfIdeals, 5},
+    {"netrankr_listingIdeals", (DL_FUNC) &netrankr_listingIdeals, 3},
+    {"netrankr_nialgo", (DL_FUNC) &netrankr_nialgo, 2},
+    {"netrankr_matdom", (DL_FUNC) &netrankr_matdom, 3},
+    {"netrankr_preserve", (DL_FUNC) &netrankr_preserve, 3},
+    {"netrankr_rankings", (DL_FUNC) &netrankr_rankings, 4},
+    {"netrankr_rankprobs", (DL_FUNC) &netrankr_rankprobs, 4},
+    {"netrankr_resistanceDistance", (DL_FUNC) &netrankr_resistanceDistance, 2},
+    {"netrankr_transreduct", (DL_FUNC) &netrankr_transreduct, 1},
+    {"netrankr_treeOfIdeals", (DL_FUNC) &netrankr_treeOfIdeals, 1},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_netrankr(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

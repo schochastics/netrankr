@@ -5,6 +5,10 @@ approx_glpom <- function(P) {
     .Call('netrankr_approx_glpom', PACKAGE = 'netrankr', P)
 }
 
+approx_relative <- function(Nu, Nd, P, iterative, max_iter) {
+    .Call('netrankr_approx_relative', PACKAGE = 'netrankr', Nu, Nd, P, iterative, max_iter)
+}
+
 checkPairs <- function(x, y) {
     .Call('netrankr_checkPairs', PACKAGE = 'netrankr', x, y)
 }
