@@ -43,10 +43,10 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 V(g)$name <- 1:11
 
 #neighborhood inclusion can be expressed with the analytic pipeline
-D <- g %>% indirect_relations(relation="identity") %>% positional_dominance()
+D <- g %>% indirect_relations(type="identity") %>% positional_dominance()
 
 #without %>% operator:
-# rel <- indirect_relations(g,relation="identity")
+# rel <- indirect_relations(g,type="identity")
 # D <- positional_dominance(rel)
 
 #positional dominance with the identity relation is identical to neighborhood
@@ -58,7 +58,7 @@ under *total heterogeneity* (`map=FALSE`) and *total homogeneity* (`map=TRUE`).
 Dominance under total homogeneity yields a ranking, if the relation is binary (e.g. connected or not).  
 
 ```{r homo and hetero}
-D <- g %>% indirect_relations(relation="identity") %>% positional_dominance(map=TRUE)
+D <- g %>% indirect_relations(type="identity") %>% positional_dominance(map=TRUE)
 
 comparable_pairs(D)
 ```
