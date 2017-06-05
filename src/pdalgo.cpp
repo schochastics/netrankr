@@ -9,7 +9,7 @@ using namespace arma;
 arma::imat matdom(NumericMatrix A, bool map, bool benefit) {
   arma::mat B=as<arma::mat>(A);
   int n=B.n_rows;
-  int m=B.n_cols;
+  // int m=B.n_cols;
   bool status;
   arma::mat Asort(n,n,fill::zeros);
   arma:imat dom(n,n,fill::zeros);
@@ -24,7 +24,7 @@ arma::imat matdom(NumericMatrix A, bool map, bool benefit) {
      c=-1;
   }
   for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+    for(int j = 0; j < n; ++j) {
       if(i!=j){
         if(!map){
           tmpi=c*B.row(i);
