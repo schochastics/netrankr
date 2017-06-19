@@ -10,13 +10,13 @@ rank_intervals(P)
 \item{P}{a partial ranking as a matrix}
 }
 \value{
-a data frame with the minimal, maximal and mean rank of each node
+a data frame with the minimal, maximal rank of each node together with the mid point of the two extrema.
 }
 \description{
 Calculate the maximal and minmal rank possible for each node using the partial ranking P.
 }
 \details{
-Note that the returned \code{mean_rank} is not the same as the expected rank, for instance computed with \link{rank_analysis}.
+Note that the returned \code{mid_point} is not the same as the expected rank, for instance computed with \link{rank_analysis}.
 It is simply the mid point between \code{min_rank} and \code{max_rank}.
 }
 \examples{
