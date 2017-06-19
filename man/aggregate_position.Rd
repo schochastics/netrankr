@@ -23,7 +23,7 @@ scores.
 The predefined functions are mainly wrappers around base R functions.
 type="sum", for instance, is equivalent to \code{rowSums()}. A non-base functions is
 type="invsum" which calculates the inverse of type="sum".
-type="self" is mostly usefull for walk based relations, e.g. to count closed walks.
+type="self" is mostly useful for walk based relations, e.g. to count closed walks.
 Other self explanatory options are type="mean", type="min", type="max" and type="prod".
 }
 \examples{

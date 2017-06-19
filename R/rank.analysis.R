@@ -6,7 +6,7 @@
 #' 
 #' @param P matrix representing a partial ranking.
 #' @param names optional argument for names if P does not have row/column names.
-#' @param only.results logical. wether only results (default) or additionally the ideal tree and lattice should be returned.
+#' @param only.results logical. return only results (default) or additionally the ideal tree and lattice should be returned.
 #' @param verbose logical. should diagnostics be printed. Defaults to \code{FALSE}.
 #' @param force logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs.
 #' Only change if you know what you are doing. 

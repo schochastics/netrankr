@@ -50,11 +50,11 @@ with \link{indirect_relations} to fine tune indirect relations.
 }
 \details{
 The predefined functions follow the naming scheme \code{relation_transformation}.
-Predifined functions \code{walks_*} are thus best used with type="walks" in
+Predefined functions \code{walks_*} are thus best used with type="walks" in
 \link{indirect_relations}. Theoretically, however, any transformation can be used with any relation.
 Yet the results might not be interpretable.
 
-The follwing functions are implemented:
+The following functions are implemented:
 
 \code{dist_2pow} returns \eqn{2^-x}
 

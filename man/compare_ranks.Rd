@@ -2,7 +2,7 @@
 % Please edit documentation in R/compare.ranks.R
 \name{compare_ranks}
 \alias{compare_ranks}
-\title{Count occurences of pairs in rankings}
+\title{Count occurrences of pairs in rankings}
 \usage{
 compare_ranks(x, y)
 }
@@ -23,7 +23,7 @@ a list containing
 Counts the number of Concordant, Discordant and (Left/Right) Ties between two rankings.
 }
 \details{
-Explicitly calculating the number of occuring cases is more robust than using correlation
+Explicitly calculating the number of occurring cases is more robust than using correlation
 indices as given in the \code{cor} function. Especially left and right ties can significantly alter an
 intuitively high correlation (See example).
 }

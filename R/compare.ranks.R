@@ -1,4 +1,4 @@
-#' @title Count occurences of pairs in rankings
+#' @title Count occurrences of pairs in rankings
 #' @description  Counts the number of Concordant, Discordant and (Left/Right) Ties between two rankings.
 #'
 #' @param x a ranking vector.
@@ -9,7 +9,7 @@
 #' \item{ties}{number of tied pairs:  \code{x[i]}=\code{x[j]} and \code{y[i]}=\code{y[j]}}
 #' \item{left}{number of left: \code{x[i]}=\code{x[j]} and \code{y[i]}!=\code{y[j]}}
 #' \item{right}{number of right: \code{x[i]}!=\code{x[j]} and \code{y[i]}=\code{y[j]}}
-#' @details Explicitly calculating the number of occuring cases is more robust than using correlation 
+#' @details Explicitly calculating the number of occurring cases is more robust than using correlation 
 #' indices as given in the \code{cor} function. Especially left and right ties can significantly alter an
 #' intuitively high correlation (See example).
 #' @author David Schoch

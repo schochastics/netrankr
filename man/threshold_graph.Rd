@@ -19,7 +19,7 @@ A threshold graph is a graph where the neighborhood inclusion preorder is comple
 }
 \details{
 Threshold graphs can be constructed with a binary sequence. For each 0, an isolated
-vertex is inserted and for each 1, a vertex is inserted that contects to all previously inserted
+vertex is inserted and for each 1, a vertex is inserted that connects to all previously inserted
 vertices. An important property of threshold graphs is, that all centrality indices induce the same ranking.
 }
 \examples{

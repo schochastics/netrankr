@@ -18,7 +18,7 @@ a matrix containing approximation of mutual rank probabilities.
 \code{relative.rank[i,j]} is the probability that i is ranked lower than j
 }
 \description{
-Approximate relative rank probabilites \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
+Approximate relative rank probabilities \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
 gives the probability that u is less central than v, given the partial ranking P.
 }
 \details{

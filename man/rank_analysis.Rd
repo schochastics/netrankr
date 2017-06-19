@@ -11,7 +11,7 @@ rank_analysis(P, names = "", only.results = T, verbose = F, force = F)
 
 \item{names}{optional argument for names if P does not have row/column names.}
 
-\item{only.results}{logical. wether only results (default) or additionally the ideal tree and lattice should be returned.}
+\item{only.results}{logical. return only results (default) or additionally the ideal tree and lattice should be returned.}
 
 \item{verbose}{logical. should diagnostics be printed. Defaults to \code{FALSE}.}
 

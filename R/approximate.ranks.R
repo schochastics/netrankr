@@ -86,7 +86,7 @@ approx_rank_expected <- function(P,method="lpom"){
 #############################
 approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
   #' @title Approximation of relative rank probabilities
-  #' @description Approximate relative rank probabilites \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
+  #' @description Approximate relative rank probabilities \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
   #' gives the probability that u is less central than v, given the partial ranking P.
   #' @param P a partial order as matrix object.
   #' @param iterative boolean. TRUE (default) if iterative approximation should be used. FALSE if not.

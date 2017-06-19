@@ -1,5 +1,5 @@
 #' @title Rank interval of nodes
-#' @description Calculate the maximal and minmal rank possible for each node using the partial ranking P.
+#' @description Calculate the maximal and minimal rank possible for each node using the partial ranking P.
 #' @param P a partial ranking as a matrix 
 #' @details Note that the returned `mid_point` is not the same as the expected rank, for instance computed with [rank_analysis].
 #' It is simply the mid point between `min_rank` and `max_rank`.

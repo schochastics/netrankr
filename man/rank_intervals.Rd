@@ -13,7 +13,7 @@ rank_intervals(P)
 a data frame with the minimal, maximal rank of each node together with the mid point of the two extrema.
 }
 \description{
-Calculate the maximal and minmal rank possible for each node using the partial ranking P.
+Calculate the maximal and minimal rank possible for each node using the partial ranking P.
 }
 \details{
 Note that the returned \code{mid_point} is not the same as the expected rank, for instance computed with \link{rank_analysis}.

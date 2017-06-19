@@ -5,11 +5,11 @@
 #' @param alpha weighting factor.
 #' @param k for walk counts up to a certain length.
 #' @details The predefined functions follow the naming scheme `relation_transformation`.
-#' Predifined functions `walks_*` are thus best used with type="walks" in
+#' Predefined functions `walks_*` are thus best used with type="walks" in
 #' [indirect_relations]. Theoretically, however, any transformation can be used with any relation.
 #' Yet the results might not be interpretable.
 #' 
-#' The follwing functions are implemented: 
+#' The following functions are implemented: 
 #' 
 #' `dist_2pow` returns \eqn{2^-x}
 #' 
