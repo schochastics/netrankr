@@ -83,6 +83,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// mcmc_rank
+List mcmc_rank(IntegerMatrix P, IntegerVector init_rank, int rp);
+RcppExport SEXP netrankr_mcmc_rank(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type P(PSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type init_rank(init_rankSEXP);
+    Rcpp::traits::input_parameter< int >::type rp(rpSEXP);
+    rcpp_result_gen = Rcpp::wrap(mcmc_rank(P, init_rank, rp));
+    return rcpp_result_gen;
+END_RCPP
+}
 // nialgo
 IntegerMatrix nialgo(List adjList, IntegerVector deg);
 RcppExport SEXP netrankr_nialgo(SEXP adjListSEXP, SEXP degSEXP) {
@@ -191,6 +204,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"netrankr_dependency", (DL_FUNC) &netrankr_dependency, 1},
     {"netrankr_LatticeOfIdeals", (DL_FUNC) &netrankr_LatticeOfIdeals, 5},
     {"netrankr_listingIdeals", (DL_FUNC) &netrankr_listingIdeals, 3},
+    {"netrankr_mcmc_rank", (DL_FUNC) &netrankr_mcmc_rank, 3},
     {"netrankr_nialgo", (DL_FUNC) &netrankr_nialgo, 2},
     {"netrankr_matdom", (DL_FUNC) &netrankr_matdom, 3},
     {"netrankr_preserve", (DL_FUNC) &netrankr_preserve, 3},
