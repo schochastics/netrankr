@@ -36,16 +36,14 @@ rank_intervals <- function(P){
   n <- nrow(P)
   max_rank <- n-rowSums(P) 
   min_rank <- colSums(P)+1
-  mid_point <- (min_rank+max_rank)/2
-  max_rank_all <- mid_point_all <-min_rank_all <-rep(0,length(MSE))  
+  max_rank_all <-min_rank_all <-rep(0,length(MSE))  
   for(i in sort(unique(MSE))){
     idx <- which(MSE==i)
     group.head <- i
     max_rank_all[idx]  <- max_rank[group.head]
     min_rank_all[idx]  <- min_rank[group.head]
-    mid_point_all[idx] <- mid_point[group.head]
-    
   }
+  mid_point_all <- (max_rank_all + min_rank_all)/2
   
   return(data.frame(min_rank=min_rank_all,max_rank=max_rank_all,mid_point=mid_point_all))
 }
