@@ -34,5 +34,5 @@ approx_rank_relative(P,iterative=FALSE)
 approx_rank_relative(P,iterative=TRUE)
 }
 \seealso{
-\link{rank_analysis} for exact computations
+\link{exact_rank_prob} for exact computations
 }

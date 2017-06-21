@@ -42,7 +42,7 @@ calculation of expected ranks, (relative) rank probabilities and the number of p
 \examples{
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 P
-res <- rank_analysis(P)
+res <- exact_rank_prob(P)
 }
 \seealso{
 \link{approx_rank_relative}, \link{approx_rank_expected}

@@ -29,12 +29,12 @@ The \emph{method} parameter can be set to
 \examples{
 P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #Exact result
-rank_analysis(P)$expected.rank
+exact_rank_prob(P)$expected.rank
 #simplest approximation, suited for tiny matrices
 approx_rank_expected(P,"lpom")
 }
 \seealso{
-\link{approx_rank_relative}, \link{rank_analysis}, \link{bradley_terry}
+\link{approx_rank_relative}, \link{exact_rank_prob}, \link{bradley_terry}
 }
 \author{
 David Schoch

@@ -16,7 +16,7 @@ a data frame with the minimal, maximal rank of each node together with the mid p
 Calculate the maximal and minimal rank possible for each node using the partial ranking P.
 }
 \details{
-Note that the returned \code{mid_point} is not the same as the expected rank, for instance computed with \link{rank_analysis}.
+Note that the returned \code{mid_point} is not the same as the expected rank, for instance computed with \link{exact_rank_prob}.
 It is simply the mid point between \code{min_rank} and \code{max_rank}.
 }
 \examples{
@@ -24,7 +24,7 @@ P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 rank_intervals(P)
 }
 \seealso{
-\link{rank_analysis}
+\link{exact_rank_prob}
 }
 \author{
 David Schoch

@@ -23,5 +23,5 @@ TODO
 ###TODO
 }
 \seealso{
-\link{rank_analysis}, \link{approx_rank_expected}
+\link{exact_rank_prob}, \link{approx_rank_expected}
 }
