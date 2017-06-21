@@ -12,11 +12,11 @@
 #' }
 #' @return a vector containing approximations of expected ranks.
 #' @author David Schoch
-#' @seealso [approx_rank_relative], [rank_analysis], [bradley_terry]
+#' @seealso [approx_rank_relative], [exact_rank_prob], [bradley_terry]
 #' @examples
 #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #' #Exact result
-#' rank_analysis(P)$expected.rank
+#' exact_rank_prob(P)$expected.rank
 #' #simplest approximation, suited for tiny matrices
 #' approx_rank_expected(P,"lpom")
 #' @export
@@ -98,7 +98,7 @@ approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
   #'
   #' @return a matrix containing approximation of mutual rank probabilities. 
   #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
-  #' @seealso [rank_analysis] for exact computations
+  #' @seealso [exact_rank_prob] for exact computations
   #' @examples
   #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   #' P
@@ -148,7 +148,7 @@ freeman_hierarchy <- function(P){
   #' @details TODO
   #'
   #' @return a matrix with four columns containing Freemans hierarchy.
-  #' @seealso [rank_analysis], [approx_rank_expected]
+  #' @seealso [exact_rank_prob], [approx_rank_expected]
   #' @examples
   #' ###TODO
   #' @export  

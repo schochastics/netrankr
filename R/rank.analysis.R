@@ -1,5 +1,6 @@
-#' @title Rank Probabilities of a partial ranking
-#' @description  Performs a complete rank analysis of a given partial ranking. 
+#' @title Probabilistic ranking 
+#' @description  Performs a complete rank analysis of a given partial ranking.
+#' This includes rank probabilities, relative rank probabilities and expected ranks.
 #' 
 #' @importFrom Rcpp evalCpp
 #' @useDynLib netrankr
@@ -29,9 +30,9 @@
 #' @examples
 #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #' P
-#' res <- rank_analysis(P)
+#' res <- exact_rank_prob(P)
 #' @export
-rank_analysis <- function(P,names="",only.results=T,verbose=F,force=F){
+exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
   # Check for names ------------------------------------------------
   if(is.null(rownames(P)) & length(names)!=nrow(P)){
     rownames(P) <- 1:nrow(P)
@@ -42,7 +43,7 @@ rank_analysis <- function(P,names="",only.results=T,verbose=F,force=F){
   n.full <- nrow(P)
   P.full <- P
   # Equivalence classes ------------------------------------------------
-  MSE=which((P+t(P))==2,arr.ind=T)
+  MSE <- which((P+t(P))==2,arr.ind=T)
   if(length(MSE)>=1){
     MSE <- t(apply(MSE,1,sort))
     MSE <- MSE[!duplicated(MSE),]
