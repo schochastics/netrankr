@@ -19,31 +19,32 @@
 #   return(data.frame(min_rank,max_rank,mid_point))
 # }
 rank_intervals <- function(P){
-  MSE=which((P+t(P))==2,arr.ind=T)
-  if(length(MSE)>=1){
-    MSE <- t(apply(MSE,1,sort))
-    MSE <- MSE[!duplicated(MSE),]
-    g <- igraph::graph.empty()
-    g <- igraph::add.vertices(g,nrow(P))
-    g <- igraph::add.edges(g,c(t(MSE)))
-    g <- igraph::as.undirected(g)
-    MSE <- igraph::clusters(g)$membership
-    equi <- which(duplicated(MSE))
-    P <- P[-equi,-equi]
-  } else{
-    MSE <- 1:nrow(P)
-  }
+  # MSE=which((P+t(P))==2,arr.ind=T)
+  # if(length(MSE)>=1){
+  #   MSE <- t(apply(MSE,1,sort))
+  #   MSE <- MSE[!duplicated(MSE),]
+  #   g <- igraph::graph.empty()
+  #   g <- igraph::add.vertices(g,nrow(P))
+  #   g <- igraph::add.edges(g,c(t(MSE)))
+  #   g <- igraph::as.undirected(g)
+  #   MSE <- igraph::clusters(g)$membership
+  #   equi <- which(duplicated(MSE))
+  #   P <- P[-equi,-equi]
+  # } else{
+  #   MSE <- 1:nrow(P)
+  # }
   n <- nrow(P)
-  max_rank <- n-rowSums(P) 
-  min_rank <- colSums(P)+1
-  max_rank_all <-min_rank_all <-rep(0,length(MSE))  
-  for(i in sort(unique(MSE))){
-    idx <- which(MSE==i)
-    group.head <- i
-    max_rank_all[idx]  <- max_rank[group.head]
-    min_rank_all[idx]  <- min_rank[group.head]
-  }
+  max_rank_all <- n-rowSums((P-t(P))==1)
+  min_rank_all <- colSums((P-t(P))==1)+1
   mid_point_all <- (max_rank_all + min_rank_all)/2
+  # max_rank_all <-min_rank_all <-rep(0,length(MSE))
+  # for(i in sort(unique(MSE))){
+  #   idx <- which(MSE==i)
+  #   group.head <- i
+  #   max_rank_all[idx]  <- max_rank[group.head]
+  #   min_rank_all[idx]  <- min_rank[group.head]
+  # }
+  # mid_point_all <- (max_rank_all + min_rank_all)/2
   
   return(data.frame(min_rank=min_rank_all,max_rank=max_rank_all,mid_point=mid_point_all))
 }
