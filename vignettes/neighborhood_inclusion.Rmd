@@ -16,10 +16,10 @@ with network centrality and gives some example use cases with the `netrankr` pac
 ## Theoretical Background
 In an undirected graph $G=(V,E)$, the *neighborhood* of a node $u \in V$ is defined as
 $$N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace$$
-and its *closed neighborhood* as $N[v]=N(v) \cup \lbrace v \rbrace$. If the neighborhood of a node $u$ is a subset of the closed neighborhood of a node $v$, $N(u)\subseteq N[v]$, we speak of *neighborhood inclusion*. This concept defines a dominance relation among nodes in a network. We say that $u$ is *dominated* by $v$ if $N(u)\subseteq N[v]$. Neighborhood inclusion induces a partial ranking on the vertices of a network. That is, (usually) some pairs of vertices are incomparable, that is neither 
+and its *closed neighborhood* as $N[v]=N(v) \cup \lbrace v \rbrace$. If the neighborhood of a node $u$ is a subset of the closed neighborhood of a node $v$, $N(u)\subseteq N[v]$, we speak of *neighborhood inclusion*. This concept defines a dominance relation among nodes in a network. We say that $u$ is *dominated* by $v$ if $N(u)\subseteq N[v]$. Neighborhood inclusion induces a partial ranking on the vertices of a network. That is, (usually) some pairs of vertices are incomparable, such that neither 
 $N(u)\subseteq N[v]$ nor $N(v)\subseteq N[u]$ holds. There is, however, a special graph class where all pairs are comparable (found in [this](threshold_graph.html) vignette).
 
-The importance of the neighborhood-inclusion is given by the following result:
+The importance of neighborhood-inclusion is given by the following result:
 
 $$
 N(u)\subseteq N[v] \implies c(u)\leq c(v),
@@ -27,7 +27,7 @@ $$
 where $c$ is a centrality index. 
 
 Very informally, if $u$ is dominated by $v$, then u is **always** less central than $v$ no matter which centrality index is used. 
-While this is the key result, this short result leaves out many theoretical considerations. These and more can be found in 
+While this is the key result, this short description leaves out many theoretical considerations. These and more can be found in 
 
 > Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks.
 *European Journal of Appplied Mathematics*, **27**(6), 971–985.
@@ -48,11 +48,7 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 V(g)$name <- 1:11
 
-#layout calculated with visone (visone.info)
-coords <- data.frame(x=c(99.90,1.50,101.44,21.60,82.99,62.83,71.15,42.04,59.33,54.08,86.57),
-  y=c(-1.50,-20.45,-35.25,-22.01,-42.32,-10.44,-25.88,-23.63,-43.01,-27.35,-18.80))
-
-plot(g,layout=as.matrix(coords),
+plot(g,
      vertex.color="black",vertex.label.color="white", vertex.size=16,vertex.label.cex=0.75,
      edge.color="black",
      margin=0,asp=0.5)
@@ -88,15 +84,12 @@ The function `dominance_graph` can alternatively be used to visualize the neighb
 ```{r dominance graph,fig.align='center',fig.width=5}
 g.dom <- dominance_graph(g)
 
-coords[2,2] <- coords[2,2]+10 #otherwise the edge 2->8 is hidden
-
-plot(g.dom,layout=as.matrix(coords),
+plot(g.dom,
      vertex.color="black",vertex.label.color="white", vertex.size=16, vertex.label.cex=0.75,
-     edge.color="black",
-     margin=0,asp=0.5)
+     edge.color="black", edge.arrow.size=0.5,margin=0,asp=0.5)
 ```
 
-### Centrality and Neighborhood Inclusion
+### Centrality and Neighborhood-inclusion
 We start by calculating some standard measures of centrality found in the `ìgraph` package for our example network.
 ```{r indices}
 cent.df <- data.frame(

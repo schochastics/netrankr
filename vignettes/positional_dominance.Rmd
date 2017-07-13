@@ -15,7 +15,31 @@ some use cases with the `netrankr` package are given.
 
 ## Theoretical Background
 
+A network can be described as a *dyadic variable* $x\in \mathcal{W}^\mathcal{D}$,
+where $\mathcal{W}$ is the value range of the network (in the simple case of unweighted networks $\mathcal{W}=\{0,1\}$)
+and $\mathcal{D}=\mathcal{N}\times\mathcal{A}$ describes the dyadic domain of actors $\mathcal{N}$ and
+affiliations $\mathcal{A}$. If $\mathcal{A}\neq\mathcal{N}$, we obtain a *two-mode network* and
+if $\mathcal{A}=\mathcal{N}$ a *one-mode network* consisting of relations among actors.
+\
+\
+\
 
+**Definition**
+
+Let $x\in \mathcal{W}^\mathcal{D}$ be a network and $i,j \in \mathcal{N}$. We say that
+$i$ is dominated by $j$ *under the total homogeneity assumption*, denoted by $i \leq j$ if
+$$
+x_{it}\leq x_{jt} \quad \forall t \in \mathcal{N}.
+$$
+If there exists a permutation $\pi: \mathcal{N} \to \mathcal{N}$ such that
+$$
+x_{it}\leq x_{j\pi(t)} \quad \forall t \in \mathcal{N},
+$$
+we say that $i$ is dominated by $j$ *under the total heterogeneity assumption*, denoted by $i ⪯ j$.  
+It holds that $i\leq j \implies i ⪯ j$ but not vice versa.
+\
+\
+\
 
 More about the positional dominance and the positional approach to network analysis can be found in
 
@@ -32,9 +56,9 @@ library(magrittr)
 set.seed(1886) #for reproducibility
 ```
 
-The function `positional_dominance` can be used to check 
-In accordance with the analytic pipeline of centrality[REF NEEDED] we use the `%>%` operator from the 
-`magrittr` package.
+The function `positional_dominance` can be used to check both, dominance under homogeneity and heterogeneity.
+In accordance with the analytic pipeline of centrality (consult the tutorial REFREF)
+we use the `%>%` operator from the `magrittr` package.
 
 ```{r pos dom}
 g <- graph.empty(n=11,directed = FALSE)
@@ -49,18 +73,53 @@ D <- g %>% indirect_relations(type="identity") %>% positional_dominance()
 # rel <- indirect_relations(g,type="identity")
 # D <- positional_dominance(rel)
 
-#positional dominance with the identity relation is identical to neighborhood
+#check if identical to neighborhood-inclusion
 identical(D,neighborhood_inclusion(g))
 ```
 
-the `map` parameter of `positional_dominance` allows to distinguish between dominance
+More on the `indirect_relations()` function can be found in [this](indirect_relations.html) vignette.
+
+The `map` parameter of `positional_dominance` allows to distinguish between dominance
 under *total heterogeneity* (`map=FALSE`) and *total homogeneity* (`map=TRUE`). 
-Dominance under total homogeneity yields a ranking, if the relation is binary (e.g. connected or not).  
+In the later case, all relations can be ordered non-decreasingly (or non-increasingly 
+if the relation describes costs, such as distances) and afterwards checked front to back.
+Dominance under total homogeneity yields a ranking, if the relation is binary (e.g. adjacent or not).  
 
 ```{r homo and hetero}
-D <- g %>% indirect_relations(type="identity") %>% positional_dominance(map=TRUE)
+D <- g %>% 
+  indirect_relations(type="identity") %>% 
+  positional_dominance(map=TRUE)
 
 comparable_pairs(D)
 ```
 
+For cost variables like geodesic distances, the `benefit` parameter is set to `FALSE`.
+```{r dist}
+D1 <- g %>% 
+  indirect_relations(type="geodesic") %>% 
+  positional_dominance(map=FALSE,benefit=FALSE)
+```
 
+From the definition given in the first section, it is clear that there are always 
+at least as many comparable pairs under the total homogeneity assumption as under
+total heterogeneity.
+```{r homo and hetero dist}
+D1 <- g %>% 
+  indirect_relations(type="geodesic") %>% 
+  positional_dominance(map=FALSE,benefit=FALSE)
+
+D2 <- g %>% 
+  indirect_relations(type="geodesic") %>% 
+  positional_dominance(map=TRUE,benefit=FALSE)
+
+c("heterogeneity"=comparable_pairs(D1),
+  "homogeneity"=comparable_pairs(D2))
+
+```
+
+Additionally, all dominance relations from the heterogeneity assumption are preserved
+under total homogeneity. (Note: $A\implies B$ is equivalent to $\neg A \lor B$)
+
+```{r homo in hetero}
+all(D1!=1 | D2==1) 
+```
