@@ -1,0 +1,112 @@
+---
+title: "Indirect relations in networks"
+author: "David Schoch"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{indirect relations in networks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette describes the importance of indirect relations on networks, how 
+they are used in centrality indices and how they are implemented in the `netrankr` package.
+
+## Theoretical Background
+A one-mode network can be described as a *dyadic variable* $x\in \mathcal{W}^\mathcal{D}$,
+where $\mathcal{W}$ is the value range of the network (in the simple case of 
+unweighted networks $\mathcal{W}=\{0,1\}$) and $\mathcal{D}=\mathcal{N}\times\mathcal{N}$ 
+describes the dyadic domain of actors $\mathcal{N}$.
+\
+\
+Observed presence or absence of ties (the value range is binary) is usually not 
+the relation of interest for network analytic tasks. Instead, mostly implicitly, 
+relations are *transformed* into a new set of *indirect* relations on the basis 
+of the *observed* relations. As an example, consider (geodesic) distances in the 
+underlying graph. While they are fairly easy to derive from an observed network 
+of contacts, it is impossible for actors in a network to answer the question 
+"How far away are you from others you are not connected with?". We denote generic 
+transformed networks from an observed network $x$ as $\tau(x)$. 
+\
+\
+
+With this notion of indirect relations, we can express all centrality indices in
+a common framework as
+$$
+c_\tau(i)=\sum\limits_{t \in \mathcal{N}} \tau(x)_{it}
+$$
+Degree and closeness centrality, for instance, can be obtained by setting $\tau=id$ 
+and $\tau=dist$, respectively. Others need several additional specifications which 
+can be found in [Brandes (2016)](http://dx.doi.org/10.1177/2059799116630650) or 
+[Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401). 
+\
+With this framework, all centrality indices can be characterized as degree-like 
+measures in a suitably transformed network $\tau(x)$. 
+
+
+
+## Indirect relations in the `netrankr` package
+
+```{r setup, warning=FALSE,message=FALSE}
+library(netrankr)
+library(igraph)
+```
+
+The `netrankr` package implements a great variety of indirect relations that are
+(or could be) used for centrality related considerations in a network. All indirect
+relations can be computed with the `indirect_relations()` function, by specifying
+the `type` parameter. 
+
+```{r indirstandard}
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+V(g)$name <- 1:11
+
+#adjacency
+A <- indirect_relations(g,type="identity")
+#geodesic distances
+D <- indirect_relations(g,type="geodesic")
+#dyadic dependencies (as used in betweenness centrality)
+B <- indirect_relations(g,type="dependencies")
+#resistance distance (as used in information centrality)
+R <- indirect_relations(g,type="resistance")
+```
+
+The function takes an additional parameter `FUN` which passes an additional function
+to further specify the transformation. The main use is to obtain walk based indirect relations
+
+```{r indirwalks}
+#count the limit proportion of walks (used for eigenvector centrality)
+W <-  indirect_relations(g,type="walks",FUN=walks_limit_prop)
+#count the number of walks of arbitrary length between nodes, weighted by 
+#the inverse factorial of their length (used for subgraph centrality)
+S <-  indirect_relations(g,type="walks",FUN=walks_exp)
+```
+
+Additional parameters can also be passed to calculate parameterized versions of
+relations.
+```{r indirparam}
+#Calculate dist(s,t)^-alpha
+D <- indirect_relations(g,type="geodesic",FUN=dist_dpow,alpha=2)
+```
+
+To view all predefined transformation functions type `?transform_relations`. The 
+predefined functions follow the naming scheme `<relation>_<transformation>`. 
+The functions `dist_` are thus only meaningful for `type="geodesic"` or `type="resistance"`
+and `walks_` for `type="walks"`. The predefined functions are not exhaustive and
+just constitute the most common transformations. It is, however, straightforward to
+pass your own transformation function. 
+
+```{r own func}
+dist_integration <- function(x){
+  x <- 1 - (x - 1)/max(x)
+}
+D <- indirect_relations(g,type="geodesic",FUN=dist_integration)
+```
+
+The function `dist_integration()` computes
+$$
+\tau(x)_{ij}=1-\frac{dist(i,j)-1}{max_{i,j}\; dist(i,j)}
+$$
+which is used in the centrality index *integration* definied by [Valente and Foreman (1998)](https://doi.org/10.1016/S0378-8733(97)00007-5)
