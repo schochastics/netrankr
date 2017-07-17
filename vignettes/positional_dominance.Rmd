@@ -4,7 +4,7 @@ author: "David Schoch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{positional dominance in networks}
+  %\VignetteIndexEntry{03 positional dominance in networks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

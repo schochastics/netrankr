@@ -4,7 +4,7 @@ author: "David Schoch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{centrality indices}
+  %\VignetteIndexEntry{05 centrality indices}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

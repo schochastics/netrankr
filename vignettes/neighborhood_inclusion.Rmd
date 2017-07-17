@@ -1,10 +1,10 @@
 ---
-title: "The concept of neighborhood-inclusion"
+title: "Neighborhood-inclusion in networks"
 author: "David Schoch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{neighborhood inclusion and centrality}
+  %\VignetteIndexEntry{01 neighborhood-inclusion and centrality}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

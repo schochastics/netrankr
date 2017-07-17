@@ -4,7 +4,7 @@ author: "David Schoch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Uniquely ranked graphs}
+  %\VignetteIndexEntry{02 uniquely ranked graphs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
