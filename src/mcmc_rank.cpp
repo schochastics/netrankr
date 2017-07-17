@@ -26,8 +26,8 @@ List mcmc_rank(IntegerMatrix P,
   //MC
   
   while(t<=rp){
-    int p = rand() % (n-1);
-    int c = rand() % 2;
+    int p = floor(R::runif(0,1)*n);//rand() % (n-1);
+    int c = round(R::runif(0,1));//rand() % 2;
     int a = init_rank[p];
     int b = init_rank[p+1];
     if(c==1 & P(a,b)!=1){
