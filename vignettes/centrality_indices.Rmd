@@ -15,6 +15,43 @@ however, that the primary purpose of the netrankr package is **not** to provide 
 variety of indices, but to offer alternative methods for centrality assessment. 
 Consult the tutorial and this vignette, before starting trial-and-error usage of indices.
 
+## Theoretical Background
+A one-mode network can be described as a *dyadic variable* $x\in \mathcal{W}^\mathcal{D}$,
+where $\mathcal{W}$ is the value range of the network (in the simple case of 
+unweighted networks $\mathcal{W}=\{0,1\}$) and $\mathcal{D}=\mathcal{N}\times\mathcal{N}$ 
+describes the dyadic domain of actors $\mathcal{N}$.
+\
+\
+Observed presence or absence of ties (the value range is binary) is usually not 
+the relation of interest for network analytic tasks. Instead, mostly implicitly, 
+relations are *transformed* into a new set of *indirect* relations on the basis 
+of the *observed* relations. As an example, consider (geodesic) distances in the 
+underlying graph. While they are fairly easy to derive from an observed network 
+of contacts, it is impossible for actors in a network to answer the question 
+"How far away are you from others you are not connected with?". We denote generic 
+transformed networks from an observed network $x$ as $\tau(x)$. 
+\
+\
+
+With this notion of indirect relations, we can express all centrality indices in
+a common framework as
+$$
+c_\tau(i)=\sum\limits_{t \in \mathcal{N}} \tau(x)_{it}
+$$
+Degree and closeness centrality, for instance, can be obtained by setting $\tau=id$ 
+and $\tau=dist$, respectively. Others need several additional specifications which 
+can be found in [Brandes (2016)](http://dx.doi.org/10.1177/2059799116630650) or 
+[Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401). 
+\
+With this framework, all centrality indices can be characterized as degree-like 
+measures in a suitably transformed network $\tau(x)$. To build specific indices,
+we follow the *analytic pipeline* for centrality assessment:
+$$
+\text{Observed network}\;(x) \longrightarrow 
+\text{transformation}\;(\tau(x)) \longrightarrow 
+\text{aggregation}\;(e.g. \sum_j \tau(x)_{ij})
+$$
+
 ## Building indices with the `netrankr` package
 
 ```{r setup, warning=FALSE,message=FALSE}
@@ -24,23 +61,37 @@ library(magrittr)
 ```
 
 The `netrankr` does, by design, not explicitly implement any centrality index. It 
-does, however, provide a huge set of components to build indices.
+does, however, provide a large set of components to build indices. Building an index
+based on an indirect relation, computed with `indirect_relations()`
 
+
+`g %>% indirect_relations() %>% aggregate_positions()` which is equivalent to
+`aggregate_positions(indirect_relations(g))`. The former, however, comes with enhanced 
+readability and is in accordance with the proposed analytic pipeline.  
+\
 The traditional indices degree, closeness, betweenness and eigenvector centrality 
 can 
 
-```{r standardcent}
+```{r standardcent,eval=F}
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 V(g)$name <- 1:11
 
-#adjacency
-g %>% indirect_relations(g,type="identity")
-#geodesic distances
-D <- indirect_relations(g,type="geodesic")
-#dyadic dependencies (as used in betweenness centrality)
-B <- indirect_relations(g,type="dependencies")
-#resistance distance (as used in information centrality)
-R <- indirect_relations(g,type="resistance")
+#Degree
+g %>% 
+  indirect_relations(type="identity") %>% 
+  aggregate_positions(type="sum")
+#Closeness
+g %>% 
+  indirect_relations(type="geodesic") %>% 
+  aggregate_positions(type="invsum")
+#Betweenness Centrality
+g %>% 
+  indirect_relations(type="dependencies") %>% 
+  aggregate_positions(type="sum")
+#Eigenvector Centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_limit_prop) %>% 
+  aggregate_positions(type="sum")
 ```

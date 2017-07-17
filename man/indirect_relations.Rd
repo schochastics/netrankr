@@ -55,7 +55,7 @@ D <- indirect_relations(g,type="dependencies")
 
 }
 \seealso{
-\link{aggregate_position} to build centrality indices, \link{positional_dominance} to derive dominance relations
+\link{aggregate_positions} to build centrality indices, \link{positional_dominance} to derive dominance relations
 }
 \author{
 David Schoch

@@ -27,7 +27,7 @@
 #' 
 #' @return a matrix containing indirect relations in a network.
 #' @author David Schoch
-#' @seealso [aggregate_position] to build centrality indices, [positional_dominance] to derive dominance relations
+#' @seealso [aggregate_positions] to build centrality indices, [positional_dominance] to derive dominance relations
 #' @examples
 #' require(igraph)
 #' g <- graph.empty(n=11,directed = FALSE)

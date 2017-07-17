@@ -22,25 +22,25 @@
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #'
 #'g %>% indirect_relations(type="identity") %>% 
-#' aggregate_position(type="sum")
+#' aggregate_positions(type="sum")
 #'
 #' #closeness centrality
 #' g %>% indirect_relations(type="geodesic") %>% 
-#'   aggregate_position(type="invsum")
+#'   aggregate_positions(type="invsum")
 #'   
 #' #betweenness centrality
 #' g %>% indirect_relations(type="dependencies") %>% 
-#'   aggregate_position(type="sum")
+#'   aggregate_positions(type="sum")
 #'   
 #' #eigenvector centrality
 #' g %>% indirect_relations(type="walks",FUN=walks_limit_prop) %>% 
-#'   aggregate_position(type="sum")
+#'   aggregate_positions(type="sum")
 #'
 #'#subgraph centrality
 #'g %>% indirect_relations(type="walks",FUN=walks_exp) %>% 
-#'   aggregate_position(type="self")
+#'   aggregate_positions(type="self")
 #' @export
-aggregate_position <- function(tau_x,type="sum"){
+aggregate_positions <- function(tau_x,type="sum"){
   if(type=="sum"){
     return(rowSums(tau_x))
   } 
