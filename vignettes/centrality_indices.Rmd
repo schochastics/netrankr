@@ -1,0 +1,46 @@
+---
+title: "Centrality indices"
+author: "David Schoch"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{centrality indices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+This vignette describes how to build different centrality indices on the basis of 
+indirect relations as described in [this](indirect_relations.html) vignette. Note,
+however, that the primary purpose of the netrankr package is **not** to provide a great
+variety of indices, but to offer alternative methods for centrality assessment. 
+Consult the tutorial and this vignette, before starting trial-and-error usage of indices.
+
+## Building indices with the `netrankr` package
+
+```{r setup, warning=FALSE,message=FALSE}
+library(netrankr)
+library(igraph)
+library(magrittr)
+```
+
+The `netrankr` does, by design, not explicitly implement any centrality index. It 
+does, however, provide a huge set of components to build indices.
+
+The traditional indices degree, closeness, betweenness and eigenvector centrality 
+can 
+
+```{r standardcent}
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+V(g)$name <- 1:11
+
+#adjacency
+g %>% indirect_relations(g,type="identity")
+#geodesic distances
+D <- indirect_relations(g,type="geodesic")
+#dyadic dependencies (as used in betweenness centrality)
+B <- indirect_relations(g,type="dependencies")
+#resistance distance (as used in information centrality)
+R <- indirect_relations(g,type="resistance")
+```
