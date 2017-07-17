@@ -61,16 +61,19 @@ library(magrittr)
 ```
 
 The `netrankr` does, by design, not explicitly implement any centrality index. It 
-does, however, provide a large set of components to build indices. Building an index
-based on an indirect relation, computed with `indirect_relations()`
-
-
-`g %>% indirect_relations() %>% aggregate_positions()` which is equivalent to
-`aggregate_positions(indirect_relations(g))`. The former, however, comes with enhanced 
-readability and is in accordance with the proposed analytic pipeline.  
+does, however, provide a large set of components to create indices. Building an index
+based on an indirect relation, computed with `indirect_relations()`, is done with 
+the function `aggregate_positions()`.  
 \
-The traditional indices degree, closeness, betweenness and eigenvector centrality 
-can 
+The usual workflow is as follows:  
+`g %>% indirect_relations() %>% aggregate_positions()`   
+which is equivalent to
+`aggregate_positions(indirect_relations(g))`.  
+The former, however, comes with enhanced readability and is in accordance with 
+the proposed analytic pipeline (see above).  
+\
+`aggregate_position()` has a parameter `type` which is used to choose an appropriate 
+aggregation method. Commonly, this is simply the sum operation.
 
 ```{r standardcent,eval=F}
 g <- graph.empty(n=11,directed = FALSE)
@@ -95,3 +98,90 @@ g %>%
   indirect_relations(type="walks",FUN=walks_limit_prop) %>% 
   aggregate_positions(type="sum")
 ```
+
+For closeness `type="invsum"` is used since traditional closeness is defined as
+$$
+c_c(i)=\frac{1}{\sum_t dist(i,t)}.
+$$
+To obtain a slight variant of closeness, i.e.
+$$
+c_c(i)=\sum_t \frac{1}{dist(i,t)},
+$$
+the following code can be used:
+```{r closeness_variant, eval=F}
+#harmonic closeness
+g %>% 
+  indirect_relations(g,type="geodesic",FUN=dist_inv) %>% 
+  aggregate_positions(type="sum")
+```
+
+The distance based indices constitute one of the biggest groups of indices in the `netrankr` package.
+
+```{r distance indices,eval=F}
+#residual closeness (Dangalchev,2006)
+g %>% 
+  indirect_relations(g,type="geodesic",FUN=dist_2pow) %>% 
+  aggregate_positions(type="sum")
+
+#generalized closeness (Agneessens et al.,2017) (alpha>0)
+g %>% 
+  indirect_relations(g,type="geodesic",FUN=dist_dpow,alpha=2) %>% 
+  aggregate_positions(type="sum")
+
+#residual closeness (Agneessens et al.,2017) (alpha>0)
+g %>% 
+  indirect_relations(g,type="geodesic",FUN=dist_dpow,alpha=2) %>% 
+  aggregate_positions(type="sum")
+
+#decay centrality (Jackson, 2010) (alpha in [0,1])
+g %>% 
+  indirect_relations(g,type="geodesic",FUN=dist_powd,alpha=0.7) %>% 
+  aggregate_positions(type="sum")
+
+#integration centrality (Valente & Foreman, 1998)
+dist_integration <- function(x){
+  x <- 1 - (x - 1)/max(x)
+}
+g %>% 
+  indirect_relations(g,type="geodesic",FUN=dist_integration) %>% 
+  aggregate_positions(type="sum")
+
+```
+
+Another large group of indices is based on counting walks
+
+```{r othercent,eval=F}
+#subgraph centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp) %>% 
+  aggregate_positions(type="self")
+#communicability centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp) %>% 
+  aggregate_positions(type="sum")
+#odd subgraph centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp_odd) %>% 
+  aggregate_positions(type="self")
+#even subgraph centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp_even) %>% 
+  aggregate_positions(type="self")
+#katz status
+g %>% 
+  indirect_relations(type="walks",FUN=walks_attenuated) %>% 
+  aggregate_positions(type="sum")
+```
+
+
+**Note**: The analytic pipeline can of course be wrapped into a function.
+
+```{r index_func}
+degree_centrality <- function(g){
+  DC <- g %>% 
+    indirect_relations(type="identity") %>% 
+    aggregate_positions(type="sum")
+  return(DC)
+}
+```
+
