@@ -1,7 +1,7 @@
 Package: netrankr
 Type: Package
 Title: A package for centrality analyses of networks
-Version: 0.0.4
+Version: 0.0.5
 Author: David Schoch
 Authors@R: person("David", "Schoch", , "david.schoch@uni-konstanz.de", c("aut", "cre"))
 Maintainer: David Schoch <david.schoch@uni-konstanz.de>

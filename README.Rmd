@@ -1,7 +1,7 @@
 ---
 output: github_document
 ---
-
+![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
