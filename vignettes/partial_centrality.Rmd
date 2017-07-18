@@ -9,4 +9,86 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette 
+This vignette describes some methods to analyse partial rankings as obtained
+from [neighborhood-inclusion](neighborhood_inclusion.html) or, more general,
+[positional dominance](positional_dominance.html). More on the topic of
+partial rankings can be found in the following literature.
+
+> Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank 
+Probabilities in Networks. *submitted*
+
+> Patil, G.P. & Taillie, C. (2004). Multiple Indicators, partially ordered sets, 
+and linear extensions: Multi-criterion ranking and prioritization. 
+*Environmental and Ecological Statistics*, **11**, 199-228 ([link](https://link.springer.com/article/10.1023%2FB%3AEEST.0000027209.93218.d9))
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=5,fig.align = 'center')
+```
+
+## Rank intervals
+
+```{r setup, warning=FALSE,message=FALSE}
+library(netrankr)
+library(igraph)
+library(magrittr)
+```
+
+The function `rank_intervals()` is used to calculate the maximal and minimal possible 
+rank for each node in any ranking that is in accordance with a given partial ranking. 
+
+```{r pos dom}
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+V(g)$name <- LETTERS[1:11]
+
+#neighborhood inclusion 
+P <- g %>% neighborhood_inclusion()
+
+#without %>% operator:
+# P <- neighborhood_inclusion(g)
+
+rank_intervals(P)
+```
+
+The package uses the convention, that higher numerical ranks correspond to top 
+ranked possition. The lowest possible rank is thus 1. The column `mid_point` 
+should not be confused with the *expected rank* of nodes, which is calculated
+with the function `exact_rank_prob()`. See [this](probabilistic_cent.html) vignette
+for more details.  
+\
+rank intervals are usefull to assess the ambiguity of ranking nodes. The bigger
+the intervals are, the more freedom exists, e.g. for centrality indices, to rank 
+nodes differently.  
+\
+rank intervals can be visualized with the function `plot_rank_intervals()`. Note
+that the package `ggplot2` is required to use the function properly. The function 
+takes a partial ranking as input and *not* the rank intervals. These are calculated 
+internally.
+
+```{r vis_intervals}
+plot_rank_intervals(P)
+```
+
+Nodes are ordered according to the mid point for better readability. If the nodes
+of the input network are named, the parameter `names` can be set accordingly.
+
+```{r vis_intervals_names}
+plot_rank_intervals(P,names=V(g)$name)
+```
+
+The function can take a data frame of centrality scores as an additional parameter 
+`cent.df`. The ranks of each node for each index are then plotted within each interval.
+Again, the higher the numerical rank the higher ranked the node is according to the index.
+
+```{r vis_intervals_cent}
+cent_scores <- data.frame(
+   degree=degree(g),
+   betweenness=round(betweenness(g),4),
+   closeness=round(closeness(g),4),
+   eigenvector=round(eigen_centrality(g)$vector,4))
+
+plot_rank_intervals(P,names=V(g)$name,cent.df = cent_scores)
+```
+
+A small jitter effect is added to the points to reduce overplotting.

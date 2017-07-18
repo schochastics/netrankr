@@ -10,8 +10,11 @@ vignette: >
 ---
 
 This vignette describes the concept of positional dominance, the generalization 
-of [neighborhood-inclusion](neighborhood_inclusion.html) for arbitrary network and attribute data. Additionally, 
-some use cases with the `netrankr` package are given.
+of [neighborhood-inclusion](neighborhood_inclusion.html) for arbitrary network and 
+attribute data. Additionally, some use cases with the `netrankr` package are given. 
+The partial ranking induced by positional dominance can be used to assess 
+[partial centrality](partial_centrality.html) or compute
+[probabilistic centrality](probabilistic_cent.html).
 
 ## Theoretical Background
 

@@ -36,8 +36,11 @@ plot_rank_intervals <- function(P,names,cent.df){
   if(missing(names)){
     names <- 1:nrow(P)
   }
+  if(length(names)!=n){
+    stop("names must have the same length as the number of nodes")
+  }
   intervals <- netrankr::rank_intervals(P)
-  intervals$node <- names
+  intervals$node <- as.character(names)
   df <- 
     data.frame(interval=rep(c("max_rank","min_rank","mid_point"),each=n),
                node=rep(names,3),
@@ -55,7 +58,7 @@ plot_rank_intervals <- function(P,names,cent.df){
       ggplot2::scale_y_continuous(breaks=pretty(1:nrow(P)))+
       ggplot2::theme_bw()+
       ggplot2::theme(text = ggplot2::element_text(family="Times",size=14),
-                     axis.text.x = ggplot2::element_text(angle=ifelse(any(nchar(df$node)>2),45,0),
+                     axis.text.x = ggplot2::element_text(angle=ifelse(any(nchar(names)>2),45,0),
                                                 hjust=1),
                      legend.position="bottom",
                      panel.border = ggplot2::element_blank(),
@@ -81,7 +84,7 @@ plot_rank_intervals <- function(P,names,cent.df){
       ggplot2::scale_y_continuous(breaks=pretty(1:nrow(P)))+
       ggplot2::theme_bw()+
       ggplot2::theme(text = ggplot2::element_text(family="Times",size=14),
-                     axis.text.x = ggplot2::element_text(angle=ifelse(any(nchar(df$node)>2),45,0),
+                     axis.text.x = ggplot2::element_text(angle=ifelse(any(nchar(names)>2),45,0),
                                                 hjust=1),
                      legend.position="bottom",
                      panel.border = ggplot2::element_blank(),

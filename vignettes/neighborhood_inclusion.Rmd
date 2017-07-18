@@ -12,6 +12,9 @@ vignette: >
 
 This vignette describes the concept of neighborhood-inclusion, its connection 
 with network centrality and gives some example use cases with the `netrankr` package. 
+The partial ranking induced by neighborhood-inclusion can be used to assess 
+[partial centrality](partial_centrality.html) or compute 
+[probabilistic centrality](probabilistic_cent.html).
 
 ## Theoretical Background
 In an undirected graph $G=(V,E)$, the *neighborhood* of a node $u \in V$ is defined as
