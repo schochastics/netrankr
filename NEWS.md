@@ -1,7 +1,3 @@
----
-output: github_document
----
-
 ## netrankr 0.0.5
 
 * most function reimplemented in C++ for efficiency. 
