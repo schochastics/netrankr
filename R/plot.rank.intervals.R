@@ -70,7 +70,7 @@ plot_rank_intervals <- function(P,names,cent.df){
     cent.df.long <- data.frame(node=rep(names,no.indices),
                                mid_point=rep(intervals$mid_point,no.indices),
                                index=rep(names(cent.df),each=n),
-                               rank=c(apply(cent.df,2,rank)))
+                               rank=c(apply(cent.df,2,function(x)rank(x,ties.method="min"))))
     ggplot2::ggplot(df,ggplot2::aes_(x=~stats::reorder(node,mid_point),y=~rank,group=~node))+
       ggplot2::geom_line(col="#8F8F8F")+
       ggplot2::geom_point(col="#8F8F8F",

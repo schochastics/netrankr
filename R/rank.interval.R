@@ -11,13 +11,6 @@
 #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #' rank_intervals(P)
 #' @export
-# rank_intervals <- function(P){
-#   n <- nrow(P)
-#   max_rank <- n-rowSums(P) 
-#   min_rank <- colSums(P)+1
-#   mid_point <- (min_rank+max_rank)/2
-#   return(data.frame(min_rank,max_rank,mid_point))
-# }
 rank_intervals <- function(P){
   # MSE=which((P+t(P))==2,arr.ind=T)
   # if(length(MSE)>=1){
@@ -34,17 +27,9 @@ rank_intervals <- function(P){
   #   MSE <- 1:nrow(P)
   # }
   n <- nrow(P)
-  max_rank_all <- n-rowSums((P-t(P))==1)
+  max_rank_all <- n-rowSums((P-t(P))==1)-rowSums(P==1 & t(P)==1) #CAUTION!!!!
   min_rank_all <- colSums((P-t(P))==1)+1
   mid_point_all <- (max_rank_all + min_rank_all)/2
-  # max_rank_all <-min_rank_all <-rep(0,length(MSE))
-  # for(i in sort(unique(MSE))){
-  #   idx <- which(MSE==i)
-  #   group.head <- i
-  #   max_rank_all[idx]  <- max_rank[group.head]
-  #   min_rank_all[idx]  <- min_rank[group.head]
-  # }
-  # mid_point_all <- (max_rank_all + min_rank_all)/2
   
   return(data.frame(min_rank=min_rank_all,max_rank=max_rank_all,mid_point=mid_point_all))
 }
