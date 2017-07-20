@@ -57,14 +57,14 @@ should not be confused with the *expected rank* of nodes, which is calculated
 with the function `exact_rank_prob()`. See [this](probabilistic_cent.html) vignette
 for more details.  
 \
-rank intervals are usefull to assess the ambiguity of ranking nodes. The bigger
+Rank intervals are usefull to assess the ambiguity of ranking nodes. The bigger
 the intervals are, the more freedom exists, e.g. for centrality indices, to rank 
 nodes differently.  
 \
-rank intervals can be visualized with the function `plot_rank_intervals()`. Note
+The intervals can be visualized with the function `plot_rank_intervals()`. Note
 that the package `ggplot2` is required to use the function properly. The function 
-takes a partial ranking as input and *not* the rank intervals. These are calculated 
-internally.
+takes a partial ranking as input and *not* already calculated rank intervals. 
+These are calculated internally.
 
 ```{r vis_intervals}
 plot_rank_intervals(P)
@@ -82,6 +82,7 @@ The function can take a data frame of centrality scores as an additional paramet
 Again, the higher the numerical rank the higher ranked the node is according to the index.
 
 ```{r vis_intervals_cent}
+
 cent_scores <- data.frame(
    degree=degree(g),
    betweenness=round(betweenness(g),4),
@@ -91,4 +92,40 @@ cent_scores <- data.frame(
 plot_rank_intervals(P,names=V(g)$name,cent.df = cent_scores)
 ```
 
-A small jitter effect is added to the points to reduce overplotting.
+A small jitter effect is added to the points to reduce overplotting.  
+\
+Observe the inconsistancy
+of betweenness for node $C$. Betweenness centrality is, so far, the only index that does not
+*strictly* preserve neighborhood-inclusion. That is, while
+$$
+N(u)\subseteq N[v] \text{ and } N(v)\not\subseteq N[u] \implies c(u)<c(v)
+$$
+holds for most indices, betweenness fails to fulfil this property.  
+\
+The intervals reduce to single points for [threshold graphs](threshold_graph.html), 
+since all nodes are pairwise comparable bei neighborhood-inclusion.
+```{r tg_ri}
+set.seed(123)
+tg <- threshold_graph(20,0.2)
+
+#neighborhood inclusion 
+P <- tg %>% neighborhood_inclusion()
+
+#without %>% operator:
+# P <- neighborhood_inclusion(tg)
+plot_rank_intervals(P)
+```
+
+The described betweenness inconsistancy is most evident for threshold graphs as shown in
+the rank intervals below.
+
+```{r tg_ri_cent}
+cent_scores <- data.frame(
+   degree=degree(tg),
+   betweenness=round(betweenness(tg),4),
+   closeness=round(closeness(tg),4),
+   eigenvector=round(eigen_centrality(tg)$vector,4))
+
+
+plot_rank_intervals(P,cent.df=cent_scores)
+```

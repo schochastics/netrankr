@@ -19,8 +19,15 @@ The partial ranking induced by neighborhood-inclusion can be used to assess
 ## Theoretical Background
 In an undirected graph $G=(V,E)$, the *neighborhood* of a node $u \in V$ is defined as
 $$N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace$$
-and its *closed neighborhood* as $N[v]=N(v) \cup \lbrace v \rbrace$. If the neighborhood of a node $u$ is a subset of the closed neighborhood of a node $v$, $N(u)\subseteq N[v]$, we speak of *neighborhood inclusion*. This concept defines a dominance relation among nodes in a network. We say that $u$ is *dominated* by $v$ if $N(u)\subseteq N[v]$. Neighborhood inclusion induces a partial ranking on the vertices of a network. That is, (usually) some pairs of vertices are incomparable, such that neither 
-$N(u)\subseteq N[v]$ nor $N(v)\subseteq N[u]$ holds. There is, however, a special graph class where all pairs are comparable (found in [this](threshold_graph.html) vignette).
+and its *closed neighborhood* as $N[v]=N(v) \cup \lbrace v \rbrace$. If the 
+neighborhood of a node $u$ is a subset of the closed neighborhood of a node 
+$v$, $N(u)\subseteq N[v]$, we speak of *neighborhood inclusion*. This concept 
+defines a dominance relation among nodes in a network. We say that $u$ is 
+*dominated* by $v$ if $N(u)\subseteq N[v]$. Neighborhood-inclusion induces a 
+partial ranking on the vertices of a network. That is, (usually) some pairs of 
+vertices are incomparable, such that neither $N(u)\subseteq N[v]$ nor $N(v)\subseteq N[u]$ holds. 
+There is, however, a special graph class where all pairs are comparable 
+(found in [this](threshold_graph.html) vignette).
 
 The importance of neighborhood-inclusion is given by the following result:
 
@@ -29,14 +36,16 @@ N(u)\subseteq N[v] \implies c(u)\leq c(v),
 $$
 where $c$ is a centrality index. 
 
-Very informally, if $u$ is dominated by $v$, then u is **always** less central than $v$ no matter which centrality index is used. 
-While this is the key result, this short description leaves out many theoretical considerations. These and more can be found in 
+Very informally, if $u$ is dominated by $v$, then u is **always** less central 
+than $v$ no matter which centrality index is used. 
+While this is the key result, this short description leaves out many theoretical
+considerations. These and more can be found in 
 
 > Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks.
 *European Journal of Appplied Mathematics*, **27**(6), 971–985.
 ([link](https://doi.org/10.1017/S0956792516000401))
 
-## Neighborhood-Inclusion in the `netrankr` Package
+## Neighborhood-inclusion in the `netrankr` Package
 
 ```{r setup, warning=FALSE,message=FALSE}
 library(netrankr)
@@ -57,7 +66,9 @@ plot(g,
      margin=0,asp=0.5)
 ```
 
-We can compare neighborhoods manually with the `neighborhood` function of the `igraph` package. Note the `mindist` parameter to distinguish between open and closed neighborhood.
+We can compare neighborhoods manually with the `neighborhood` function of the 
+`igraph` package. Note the `mindist` parameter to distinguish between open and 
+closed neighborhood.
 ```{r neighborhood}
 u <- 3
 v <- 5
@@ -73,7 +84,8 @@ Although it is obvious that `Nu` is a subset of `Nv`, we can verify it with `R`.
 all(Nu%in%Nv)
 ```
 
-Checking all pairs of nodes can efficiently be done with the `neighborhood_inclusion` function from the `netrankr` package.  
+Checking all pairs of nodes can efficiently be done with the `neighborhood_inclusion()` 
+function from the `netrankr` package.  
 
 ```{r neighborhood inclusion}
 P <- neighborhood_inclusion(g)
@@ -82,7 +94,8 @@ P
   
 If an entry `P[u,v]` is equal to one, we have $N(u)\subseteq N[v]$.  
 
-The function `dominance_graph` can alternatively be used to visualize the neighborhood inclusion as a directed graph.
+The function `dominance_graph()` can alternatively be used to visualize the 
+neighborhood inclusion as a directed graph.
 
 ```{r dominance graph,fig.align='center',fig.width=5}
 g.dom <- dominance_graph(g)
@@ -93,7 +106,10 @@ plot(g.dom,
 ```
 
 ### Centrality and Neighborhood-inclusion
-We start by calculating some standard measures of centrality found in the `ìgraph` package for our example network.
+We start by calculating some standard measures of centrality found in the 
+`ìgraph` package for our example network. Note that the `netrankr` package also
+implements a great variety of indices, but they need further specifications described
+in [this](centrality_indices.html) vignette.
 ```{r indices}
 cent.df <- data.frame(
   vertex=1:11,
