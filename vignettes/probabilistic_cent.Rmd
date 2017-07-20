@@ -1,0 +1,170 @@
+---
+title: "Probabilistic Centrality"
+author: "David Schoch"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{07 probabilistic centrality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette describes methods to analyse all possible centrality rankings
+of a network at once. To do so, a partial rankings as computed
+from [neighborhood-inclusion](neighborhood_inclusion.html) or, more general,
+[positional dominance](positional_dominance.html) is needed. In this vignette we 
+focus on neighborhood-inclusion but note that all considered methods are readily
+applicable for positional dominance. For more examples consult the tutorial.
+
+## Theoretical Background
+
+Neighborhood-inclusion or induces a partial ranking on the vertices of a graph $G=(V,E)$. 
+We write $u\leq v$ if $N(u)\subseteq N[v]$ holds for two vertices $u,v \in V$. 
+From the fact that
+$$
+u\leq v \implies c(u) \leq c(v)
+$$
+holds for any centrality index $c:V\to \mathbb{R}$, we can characterize the set of all *possible*
+centrality based node rankings. Namely as the set of rankings that extend the partial ranking
+"$\leq$" to a (complete) ranking.  
+\
+A node ranking can be defined as a mapping 
+$$rk: V \to \{1,\ldots,n\},$$
+where we use the convention that $u$ is the top ranked node if $rk(u)=n$ and the 
+bottom ranked one if $rk(u)=1$. The set of all possible rankings can then be characterized as
+$$
+\mathcal{R}(\leq)=\{rk:V \to \{1,\ldots,n\}\; : \; u\leq v \implies rk(u)\leq rk(v)\}.
+$$
+This set contains **all** rankings that could be obtained with a centrality index.  
+\
+Once $\mathcal{R}(\leq)$ is calculated, it can be used for a probabilistic assessment of centrality,
+analysing all possible rankings at once. Examples include *relative rank probabilities*
+(How likely is it, that a node $u$ is more central than another node $v$?) or
+*expected ranks* (How central do we expect a node $u$ to be).  
+\
+It most be noted though, that deriving the set $\mathcal{R}(\leq)$ quickly becomes 
+infeasible for larger networks, and one has to resort to approximative methods.
+These and more theoretical details can be found in
+
+> Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank 
+Probabilities in Networks. *submitted*
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=5,fig.align = 'center')
+```
+
+## Exact Probabilities in the `netrankr` Package
+```{r setup, warning=FALSE,message=FALSE}
+library(netrankr)
+library(igraph)
+library(magrittr)
+```
+
+Before calculating any probabilities consider the following example graph and
+the rankings induced by various centrality indices, shown as rank intervals 
+(consult [this](partial_centrality.html) vignette for details).
+
+```{r pos dom}
+g <- graph.empty(n=11,directed = FALSE)
+g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+V(g)$name <- LETTERS[1:11]
+
+#neighborhood inclusion 
+P <- g %>% neighborhood_inclusion()
+
+#without %>% operator:
+# P <- neighborhood_inclusion(g)
+
+cent_scores <- data.frame(
+   degree=degree(g),
+   betweenness=round(betweenness(g),4),
+   closeness=round(closeness(g),4),
+   eigenvector=round(eigen_centrality(g)$vector,4),
+   subgraph=round(subgraph_centrality(g),4))
+
+plot_rank_intervals(P,cent.df = cent_scores)
+```
+
+Notice how all five centrality rank a different vertex as the most central one.  
+\
+In the following subsections the output of the function `exact_rank_probabilities()` 
+are described which may help to circumvent the potential arbitrariness of index induced rankings.
+But first, let us briefly look at all the return values.
+```{r calc_probs}
+res <- exact_rank_prob(P)
+str(res)
+```
+
+The return value `lin.ext` gives the number of possible rankings that are in 
+accordance with the partial ranking `P`. The `names` vector returns the names of nodes if they were
+supplied with the `names` parameter. Otherways, node ids are returned as a character vector.
+The vector `mse` returns the equivalence classes of `P`. Nodes $u$ and $v$ are equivalent
+if $N(u)\subseteq N[v]$ and $N(v)\subseteq N[u]$ holds. The remaining return values
+are discussed in the following.
+
+
+### Rank Probabilities
+
+Instead of insisting on fixed ranks of nodes as given by indices, we can use *rank probabilities*
+to assess the likelihood of certain rank. Formally, rank probabilities are simply defined as
+$$
+P(rk(u)=k)=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)=k\} \rvert}{\lvert \mathcal{R}(\leq) \rvert}.
+$$
+Rank probabilities are given by the return value `rank.prob` of the `exact_rank_prob()`
+function.
+
+```{r rk_probs}
+rp <- round(res$rank.prob,2)
+rp
+```
+
+Entries `rp[u,k]` correspond to $P(rk(u)=k)$.  
+\
+The most interesting probabilities are certainly $P(rk(u)=n)$, that is how likely
+is it for a node to be the most central.
+
+```{r rk_top}
+rp[,11]
+```
+Recall from the previous section that we found five indices that ranked $6,7,8,10$
+and $11$ on top. The probability tell us now, how likely it is to find an index that
+rank these nodes on top. In this case, node $11$ has the highest probability to be 
+the most central node.
+
+### Relative Rank Probabilities
+In some cases, we might not necessarily be interested in a complete ranking of nodes, 
+but only in the relative position of a subset of nodes. This idea leads to 
+*relative rank probabilities*, that is formally defined as
+$$
+P(rk(u)\leq rk(v))=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)\leq rk(v)\} \rvert}{\lvert \mathcal{R}(\leq) \rvert}.
+$$
+Relative rank probabilities are given by the return value `relative.rank` of the `exact_rank_prob()`
+function.
+
+```{r rrp}
+rrp <- round(res$relative.rank,2)
+rrp
+```
+
+Entries `rrp[u,v]` correspond to $P(rk(u)\leq rk(v))$.  
+\
+The more a value `rrp[u,v]` deviates from $0.5$ towards $1$, the more confidence we gain
+that a node $v$ is more central than a node $u$.
+
+###Expected Ranks
+The *expected rank* of a node in centrality rankings is defined as the expected 
+value of the rank probability distribution. That is,
+$$
+\rho(u)=\sum_{k=1}^n k\cdot P(rk(u)=k).
+$$
+Expected ranks are given by the return value `expected.rank` of the `exact_rank_prob()`
+function.
+
+```{r rk_exp}
+ex_rk <- round(res$expected.rank,2)
+ex_rk
+```
+
+As a reminder, the higher the numeric rank, the more central a node is. In this case,
+node $11$ has the highest expected rank in any centrality ranking.
