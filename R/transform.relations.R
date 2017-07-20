@@ -19,6 +19,9 @@
 #' 
 #' `dist_powd` returns \eqn{\alpha^x} where \eqn{\alpha} should be chosen between 0 and 1.
 #' 
+#' `dist_triang` returns \eqn{\sum_t\frac{x_{st}}{x_{su}+x_{st}}}. This function is used for
+#' a corrected betweenness version.
+#' 
 #' `walks_limit_prop` returns the limit proportion of walks between pairs of nodes. Calculating
 #' rowSums of this relation will result in the principle eigenvector of the network.
 #' 
@@ -67,6 +70,23 @@ dist_dpow <- function(x,alpha=1){
 #' @rdname transform_relations
 #' @export
 dist_powd <- function(x,alpha=0.5){alpha^(x)}
+
+#' @rdname transform_relations
+#' @export
+dist_triang <- function(x) {
+  n <- nrow(x)
+  y <- matrix(0,n,n)
+  for(s in 1:n){
+    for(t in 1:n){
+      for(u in 1:n){
+        if(s!=t & u!=s & u!=t){
+          y[u,s] <- y[u,s] + (x[s,t])/(x[s,u]+x[u,t])
+        }
+      }
+    }
+  }
+  return(y)
+}
 
 #' @rdname transform_relations
 #' @export
