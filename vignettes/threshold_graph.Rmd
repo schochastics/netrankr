@@ -118,14 +118,14 @@ As it is always the case with artificial graph structures, it is rather unlikely
 An in depth discussion of possible measures can be found in the paper mentioned at the beginning of this vignette. 
 
 `netrankr` implements one function that can be used to assess the distance of arbitrary graphs to threshold graphs.
-The so called *majorization gap* operates solely on the degree sequence and determines the number of entries that have to be changed in order to obtain the degree sequence of a threshold graph. Changing can, however, not be done arbitrarily. The only allowed operation is to lower the degree of one vertex and simultaneously increase the degree of another. For threshold graphs, this measure is necessarily zero.
+The so called *majorization gap* operates solely on the degree sequence and determines the number of entries that have to be changed in order to obtain the degree sequence of a threshold graph. Changing can, however, not be done arbitrarily. The only allowed operation is to lower the degree of one vertex and simultaneously increase the degree of another. For threshold graphs, this measure is obviously zero.
 
 ```{r major_gap}
 tg <- threshold_graph(200,0.2)
 majorization_gap(g)
 ```
 
-By default, `majorization_gap` is normalized by the number of edges (or equivalently with twice the sum of all degrees). 
+By default, `majorization_gap` is normalized by the number of edges.
 
 ```{r major_gap_ex_norm}
 
