@@ -132,7 +132,7 @@ which(rowSums(P)==0)
 `r length(which(rowSums(P)==0))` nodes are undominated in the graph. It is thus entirely possible to find indices that would also rank 
 $4, 5$ and $9$ on top.
 
-Besides the top ranked nodes, we can check if the entire partial ranking `P` is preserved in each centrality ranking. If there exists a pair $u$ and $v$ and index $c()$ such that $N(u)\subseteq N[v]$ but $c(v)>c(u)$, we do not consider $c$ to be a vaild index.
+Besides the top ranked nodes, we can check if the entire partial ranking `P` is preserved in each centrality ranking. If there exists a pair $u$ and $v$ and index $c()$ such that $N(u)\subseteq N[v]$ but $c(v)>c(u)$, we do not consider $c$ to be a valid index.
 
 In our example, we considered vertex $3$ and $5$, where $3$ was dominated by $5$. It is easy to verify that all centrality scores of $5$ are in fact greater than the ones of $3$ by inspecting the respective rows in the table. To check all pairs, we use the function `is_preserved`. The function takes a partial ranking, as induced by neighborhood inclusion, and a score vector of a centrality index and checks if
 `P[i,j]==1 & scores[i]>scores[j]` is `FALSE` for all pairs `i` and `j`.

@@ -83,9 +83,9 @@ We, however, obtain correlations that are not equal to one. This is due to the d
 * tied: `x[i]=x[j] & y[i]=y[j]`
 * left/right ties: `x[i]=x[j] & y[i]!=y[j]` or `x[i]!=x[j] & y[i]=y[j]`
 
-Kendall's $\tau$ considers left and right ties as correlation reducing. That is if two vertices are tied in one ranking, but not the other, the correlations is weakend. Left and right ties are, however, not forbidden according to the neighborhood inclusion property. The only forbidden case are discordant pairs. That is, $N(u)\subseteq N[v]$ can not result in $c(u)>c(v)$ but it may result in $c(u)=c(v)$. Also, one can argue that left and right ties distinguish between fine/coarse grained indices.  
+Kendall's $\tau$ considers left and right ties as correlation reducing. That is if two vertices are tied in one ranking, but not the other, the correlations is weakened. Left and right ties are, however, not forbidden according to the neighborhood inclusion property. The only forbidden case are discordant pairs. That is, $N(u)\subseteq N[v]$ can not result in $c(u)>c(v)$ but it may result in $c(u)=c(v)$. Also, one can argue that left and right ties distinguish between fine/coarse grained indices.  
 
-`netrankr` comes with a function called `compare_ranks` which calculates all occurences of the above cases. Simply counting the cases instead of aggregating them will help circumvent the problem of possibly missinterpreting correlation measures.
+`netrankr` comes with a function called `compare_ranks` which calculates all occurrences of the above cases. Simply counting the cases instead of aggregating them will help circumvent the problem of possibly misinterpreting correlation measures.
 
 ```{R compare ranks}
 comp <- compare_ranks(cent.df$degree,cent.df$betweenness)

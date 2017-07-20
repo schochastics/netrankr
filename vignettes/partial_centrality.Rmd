@@ -52,12 +52,12 @@ rank_intervals(P)
 ```
 
 The package uses the convention, that higher numerical ranks correspond to top 
-ranked possition. The lowest possible rank is thus 1. The column `mid_point` 
+ranked position. The lowest possible rank is thus 1. The column `mid_point` 
 should not be confused with the *expected rank* of nodes, which is calculated
 with the function `exact_rank_prob()`. See [this](probabilistic_cent.html) vignette
 for more details.  
 \
-Rank intervals are usefull to assess the ambiguity of ranking nodes. The bigger
+Rank intervals are useful to assess the ambiguity of ranking nodes. The bigger
 the intervals are, the more freedom exists, e.g. for centrality indices, to rank 
 nodes differently.  
 \
@@ -92,18 +92,18 @@ cent_scores <- data.frame(
 plot_rank_intervals(P,names=V(g)$name,cent.df = cent_scores)
 ```
 
-A small jitter effect is added to the points to reduce overplotting.  
+A small jitter effect is added to the points to reduce over-plotting.  
 \
-Observe the inconsistancy
+Observe the inconsistency
 of betweenness for node $C$. Betweenness centrality is, so far, the only index that does not
 *strictly* preserve neighborhood-inclusion. That is, while
 $$
 N(u)\subseteq N[v] \text{ and } N(v)\not\subseteq N[u] \implies c(u)<c(v)
 $$
-holds for most indices, betweenness fails to fulfil this property.  
+holds for most indices, betweenness fails to fulfill this property.  
 \
 The intervals reduce to single points for [threshold graphs](threshold_graph.html), 
-since all nodes are pairwise comparable bei neighborhood-inclusion.
+since all nodes are pairwise comparable by neighborhood-inclusion.
 ```{r tg_ri}
 set.seed(123)
 tg <- threshold_graph(20,0.2)

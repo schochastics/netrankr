@@ -38,12 +38,12 @@ $$
 This set contains **all** rankings that could be obtained with a centrality index.  
 \
 Once $\mathcal{R}(\leq)$ is calculated, it can be used for a probabilistic assessment of centrality,
-analysing all possible rankings at once. Examples include *relative rank probabilities*
+analyzing all possible rankings at once. Examples include *relative rank probabilities*
 (How likely is it, that a node $u$ is more central than another node $v$?) or
 *expected ranks* (How central do we expect a node $u$ to be).  
 \
 It most be noted though, that deriving the set $\mathcal{R}(\leq)$ quickly becomes 
-infeasible for larger networks, and one has to resort to approximative methods.
+infeasible for larger networks, and one has to resort to approximation methods.
 These and more theoretical details can be found in
 
 > Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank 
@@ -98,7 +98,7 @@ str(res)
 
 The return value `lin.ext` gives the number of possible rankings that are in 
 accordance with the partial ranking `P`. The `names` vector returns the names of nodes if they were
-supplied with the `names` parameter. Otherways, node ids are returned as a character vector.
+supplied with the `names` parameter. Otherwise, node ids are returned as a character vector.
 The vector `mse` returns the equivalence classes of `P`. Nodes $u$ and $v$ are equivalent
 if $N(u)\subseteq N[v]$ and $N(v)\subseteq N[u]$ holds. The remaining return values
 are discussed in the following.

@@ -109,4 +109,4 @@ The function `dist_integration()` computes
 $$
 \tau(x)_{ij}=1-\frac{dist(i,j)-1}{max_{i,j}\; dist(i,j)}
 $$
-which is used in the centrality index *integration* definied by [Valente and Foreman (1998)](https://doi.org/10.1016/S0378-8733(97)00007-5)
+which is used in the centrality index *integration* defined by [Valente and Foreman (1998)](https://doi.org/10.1016/S0378-8733(97)00007-5)
