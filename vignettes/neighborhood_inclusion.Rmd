@@ -98,7 +98,7 @@ The function `dominance_graph()` can alternatively be used to visualize the
 neighborhood inclusion as a directed graph.
 
 ```{r dominance graph,fig.align='center',fig.width=5}
-g.dom <- dominance_graph(g)
+g.dom <- dominance_graph(P)
 
 plot(g.dom,
      vertex.color="black",vertex.label.color="white", vertex.size=16, vertex.label.cex=0.75,
