@@ -61,7 +61,7 @@ apply(cent_scores,2,which.max)
 
 Each index assigns the highest value to a different vertex!
 
-More generic approach via neighborhood-inclusion
+More generic approach via neighborhood-inclusion.
 
 ``` r
 P <- neighborhood_inclusion(g)
@@ -87,8 +87,10 @@ D <- dominance_graph(P)
 ```
 
 If `P[u,v]=1` or equivalently `(u,v)` is an edge in `D`, then *N*(*u*)⊆*N*\[*v*\] holds, which implies that *c*(*u*)≤*c*(*v*) for all centrality indices *c*!
+
 Neighborhood-inclusion defines a partial ranking on the set of nodes. Each ranking that is in accordance with this partial ranking defines a proper centrality ranking. Each of these ranking can potentially be the outcome of a centrality index.
-the function `exact_rank_prob()` can be used to calculate all these ranking and produce probabilistic centrality rankings.
+
+The function `exact_rank_prob()` can be used to calculate all these ranking and produce probabilistic centrality rankings.
 
 ``` r
 res <- exact_rank_prob(P)
@@ -114,7 +116,7 @@ round(res$rank.prob[,11],2)
 
     ##  [1] 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16
 
-`relative.rank` contains the relative rank probabilites. An entry `relative.rank[u,v]` indicates how likely it is that `v` is more central than `u`
+`relative.rank` contains the relative rank probabilites. An entry `relative.rank[u,v]` indicates how likely it is that `v` is more central than `u`.
 
 ``` r
 # How likely is it, that 6 is more central than 3?
