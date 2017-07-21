@@ -19,7 +19,7 @@ Some features of the package are:
 
 -   Working with the neighborhood inclusion preorder. This forms the bases for any centrality analysis on undirected and unweighted graphs. More details can be found in the dedicated vignette: `vignette("neighborhood_inclusion",package="netrankr")`.
 -   Constructing graphs with a unique centrality ranking. This class of graphs, known as threshold graphs, can be used to benchmark centrality indices, since they only allow for one ranking of the nodes. For more details consult the vignette: `vignette("threshold_graph",package="netrankr")`.
--   Probabilistic ranking methods. The package includes several function to perform probabilistic rank analyses of nodes in a network. These include expected ranks and relative rank probabilities (how likely is it that a node is more central than another). An extensive example is given in the corresponding vignette (TODO). }
+-   Probabilistic ranking methods. The package includes several function to perform probabilistic rank analyses of nodes in a network. These include expected ranks and relative rank probabilities (how likely is it that a node is more central than another). An extensive example is given at the end of this document.
 
 To browse all vignettes use: `browseVignettes(package = "netrankr")`
 

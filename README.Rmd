@@ -35,8 +35,8 @@ Some features of the package are:
 * Probabilistic ranking methods. The package includes several function to 
   perform probabilistic rank analyses of nodes in a network. These include expected
   ranks and relative rank probabilities (how likely is it that a node is more central than another).
-  An extensive example is given in the corresponding vignette (TODO).
-}
+  An extensive example is given at the end of this document.
+
  
 To browse all vignettes use: `browseVignettes(package = "netrankr")`
 
