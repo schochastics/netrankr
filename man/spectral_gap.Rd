@@ -4,7 +4,7 @@
 \alias{spectral_gap}
 \title{Spectral Gap of a Graph}
 \usage{
-spectral_gap(g, method = "fraction")
+spectral_gap(g, method = "frac")
 }
 \arguments{
 \item{g}{igraph object}
@@ -18,10 +18,15 @@ numeric value
 The spectral gap of a graph is the absolute difference between the biggest and second biggest eigenvalue
 of the adjacency matrix. To compare spectral gaps across networks, the fraction can be used
 }
+\details{
+The spectral gap is bounded between 0 and 1 if \code{method="frac"}, the closer
+the value to one, the bigger the gap.
+}
 \examples{
-#The spectral gap of a threshold graph is usually quite big
-g=threshold_graph(10,0.3)
-spectral_gap(g,method="fraction")
+#The fractional spectral gap of a threshold graph is usually close to 1
+g <- threshold_graph(50,0.3)
+spectral_gap(g,method="frac")
+
 }
 \author{
 David Schoch

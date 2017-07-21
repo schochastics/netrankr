@@ -1,5 +1,5 @@
 #' @title Indirect relations of a network
-#' @description Derive indirect relations like distances for a given network. 
+#' @description Derive indirect relations (like geodesic distances) for a given network. 
 #' @param g igraph object. The network for which relations should be derived.
 #' @param type string. giving the relation to be calculated. See Details for options.
 #' @param FUN a function that allows the transformation of relations. See Details.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/threshold.graph.R
 \name{threshold_graph}
 \alias{threshold_graph}
-\title{Constructing Threshold Graphs}
+\title{Random threshold graphs}
 \usage{
 threshold_graph(n, p)
 }
@@ -15,6 +15,7 @@ threshold_graph(n, p)
 a threshold graph as igraph object
 }
 \description{
+Constructs a random threshold graph.
 A threshold graph is a graph where the neighborhood inclusion preorder is complete.
 }
 \details{
@@ -26,16 +27,22 @@ vertices. An important property of threshold graphs is, that all centrality indi
 require(igraph)
 g <- threshold_graph(10,0.3)
 plot(g)
-### star graphs and complete graphs are threshold graphs
+# star graphs and complete graphs are threshold graphs
 complete <- threshold_graph(10,1) #complete graph
 plot(complete)
 star <- threshold_graph(10,0) #star graph
 plot(star)
-###Compare induced rankings
+# Centrality scores are perfectly rank correlated
 cor(degree(g),closeness(g),method="kendall")
 }
+\references{
+Mahadev, N. and Peled, U. N. , 1995. Threshold graphs and related topics.
+
+Schoch, D., Valente, T. W. and Brandes, U., 2017. Correlations among centrality
+indices and a class of uniquely ranked graphs. \emph{Social Networks} 50, 46–54.
+}
 \seealso{
-\link{neighborhood_inclusion},\link{positional_dominance}
+\link{neighborhood_inclusion}, \link{positional_dominance}
 }
 \author{
 David Schoch

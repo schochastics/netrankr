@@ -2,7 +2,7 @@
 % Please edit documentation in R/majorization.gap.R
 \name{majorization_gap}
 \alias{majorization_gap}
-\title{(normalized) Majorization Gap of a Graph}
+\title{Majorization gap of a graph}
 \usage{
 majorization_gap(g, norm = TRUE)
 }
@@ -26,6 +26,7 @@ First, the \emph{corrected conjugated degree sequence} d' is calculated from the
 | \{ i : i>k \land d_i\geq k \} |.}
 the majorization gap is then defined as
 \deqn{1/2 \sum_{k=1}^n \max\{d'_k - d_k,0\}}
+The higher the value, the further away is a graph to be a threshold graph.
 }
 \examples{
 require(igraph)
@@ -35,6 +36,10 @@ majorization_gap(g) #0 since star graphs are threshold graphs
 g <- sample_gnp(100,0.15)
 majorization_gap(g,norm=TRUE) #fraction of reverse unit transformation
 majorization_gap(g,norm=FALSE) #number of reverse unit transformation
+}
+\references{
+Schoch, D., Valente, T. W. and Brandes, U., 2017. Correlations among centrality
+indices and a class of uniquely ranked graphs. \emph{Social Networks} 50, 46–54.
 }
 \author{
 David Schoch

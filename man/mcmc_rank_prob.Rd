@@ -4,7 +4,7 @@
 \alias{mcmc_rank_prob}
 \title{Estimate Rankings with MCMC}
 \usage{
-mcmc_rank_prob(P, rp = 10000)
+mcmc_rank_prob(P, rp = nrow(P)^3)
 }
 \arguments{
 \item{P}{a matrix representing a partial ranking.}
@@ -12,21 +12,28 @@ mcmc_rank_prob(P, rp = 10000)
 \item{rp}{integer indicating the number of samples to be drawn.}
 }
 \value{
-data frame containing approximated expected ranks and relative rank probabilities.
-
-#' @seealso \link{exact_rank_prob}, \link{approx_rank_relative}, \link{approx_rank_expected}
+\item{expected.rank}{Estimated expected ranks of nodes}
+\item{relative.rank}{Matrix containing estimated relative rank probabilities:
+\code{relative.rank[u,v]} is the probability that u is ranked lower than v.}
 }
 \description{
 Performs a probabilistic rank analysis based on an almost uniform
-sample of possible rankings that preserve the partial ranking, instead of taking all possibilities
-as in \link{exact_rank_prob}.
+sample of possible rankings that preserve a partial ranking
 }
 \details{
-As a rule of thumb, the number of samples should at least be cubic in
-the number of nodes of the network, but the higher the better.
+This function can be used instead of \link{exact_rank_prob}
+if the number of nodes is too large for an exact computation. As a rule of thumb,
+the number of samples should be at least cubic in the number of nodes of the network.
 }
 \examples{
-###TODO
+# Will be added in later version
+}
+\references{
+Bubley, R. and Dyer, M., 1999. Faster random generation of linear extensions.
+\emph{Discrete Mathematics}, 201(1):81-88
+}
+\seealso{
+\link{exact_rank_prob}, \link{approx_rank_relative}, \link{approx_rank_expected}
 }
 \author{
 David Schoch

@@ -1,15 +1,17 @@
 #' @title All rankings of a partial ranking
-#' @description Returns all possible rankings of a partial ranking using the lattice of ideals.
+#' @description Returns all possible rankings of a partial ranking.
 #'
 #' @param lattice adjacency list of predecessors in lattice of ideal. This list is returned if [exact_rank_prob] 
 #' is run with `only.results=FALSE`
 #' @param ideals list of ideals. This list is returned if [exact_rank_prob] 
 #' is run with `only.results=FALSE`
 #' @param topo.order topological order used in [exact_rank_prob]
-#' @param linext number of possible rankings. returned by exact_rank_prob
+#' @param linext number of possible rankings. returned by [exact_rank_prob]
 #' @param mse equivalence classes of rankings. returned by [exact_rank_prob]
 #' @param force boolean. stops function if the number of rankings is too large.
 #' Only change to TRUE if you know what you are doing
+#' @details The ith row of the matrix contains the rank of node i in all possible rankings
+#' that are in accordance with the partial ranking P.
 #' @return a matrix containing all ranking positions of nodes
 #' @author David Schoch
 #' @examples

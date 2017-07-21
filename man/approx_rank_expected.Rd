@@ -15,26 +15,37 @@ approx_rank_expected(P, method = "lpom")
 a vector containing approximations of expected ranks.
 }
 \description{
-Implements a variety of functions to approximate expected ranks in large partially ordered sets.
+Implements a variety of functions to approximate expected ranks
+for partial rankings.
 }
 \details{
 The \emph{method} parameter can be set to
 \describe{
 \item{lpom}{ simplest, most accurate for tiny networks}
 \item{glpom}{ most accurate for tiny networks}
-\item{loof1}{ more accurate for large networks}
-\item{loof2}{ even more accurate for large networks}
+\item{loof1}{ more accurate for larger networks}
+\item{loof2}{ even more accurate for larger networks}
 }
+Which of the above methods performs best depends on the structure of the partial
+ranking. It is thus advisable to apply more than one for comparrison.
 }
 \examples{
 P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #Exact result
 exact_rank_prob(P)$expected.rank
-#simplest approximation, suited for tiny matrices
 approx_rank_expected(P,"lpom")
 }
+\references{
+Brüggemann R., Simon, U., and Mey,S, 2005. Estimation of averaged
+ranks by extended local partial order models. \emph{MATCH Commun. Math.
+Comput. Chem.}, 54:489-518.
+
+Brüggemann, R. and Carlsen, L., 2011. An improved estimation of aver-
+aged ranks of partial orders. \emph{MATCH Commun. Math. Comput. Chem.},
+65(2):383-414.
+}
 \seealso{
-\link{approx_rank_relative}, \link{exact_rank_prob}, \link{bradley_terry}
+\link{approx_rank_relative}, \link{exact_rank_prob}, \link{mcmc_rank_prob}
 }
 \author{
 David Schoch

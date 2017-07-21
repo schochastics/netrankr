@@ -7,7 +7,7 @@
 approx_rank_relative(P, iterative = TRUE, num.iter = 10)
 }
 \arguments{
-\item{P}{a partial order as matrix object.}
+\item{P}{a partial ranking as matrix object.}
 
 \item{iterative}{boolean. TRUE (default) if iterative approximation should be used. FALSE if not.}
 
@@ -18,8 +18,9 @@ a matrix containing approximation of mutual rank probabilities.
 \code{relative.rank[i,j]} is the probability that i is ranked lower than j
 }
 \description{
-Approximate relative rank probabilities \eqn{Prob(u<v)}. In a network context, \eqn{Prob(u<v)}
-gives the probability that u is less central than v, given the partial ranking P.
+Approximate relative rank probabilities \eqn{P(rk(u)<rk(v))}.
+In a network context, \eqn{P(rk(u)<rk(v))} is the probability that u is
+less central than v, given the partial ranking P.
 }
 \details{
 The iterative approach generally gives better approximations than the non iterative, if only slightly.
@@ -33,6 +34,14 @@ P
 approx_rank_relative(P,iterative=FALSE) 
 approx_rank_relative(P,iterative=TRUE)
 }
+\references{
+De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual
+rank probabilities in partially ordered sets. In \emph{Multicriteria Ordering and
+Ranking: Partial Orders, Ambiguities and Applied Issues}, 145-165.
+}
 \seealso{
 \link{exact_rank_prob} for exact computations
+}
+\author{
+David Schoch
 }

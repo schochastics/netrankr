@@ -5,20 +5,25 @@
 #' @param map boolean if rows can be sorted or not (default)
 #' @param benefit boolean if higher values(default) or lower values are better
 #' @details Positional dominance is a generalization of neighborhood-inclusion for 
-#' arbitrary network data. In the default case, it checks for all pairs \eqn{i,j} if 
-#' \eqn{A_{it} \geq A_{jt}} holds for all \eqn{t}. If \code{map=TRUE}, 
-#' the rows of \eqn{A} are sorted decreasingly (\code{benefit=TRUE}) or increasingly
-#' (\code{benefit=FALSE}) and then the dominance condition is checked.
-#' @return dominance relations as matrix object.
+#' arbitrary network data. In the default case, it checks for all pairs \eqn{u,v} if 
+#' \eqn{A_{ut} \ge A_{vt}} holds for all \eqn{t} if \code{benefit=TRUE} or 
+#' \eqn{A_{ut} \le A_{vt}} holds for all \eqn{t} if \code{benefit=FALSE}.  
+#' This form of dominance is referred to as *dominance under total heterogeneity*. 
+#' If \code{map=TRUE}, the rows of \eqn{A} are sorted decreasingly (\code{benefit=TRUE}) 
+#' or increasingly (\code{benefit=FALSE}) and then the dominance condition is checked. This second
+#' form of dominance is referred to as *dominance under total homogeneity*.
+#' 
+#' @return dominance relations as matrix object. \code{P[u,v]=1} if u is dominated by v.
 #' @author David Schoch
-#' #' @references Brandes, U. Heine, M., Müller, J. and Ortmann, M., 2017.
-#' Positional Dominance: Concepts and Algorithms. *Conference on Algorithms and Discrete Applied Mathematics*, 60-71.
+#' 
+#' @references Brandes, U., 2016. Network positions. *Methodological Innovations* 9,
+#' 2059799116630650.
 #' 
 #' Schoch, D. and Brandes, U., 2016. Re-conceptualizing centrality in social networks. 
 #' *European Journal of Applied Mathematics* 27(6), 971-985.
-#' @seealso [neighborhood_inclusion], [is_preserved]
+#' 
+#' @seealso [neighborhood_inclusion], [indirect_relations], [exact_rank_prob]
 #' @examples
-#' ###
 #' require(igraph)
 #' 
 #' g <- graph.empty(n=11,directed = FALSE)
@@ -27,18 +32,13 @@
 #' P<-neighborhood_inclusion(g)
 #' comparable_pairs(P)
 #' 
-#' dist <- distances(g)
+#' dist <- indirect_relations(g,type="geodesic")
 #' D <- positional_dominance(dist,map=FALSE,benefit=FALSE) 
 #' comparable_pairs(D) #same as P
 #' 
 #' D <- positional_dominance(dist,map=TRUE,benefit=FALSE) 
 #' comparable_pairs(D) #more comparables than P
 #' 
-#' ### all distance based indices preserve positional dominance
-#' is_preserved(D,distance_index(g,type="sor"))
-#' is_preserved(D,distance_index(g,type="ros"))
-#' is_preserved(D,distance_index(g,type="pow2"))
-#' is_preserved(D,distance_index(g,type="int"))
 #' @export
 
 positional_dominance <- function(A,map=FALSE,benefit=TRUE){

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hyperbolic.index.R
 \name{hyperbolic_index}
 \alias{hyperbolic_index}
-\title{hyperbolic centrality index}
+\title{Hyperbolic centrality index}
 \usage{
 hyperbolic_index(g, type = "odd")
 }
@@ -17,8 +17,7 @@ a vector containing centrality scores.
 }
 \description{
 The hyperbolic index is a centrality index that considers all closed
-walks of even or odd length on induced neighborhoods of a vertex. Formally
-\deqn{c_{hyp}(u)=\sum_{v \in N[u]} \cosh(A^{[u]})_{vv}}
+walks of even or odd length on induced neighborhoods of a vertex.
 }
 \details{
 The hyperbolic index is a illustrative centrality index that should
@@ -32,7 +31,7 @@ require(igraph)
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-
+hyperbolic_index(g)
 }
 \author{
 David Schoch

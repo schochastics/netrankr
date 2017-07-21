@@ -1,7 +1,7 @@
-#' netrankr: a package for generic centrality analyses. 
+#' netrankr: Network centrality (almost) without indices. 
 #' 
-#' netrankr provides several functions to centrality related analyses in networks. 
-#' The focus lies on methods that do not relay on traditional indices like degree, 
+#' netrankr provides several functions for centrality related analyses of networks. 
+#' The main focus lies on methods that do not rely on indices like degree, 
 #' betweenness or closeness.
 #'
 #' Some notable features of the package are: 
@@ -15,14 +15,16 @@
 #' This class of graphs, known as threshold graphs, can be used to benchmark 
 #' centrality indices, since they only allow for one ranking of the nodes.   
 #' For more details consult the vignette: `vignette("threshold_graph",package="netrankr")`
-#' \item Probabilistic ranking methods. The package includes several function to 
-#' calculate rank probabilities of nodes in a network. These include expected (centrality)
-#' ranks and relative rank probabilities (how likely is it that a node is more central than another)
-#' An extensive example is given in the corresponding vignette
+#' \item Probabilistic centrality. Why applying a handful of indices and choosing
+#' the one that fits best, when it is possible to analyze **all** centrality rankings at once?
+#' The package includes several function to 
+#' calculate rank probabilities of nodes in a network. These include expected ranks and 
+#' relative rank probabilities (how likely is it that a node is more central than another?)
+#' Consult `vignette("probabilistic_cent",package="netrankr")` for more info.
 #' }
 #' 
-#' To learn more about netrankr, start with the vignettes:
-#' `browseVignettes(package = "netrankr")`
+#' The package provides many additional vignettes that explain the functionality 
+#' of netrankr and its conceptual ideas. See `browseVignettes(package = "netrankr")`
 #' 
 #' @docType package
 #' @name netrankr

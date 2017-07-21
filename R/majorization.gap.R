@@ -1,4 +1,4 @@
-#' @title (normalized) Majorization Gap of a Graph
+#' @title Majorization gap of a graph
 #' @description  Calculates the (normalized) majorization gap of a graph. The majorization gap indicates how far the
 #' degree sequence of a graph is from a threshold sequence. 
 #'
@@ -11,8 +11,11 @@
 #' | \{ i : i>k \land d_i\geq k \} |.} 
 #' the majorization gap is then defined as
 #' \deqn{1/2 \sum_{k=1}^n \max\{d'_k - d_k,0\}}
+#' The higher the value, the further away is a graph to be a threshold graph.
 #' @return majorization gap of an undirected graph.
 #' @author David Schoch
+#' @references Schoch, D., Valente, T. W. and Brandes, U., 2017. Correlations among centrality
+#' indices and a class of uniquely ranked graphs. *Social Networks* 50, 46–54.
 #' @examples
 #' require(igraph)
 #' g <- graph.star(5,"undirected")

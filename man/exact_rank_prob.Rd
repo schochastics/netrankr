@@ -2,7 +2,7 @@
 % Please edit documentation in R/rank.analysis.R
 \name{exact_rank_prob}
 \alias{exact_rank_prob}
-\title{Probabilistic ranking}
+\title{Probabilistic centrality}
 \usage{
 exact_rank_prob(P, names = "", only.results = T, verbose = F, force = F)
 }
@@ -11,27 +11,28 @@ exact_rank_prob(P, names = "", only.results = T, verbose = F, force = F)
 
 \item{names}{optional argument for names if P does not have row/column names.}
 
-\item{only.results}{logical. return only results (default) or additionally the ideal tree and lattice should be returned.}
+\item{only.results}{logical. return only results (default) or additionally the ideal tree and lattice if FALSE.}
 
 \item{verbose}{logical. should diagnostics be printed. Defaults to \code{FALSE}.}
 
-\item{force}{logical. If False(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs.
-Only change if you know what you are doing.}
+\item{force}{logical. If FALSE(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs. Only change if you know what you are doing.}
 }
 \value{
 \item{lin.ext}{Number of possible rankings.}
-\item{mse}{Array indicating equivalent nodes.}
-\item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[i,k]} is the probability that i has rank k.}
-\item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[i,j]} is the probability that i is ranked lower than j.}
+\item{mse}{Array giving the equivalence classes of P.}
+\item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[u,k]} is the probability that u has rank k.}
+\item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[u,v]} is the probability that u is ranked lower than v.}
 \item{expected.rank}{Expected ranks of nodes in any centrality ranking.}
 \item{rank.spread}{Variance of the ranking probabilities.}
 \item{topo.order}{Random ranking used to build the lattice of ideals (if \code{only.results=FALSE}).}
 \item{tree}{igraph object. The tree of ideals (if \code{only.results=FALSE}).}
 \item{lattice}{igraph object. The lattice of ideals (if \code{only.results=FALSE}).}
 \item{ideals}{list. order ideals (if \code{only.results=FALSE}).}
+In all cases, higher numerical ranks imply a higher position in the ranking. That is,
+the lowest ranked node has rank 1.
 }
 \description{
-Performs a complete rank analysis of a given partial ranking.
+Performs a complete and exact rank analysis of a given partial ranking.
 This includes rank probabilities, relative rank probabilities and expected ranks.
 }
 \details{
@@ -43,9 +44,18 @@ calculation of expected ranks, (relative) rank probabilities and the number of p
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 P
 res <- exact_rank_prob(P)
+
+#a warning is displayed if only one ranking is possible
+tg <- threshold_graph(20,0.2)
+P <- neighborhood_inclusion(tg)
+res <- exact_rank_prob(P)
+}
+\references{
+De Loof, K., De Meyer, H. and De Baets, B., 2006. Exploiting the
+lattice of ideals representation of a poset. \emph{Fundamenta Informaticae}, 71(2,3):309-321.
 }
 \seealso{
-\link{approx_rank_relative}, \link{approx_rank_expected}
+\link{approx_rank_relative}, \link{approx_rank_expected}, \link{mcmc_rank_prob}
 }
 \author{
 David Schoch, Julian Müller

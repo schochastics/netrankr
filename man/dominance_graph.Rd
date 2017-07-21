@@ -2,23 +2,31 @@
 % Please edit documentation in R/dominance.graph.R
 \name{dominance_graph}
 \alias{dominance_graph}
-\title{Neighborhood Inclusion Graph}
+\title{Directed Comparability Graph}
 \usage{
-dominance_graph(g)
+dominance_graph(P)
 }
 \arguments{
-\item{g}{igraph object}
+\item{P}{Partial ranking as matrix object}
 }
 \value{
-directed igraph object with dominance relations
+igraph object.
 }
 \description{
-Displays the neighborhood inclusion preorder as a directed graph
+Turns a partial ranking into a directed graph.
+}
+\details{
+An edge (u,v) is present if u is dominated by v in P.
 }
 \examples{
 require(igraph)
-g <- erdos.renyi.game(100,0.1)
-d <- dominance_graph(g)
+g <- threshold_graph(20,0.1)
+P <- neighborhood_inclusion(g)
+d <- dominance_graph(P)
+plot(d)
+# to reduce overplotting use transitive reduction
+P <- transitive_reduction(P)
+d <- dominance_graph(P)
 plot(d)
 }
 \author{

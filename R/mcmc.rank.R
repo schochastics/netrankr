@@ -1,20 +1,26 @@
 #' @title Estimate Rankings with MCMC
 #' @description Performs a probabilistic rank analysis based on an almost uniform 
-#' sample of possible rankings that preserve the partial ranking, instead of taking all possibilities
-#' as in [exact_rank_prob].
+#' sample of possible rankings that preserve a partial ranking
 #' @param P a matrix representing a partial ranking.
 #' @param rp integer indicating the number of samples to be drawn.
-#' @details As a rule of thumb, the number of samples should at least be cubic in 
-#' the number of nodes of the network, but the higher the better. 
+#' @details This function can be used instead of [exact_rank_prob]
+#' if the number of nodes is too large for an exact computation. As a rule of thumb, 
+#' the number of samples should be at least cubic in the number of nodes of the network. 
 #' 
-#' @return data frame containing approximated expected ranks and relative rank probabilities.
+#' @return 
+#' \item{expected.rank}{Estimated expected ranks of nodes}
+#' \item{relative.rank}{Matrix containing estimated relative rank probabilities:
+#' \code{relative.rank[u,v]} is the probability that u is ranked lower than v.}
 #' 
-#' #' @seealso [exact_rank_prob], [approx_rank_relative], [approx_rank_expected]
+#' @references Bubley, R. and Dyer, M., 1999. Faster random generation of linear extensions. 
+#' *Discrete Mathematics*, 201(1):81-88
+#' 
+#' @seealso [exact_rank_prob], [approx_rank_relative], [approx_rank_expected]
 #' @author David Schoch
 #' @examples
-#' ###TODO
+#' # Will be added in later version
 #' @export
-mcmc_rank_prob <- function(P,rp=10000){
+mcmc_rank_prob <- function(P,rp=nrow(P)^3){
   n.full <- nrow(P)
   MSE <- which((P+t(P))==2,arr.ind=T)
   if(length(MSE)>=1){
@@ -48,6 +54,6 @@ mcmc_rank_prob <- function(P,rp=10000){
       rrp.full[idx,] <- res$rrp[i,MSE]
     }
   }
-  return(list(expected=expected.full,rrp=rrp.full))
+  return(list(expected.rank=expected.full,relative.rank=rrp.full))
 }
 

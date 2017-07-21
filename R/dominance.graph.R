@@ -1,17 +1,22 @@
-#' @title Neighborhood Inclusion Graph
-#' @description Displays the neighborhood inclusion preorder as a directed graph
+#' @title Directed Comparability Graph
+#' @description Turns a partial ranking into a directed graph.
 #'
-#' @param g igraph object
-#' @return directed igraph object with dominance relations
+#' @param P Partial ranking as matrix object
+#' @return igraph object.
+#' @details An edge (u,v) is present if u is dominated by v in P.
 #' @author David Schoch
 #' @examples
 #' require(igraph)
-#' g <- erdos.renyi.game(100,0.1)
-#' d <- dominance_graph(g)
+#' g <- threshold_graph(20,0.1)
+#' P <- neighborhood_inclusion(g)
+#' d <- dominance_graph(P)
+#' plot(d)
+#' # to reduce overplotting use transitive reduction
+#' P <- transitive_reduction(P)
+#' d <- dominance_graph(P)
 #' plot(d)
 #' @export
-dominance_graph <- function(g){
-  P <- neighborhood_inclusion(g)
+dominance_graph <- function(P){
   d <- igraph::graph_from_adjacency_matrix(P,"directed")
   if(!is.null(igraph::V(g)$name)){
     igraph::V(d)$name <- igraph::V(g)$name

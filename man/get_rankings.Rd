@@ -15,7 +15,7 @@ is run with \code{only.results=FALSE}}
 
 \item{topo.order}{topological order used in \link{exact_rank_prob}}
 
-\item{linext}{number of possible rankings. returned by exact_rank_prob}
+\item{linext}{number of possible rankings. returned by \link{exact_rank_prob}}
 
 \item{mse}{equivalence classes of rankings. returned by \link{exact_rank_prob}}
 
@@ -26,7 +26,11 @@ Only change to TRUE if you know what you are doing}
 a matrix containing all ranking positions of nodes
 }
 \description{
-Returns all possible rankings of a partial ranking using the lattice of ideals.
+Returns all possible rankings of a partial ranking.
+}
+\details{
+The ith row of the matrix contains the rank of node i in all possible rankings
+that are in accordance with the partial ranking P.
 }
 \examples{
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)

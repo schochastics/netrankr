@@ -1,7 +1,6 @@
-#' @title hyperbolic centrality index
+#' @title Hyperbolic centrality index
 #' @description The hyperbolic index is a centrality index that considers all closed 
-#' walks of even or odd length on induced neighborhoods of a vertex. Formally 
-#' \deqn{c_{hyp}(u)=\sum_{v \in N[u]} \cosh(A^{[u]})_{vv}} 
+#' walks of even or odd length on induced neighborhoods of a vertex.
 #' @param g igraph object. 
 #' @param type string. "even" if only even length walks should be considered. "odd" (Default)
 #' if only odd length walks should be used.
@@ -17,7 +16,7 @@
 #' g <- graph.empty(n=11,directed = FALSE)
 #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-#' 
+#' hyperbolic_index(g)
 #' @export
 hyperbolic_index <- function(g,type="odd"){
   n <- igraph::vcount(g)
@@ -42,7 +41,7 @@ hyperbolic_index <- function(g,type="odd"){
       eig.decomp <- eigen(C,symmetric=TRUE)
       V <- (eig.decomp$vectors)^2
       lambda <- eig.decomp$values
-      ENW[v] <- sum(V%*%sinh(lambda))*igraph::graph.density(g1)   #cosh(x)
+      ENW[v] <- sum(V%*%sinh(lambda))*igraph::graph.density(g1)   #sinh(x)
     }
   }
   else{

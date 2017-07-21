@@ -16,8 +16,8 @@ a list containing
 \item{concordant}{number of concordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}>\code{y[j]}}
 \item{discordant}{number of discordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}<\code{y[j]}}
 \item{ties}{number of tied pairs:  \code{x[i]}=\code{x[j]} and \code{y[i]}=\code{y[j]}}
-\item{left}{number of left: \code{x[i]}=\code{x[j]} and \code{y[i]}!=\code{y[j]}}
-\item{right}{number of right: \code{x[i]}!=\code{x[j]} and \code{y[i]}=\code{y[j]}}
+\item{left}{number of left ties: \code{x[i]}=\code{x[j]} and \code{y[i]}!=\code{y[j]}}
+\item{right}{number of right ties: \code{x[i]}!=\code{x[j]} and \code{y[i]}=\code{y[j]}}
 }
 \description{
 Counts the number of Concordant, Discordant and (Left/Right) Ties between two rankings.
@@ -33,8 +33,8 @@ tg <- threshold_graph(100,0.2)
 compare_ranks(degree(tg),closeness(tg)) #only concordant pairs
 compare_ranks(degree(tg),betweenness(tg)) #no discordant pairs
 ## Rank Correlation
-cor(degree(tg),closeness(tg)) #1
-cor(degree(tg),betweenness(tg)) #not 1, although no discordant pairs
+cor(degree(tg),closeness(tg),method="kendall") #1
+cor(degree(tg),betweenness(tg),method="kendall") #not 1, although no discordant pairs
 }
 \author{
 David Schoch

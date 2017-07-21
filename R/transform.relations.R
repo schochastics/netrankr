@@ -11,7 +11,7 @@
 #' 
 #' The following functions are implemented: 
 #' 
-#' `dist_2pow` returns \eqn{2^-x}
+#' `dist_2pow` returns \eqn{2^{-x}}
 #' 
 #' `dist_inv` returns \eqn{1/x}
 #'  

@@ -19,7 +19,7 @@ indirect_relations(g, type = "geodesic", FUN = identity, ...)
 a matrix containing indirect relations in a network.
 }
 \description{
-Derive indirect relations like distances for a given network.
+Derive indirect relations (like geodesic distances) for a given network.
 }
 \details{
 The \code{type} parameter has the following options.

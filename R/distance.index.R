@@ -21,19 +21,19 @@
 #' d_sor <- distance_index(g,type="sor")
 #' compare_ranks(d_ros,d_sor) #compare rankings
 #' @export
-distance_index <- function(g,type="ros",alpha=1){
-  D <- igraph::distances(g)
-  diam <- igraph::diameter(g)
-  switch(type,
-         ros={1/rowSums(D)},
-         sor={R=1/D
-         diag(R)=0
-         rowSums(R)},
-         dpow={R=(D^-alpha)
-         diag(R)=0
-         rowSums(R)},
-         powd={rowSums(alpha^D)},
-         int={rowSums(1-(D-1)/diam)},
-         pow2={rowSums(2^-D)}
-  )         
-}
+# distance_index <- function(g,type="ros",alpha=1){
+#   D <- igraph::distances(g)
+#   diam <- igraph::diameter(g)
+#   switch(type,
+#          ros={1/rowSums(D)},
+#          sor={R=1/D
+#          diag(R)=0
+#          rowSums(R)},
+#          dpow={R=(D^-alpha)
+#          diag(R)=0
+#          rowSums(R)},
+#          powd={rowSums(alpha^D)},
+#          int={rowSums(1-(D-1)/diam)},
+#          pow2={rowSums(2^-D)}
+#   )         
+# }
