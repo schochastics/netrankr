@@ -4,10 +4,13 @@
 \alias{positional_dominance}
 \title{Generalized Dominance in Graphs}
 \usage{
-positional_dominance(A, map = FALSE, benefit = TRUE)
+positional_dominance(A, type = "one-mode", map = FALSE, benefit = TRUE)
 }
 \arguments{
 \item{A}{matrix containing attributes or relations}
+
+\item{type}{string. Either "one-mode" (default) if \code{A} is a regular one-mode network
+or "two-mode" if \code{A} is a general data matrix.}
 
 \item{map}{boolean if rows can be sorted or not (default)}
 

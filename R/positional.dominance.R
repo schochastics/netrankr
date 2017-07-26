@@ -2,6 +2,8 @@
 #' @description generalized dominance relations. 
 #'
 #' @param A matrix containing attributes or relations
+#' @param type string. Either "one-mode" (default) if \code{A} is a regular one-mode network
+#' or "two-mode" if \code{A} is a general data matrix. 
 #' @param map boolean if rows can be sorted or not (default)
 #' @param benefit boolean if higher values(default) or lower values are better
 #' @details Positional dominance is a generalization of neighborhood-inclusion for 
@@ -41,8 +43,16 @@
 #' 
 #' @export
 
-positional_dominance <- function(A,map=FALSE,benefit=TRUE){
- 
-  D <- matdom(A,map,benefit)
+positional_dominance <- function(A,type="one-mode",map=FALSE,benefit=TRUE){
+  if(grepl("one",type)){
+    D <- matdom(A,map,benefit)
+  }
+  else if(grepl("two",type)){ #should be implemented in C++
+    fct<-function(x,y) all(x<=y)+0
+    vecfct<-Vectorize(fct)
+    r.rows <- split(A, row(A))
+    D <- outer(r.rows,r.rows,vecfct)
+    diag(D) <- 0
+  }
   return(D)
 }
