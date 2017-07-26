@@ -59,7 +59,7 @@ Yet the results might not be interpretable.
 
 The following functions are implemented:
 
-\code{dist_2pow} returns \eqn{2^-x}
+\code{dist_2pow} returns \eqn{2^{-x}}
 
 \code{dist_inv} returns \eqn{1/x}
 
