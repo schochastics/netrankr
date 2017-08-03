@@ -1,7 +1,5 @@
 ---
 title: "Indirect relations in networks"
-author: "David Schoch"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{04 indirect relations in networks}
@@ -11,6 +9,8 @@ vignette: >
 
 This vignette describes the importance of indirect relations on networks, how 
 they are used in centrality indices and how they are implemented in the `netrankr` package.
+
+________________________________________________________________________________
 
 ## Theoretical Background
 A one-mode network can be described as a *dyadic variable* $x\in \mathcal{W}^\mathcal{D}$,
@@ -43,7 +43,7 @@ can be found in [Brandes (2016)](http://dx.doi.org/10.1177/2059799116630650) or
 With this framework, all centrality indices can be characterized as degree-like 
 measures in a suitably transformed network $\tau(x)$. 
 
-
+________________________________________________________________________________
 
 ## Indirect relations in the `netrankr` package
 

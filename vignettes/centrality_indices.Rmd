@@ -1,7 +1,5 @@
 ---
 title: "Centrality indices"
-author: "David Schoch"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{05 centrality indices}
@@ -15,7 +13,10 @@ however, that the primary purpose of the netrankr package is **not** to provide 
 variety of indices, but to offer alternative methods for centrality assessment. 
 Consult the tutorial and this vignette, before starting trial-and-error usage of indices.
 
+________________________________________________________________________________
+
 ## Theoretical Background
+
 A one-mode network can be described as a *dyadic variable* $x\in \mathcal{W}^\mathcal{D}$,
 where $\mathcal{W}$ is the value range of the network (in the simple case of 
 unweighted networks $\mathcal{W}=\{0,1\}$) and $\mathcal{D}=\mathcal{N}\times\mathcal{N}$ 
@@ -51,6 +52,8 @@ $$
 \text{transformation}\;(\tau(x)) \longrightarrow 
 \text{aggregation}\;(e.g. \sum_j \tau(x)_{ij})
 $$
+
+________________________________________________________________________________
 
 ## Building indices with the `netrankr` package
 

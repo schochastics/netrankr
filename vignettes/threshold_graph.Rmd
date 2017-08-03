@@ -1,7 +1,5 @@
 ---
 title: "Uniquely ranked graphs"
-author: "David Schoch"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{02 uniquely ranked graphs}
@@ -11,6 +9,8 @@ vignette: >
 
 This vignette introduces *threshold graphs*, a class of graphs with a unique centrality ranking and
 relevant functions from the `netrankr` package to work with this class of graphs. 
+
+________________________________________________________________________________
 
 ## Theoretical Background
 
@@ -23,6 +23,8 @@ According to [this](neighborhood_inclusion.html) vignette, it is thus clear that
 
 > Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
 and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
+
+________________________________________________________________________________
 
 ## Uniquely Ranked Graphs in the `netrankr` Package
 

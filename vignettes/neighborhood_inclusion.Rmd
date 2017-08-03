@@ -1,7 +1,5 @@
 ---
 title: "Neighborhood-inclusion in networks"
-author: "David Schoch"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{01 neighborhood-inclusion and centrality}
@@ -16,7 +14,10 @@ The partial ranking induced by neighborhood-inclusion can be used to assess
 [partial centrality](partial_centrality.html) or compute 
 [probabilistic centrality](probabilistic_cent.html).
 
+________________________________________________________________________________
+
 ## Theoretical Background
+
 In an undirected graph $G=(V,E)$, the *neighborhood* of a node $u \in V$ is defined as
 $$N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace$$
 and its *closed neighborhood* as $N[v]=N(v) \cup \lbrace v \rbrace$. If the 
@@ -44,6 +45,8 @@ considerations. These and more can be found in
 > Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks.
 *European Journal of Appplied Mathematics*, **27**(6), 971–985.
 ([link](https://doi.org/10.1017/S0956792516000401))
+
+________________________________________________________________________________
 
 ## Neighborhood-inclusion in the `netrankr` Package
 

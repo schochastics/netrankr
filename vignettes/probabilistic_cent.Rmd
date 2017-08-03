@@ -1,7 +1,5 @@
 ---
 title: "Probabilistic Centrality"
-author: "David Schoch"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{07 probabilistic centrality}
@@ -15,6 +13,8 @@ from [neighborhood-inclusion](neighborhood_inclusion.html) or, more general,
 [positional dominance](positional_dominance.html) is needed. In this vignette we 
 focus on neighborhood-inclusion but note that all considered methods are readily
 applicable for positional dominance. For more examples consult the tutorial.
+
+________________________________________________________________________________
 
 ## Theoretical Background
 
@@ -52,6 +52,8 @@ Probabilities in Networks. *submitted*
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width=5,fig.align = 'center')
 ```
+
+________________________________________________________________________________
 
 ## Exact Probabilities in the `netrankr` Package
 ```{r setup, warning=FALSE,message=FALSE}

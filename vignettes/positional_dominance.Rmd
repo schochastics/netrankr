@@ -1,7 +1,5 @@
 ---
 title: "Positional dominance in networks"
-author: "David Schoch"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{03 positional dominance in networks}
@@ -15,6 +13,8 @@ attribute data. Additionally, some use cases with the `netrankr` package are giv
 The partial ranking induced by positional dominance can be used to assess 
 [partial centrality](partial_centrality.html) or compute
 [probabilistic centrality](probabilistic_cent.html).
+
+________________________________________________________________________________
 
 ## Theoretical Background
 
@@ -49,6 +49,8 @@ More about the positional dominance and the positional approach to network analy
 > Brandes, Ulrik. (2016). Network Positions.
 *Methodological Innovations*, **9**, 2059799116630650.
 ([link](http://dx.doi.org/10.1177/2059799116630650))
+
+________________________________________________________________________________
 
 ## Positional Dominance in the `netrankr` Package
 

@@ -1,7 +1,5 @@
 ---
 title: "Partial Centrality"
-author: "David Schoch"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{06 partial centrality}
@@ -24,6 +22,8 @@ and linear extensions: Multi-criterion ranking and prioritization.
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width=5,fig.align = 'center')
 ```
+
+________________________________________________________________________________
 
 ## Rank intervals
 
