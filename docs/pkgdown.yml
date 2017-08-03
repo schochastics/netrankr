@@ -1,0 +1,12 @@
+urls:
+  reference: https://github.com/schochastics/netrankr/reference
+  article: https://github.com/schochastics/netrankr/articles
+articles:
+  centrality_indices: centrality_indices.html
+  indirect_relations: indirect_relations.html
+  neighborhood_inclusion: neighborhood_inclusion.html
+  partial_centrality: partial_centrality.html
+  positional_dominance: positional_dominance.html
+  probabilistic_cent: probabilistic_cent.html
+  threshold_graph: threshold_graph.html
+
