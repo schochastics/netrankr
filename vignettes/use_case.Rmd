@@ -1,0 +1,109 @@
+---
+title: "Use Case: Florentine Families"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{07 use case}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette describes a typical use case of the `netrankr` packages. It contrasts
+the usual centrality analysis based on indices with the dominance based assessment.
+
+________________________________________________________________________________
+
+
+## Setup
+[Padget & Ansell, 1993](http://www.journals.uchicago.edu/doi/abs/10.1086/230190)
+
+```{r setup, warning=FALSE,message=FALSE}
+library(igraph)
+library(netrankr)
+library(magrittr)
+library(ggplot2)
+data("florentine_m")
+#Delete Pucci family (isolated)
+florentine_m <- delete_vertices(florentine_m,which(degree(florentine_m)==0))
+```
+
+```{r plot,fig.height=5,fig.width=5,fig.align='center'}
+#plot the graph
+set.seed(111)
+plot(florentine_m,
+     vertex.label.cex=V(florentine_m)$wealth*0.01,
+     vertex.label.color="black",
+     vertex.color="white",
+     vertex.frame.color="gray")
+```
+
+________________________________________________________________________________
+
+## Most central family
+
+```{r cent}
+cent.df <- data.frame(
+  degree=degree(florentine_m),
+  betweenness=betweenness(florentine_m),
+  closeness=closeness(florentine_m),
+  eigenvector=eigen_centrality(florentine_m)$vector,
+  subgraph=subgraph_centrality(florentine_m))
+
+# most central family according to the 5 indices
+V(florentine_m)$name[apply(cent.df,2,which.max)]
+```
+
+In all cases, the Medici are considered to be the most central family. However,
+we can also find an index that ranks other families on top.
+
+```{r cent_new}
+#odd subgraph centrality
+sc_odd <- florentine_m %>% 
+  indirect_relations(type = "walks",FUN = walks_exp_odd) %>% 
+  aggregate_positions(type = "self")
+
+#family with highest score 
+V(florentine_m)$name[which.max(sc_odd)]
+```
+
+```{r ni}
+P <- neighborhood_inclusion(florentine_m)
+comparable_pairs(P)
+```
+
+```{r dom_graph,fig.height=5,fig.width=5,fig.align='center'}
+d <- dominance_graph(P)
+V(d)$name <- V(florentine_m)$name
+set.seed(113)
+plot(d,vertex.label.color="black",
+     vertex.color="white",
+     vertex.frame.color="gray",
+     edge.arrow.size=0.5)
+```
+
+```{r probs}
+res <- exact_rank_prob(P,names=V(florentine_m)$name)
+str(res)
+```
+There are `r format(res$lin.ext,scientific = F,big.mark = ",")` different possibilities to rank
+the families.
+
+```{r likely_most_central}
+top_rank_prob <- res$rank.prob[,15]
+names(top_rank_prob) <- V(florentine_m)$name
+round(top_rank_prob[top_rank_prob>0],3)
+```
+Highest prob for Strozzi
+
+________________________________________________________________________________
+
+## Hypothesis
+
+Can proximity explain wealth?
+
+Index approach
+```{r dist_vs_wealth}
+florentine_m %>% 
+  indirect_relations(type="geodesic",FUN=dist_inv) %>% 
+  aggregate_positions(type="sum")
+
+```
