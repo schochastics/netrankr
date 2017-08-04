@@ -114,7 +114,7 @@ the following code can be used:
 ```{r closeness_variant, eval=F}
 #harmonic closeness
 g %>% 
-  indirect_relations(g,type="geodesic",FUN=dist_inv) %>% 
+  indirect_relations(type="geodesic",FUN=dist_inv) %>% 
   aggregate_positions(type="sum")
 ```
 
@@ -123,22 +123,17 @@ The distance based indices constitute one of the biggest groups of indices in th
 ```{r distance indices,eval=F}
 #residual closeness (Dangalchev,2006)
 g %>% 
-  indirect_relations(g,type="geodesic",FUN=dist_2pow) %>% 
+  indirect_relations(type="geodesic",FUN=dist_2pow) %>% 
   aggregate_positions(type="sum")
 
 #generalized closeness (Agneessens et al.,2017) (alpha>0)
 g %>% 
-  indirect_relations(g,type="geodesic",FUN=dist_dpow,alpha=2) %>% 
-  aggregate_positions(type="sum")
-
-#residual closeness (Agneessens et al.,2017) (alpha>0)
-g %>% 
-  indirect_relations(g,type="geodesic",FUN=dist_dpow,alpha=2) %>% 
+  indirect_relations(type="geodesic",FUN=dist_dpow,alpha=2) %>% 
   aggregate_positions(type="sum")
 
 #decay centrality (Jackson, 2010) (alpha in [0,1])
 g %>% 
-  indirect_relations(g,type="geodesic",FUN=dist_powd,alpha=0.7) %>% 
+  indirect_relations(type="geodesic",FUN=dist_powd,alpha=0.7) %>% 
   aggregate_positions(type="sum")
 
 #integration centrality (Valente & Foreman, 1998)
@@ -146,7 +141,7 @@ dist_integration <- function(x){
   x <- 1 - (x - 1)/max(x)
 }
 g %>% 
-  indirect_relations(g,type="geodesic",FUN=dist_integration) %>% 
+  indirect_relations(type="geodesic",FUN=dist_integration) %>% 
   aggregate_positions(type="sum")
 
 ```
