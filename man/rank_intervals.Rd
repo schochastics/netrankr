@@ -21,7 +21,7 @@ It is simply the mid point between \code{min_rank} and \code{max_rank}.
 }
 \examples{
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
-rank_intervals(P)
+\dontrun{rank_intervals(P)}
 }
 \seealso{
 \link{exact_rank_prob}

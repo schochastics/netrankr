@@ -17,12 +17,15 @@
 #' @examples
 #' require(igraph)
 #' g <- threshold_graph(10,0.3)
-#' plot(g)
+#' \dontrun{plot(g)}
+#' 
 #' # star graphs and complete graphs are threshold graphs
 #' complete <- threshold_graph(10,1) #complete graph
-#' plot(complete)
+#' \dontrun{plot(complete)}
+#' 
 #' star <- threshold_graph(10,0) #star graph
-#' plot(star)
+#' \dontrun{plot(star)}
+#' 
 #' # Centrality scores are perfectly rank correlated
 #' cor(degree(g),closeness(g),method="kendall")
 #' @export
