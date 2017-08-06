@@ -9,7 +9,7 @@ vignette: >
 
 This vignette describes a typical use case of the `netrankr` packages. It contrasts
 the usual centrality analysis based on indices with the dominance based assessment.
-
+It is advisable to read the other vignettes before going through this example.
 ________________________________________________________________________________
 
 
@@ -102,8 +102,74 @@ Can proximity explain wealth?
 
 Index approach
 ```{r dist_vs_wealth}
-florentine_m %>% 
+
+#Closeness
+c_C <- florentine_m %>% 
+  indirect_relations(type="geodesic") %>% 
+  aggregate_positions(type="invsum")
+
+#harmonic closeness
+c_HC <- florentine_m %>% 
   indirect_relations(type="geodesic",FUN=dist_inv) %>% 
   aggregate_positions(type="sum")
 
+cor(c_C,V(florentine_m)$wealth,method="kendall")
+cor(c_HC,V(florentine_m)$wealth,method="kendall")
 ```
+
+There doesn't seem to be much evidence, yet there are several additional distance based
+indices!
+
+```{r dist_vs_wealth2}
+#residual closeness (Dangalchev,2006)
+c_RC <- florentine_m %>% 
+  indirect_relations(type="geodesic",FUN=dist_2pow) %>% 
+  aggregate_positions(type="sum")
+
+#integration centrality (Valente & Foreman, 1998)
+dist_integration <- function(x){
+  x <- 1 - (x - 1)/max(x)
+}
+c_IN <- florentine_m %>% 
+  indirect_relations(type="geodesic",FUN=dist_integration) %>% 
+  aggregate_positions(type="sum")
+
+cor(c_RC,V(florentine_m)$wealth,method="kendall")
+cor(c_IN,V(florentine_m)$wealth,method="kendall")
+```
+
+There are also some indices with parameters to maximize correlation.
+
+```{r distalpha_wealth,warning=FALSE}
+#generalized closeness (Agneessens et al.,2017) (alpha>0)
+alpha <- c(seq(0.01,0.99,0.01),seq(1,10,0.1))
+scores <- 
+sapply(alpha,function(x)
+    florentine_m %>% 
+      indirect_relations(type="geodesic",FUN=dist_dpow,alpha=x) %>% 
+      aggregate_positions(type="sum")
+)
+cors <- apply(scores,2,
+              function(x)cor(x,V(florentine_m)$wealth,method="kendall"))
+
+res_gc <- c(max(cors),alpha[which.max(cors)])
+
+#decay centrality (Jackson, 2010) (alpha in [0,1])
+alpha <- seq(0.01,0.99,0.01)
+scores <- 
+sapply(alpha,function(x)
+  florentine_m %>% 
+    indirect_relations(type="geodesic",FUN=dist_powd,alpha=x) %>% 
+    aggregate_positions(type="sum")
+)
+cors <- apply(scores,2,
+              function(x)cor(x,V(florentine_m)$wealth,method="kendall"))
+
+res_dc <- c(max(cors),alpha[which.max(cors)])
+```
+
+The highest correlation for generalized closeness is `r res_gc[1]` achieved for 
+alpha= `r res_gc[2]`  
+
+The highest correlation for decay centrality is `r res_dc[1]` achieved for 
+alpha=`r res_dc[2]`
