@@ -38,7 +38,12 @@ plot(florentine_m,
 
 ________________________________________________________________________________
 
-## Most central family
+## Most central family (Index approach)
+
+The network is often used to benchmark new centrality indices. The premise is that
+the Medici should always emerge as one of the most central once (if not **the** most central).  
+
+We start by applying some of the standard centrality indices given in the `igraph` package.
 
 ```{r cent}
 cent.df <- data.frame(
@@ -53,22 +58,48 @@ V(florentine_m)$name[apply(cent.df,2,which.max)]
 ```
 
 In all cases, the Medici are considered to be the most central family. However,
-we can also find an index that ranks other families on top.
+it is possible to find indices that rank other families on top. An example is
+*odd subgraph centrality*, which can be assembled with the `netrankr` package.
 
 ```{r cent_new}
 #odd subgraph centrality
 sc_odd <- florentine_m %>% 
   indirect_relations(type = "walks",FUN = walks_exp_odd) %>% 
   aggregate_positions(type = "self")
-
+rank(sc_odd)
 #family with highest score 
 V(florentine_m)$name[which.max(sc_odd)]
 ```
 
+In this example, the Strozzi family are considered to be the most central family
+and the Medici are ranked third.
+
+Although we have found $5$ indices that consider the Medici the most central family,
+we can not guarantee, that there do not exist hundreds (or thousands?) of indices
+that would give an entirely different result. 
+
+________________________________________________________________________________
+
+## Most central family (Probabilistic approach)
+
+We start by calculating the neighborhood-inclusion preorder, that is the most rudimentary
+requirenment for any centrality index.
+
 ```{r ni}
 P <- neighborhood_inclusion(florentine_m)
+```
+
+With the function `comparable_pairs()` we can assess how many pairs of families are already
+ordered, before applying any index.
+```{r ni_comp}
 comparable_pairs(P)
 ```
+
+Only around `r round(comparable_pairs(P)*100,0)`% of pairs of families are comparable,
+leaving `r 100-round(comparable_pairs(P)*100,0)`% of pairs of families that could be 
+ordered (basically) arbitrarily.
+
+If we want to visually assess the dominance relations we can use the function `dominance_graph()`.
 
 ```{r dom_graph,fig.height=5,fig.width=5,fig.align='center'}
 d <- dominance_graph(P)
@@ -79,6 +110,12 @@ plot(d,vertex.label.color="black",
      vertex.frame.color="gray",
      edge.arrow.size=0.5)
 ```
+
+The Castellan family neither dominates nor is dominated by any other family. This means, that we
+can find indices that potentially rank them on top or on the bottom, or anything in between.
+
+To better assess the potential ranks of nodes, we can plot the rank intervals with
+`plot_rank`
 
 ```{r probs}
 res <- exact_rank_prob(P,names=V(florentine_m)$name)
@@ -169,7 +206,7 @@ res_dc <- c(max(cors),alpha[which.max(cors)])
 ```
 
 The highest correlation for generalized closeness is `r res_gc[1]` achieved for 
-alpha= `r res_gc[2]`  
+$\alpha$= `r res_gc[2]`  
 
 The highest correlation for decay centrality is `r res_dc[1]` achieved for 
-alpha=`r res_dc[2]`
+$\alpha$=`r res_dc[2]`
