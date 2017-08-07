@@ -82,7 +82,7 @@ ________________________________________________________________________________
 
 ## Most central family (Probabilistic approach)
 
-We start by calculating the neighborhood-inclusion preorder, that is the most rudimentary
+We start by calculating the neighborhood-inclusion preorder, that is, the most rudimentary
 requirenment for any centrality index.
 
 ```{r ni}
@@ -115,21 +115,63 @@ The Castellan family neither dominates nor is dominated by any other family. Thi
 can find indices that potentially rank them on top or on the bottom, or anything in between.
 
 To better assess the potential ranks of nodes, we can plot the rank intervals with
-`plot_rank`
+`plot_rank_intervals()`
+
+```{r rk_inter,fig.align='center',fig.width=5,fig.height=5}
+plot_rank_intervals(P,names=V(florentine_m)$name)
+```
+
+Observe how big the intervals are, indicating that there is ample scope to rank the
+families differently. These intervals, however, only give us a rough estimate of this
+arbitrariness and does not give us any rank probabilities. To get all exact probabilities,
+we use the function `exact_rank_prob()`.
 
 ```{r probs}
 res <- exact_rank_prob(P,names=V(florentine_m)$name)
-str(res)
+
 ```
 There are `r format(res$lin.ext,scientific = F,big.mark = ",")` different possibilities to rank
-the families.
+the families! (*the value is stored in `res$lin.ext`. *). This means that theoretically, we
+can find almost 4 Billion indices that rank the families differently. 
+
+The *rank probabilities* of families can be found in `res$rank.prob`. They are returned 
+as a matrix where rows are families and columns are ranks. That is, an entry in 
+row $u$ and column $k$ gives the probability that $u$ has rank $k$ (larger $k$ indicate higher ranks)
+Mostly, you will be interested in the probability to be the most central node of a network.
+Below, we calculate these probability for all families and return the one's that have
+a higher probability than $0.1*$.
 
 ```{r likely_most_central}
 top_rank_prob <- res$rank.prob[,15]
 names(top_rank_prob) <- V(florentine_m)$name
-round(top_rank_prob[top_rank_prob>0],3)
+round(top_rank_prob[top_rank_prob>0.1],3)
 ```
-Highest prob for Strozzi
+
+The Strozzi family, with $0.13$, has the highest probability to be top ranked, followed
+by the Medici with $0.12$. 
+
+If we are only interested in a subset of nodes, in our case maybe the Strozzi and Medici,
+we can assess the *relative rank probabilities* in `res$relative.rank`. Again, 
+probabilities are returned as matrix objects, where an entry in row $u$ and column $v$
+gives the probability that $u$ is ranked below $v$. Below we calculate this probability
+for the Strozzi and Medici.
+
+```{r medici_strozzi,eval=TRUE}
+id_strozzi <- which(V(florentine_m)$name=="Strozzi") 
+id_medici  <- which(V(florentine_m)$name=="Medici")
+res$relative.rank[id_strozzi,id_medici]
+```
+
+The probability that the Strozzi are less central than the Medici is 
+`r round(res$relative.rank[id_strozzi,id_medici],2)` and thus very close to a "fifty-fifty" chance.
+
+The last result of interest returned by `exact_rank_prob()` are the *expected ranks* in
+`res$expected.rank`. The expected ranks, as the name indicates, returns the ranks that we
+expect families to have in a valid centrality ranking.
+
+```{r exp_rank}
+res$expected.rank
+```
 
 ________________________________________________________________________________
 
