@@ -123,7 +123,7 @@ plot_rank_intervals(P,names=V(florentine_m)$name)
 
 Observe how big the intervals are, indicating that there is ample scope to rank the
 families differently. These intervals, however, only give us a rough estimate of this
-arbitrariness and does not give us any rank probabilities. To get all exact probabilities,
+arbitrariness and not any rank probabilities. To get all exact probabilities,
 we use the function `exact_rank_prob()`.
 
 ```{r probs}
@@ -139,7 +139,7 @@ as a matrix where rows are families and columns are ranks. That is, an entry in
 row $u$ and column $k$ gives the probability that $u$ has rank $k$ (larger $k$ indicate higher ranks)
 Mostly, you will be interested in the probability to be the most central node of a network.
 Below, we calculate these probability for all families and return the one's that have
-a higher probability than $0.1*$.
+a higher probability than $0.1$.
 
 ```{r likely_most_central}
 top_rank_prob <- res$rank.prob[,15]
@@ -167,11 +167,18 @@ The probability that the Strozzi are less central than the Medici is
 
 The last result of interest returned by `exact_rank_prob()` are the *expected ranks* in
 `res$expected.rank`. The expected ranks, as the name indicates, returns the ranks that we
-expect families to have in a valid centrality ranking.
+expect families to have in a centrality ranking.
 
-```{r exp_rank}
-res$expected.rank
+```{r exp_rank,echo=FALSE}
+tab <- data.frame(Name=V(florentine_m)$name,Expected=round(res$expected.rank,2))
+tab <- tab[order(tab[,2],decreasing=TRUE),]
+knitr::kable(tab,row.names = F)
 ```
+
+Although the Strozzi have a higher probability to be the most central family, over all we still
+expect the Medici to be the most central.  
+
+This general 
 
 ________________________________________________________________________________
 
