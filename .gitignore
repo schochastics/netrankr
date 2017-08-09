@@ -6,3 +6,4 @@ netrankr.Rproj
 src/*.o
 src/*.so
 inst/doc
+logo.xcf
