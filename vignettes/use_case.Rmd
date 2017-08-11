@@ -80,7 +80,7 @@ that would give an entirely different result.
 
 ________________________________________________________________________________
 
-## Most central family (Probabilistic approach)
+## Most central family (Dominance approach)
 
 We start by calculating the neighborhood-inclusion preorder, that is, the most rudimentary
 requirenment for any centrality index.
@@ -178,35 +178,42 @@ knitr::kable(tab,row.names = F)
 Although the Strozzi have a higher probability to be the most central family, over all we still
 expect the Medici to be the most central.  
 
-This general 
-
+This very general assessment gives us a general idea of the scope of potential centrality
+analyses. The more possible rankings we have (as in this case!) the more unreliable an
+index driven approach can be. We will explore this in more detail in the following section. 
 ________________________________________________________________________________
 
-## Hypothesis
+## Centrality as explanatory variable (Index approach)
 
-Can proximity explain wealth?
+Usually, we are not simply interested in a ranking of nodes, but we rather would 
+like to use centrality to explain certain node attributes. In our case, we might 
+be interested in the question: "can an index explain the wealth of families?", or if
+we already have a more concrete idea "can proximity to other families explain the wealth attribute?" 
 
-Index approach
-```{r dist_vs_wealth}
+"Proximity" can be translated to the graph-theoretic concept of geodesic distances, 
+such that closeness centrality would be an adequat candidate as an index. We here
+use the pipelined approach of the `netrankr` package instead of the `closeness()`
+function of `igraph`. The reasons will become evident in the next section.
+
+```{r closeness_vs_wealth}
 
 #Closeness
 c_C <- florentine_m %>% 
   indirect_relations(type="geodesic") %>% 
   aggregate_positions(type="invsum")
 
+cor(c_C,V(florentine_m)$wealth,method="kendall")
+```
+
+The correlation between closeness and wealth (`r round(cor(c_C,V(florentine_m)$wealth,method="kendall"),4)`) is far to low to constitute that "proximity" is related to wealth. However, there 
+exist various other indices, that are based on the geodesic distances in a graph.
+We exclude the mathematical definitions. Refer to the literature for more details.
+
+```{r harmclos_wealth}
 #harmonic closeness
 c_HC <- florentine_m %>% 
   indirect_relations(type="geodesic",FUN=dist_inv) %>% 
   aggregate_positions(type="sum")
-
-cor(c_C,V(florentine_m)$wealth,method="kendall")
-cor(c_HC,V(florentine_m)$wealth,method="kendall")
-```
-
-There doesn't seem to be much evidence, yet there are several additional distance based
-indices!
-
-```{r dist_vs_wealth2}
 #residual closeness (Dangalchev,2006)
 c_RC <- florentine_m %>% 
   indirect_relations(type="geodesic",FUN=dist_2pow) %>% 
@@ -220,14 +227,22 @@ c_IN <- florentine_m %>%
   indirect_relations(type="geodesic",FUN=dist_integration) %>% 
   aggregate_positions(type="sum")
 
-cor(c_RC,V(florentine_m)$wealth,method="kendall")
+c(cor(c_HC,V(florentine_m)$wealth,method="kendall"),
+cor(c_RC,V(florentine_m)$wealth,method="kendall"),
 cor(c_IN,V(florentine_m)$wealth,method="kendall")
+)
 ```
 
-There are also some indices with parameters to maximize correlation.
+The highest correlation (0.1159) is achieved for residual closeness, however, this is 
+still too low to conclude that proximity is related to wealth.
+
+Besides the already considered indices, there exist further one's that include a
+free parameter. The idea is that the parameter can be tuned to maximize the correlation
+between the index and the attribute under consideration. Again, the mathematical
+details can be found in the respective literature.
 
 ```{r distalpha_wealth,warning=FALSE}
-#generalized closeness (Agneessens et al.,2017) (alpha>0)
+#generalized closeness (Agneessens et al.,2017) (alpha>0) sum(dist^-alpha)
 alpha <- c(seq(0.01,0.99,0.01),seq(1,10,0.1))
 scores <- 
 sapply(alpha,function(x)
@@ -235,12 +250,12 @@ sapply(alpha,function(x)
       indirect_relations(type="geodesic",FUN=dist_dpow,alpha=x) %>% 
       aggregate_positions(type="sum")
 )
-cors <- apply(scores,2,
+cors_gc <- apply(scores,2,
               function(x)cor(x,V(florentine_m)$wealth,method="kendall"))
 
-res_gc <- c(max(cors),alpha[which.max(cors)])
+res_gc <- c(max(cors_gc),alpha[which.max(cors_gc)])
 
-#decay centrality (Jackson, 2010) (alpha in [0,1])
+#decay centrality (Jackson, 2010) (alpha in [0,1]) sum(alpha^dist)
 alpha <- seq(0.01,0.99,0.01)
 scores <- 
 sapply(alpha,function(x)
@@ -248,10 +263,10 @@ sapply(alpha,function(x)
     indirect_relations(type="geodesic",FUN=dist_powd,alpha=x) %>% 
     aggregate_positions(type="sum")
 )
-cors <- apply(scores,2,
+cors_dc <- apply(scores,2,
               function(x)cor(x,V(florentine_m)$wealth,method="kendall"))
 
-res_dc <- c(max(cors),alpha[which.max(cors)])
+res_dc <- c(max(cors_dc),alpha[which.max(cors_dc)])
 ```
 
 The highest correlation for generalized closeness is `r res_gc[1]` achieved for 
@@ -259,3 +274,53 @@ $\alpha$= `r res_gc[2]`
 
 The highest correlation for decay centrality is `r res_dc[1]` achieved for 
 $\alpha$=`r res_dc[2]`
+
+We could know accept that there is no index based on geodesic distances that could 
+explain wealth. Or, we could start to craft new indices that might yield a better
+correlation with wealth. However, we then enter the dilemma that was mentioned at the end of
+the last section. If we find one, we can not be certain that there might not even be a 
+better one out there. In contrast, if we do not succeed, we can not guarantee that 
+there does not exist an index with a higher correlation. 
+
+## Centrality as explanatory variable (Dominance approach)
+
+Since we are postulating a connection between proximity and wealth, we  
+
+```{r pos_dom_hetero}
+D <- florentine_m %>% 
+  indirect_relations(type="geodesic") %>% 
+  positional_dominance(benefit=F)
+
+comparable_pairs(D)
+```
+
+
+```{r pos_dom_homo}
+D <- florentine_m %>% 
+  indirect_relations(type="geodesic") %>% 
+  positional_dominance(benefit=F,map=T)
+
+comparable_pairs(D)
+```
+
+```{r plot dist_dom,fig.align="center",fig.height=5,fig.width=5,echo=F}
+d <- dominance_graph(D)
+V(d)$name <- V(florentine_m)$name
+x <- V(florentine_m)$wealth
+x[9] <- x[9]-50
+x[14] <- x[14]-50
+y <- colSums(D)
+el <- get.edgelist(d,names = F)
+E(d)$color <- "gray"
+col <- apply(el,1,function(x)V(florentine_m)$wealth[x[1]]>V(florentine_m)$wealth[x[2]])
+#wrong:41
+E(d)$color[col] <- "indianred"
+
+plot(d,layout=cbind(x,y),
+     vertex.label.cex=0.75,
+     vertex.label.color="black",
+     vertex.color="white",
+     vertex.frame.color="gray",
+     edge.arrow.size=0.4
+     )
+```
