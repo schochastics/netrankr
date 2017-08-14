@@ -23,6 +23,8 @@ navbar:
          href: articles/partial_centrality.html
       -  text: Probabilistic Centrality
          href: articles/probabilistic_cent.html
+    - text: "Use Case"
+      href: articles/use_case.html
   right:
       - icon: fa-newspaper-o
         text: "news"
