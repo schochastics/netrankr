@@ -10,33 +10,43 @@ vignette: >
 This vignette describes a typical use case of the `netrankr` packages. It contrasts
 the usual centrality analysis based on indices with the dominance based assessment.
 It is advisable to read the other vignettes before going through this example.
+
 ________________________________________________________________________________
 
 
-## Setup
-[Padget & Ansell, 1993](http://www.journals.uchicago.edu/doi/abs/10.1086/230190)
-
-```{r setup, warning=FALSE,message=FALSE}
+```{r libs, warning=FALSE,message=FALSE}
 library(igraph)
 library(netrankr)
 library(magrittr)
 library(ggplot2)
+```
+
+## Data
+For this tutorial, we use the famous *florentine families* dataset ([Padget & Ansell, 1993](http://www.journals.uchicago.edu/doi/abs/10.1086/230190)). The marriage links
+of families together with the wealth attribute are included in the `netrankr` package.
+
+```{r plot,fig.height=5,fig.width=5,fig.align='center'}
 data("florentine_m")
 #Delete Pucci family (isolated)
 florentine_m <- delete_vertices(florentine_m,which(degree(florentine_m)==0))
-```
 
-```{r plot,fig.height=5,fig.width=5,fig.align='center'}
-#plot the graph
+#plot the graph (label size proportional to wealth)
 set.seed(111)
 plot(florentine_m,
-     vertex.label.cex=V(florentine_m)$wealth*0.01,
+     vertex.label.cex=V(florentine_m)$wealth*0.01, 
      vertex.label.color="black",
      vertex.color="white",
      vertex.frame.color="gray")
 ```
 
+We use this dataset below to illustrate how a dominance based assessment of centrality
+offers an alternative approach to centrality in two ways:
+
+* Are the Medici universally the most central family?
+* Using centrality as explanatory variable (Can centrality explain the wealth attribute?)
+
 ________________________________________________________________________________
+
 
 ## Most central family (Index approach)
 
@@ -47,11 +57,11 @@ We start by applying some of the standard centrality indices given in the `igrap
 
 ```{r cent}
 cent.df <- data.frame(
-  degree=degree(florentine_m),
-  betweenness=betweenness(florentine_m),
-  closeness=closeness(florentine_m),
-  eigenvector=eigen_centrality(florentine_m)$vector,
-  subgraph=subgraph_centrality(florentine_m))
+  degree = degree(florentine_m),
+  betweenness = betweenness(florentine_m),
+  closeness = closeness(florentine_m),
+  eigenvector = eigen_centrality(florentine_m)$vector,
+  subgraph = subgraph_centrality(florentine_m))
 
 # most central family according to the 5 indices
 V(florentine_m)$name[apply(cent.df,2,which.max)]
@@ -66,7 +76,7 @@ it is possible to find indices that rank other families on top. An example is
 sc_odd <- florentine_m %>% 
   indirect_relations(type = "walks",FUN = walks_exp_odd) %>% 
   aggregate_positions(type = "self")
-rank(sc_odd)
+
 #family with highest score 
 V(florentine_m)$name[which.max(sc_odd)]
 ```
@@ -80,10 +90,11 @@ that would give an entirely different result.
 
 ________________________________________________________________________________
 
+
 ## Most central family (Dominance approach)
 
-We start by calculating the neighborhood-inclusion preorder, that is, the most rudimentary
-requirenment for any centrality index.
+We start by calculating the neighborhood-inclusion preorder, the most general
+requirement for any centrality index.
 
 ```{r ni}
 P <- neighborhood_inclusion(florentine_m)
@@ -181,7 +192,9 @@ expect the Medici to be the most central.
 This very general assessment gives us a general idea of the scope of potential centrality
 analyses. The more possible rankings we have (as in this case!) the more unreliable an
 index driven approach can be. We will explore this in more detail in the following section. 
+
 ________________________________________________________________________________
+
 
 ## Centrality as explanatory variable (Index approach)
 
@@ -191,8 +204,8 @@ be interested in the question: "can an index explain the wealth of families?", o
 we already have a more concrete idea "can proximity to other families explain the wealth attribute?" 
 
 "Proximity" can be translated to the graph-theoretic concept of geodesic distances, 
-such that closeness centrality would be an adequat candidate as an index. We here
-use the pipelined approach of the `netrankr` package instead of the `closeness()`
+such that closeness centrality would be an adequate candidate as an index. We here
+use the pipeline approach of the `netrankr` package instead of the `closeness()`
 function of `igraph`. The reasons will become evident in the next section.
 
 ```{r closeness_vs_wealth}
@@ -207,7 +220,7 @@ cor(c_C,V(florentine_m)$wealth,method="kendall")
 
 The correlation between closeness and wealth (`r round(cor(c_C,V(florentine_m)$wealth,method="kendall"),4)`) is far to low to constitute that "proximity" is related to wealth. However, there 
 exist various other indices, that are based on the geodesic distances in a graph.
-We exclude the mathematical definitions. Refer to the literature for more details.
+Refer to the literature for more details on these indices.
 
 ```{r harmclos_wealth}
 #harmonic closeness
@@ -282,9 +295,13 @@ the last section. If we find one, we can not be certain that there might not eve
 better one out there. In contrast, if we do not succeed, we can not guarantee that 
 there does not exist an index with a higher correlation. 
 
+________________________________________________________________________________
+
 ## Centrality as explanatory variable (Dominance approach)
 
-Since we are postulating a connection between proximity and wealth, we  
+Since we are postulating a connection between proximity and wealth, we compute 
+the pairwise geodesic distances as our *indirect relation* of interest and calculate
+the positional dominance relations.
 
 ```{r pos_dom_hetero}
 D <- florentine_m %>% 
@@ -294,6 +311,16 @@ D <- florentine_m %>%
 comparable_pairs(D)
 ```
 
+Note that exactly the same pairs are comparable as for neighborhood-inclusion. However,
+with one additional assumption, we will be able to increase the number of comparable pairs
+significantly (and thus reduce the space of potential rankings). By summing up distances
+in various ways, as done by the indices above, we assume families to be *homogeneous*.
+It doesn't matter to whom we have a small distance, it just matters that they are small.
+
+If we can safely comply with this assumption, we can use positional dominance 
+*under total homogeneity*. It is important to note, that if a family is dominated 
+by another under this premise, it will have a lower score in **any** distance based 
+centrality index.
 
 ```{r pos_dom_homo}
 D <- florentine_m %>% 
@@ -302,6 +329,20 @@ D <- florentine_m %>%
 
 comparable_pairs(D)
 ```
+
+The number of comparable pairs increased from $0.15$ to $0.82$, thus reducing the 
+space of potential centrality rankings based on distances significantly. 
+
+We proceed to explore if there is potential for a distance based ranking to explain
+wealth perfectly. This is only possible, if families with lower wealth do not dominate 
+wealthier family. Otherwise they would always be ranked higher, prohibiting a perfect 
+correlation.  
+
+The figure below shows the dominance relations as a directed graph, where the x coordinate
+of nodes is proportional to the wealth attribute and the y coordinate to the number of
+dominated families.  Any edge pointing to the left (shown in red) denotes a pair of
+"wrongly" ordered families, i.e. a wealthy family is dominated by a less wealthy
+one.
 
 ```{r plot dist_dom,fig.align="center",fig.height=5,fig.width=5,echo=F}
 d <- dominance_graph(D)
@@ -324,3 +365,83 @@ plot(d,layout=cbind(x,y),
      edge.arrow.size=0.4
      )
 ```
+
+In total, we find $41$ such pairs ($39$% of all pairs). This implies that we are
+(potentially) quite far from being able to explain wealth perfectly with geodesic 
+distances. In the following we will explore *how* far away. 
+
+We start by calculating the rank intervals to illustrate the difference to 
+neighborhood-inclusion.
+```{r rk_inter_dist,fig.align='center',fig.width=5,fig.height=5}
+plot_rank_intervals(D,names=V(florentine_m)$name)
+```
+All intervals shrunk significantly and even correspond to a single point for two
+families (Pazzi and Medici). This implies that no matter which distance based index we
+use, the Pazzi family will always be ranked last and the Medici always on top.
+
+For a more exact assessment we again use the function `exact_rank_prob()`.
+
+```{r dist_probs}
+res <- exact_rank_prob(D,names = V(florentine_m)$name)
+```
+In total, there are `r format(res$lin.ext,scientific = F,big.mark = ",")` distance
+based rankings possible. This is a huge reduction from the general case where almost
+$4$ billion are possible. 
+
+To determine the best possible correlation between wealth and any distance based ranking,
+we first need to determine all `r format(res$lin.ext,scientific = F,big.mark = ",")`
+rankings. For this purpose, we rerun the previous analysis with `only.results=FALSE` to obtain 
+the necessary data structure.
+```{r dist_probs_lat}
+res <- exact_rank_prob(D,names = V(florentine_m)$name,only.results = FALSE)
+```
+
+Now, we can use the function `get_rankings()` which returns all rankings as a matrix.
+
+```{r all_rankings}
+all_ranks <- get_rankings(lattice = res$lattice,
+                          ideals = res$ideals,
+                          topo.order = res$topo.order,
+                          linext = res$lin.ext,
+                          mse = res$mse)
+dim(all_ranks)
+```
+
+No we can simply loop over all rankings and calculate the correlation between the 
+ranking and the wealth attribute.
+```{r all_cors}
+dist_cor <- apply(all_ranks,2,
+              function(x)cor(V(florentine_m)$wealth,x,method="kendall"))
+c(max_cor = max(dist_cor),mean_cor = mean(dist_cor))
+```
+The highest achievable correlation is `r round(max(dist_cor),4)`.
+
+The figure below shows all correlations as a boxplot.
+```{r vis_rank_cor,fig.align='center',fig.width=5,fig.height=5,echo=FALSE}
+dist_cor<-
+data.frame(cor = apply(all_ranks,2,
+           function(x)cor(V(florentine_m)$wealth,x,method="kendall")),
+           method = "distance")
+
+ggplot(dist_cor)+
+  geom_boxplot(aes(x=method,y=cor))+
+  theme(text = element_text(family="Times",size=14),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid = element_blank(),
+        axis.ticks = element_blank())+
+      labs(x="",y="Correlation with wealth")
+
+```
+
+We can conclude, that there can not be any distance based centrality index that can
+reasonably explain the wealth attribute. 
+
+We can additionally consider the correlation between degree and wealth, calculated below.
+```{r cor_deg}
+cor(degree(florentine_m),V(florentine_m)$wealth,method="kendall")
+```
+
+The correlation is higher than any distance based index can have. Thus, we can 
+additionally conclude that marriage ties are more indicative for wealth than proximity
+in the marriage network.
