@@ -109,7 +109,7 @@ For instance, the probability for each node to be the most central one is as fol
 round(res$rank.prob[,11],2)
 ```
 
-`relative.rank` contains the relative rank probabilites. An entry `relative.rank[u,v]`
+`relative.rank` contains the relative rank probabilities. An entry `relative.rank[u,v]`
 indicates how likely it is that `v` is more central than `u`.
 ```{r rel_rank}
 # How likely is it, that 6 is more central than 3?
