@@ -25,6 +25,8 @@ navbar:
          href: articles/probabilistic_cent.html
     - text: "Use Case"
       href: articles/use_case.html
+    - text: "Benchmarks"
+      href: articles/benchmarks.html
   right:
       - icon: fa-newspaper-o
         text: "news"
