@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 using namespace Rcpp;
 
 // [[Rcpp::export]]
@@ -6,7 +7,7 @@ List mcmc_rank(IntegerMatrix P,
                IntegerVector init_rank,
                int rp) {
   int t = 1;
-  int n =P.rows();
+  int n = P.rows();
   NumericMatrix rrp(n,n);
   NumericVector expected(n);
   IntegerVector elements=seq(0,n-1);
@@ -23,15 +24,15 @@ List mcmc_rank(IntegerMatrix P,
   for(int i=0;i<n; ++i){
       expected[init_rank[i]] =i;
   }
-  //MC
   
+  //MC
   while(t<=rp){
-    int p = floor(R::runif(0,1)*n);//rand() % (n-1);
+    int p = floor(R::runif(0,1)*(n-1));//rand() % (n-1);
     int c = round(R::runif(0,1));//rand() % 2;
     int a = init_rank[p];
     int b = init_rank[p+1];
+    t+=1;
     if(c==1 & P(a,b)!=1){
-      t+=1;
       init_rank[p]=b;
       init_rank[p+1]=a;
       //expected update
