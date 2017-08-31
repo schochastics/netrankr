@@ -119,7 +119,7 @@ round(res$rank.prob[,11],2)
 
     ##  [1] 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16
 
-`relative.rank` contains the relative rank probabilites. An entry `relative.rank[u,v]` indicates how likely it is that `v` is more central than `u`.
+`relative.rank` contains the relative rank probabilities. An entry `relative.rank[u,v]` indicates how likely it is that `v` is more central than `u`.
 
 ``` r
 # How likely is it, that 6 is more central than 3?
