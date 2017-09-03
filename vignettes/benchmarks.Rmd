@@ -17,13 +17,13 @@ and **relative rank probabilities** are assessed.
 
 ________________________________________________________________________________
 
-## Runtimes
+## Runtimes exact probabilities
 
 The below figure shows the runtime of `exact_rank_prob()` for a sample of
 13,000 partial rankings with 10 to 30 nodes and varying degree of completeness.
 
 ```{r runtime, echo=FALSE}
-knitr::include_graphics("runtimes.png")
+knitr::include_graphics("runtimes_exact.png")
 ```
 
 Not surprisingly, the runtime increases quickly with the number of nodes and the
@@ -37,19 +37,32 @@ ________________________________________________________________________________
 
 ## Approximating expected ranks
 
-`netrankr` implements four methods to approximate expected ranks which are given
-by the function `approx_rank_expected`. 
+`netrankr` implements five methods to approximate expected ranks which are given
+by the functions `approx_rank_expected()` and `mcmc_rank_prob()`. 
 
-```{r qual_exp, echo=FALSE}
-knitr::include_graphics("quality_expected.png")
+```{r qual_exp_mse, echo=FALSE}
+knitr::include_graphics("quality_expected_mse.png")
 ```
 
+```{r qual_exp_cor, echo=FALSE}
+knitr::include_graphics("quality_expected_cor.png")
+```
 ________________________________________________________________________________
 
 ## Approximating expected ranks
 
 ```{r qual_rel, echo=FALSE}
-knitr::include_graphics("quality_relative.png")
+knitr::include_graphics("quality_relative_mse.png")
+```
+
+```{r qual_rel2, echo=FALSE}
+knitr::include_graphics("quality_relative_mse2.png")
+```
+
+## Runtime MCMC
+
+```{r runtime_mcmc, echo=FALSE}
+knitr::include_graphics("runtimes_mcmc.png")
 ```
 
 ________________________________________________________________________________
