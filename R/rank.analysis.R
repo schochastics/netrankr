@@ -80,6 +80,7 @@ exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
     expected.full <- rank(colSums(P.full),ties.method = "max")
     rank.spread.full <- rep(0,nrow(P.full))
     mrp.full <- P.full
+    mrp.full[mrp.full==t(mrp.full)] <- 0
     rp.full=matrix(0,nrow(P.full),nrow(P.full))
     for(i in 1:nrow(P.full)){
       rp.full[i,expected.full[i]] <- 1
@@ -89,7 +90,7 @@ exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
                 names=rownames(P.full),
                 mse=MSE,
                 rank.prob=rp.full,
-                relative.rank=t(mrp.full),
+                relative.rank=mrp.full,
                 expected.rank=expected.full,
                 rank.spread=rank.spread.full))
   }
@@ -171,7 +172,7 @@ exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
       rank.spread.full[idx] <- rank.spread[i]
     }
   }
-
+  expected.full <- expected.full+sum(duplicated(MSE))
   ###############################
   if(only.results){
     return(list(lin.ext=res$linext,

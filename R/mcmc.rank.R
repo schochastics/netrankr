@@ -1,12 +1,12 @@
-#' @title Estimate Rankings with MCMC
+#' @title Estimate rank probabilities with MCMC
 #' @description Performs a probabilistic rank analysis based on an almost uniform 
-#' sample of possible rankings that preserve a partial ranking
+#' sample of possible rankings that preserve a partial ranking.
 #' @param P a matrix representing a partial ranking.
 #' @param rp integer indicating the number of samples to be drawn.
 #' @details This function can be used instead of [exact_rank_prob]
 #' if the number of nodes is too large for an exact computation. As a rule of thumb, 
 #' the number of samples should be at least cubic in the number of nodes of the network. 
-#' 
+#' See online manual for benchmark results.
 #' @return 
 #' \item{expected.rank}{Estimated expected ranks of nodes}
 #' \item{relative.rank}{Matrix containing estimated relative rank probabilities:
@@ -54,6 +54,7 @@ mcmc_rank_prob <- function(P,rp=nrow(P)^3){
       rrp.full[idx,] <- res$rrp[i,MSE]
     }
   }
+  expected.full <- expected.full+sum(duplicated(MSE))
   return(list(expected.rank=expected.full,relative.rank=rrp.full))
 }
 

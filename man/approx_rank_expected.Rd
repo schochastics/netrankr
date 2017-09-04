@@ -21,28 +21,33 @@ for partial rankings.
 \details{
 The \emph{method} parameter can be set to
 \describe{
-\item{lpom}{ simplest, most accurate for tiny networks}
-\item{glpom}{ most accurate for tiny networks}
-\item{loof1}{ more accurate for larger networks}
-\item{loof2}{ even more accurate for larger networks}
+\item{lpom}{local partial order model}
+\item{glpom}{extension of the local partial order model.}
+\item{loof1}{based on a connection with relative rank probabilities.}
+\item{loof2}{extension of the previous method.}
 }
 Which of the above methods performs best depends on the structure of the partial
-ranking. It is thus advisable to apply more than one for comparrison.
+ranking. See the benchmark results in the online manual.
 }
 \examples{
-P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #Exact result
 exact_rank_prob(P)$expected.rank
+
 approx_rank_expected(P,"lpom")
+approx_rank_expected(P,"glpom")
 }
 \references{
 Brüggemann R., Simon, U., and Mey,S, 2005. Estimation of averaged
 ranks by extended local partial order models. \emph{MATCH Commun. Math.
 Comput. Chem.}, 54:489-518.
 
-Brüggemann, R. and Carlsen, L., 2011. An improved estimation of aver-
-aged ranks of partial orders. \emph{MATCH Commun. Math. Comput. Chem.},
+Brüggemann, R. and Carlsen, L., 2011. An improved estimation of averaged ranks
+of partial orders. \emph{MATCH Commun. Math. Comput. Chem.},
 65(2):383-414.
+
+De Loof, L., De Baets, B., and De Meyer, H., 2011. Approximation of Average
+Ranks in Posets. \emph{MATCH Commun. Math. Comput. Chem.}, 66:219-229.
 }
 \seealso{
 \link{approx_rank_relative}, \link{exact_rank_prob}, \link{mcmc_rank_prob}

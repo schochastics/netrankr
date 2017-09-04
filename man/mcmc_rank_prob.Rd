@@ -2,7 +2,7 @@
 % Please edit documentation in R/mcmc.rank.R
 \name{mcmc_rank_prob}
 \alias{mcmc_rank_prob}
-\title{Estimate Rankings with MCMC}
+\title{Estimate rank probabilities with MCMC}
 \usage{
 mcmc_rank_prob(P, rp = nrow(P)^3)
 }
@@ -18,12 +18,13 @@ mcmc_rank_prob(P, rp = nrow(P)^3)
 }
 \description{
 Performs a probabilistic rank analysis based on an almost uniform
-sample of possible rankings that preserve a partial ranking
+sample of possible rankings that preserve a partial ranking.
 }
 \details{
 This function can be used instead of \link{exact_rank_prob}
 if the number of nodes is too large for an exact computation. As a rule of thumb,
 the number of samples should be at least cubic in the number of nodes of the network.
+See online manual for benchmark results.
 }
 \examples{
 # Will be added in later version
