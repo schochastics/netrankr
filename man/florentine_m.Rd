@@ -9,7 +9,6 @@
 florentine_m
 }
 \description{
-A dataset containing the prices and other attributes of almost 54,000
-diamonds.
+Florentine Family marriage network
 }
 \keyword{datasets}
