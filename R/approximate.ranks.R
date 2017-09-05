@@ -36,6 +36,30 @@
 #' approx_rank_expected(P,"glpom")
 #' @export
 approx_rank_expected <- function(P,method="lpom"){
+  n.full <- nrow(P)
+  P.full <- P
+# Equivalence classes ------------------------------------------------
+  MSE <- which((P+t(P))==2,arr.ind=T)
+  if(length(MSE)>=1){
+    MSE <- t(apply(MSE,1,sort))
+    MSE <- MSE[!duplicated(MSE),]
+    g <- igraph::graph.empty()
+    g <- igraph::add.vertices(g,nrow(P))
+    g <- igraph::add.edges(g,c(t(MSE)))
+    g <- igraph::as.undirected(g)
+    MSE <- igraph::clusters(g)$membership
+    equi <- which(duplicated(MSE))
+    P <- P[-equi,-equi]
+  } else{
+    MSE <- 1:nrow(P)
+  }
+  if(is.null(nrow(P))){
+    warning("all elements are structurally equivalent and have the same rank")
+    return()
+  }
+  #number of Elements
+  n <- length(names)
+  
   g <- igraph::graph_from_adjacency_matrix(P,"directed")
   n <- nrow(P)
   if(method=="lpom"){
@@ -81,7 +105,13 @@ approx_rank_expected <- function(P,method="lpom"){
       }
     }
   }
-  return(r.approx)
+  expected.full <- r.approx[MSE]
+  for(val in sort(unique(expected.full),decreasing=T)){
+    idx <- which(expected.full==val)
+    expected.full[idx] <- expected.full[idx]+
+      sum(duplicated(expected.full[expected.full<=val]))
+  }
+  return(expected.full)
 }
 
 .sl.approx <- function(sx,sy,lx,ly){

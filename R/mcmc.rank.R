@@ -46,15 +46,22 @@ mcmc_rank_prob <- function(P,rp=nrow(P)^3){
     idx <- which(MSE==i)
     if(length(idx)>1){
       group.head <- i
-      expected.full[idx] <- res$expected[group.head]
+      # expected.full[idx] <- res$expected[group.head]
+      # expected.full[idx] <- expected.full[idx]+sum(duplicated(MSE[MSE<=i]))
       rrp.full[idx,] <- do.call(rbind, replicate(length(idx), res$rrp[group.head,MSE], simplify=FALSE))
     }
     else if(length(idx)==1){
-      expected.full[idx] <- res$expected[i]
+      # expected.full[idx] <- res$expected[i]
+      # expected.full[idx] <- expected.full[idx]+sum(duplicated(MSE[MSE<=i]))
       rrp.full[idx,] <- res$rrp[i,MSE]
     }
   }
-  expected.full <- expected.full+sum(duplicated(MSE))
+  expected.full <- res$expected[MSE]
+  for(val in sort(unique(expected.full),decreasing=T)){
+    idx <- which(expected.full==val)
+    expected.full[idx] <- expected.full[idx]+
+      sum(duplicated(expected.full[expected.full<=val]))
+  }
   return(list(expected.rank=expected.full,relative.rank=rrp.full))
 }
 

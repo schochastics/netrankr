@@ -42,7 +42,7 @@
 #' res <- exact_rank_prob(P)
 #' @export
 exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
-  # Check for names ------------------------------------------------
+# Check for names ------------------------------------------------
   if(is.null(rownames(P)) & length(names)!=nrow(P)){
     rownames(P) <- 1:nrow(P)
   }
@@ -51,7 +51,7 @@ exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
   }
   n.full <- nrow(P)
   P.full <- P
-  # Equivalence classes ------------------------------------------------
+# Equivalence classes ------------------------------------------------
   MSE <- which((P+t(P))==2,arr.ind=T)
   if(length(MSE)>=1){
     MSE <- t(apply(MSE,1,sort))
@@ -109,7 +109,7 @@ exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
   
   ImSucc <- igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P,"directed"),"out")
   ImSucc <- lapply(ImSucc,function(x) as.vector(x)-1)
-  # TREEOFIDEALS ----------------------------------------------------  
+# TREEOFIDEALS ----------------------------------------------------  
   if(verbose==TRUE){
     print("building tree of ideals")
   }
@@ -162,17 +162,24 @@ exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
       group.head <- i
       rp.full[idx,]  <- do.call(rbind, replicate(length(idx), res$rp[group.head,], simplify=FALSE))
       mrp.full[idx,] <- do.call(rbind, replicate(length(idx), res$mrp[group.head,MSE], simplify=FALSE))
-      expected.full[idx] <- expected[group.head]
+      # expected.full[idx] <- expected[group.head]
+      # expected.full[idx] <- expected.full[idx]+sum(duplicated(MSE[MSE<=i]))
       rank.spread.full[idx] <- rank.spread[group.head]
     }
     else if(length(idx)==1){
       rp.full[idx,] <- res$rp[i,]
       mrp.full[idx,] <- res$mrp[i,MSE]
-      expected.full[idx] <- expected[i]
+      # expected.full[idx] <- expected[i]
+      # expected.full[idx] <- expected.full[idx]+sum(duplicated(MSE[MSE<=i]))
       rank.spread.full[idx] <- rank.spread[i]
     }
   }
-  expected.full <- expected.full+sum(duplicated(MSE))
+  expected.full <- expected[MSE]
+  for(val in sort(unique(expected.full),decreasing=T)){
+    idx <- which(expected.full==val)
+    expected.full[idx] <- expected.full[idx]+
+      sum(duplicated(expected.full[expected.full<=val]))
+  }
   ###############################
   if(only.results){
     return(list(lin.ext=res$linext,
