@@ -65,7 +65,8 @@ approx_rank_expected <- function(P,method="lpom"){
   if(method=="lpom"){
     sx <- igraph::degree(g,mode="in")
     ix <- (n-1)-igraph::degree(g,mode="all")
-    r.approx=(sx+1)*(n+1)/(n+1-ix)
+    r.approx <- (sx+1)*(n+1)/(n+1-ix)
+    r.approx <- unname(r.approx)
   }
   else if(method=="glpom"){
     r.approx <- approx_glpom(P)
@@ -109,7 +110,7 @@ approx_rank_expected <- function(P,method="lpom"){
   for(val in sort(unique(expected.full),decreasing=T)){
     idx <- which(expected.full==val)
     expected.full[idx] <- expected.full[idx]+
-      sum(duplicated(expected.full[expected.full<=val]))
+      sum(duplicated(MSE[expected.full<=val]))
   }
   return(expected.full)
 }

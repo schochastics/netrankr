@@ -178,7 +178,7 @@ exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
   for(val in sort(unique(expected.full),decreasing=T)){
     idx <- which(expected.full==val)
     expected.full[idx] <- expected.full[idx]+
-      sum(duplicated(expected.full[expected.full<=val]))
+      sum(duplicated(MSE[expected.full<=val]))
   }
   ###############################
   if(only.results){

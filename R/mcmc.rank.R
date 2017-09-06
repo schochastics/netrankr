@@ -60,7 +60,7 @@ mcmc_rank_prob <- function(P,rp=nrow(P)^3){
   for(val in sort(unique(expected.full),decreasing=T)){
     idx <- which(expected.full==val)
     expected.full[idx] <- expected.full[idx]+
-      sum(duplicated(expected.full[expected.full<=val]))
+      sum(duplicated(MSE[expected.full<=val]))
   }
   return(list(expected.rank=expected.full,relative.rank=rrp.full))
 }
