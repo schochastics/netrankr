@@ -13,14 +13,14 @@ transitive_reduction(P)
 transitive reduction of P
 }
 \description{
-Calculates the transitive reduction of a directed graph.
+Calculates the transitive reduction of a partial ranking.
 }
 \examples{
 require(igraph)
-g <- sample_gnp(100,0.1)
-P<-neighborhood_inclusion(g)
+g <- threshold_graph(100,0.1)
+P <- neighborhood_inclusion(g)
 sum(P)
-T<-transitive_reduction(P)
+T <- transitive_reduction(P)
 sum(T)
 }
 \author{

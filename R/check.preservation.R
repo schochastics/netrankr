@@ -23,7 +23,6 @@
 is_preserved <- function(P,scores){
   n <- nrow(P)
   preserved <- preserve(P,scores,n)==0
-  # preserved <- all(!apply(P.idx,1,function(x){scores[x[1]]>scores[x[2]]}))
   
   return(preserved)
 }

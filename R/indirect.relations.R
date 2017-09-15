@@ -59,10 +59,10 @@ indirect_relations <- function(g,type="geodesic",
   } else if(type=="resistance"){
     L <- igraph::graph.laplacian(g,sparse=FALSE)
     n <- igraph::vcount(g)
-    A <- L+matrix(1/n,n,n)
+    A <- L + matrix(1/n,n,n)
     C <- solve(A)
     rel <- resistanceDistance(C,n)
     rel <- FUN(rel,...)
-  }else stop(paste(type,"is not defined as indirect relation"))
+  } else stop(paste(type,"is not defined as indirect relation"))
   return(rel)
 }

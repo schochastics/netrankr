@@ -19,8 +19,5 @@
 #' @export
 dominance_graph <- function(P){
   d <- igraph::graph_from_adjacency_matrix(P,"directed")
-  # if(!is.null(igraph::V(g)$name)){
-  #   igraph::V(d)$name <- igraph::V(g)$name
-  # }
   return(d)
 }

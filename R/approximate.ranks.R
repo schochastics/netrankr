@@ -57,6 +57,7 @@ approx_rank_expected <- function(P,method="lpom"){
     warning("all elements are structurally equivalent and have the same rank")
     return()
   }
+  
   #number of Elements
   n <- length(names)
   
@@ -145,7 +146,9 @@ approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
   #' approx_rank_relative(P,iterative=FALSE) 
   #' approx_rank_relative(P,iterative=TRUE)
   #' @export
-  MSE=which((P+t(P))==2,arr.ind=T)
+  
+  # Equivalence classes ------------------------------------------------
+  MSE <- which((P+t(P))==2,arr.ind=T)
   P.full <- P
   if(length(MSE)>=1){
     MSE <- t(apply(MSE,1,sort))
@@ -160,9 +163,14 @@ approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
   } else{
     MSE<-1:nrow(P)
   }
+  
+  if(is.null(nrow(P))){
+    warning("all elements are structurally equivalent and have the same rank")
+    return()
+  }
   n <- nrow(P)
   relative.rank <- approx_relative(colSums(P),rowSums(P),P,iterative,num.iter)
-  mrp.full=matrix(0,length(MSE),length(MSE))
+  mrp.full <- matrix(0,length(MSE),length(MSE))
   for(i in sort(unique(MSE))){
     idx <- which(MSE==i)
     if(length(idx)>1){

@@ -37,7 +37,7 @@
 #'   aggregate_positions(type="sum")
 #'
 #'#subgraph centrality
-#'g %>% indirect_relations(type="walks",FUN=walks_exp) %>% 
+#' g %>% indirect_relations(type="walks",FUN=walks_exp) %>% 
 #'   aggregate_positions(type="self")
 #' @export
 aggregate_positions <- function(tau_x,type="sum"){
