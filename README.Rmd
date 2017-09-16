@@ -101,7 +101,7 @@ res <- exact_rank_prob(P)
 str(res)
 ```
 `lin.ext` is the number of possible rankings. For the graph `g` we could thus come up with
-`r format(res$lin.ext,big.mark   = ",")` indices that would rank the node differently.  
+`r format(res$lin.ext,big.mark   = ",")` indices that would rank the nodes differently.  
 
 `rank.prob` contains the probabilities for each node to occupy a certain rank. 
 For instance, the probability for each node to be the most central one is as follows.

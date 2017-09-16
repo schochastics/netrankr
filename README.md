@@ -109,7 +109,7 @@ str(res)
     ##  $ expected.rank: num [1:11] 1.71 3 4.29 7.5 8.14 ...
     ##  $ rank.spread  : num [1:11] 0.958 1.897 1.725 2.54 2.16 ...
 
-`lin.ext` is the number of possible rankings. For the graph `g` we could thus come up with 739,200 indices that would rank the node differently.
+`lin.ext` is the number of possible rankings. For the graph `g` we could thus come up with 739,200 indices that would rank the nodes differently.
 
 `rank.prob` contains the probabilities for each node to occupy a certain rank. For instance, the probability for each node to be the most central one is as follows.
 
