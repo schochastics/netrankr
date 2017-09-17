@@ -9,8 +9,8 @@ positional_dominance(A, type = "one-mode", map = FALSE, benefit = TRUE)
 \arguments{
 \item{A}{matrix containing attributes or relations}
 
-\item{type}{string. Either "one-mode" (default) if \code{A} is a regular one-mode network
-or "two-mode" if \code{A} is a general data matrix.}
+\item{type}{string. Either 'one-mode' (default) if \code{A} is a regular one-mode network
+or 'two-mode' if \code{A} is a general data matrix.}
 
 \item{map}{boolean if rows can be sorted or not (default)}
 
@@ -41,7 +41,7 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 P<-neighborhood_inclusion(g)
 comparable_pairs(P)
 
-dist <- indirect_relations(g,type="geodesic")
+dist <- indirect_relations(g,type='geodesic')
 D <- positional_dominance(dist,map=FALSE,benefit=FALSE) 
 comparable_pairs(D) #same as P
 

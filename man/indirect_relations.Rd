@@ -24,21 +24,21 @@ Derive indirect relations (like geodesic distances) for a given network.
 \details{
 The \code{type} parameter has the following options.
 
-\emph{"identity"} returns the adjacency matrix of the network.
+\emph{'identity'} returns the adjacency matrix of the network.
 
-\emph{"distances"} returns geodesic distances between all pairs of nodes.
+\emph{'distances'} returns geodesic distances between all pairs of nodes.
 
-\emph{"dependencies"} returns dyadic dependencies
+\emph{'dependencies'} returns dyadic dependencies
 \deqn{\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}}
 where \eqn{\sigma(s,t|u)} is the number of shortest paths from s to t that include u and
 \eqn{\sigma(s,t)} is the total number of shortest (s,t)-paths. This relation is mostly used
 for betweenness-like centrality indices.
 
-\emph{"walks"} returns walk counts between pairs of nodes, usually they are
+\emph{'walks'} returns walk counts between pairs of nodes, usually they are
 weighted decreasingly in their lengths or other properties which can be done by adding
 a function in \code{FUN}.
 
-\emph{"resistance"} returns the resistance distance between all pairs of vertices.
+\emph{'resistance'} returns the resistance distance between all pairs of vertices.
 
 The function \code{FUN} is used to further specify the indirect
 relation. See \link{transform_relations} for predefined functions and additional help.
@@ -49,9 +49,9 @@ g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #geodesic distances
-D <- indirect_relations(g,type="geodesic") 
+D <- indirect_relations(g,type='geodesic') 
 #dyadic dependencies
-D <- indirect_relations(g,type="dependencies")
+D <- indirect_relations(g,type='dependencies')
 
 }
 \seealso{

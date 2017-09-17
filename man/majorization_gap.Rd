@@ -30,7 +30,7 @@ The higher the value, the further away is a graph to be a threshold graph.
 }
 \examples{
 require(igraph)
-g <- graph.star(5,"undirected")
+g <- graph.star(5,'undirected')
 majorization_gap(g) #0 since star graphs are threshold graphs
 
 g <- sample_gnp(100,0.15)

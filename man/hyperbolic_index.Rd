@@ -9,7 +9,7 @@ hyperbolic_index(g, type = "odd")
 \arguments{
 \item{g}{igraph object.}
 
-\item{type}{string. "even" if only even length walks should be considered. "odd" (Default)
+\item{type}{string. 'even' if only even length walks should be considered. 'odd' (Default)
 if only odd length walks should be used.}
 }
 \value{

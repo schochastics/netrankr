@@ -4,26 +4,16 @@
 \alias{get_rankings}
 \title{All rankings of a partial ranking}
 \usage{
-get_rankings(lattice, ideals, topo.order, linext, mse, force = F)
+get_rankings(data, force = F)
 }
 \arguments{
-\item{lattice}{adjacency list of predecessors in lattice of ideal. This list is returned if \link{exact_rank_prob}
-is run with \code{only.results=FALSE}}
-
-\item{ideals}{list of ideals. This list is returned if \link{exact_rank_prob}
-is run with \code{only.results=FALSE}}
-
-\item{topo.order}{topological order used in \link{exact_rank_prob}}
-
-\item{linext}{number of possible rankings. returned by \link{exact_rank_prob}}
-
-\item{mse}{equivalence classes of rankings. returned by \link{exact_rank_prob}}
+\item{data}{list as returned by \link{exact_rank_prob} when run with \code{only.results=FALSE}}
 
 \item{force}{boolean. stops function if the number of rankings is too large.
 Only change to TRUE if you know what you are doing}
 }
 \value{
-a matrix containing all ranking positions of nodes
+a matrix containing ranks of nodes in all possible rankings
 }
 \description{
 Returns all possible rankings of a partial ranking.
@@ -36,7 +26,7 @@ that are in accordance with the partial ranking P.
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 P
 res <- exact_rank_prob(P,only.results=FALSE)
-get_rankings(res$lattice,res$ideals,res$topo.order,res$lin.ext,res$mse)
+get_rankings(res)
 
 }
 \author{

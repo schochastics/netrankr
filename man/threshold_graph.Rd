@@ -36,7 +36,7 @@ star <- threshold_graph(10,0) #star graph
 \dontrun{plot(star)}
 
 # Centrality scores are perfectly rank correlated
-cor(degree(g),closeness(g),method="kendall")
+cor(degree(g),closeness(g),method='kendall')
 }
 \references{
 Mahadev, N. and Peled, U. N. , 1995. Threshold graphs and related topics.
