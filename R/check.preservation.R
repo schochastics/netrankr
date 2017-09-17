@@ -20,9 +20,9 @@
 #' is_preserved(P,betweenness(g))
 #' is_preserved(P,closeness(g))
 #' @export
-is_preserved <- function(P,scores){
-  n <- nrow(P)
-  preserved <- preserve(P,scores,n)==0
-  
-  return(preserved)
+is_preserved <- function(P, scores) {
+    n <- nrow(P)
+    preserved <- preserve(P, scores, n) == 0
+    
+    return(preserved)
 }
