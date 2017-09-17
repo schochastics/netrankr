@@ -5,5 +5,4 @@
 ^NEWS\.md$
 ^docs$
 _pkgdown.yaml
-vignettes/benchmarks.Rmd
-vignettes/*.png
+logo.png
