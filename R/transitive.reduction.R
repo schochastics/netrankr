@@ -12,7 +12,7 @@
 #' T <- transitive_reduction(P)
 #' sum(T)
 #' @export
-transitive_reduction <- function(P){
-  B <- transreduct(P)
-  return(B)
+transitive_reduction <- function(P) {
+    B <- transreduct(P)
+    return(B)
 }

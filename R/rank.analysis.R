@@ -41,168 +41,158 @@
 #' P <- neighborhood_inclusion(tg)
 #' res <- exact_rank_prob(P)
 #' @export
-exact_rank_prob <- function(P,names="",only.results=T,verbose=F,force=F){
-# Check for names ------------------------------------------------
-  if(is.null(rownames(P)) & length(names)!=nrow(P)){
-    rownames(P) <- 1:nrow(P)
-  }
-  else if(is.null(rownames(P)) & length(names)==nrow(P)){
-    rownames(P) <- names
-  }
-  n.full <- nrow(P)
-  P.full <- P
-# Equivalence classes ------------------------------------------------
-  MSE <- which((P+t(P))==2,arr.ind=T)
-  if(length(MSE)>=1){
-    MSE <- t(apply(MSE,1,sort))
-    MSE <- MSE[!duplicated(MSE),]
-    g <- igraph::graph.empty()
-    g <- igraph::add.vertices(g,nrow(P))
-    g <- igraph::add.edges(g,c(t(MSE)))
-    g <- igraph::as.undirected(g)
-    MSE <- igraph::clusters(g)$membership
-    equi <- which(duplicated(MSE))
-    P <- P[-equi,-equi]
-  } else{
-    MSE <- 1:nrow(P)
-  }
-  if(is.null(nrow(P))){
-    warning("all elements are structurally equivalent and have the same rank")
-    return()
-  }
-  names <- rownames(P)
-  #number of Elements
-  nElem <- length(names)
-  
-# check for linear order ---------------------------------------------
-  if(comparable_pairs(P)==1){
-    warning("P is already a ranking.\nExpected Ranks correspond to the only possible ranking.")
-    expected.full <- rank(colSums(P.full),ties.method = "max")
-    rank.spread.full <- rep(0,nrow(P.full))
-    mrp.full <- P.full
-    mrp.full[mrp.full==t(mrp.full)] <- 0
-    rp.full=matrix(0,nrow(P.full),nrow(P.full))
-    for(i in 1:nrow(P.full)){
-      rp.full[i,expected.full[i]] <- 1
+exact_rank_prob <- function(P, names = "", only.results = T, verbose = F, force = F) {
+    # Check for names ------------------------------------------------
+    if (is.null(rownames(P)) & length(names) != nrow(P)) {
+        rownames(P) <- 1:nrow(P)
+    } else if (is.null(rownames(P)) & length(names) == nrow(P)) {
+        rownames(P) <- names
     }
-
-    return(list(lin.ext=1,
-                names=rownames(P.full),
-                mse=MSE,
-                rank.prob=rp.full,
-                relative.rank=mrp.full,
-                expected.rank=expected.full,
-                rank.spread=rank.spread.full))
-  }
-  
-# sanity check if applicable ------------------------------------------------
-  if(nrow(P)>50 & comparable_pairs(P)<0.2 & force==F){
-    stop("Input data too big. Use approximations or set force=T if you know what you are doing")
-  }
-#Prepare Data structures---------------------
-  n <- nrow(P)
-  topo.order <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P,"directed")))
-  
-  P <- P[topo.order,topo.order]
-  ImPred <- igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P,"directed"),"in")
-  ImPred <- lapply(ImPred,function(x) as.vector(x)-1)
-  
-  ImSucc <- igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P,"directed"),"out")
-  ImSucc <- lapply(ImSucc,function(x) as.vector(x)-1)
-# TREEOFIDEALS ----------------------------------------------------  
-  if(verbose==TRUE){
-    print("building tree of ideals")
-  }
-  tree<-treeOfIdeals(ImPred)
-  nIdeals=length(tree$label)
-  if(verbose==TRUE){
-    print("tree of ideals built")
-  }
-  Ek=sapply(0:(nElem-1),function(x){which(tree$label==x)-1})
-  # tree$child=lapply(tree$child,function(x) {idx=order(tree$label[x+1],decreasing=T);x[idx]})
-  if(verbose==TRUE){
-    print("building lattice of Ideals")
-  }
-  latofI=LatticeOfIdeals(tree$child,tree$parent,Ek,nElem,nIdeals)
-
-  if(verbose==TRUE){
-    print("lattice of ideals built")
-  }
-  ideallist=listingIdeals(ImSucc,nElem,nIdeals)
-  # ideallist=lapply(ideallist,sort)
-  
-  if(verbose==TRUE){
-    print("ideals listed")
-  }
-  
-  if(verbose==TRUE){
-    print(paste("No of ideals:",nIdeals))
-    print("Calculating Rank Probabilities")
-  }
-
-  res <- rankprobs(latofI,ideallist,nElem,nIdeals)
-  if(verbose==TRUE){
-    print(paste("No. of possible Rankings: ",res$linext))
-  }
-  res$rp <- res$rp[order(topo.order),]
-  res$mrp <- res$mrp[order(topo.order),order(topo.order)]
-  ###############################END
-  expected <- res$rp%*%1:nElem
-  rank.spread <- rowSums((matrix(rep(1:nElem,each=nElem),nElem,nElem)-c(expected))^2*res$rp)
-  expected <- c(expected)
-  ###############################
-  # Insert equivalent nodes again
-  rp.full <- matrix(0,n.full,ncol(res$rp))
-  mrp.full <- matrix(0,n.full,n.full)
-  expected.full <- c(0,n.full)
-  rank.spread.full <- rep(0,n.full)
-  for(i in sort(unique(MSE))){
-    idx <- which(MSE==i)
-    if(length(idx)>1){
-      group.head <- i
-      rp.full[idx,]  <- do.call(rbind, replicate(length(idx), res$rp[group.head,], simplify=FALSE))
-      mrp.full[idx,] <- do.call(rbind, replicate(length(idx), res$mrp[group.head,MSE], simplify=FALSE))
-      # expected.full[idx] <- expected[group.head]
-      # expected.full[idx] <- expected.full[idx]+sum(duplicated(MSE[MSE<=i]))
-      rank.spread.full[idx] <- rank.spread[group.head]
+    n_full <- nrow(P)
+    P_full <- P
+    # Equivalence classes ------------------------------------------------
+    MSE <- which((P + t(P)) == 2, arr.ind = T)
+    if (length(MSE) >= 1) {
+        MSE <- t(apply(MSE, 1, sort))
+        MSE <- MSE[!duplicated(MSE), ]
+        g <- igraph::graph.empty()
+        g <- igraph::add.vertices(g, nrow(P))
+        g <- igraph::add.edges(g, c(t(MSE)))
+        g <- igraph::as.undirected(g)
+        MSE <- igraph::clusters(g)$membership
+        equi <- which(duplicated(MSE))
+        P <- P[-equi, -equi]
+    } else {
+        MSE <- 1:nrow(P)
     }
-    else if(length(idx)==1){
-      rp.full[idx,] <- res$rp[i,]
-      mrp.full[idx,] <- res$mrp[i,MSE]
-      # expected.full[idx] <- expected[i]
-      # expected.full[idx] <- expected.full[idx]+sum(duplicated(MSE[MSE<=i]))
-      rank.spread.full[idx] <- rank.spread[i]
+    if (is.null(nrow(P))) {
+        warning("all elements are structurally equivalent and have the same rank")
+        return()
     }
-  }
-  expected.full <- expected[MSE]
-  for(val in sort(unique(expected.full),decreasing=T)){
-    idx <- which(expected.full==val)
-    expected.full[idx] <- expected.full[idx]+
-      sum(duplicated(MSE[expected.full<=val]))
-  }
-  ###############################
-  if(only.results){
-    return(list(lin.ext=res$linext,
-                names=rownames(P.full),
-                mse=MSE,
-                rank.prob=rp.full,
-                relative.rank=t(mrp.full),
-                expected.rank=expected.full,
-                rank.spread=sqrt(rank.spread.full)))
-  } else{
-    return(list(lin.ext=res$linext,
-                topo.order=topo.order,
-                names=rownames(P.full),
-                mse=MSE,
-                rank.prob=rp.full,
-                relative.rank=t(mrp.full),
-                expected.rank=expected.full,
-                rank.spread=sqrt(rank.spread.full),
-                topo.order=topo.order,
-                tree=tree,
-                lattice=latofI,
-                ideals=ideallist))
-  }
-  ###############################
+    names <- rownames(P)
+    # number of Elements
+    nElem <- length(names)
+    
+    # check for linear order ---------------------------------------------
+    if (comparable_pairs(P) == 1) {
+        warning("P is already a ranking.\nExpected Ranks correspond to the only possible ranking.")
+        expected_full <- rank(colSums(P_full), ties.method = "max")
+        rank.spread_full <- rep(0, nrow(P_full))
+        mrp_full <- P_full
+        mrp_full[mrp_full == t(mrp_full)] <- 0
+        rp_full  <-  matrix(0, nrow(P_full), nrow(P_full))
+        for (i in 1:nrow(P_full)) {
+            rp_full[i, expected_full[i]] <- 1
+        }
+        
+        return(list(lin.ext = 1, 
+                    names = rownames(P_full), 
+                    mse = MSE, 
+                    rank.prob = rp_full, 
+                    relative.rank = mrp_full, 
+                    expected.rank = expected_full, 
+                    rank.spread = rank.spread_full))
+    }
+    
+    # sanity check if applicable ------------------------------------------------
+    if (nrow(P) > 40 & comparable_pairs(P) < 0.4 & force == F) {
+        stop("Input data too big. Use approximations or set force=T if you know what you are doing")
+    }
+    # Prepare Data structures---------------------
+    topo.order <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P, "directed")))
+    
+    P <- P[topo.order, topo.order]
+    ImPred <- igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P, "directed"), "in")
+    ImPred <- lapply(ImPred, function(x) as.vector(x) - 1)
+    
+    ImSucc <- igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P, "directed"), "out")
+    ImSucc <- lapply(ImSucc, function(x) as.vector(x) - 1)
+    # TREEOFIDEALS ----------------------------------------------------
+    if (verbose == TRUE) {
+        print("building tree of ideals")
+    }
+    tree <- treeOfIdeals(ImPred)
+    nIdeals <-  length(tree$label)
+    if (verbose == TRUE) {
+        print("tree of ideals built")
+    }
+    Ek <-  sapply(0:(nElem - 1), function(x) {
+        which(tree$label == x) - 1
+    })
+    # tree$child=lapply(tree$child,function(x) {idx=order(tree$label[x+1],decreasing=T);x[idx]})
+    if (verbose == TRUE) {
+        print("building lattice of Ideals")
+    }
+    latofI <-  LatticeOfIdeals(tree$child, tree$parent, Ek, nElem, nIdeals)
+    
+    if (verbose == TRUE) {
+        print("lattice of ideals built")
+    }
+    ideallist <-  listingIdeals(ImSucc, nElem, nIdeals)
+    # ideallist=lapply(ideallist,sort)
+    
+    if (verbose == TRUE) {
+        print("ideals listed")
+    }
+    
+    if (verbose == TRUE) {
+        print(paste("No of ideals:", nIdeals))
+        print("Calculating Rank Probabilities")
+    }
+    
+    res <- rankprobs(latofI, ideallist, nElem, nIdeals)
+    if (verbose == TRUE) {
+        print(paste("No. of possible Rankings: ", res$linext))
+    }
+    res$rp <- res$rp[order(topo.order), ]
+    res$mrp <- res$mrp[order(topo.order), order(topo.order)]
+    ############################### END
+    expected <- res$rp %*% 1:nElem
+    rank.spread <- rowSums((matrix(rep(1:nElem, each = nElem), nElem, nElem) - c(expected))^2 * res$rp)
+    expected <- c(expected)
+    ############################### Insert equivalent nodes again
+    rp_full <- matrix(0, n_full, ncol(res$rp))
+    mrp_full <- matrix(0, n_full, n_full)
+    expected_full <- c(0, n_full)
+    rank.spread_full <- rep(0, n_full)
+    for (i in sort(unique(MSE))) {
+        idx <- which(MSE == i)
+        if (length(idx) > 1) {
+            group.head <- i
+            rp_full[idx, ] <- do.call(rbind, replicate(length(idx), res$rp[group.head, ], simplify = FALSE))
+            mrp_full[idx, ] <- do.call(rbind, replicate(length(idx), res$mrp[group.head, MSE], simplify = FALSE))
+            rank.spread_full[idx] <- rank.spread[group.head]
+        } else if (length(idx) == 1) {
+            rp_full[idx, ] <- res$rp[i, ]
+            mrp_full[idx, ] <- res$mrp[i, MSE]
+            rank.spread_full[idx] <- rank.spread[i]
+        }
+    }
+    expected_full <- expected[MSE]
+    for (val in sort(unique(expected_full), decreasing = T)) {
+        idx <- which(expected_full == val)
+        expected_full[idx] <- expected_full[idx] + sum(duplicated(MSE[expected_full <= val]))
+    }
+    ############################### 
+    if (only.results) {
+        return(list(lin.ext = res$linext, 
+                    names = rownames(P_full), 
+                    mse = MSE, rank.prob = rp_full, 
+                    relative.rank = t(mrp_full), 
+                    expected.rank = expected_full, 
+                    rank.spread = sqrt(rank.spread_full)))
+    } else {
+        return(list(lin.ext = res$linext, 
+                    names = rownames(P_full), 
+                    mse = MSE, 
+                    rank.prob = rp_full, 
+                    relative.rank = t(mrp_full), 
+                    expected.rank = expected_full, 
+                    rank.spread = sqrt(rank.spread_full), 
+                    topo.order = topo.order, 
+                    tree = tree, 
+                    lattice = latofI, 
+                    ideals = ideallist))
+    }
 }
 
