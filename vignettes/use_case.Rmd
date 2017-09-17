@@ -399,11 +399,7 @@ res <- exact_rank_prob(D,names = V(florentine_m)$name,only.results = FALSE)
 Now, we can use the function `get_rankings()` which returns all rankings as a matrix.
 
 ```{r all_rankings}
-all_ranks <- get_rankings(lattice = res$lattice,
-                          ideals = res$ideals,
-                          topo.order = res$topo.order,
-                          linext = res$lin.ext,
-                          mse = res$mse)
+all_ranks <- get_rankings(res)
 dim(all_ranks)
 ```
 
