@@ -12,16 +12,16 @@ Rcpp::List checkPairs(NumericVector x,NumericVector y) {
   int n=x.size();
   for(int i=0; i<n-1; ++i){
     for(int j=i+1; j<n; ++j){
-      if((x[i]>x[j] & y[i]>y[j]) | (x[i]<x[j] & y[i]<y[j])){
+      if(((x[i]>x[j]) & (y[i]>y[j])) | ((x[i]<x[j]) & (y[i]<y[j]))){
         Con+=+1;
       }
-      else if((x[i]>x[j] & y[i]<y[j]) | (x[i]<x[j] & y[i]>y[j])){
+      else if(((x[i]>x[j]) & (y[i]<y[j])) | ((x[i]<x[j]) & (y[i]>y[j]))){
         Dis+=+1;
       }
-      else if(x[i]==x[j] & y[i]==y[j]){
+      else if((x[i]==x[j]) & (y[i]==y[j])){
         Tie+=1;
       }
-      else if(x[i]==x[j] & y[i]!=y[j]){
+      else if((x[i]==x[j]) & (y[i]!=y[j])){
         Left+=1;
       }
       else{

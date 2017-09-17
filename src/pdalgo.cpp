@@ -12,7 +12,7 @@ arma::imat matdom(NumericMatrix A, bool map, bool benefit) {
   // int m=B.n_cols;
   bool status;
   arma::mat Asort(n,n,fill::zeros);
-  arma:imat dom(n,n,fill::zeros);
+  arma::imat dom(n,n,fill::zeros);
   arma::rowvec tmpi(n);
   arma::rowvec tmpj(n);
   arma::rowvec check(n); 

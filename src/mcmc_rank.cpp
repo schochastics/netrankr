@@ -32,7 +32,7 @@ List mcmc_rank(IntegerMatrix P,
     int a = init_rank[p];
     int b = init_rank[p+1];
     t+=1;
-    if(c==1 & P(a,b)!=1){
+    if((c==1) & (P(a,b)!=1)){
       init_rank[p]=b;
       init_rank[p+1]=a;
       //expected update

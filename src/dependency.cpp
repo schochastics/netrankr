@@ -31,7 +31,8 @@ NumericMatrix dependency(std::vector<std::vector<int> > adj) {
       Q.erase(Q.begin());
       S.push_front(v);
       std::vector<int> Nv=adj[v];
-      for(int i=0; i<Nv.size();++i){
+      int m = Nv.size();
+      for(int i=0; i<m; ++i){
         int w=Nv[i];
         /* path discovery */
         if(dist[w]<0){
@@ -53,7 +54,8 @@ NumericMatrix dependency(std::vector<std::vector<int> > adj) {
       Rcpp::checkUserInterrupt();
       int w=S[0];
       S.erase(S.begin());
-      for(int i=0;i<Pred[w].size(); ++i){
+      int m = Pred[w].size();
+      for(int i=0;i<m; ++i){
         int v=Pred[w][i];
         delta[v]+=double(sigma[v])/double(sigma[w])*(1+delta[w]);
       }

@@ -98,7 +98,7 @@ void ComputeMutualRankProb(int v,int h, int &nElem,
                             ideals[v].begin(), ideals[v].end(), &x);
         mrp(x,y)=mrp(x,y)+double(lei[v])*double(lef[vPrime])/double(e);
       }
-      if(vPrime!=0 & visited[vPrime]==0){
+      if((vPrime!=0) & (visited[vPrime]==0)){
         int x;
         std::set_difference(ideals[vPrime].begin(), ideals[vPrime].end(),
                             ideals[v].begin(), ideals[v].end(), &x);

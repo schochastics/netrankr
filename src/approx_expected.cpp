@@ -15,7 +15,7 @@ NumericVector approx_glpom(NumericMatrix P) {
   List Sx(n); 
   for(int i=0;i<n;++i){
     rapprox[i]=sum(P(_,i))+1;
-    Lxvec=elements[P(_,i)==0 & P(i,_)==0];
+    Lxvec=elements[(P(_,i)==0) & (P(i,_)==0)];
     Ix[i]=Lxvec[Lxvec!=i];
     Sx[i]=elements[P(_,i)==1];
   }
