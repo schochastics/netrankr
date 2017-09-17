@@ -1,16 +1,11 @@
 citHeader("To cite netrankr in publications use:")
 
 citEntry(entry = "Manual",
-  title        = "netrankr:",
+  title        = "netrankr: An R package to analyze partial rankings in networks",
   author       = personList(as.person("David Schoch")),
-  journal      = "",
-  year         = "2017",
-  volume       = "",
-  number       = "",
-  pages        = "",
-  url          = "",
+  year         = "2017"
 
   textVersion  =
   paste("David Schoch (2017).",
-        "netrankr: R package for Partial Centrality and Expected Ranks in networks")
+        "netrankr: An R package to analyze partial rankings in networks")
 )

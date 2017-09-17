@@ -1,10 +1,10 @@
 Package: netrankr
 Type: Package
-Title: Analyzing Partial Rankings for Network Centrality
+Title: Analyzing Partial Rankings in Networks
 Version: 0.0.5
 Authors@R: person("David", "Schoch", ,"david.schoch@uni-konstanz.de", c("aut", "cre"))
 Maintainer: David Schoch <david.schoch@uni-konstanz.de>
-Description: Implements methods that can be used for network centrality 
+Description: Implements methods for network centrality 
     related analyses of networks. While the package includes the possibility to
     build a variety of indices, its main focus lies on index-free assessment of centrality via partial 
     rankings obtained by neighborhood-inclusion or positional dominance. 

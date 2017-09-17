@@ -1,9 +1,9 @@
-#' netrankr: Analyzing Partial Rankings for Network Centrality
+#' netrankr: An R package to analyze partial rankings in networks
 #' 
 #' netrankr provides several functions to analyze partial rankings for network
 #' centrality. The main focus lies on methods that do not rely on indices like degree, 
-#' betweenness or closeness. The package can, however, also be used to analyse
-#' partial rankings that arise from a non-network context
+#' betweenness or closeness. The package can also be used to analyse
+#' partial rankings that arise from a non-network context.
 #'
 #' Some features of the package are: 
 #'    
@@ -24,7 +24,7 @@
 #' Consult `vignette('probabilistic_cent',package='netrankr')` for more info.
 #' }
 #' 
-#' The package provides many additional vignettes that explain the functionality 
+#' The package provides several additional vignettes that explain the functionality 
 #' of netrankr and its conceptual ideas. See `browseVignettes(package = 'netrankr')`
 #' 
 #' @docType package
