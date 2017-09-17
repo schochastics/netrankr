@@ -59,8 +59,8 @@ cent_scores <- data.frame(
 apply(cent_scores,2,which.max)
 ```
 
-    ##      degree betweenness   closeness eigenvector    subgraph 
-    ##          11           8           6           7          10
+    #>      degree betweenness   closeness eigenvector    subgraph 
+    #>          11           8           6           7          10
 
 Each index assigns the highest value to a different vertex!
 
@@ -71,18 +71,18 @@ P <- neighborhood_inclusion(g)
 P
 ```
 
-    ##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-    ##  [1,]    0    0    1    0    1    1    1    0    0     0     1
-    ##  [2,]    0    0    0    1    0    0    0    1    0     0     0
-    ##  [3,]    0    0    0    0    1    0    0    0    0     0     1
-    ##  [4,]    0    0    0    0    0    0    0    0    0     0     0
-    ##  [5,]    0    0    0    0    0    0    0    0    0     0     0
-    ##  [6,]    0    0    0    0    0    0    0    0    0     0     0
-    ##  [7,]    0    0    0    0    0    0    0    0    0     0     0
-    ##  [8,]    0    0    0    0    0    0    0    0    0     0     0
-    ##  [9,]    0    0    0    0    0    0    0    0    0     0     0
-    ## [10,]    0    0    0    0    0    0    0    0    0     0     0
-    ## [11,]    0    0    0    0    0    0    0    0    0     0     0
+    #>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
+    #>  [1,]    0    0    1    0    1    1    1    0    0     0     1
+    #>  [2,]    0    0    0    1    0    0    0    1    0     0     0
+    #>  [3,]    0    0    0    0    1    0    0    0    0     0     1
+    #>  [4,]    0    0    0    0    0    0    0    0    0     0     0
+    #>  [5,]    0    0    0    0    0    0    0    0    0     0     0
+    #>  [6,]    0    0    0    0    0    0    0    0    0     0     0
+    #>  [7,]    0    0    0    0    0    0    0    0    0     0     0
+    #>  [8,]    0    0    0    0    0    0    0    0    0     0     0
+    #>  [9,]    0    0    0    0    0    0    0    0    0     0     0
+    #> [10,]    0    0    0    0    0    0    0    0    0     0     0
+    #> [11,]    0    0    0    0    0    0    0    0    0     0     0
 
 ``` r
 D <- dominance_graph(P)
@@ -100,14 +100,14 @@ res <- exact_rank_prob(P)
 str(res)
 ```
 
-    ## List of 7
-    ##  $ lin.ext      : num 739200
-    ##  $ names        : chr [1:11] "1" "2" "3" "4" ...
-    ##  $ mse          : int [1:11] 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ rank.prob    : num [1:11, 1:11] 0.545 0.273 0 0 0 ...
-    ##  $ relative.rank: num [1:11, 1:11] 0 0.3333 0 0.0476 0 ...
-    ##  $ expected.rank: num [1:11] 1.71 3 4.29 7.5 8.14 ...
-    ##  $ rank.spread  : num [1:11] 0.958 1.897 1.725 2.54 2.16 ...
+    #> List of 7
+    #>  $ lin.ext      : num 739200
+    #>  $ names        : chr [1:11] "1" "2" "3" "4" ...
+    #>  $ mse          : int [1:11] 1 2 3 4 5 6 7 8 9 10 ...
+    #>  $ rank.prob    : num [1:11, 1:11] 0.545 0.273 0 0 0 ...
+    #>  $ relative.rank: num [1:11, 1:11] 0 0.3333 0 0.0476 0 ...
+    #>  $ expected.rank: num [1:11] 1.71 3 4.29 7.5 8.14 ...
+    #>  $ rank.spread  : num [1:11] 0.958 1.897 1.725 2.54 2.16 ...
 
 `lin.ext` is the number of possible rankings. For the graph `g` we could thus come up with 739,200 indices that would rank the nodes differently.
 
@@ -117,7 +117,7 @@ str(res)
 round(res$rank.prob[,11],2)
 ```
 
-    ##  [1] 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16
+    #>  [1] 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16
 
 `relative.rank` contains the relative rank probabilities. An entry `relative.rank[u,v]` indicates how likely it is that `v` is more central than `u`.
 
@@ -126,7 +126,7 @@ round(res$rank.prob[,11],2)
 round(res$relative.rank[3,6],2)
 ```
 
-    ## [1] 0.75
+    #> [1] 0.75
 
 `expected.ranks` contains the expected centrality ranks for all nodes. They are derived on the basis of `rank.prob`.
 
@@ -134,7 +134,7 @@ round(res$relative.rank[3,6],2)
 round(res$expected.rank,2)
 ```
 
-    ##  [1] 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14
+    #>  [1] 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14
 
 The higher the value, the more central a node is expected to be.
 

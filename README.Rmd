@@ -3,14 +3,20 @@ output: github_document
 ---
 # netrankr <img src="logo.png" align="right" height="auto" width="125" />
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
 ```
 
 ## Overview
 
 netrankr is an R package that can be used for centrality analyses of networks.
 Although it implements some indices, the main focus lies on an index-free assessment 
-of centrality in networks. Most implemented methods are, however, more general and can be used 
+of centrality in networks. 
+
+Most implemented methods are, however, more general and can be used 
 whenever partial rankings have to be analysed.
 
 ## Install
@@ -57,7 +63,7 @@ For larger networks, various approximation functions can be used. See vignettes 
 
 ## Example
 
-```{r ex, warning=FALSE,message=FALSE}
+```{r example_graph, warning=FALSE,message=FALSE}
 library(igraph)
 library(netrankr)
 set.seed(123)
