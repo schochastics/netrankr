@@ -20,44 +20,42 @@
 #' @examples
 #' # Will be added in later version
 #' @export
-mcmc_rank_prob <- function(P,rp=nrow(P)^3){
-  n.full <- nrow(P)
-  MSE <- which((P+t(P))==2,arr.ind=T)
-  if(length(MSE)>=1){
-    MSE <- t(apply(MSE,1,sort))
-    MSE <- MSE[!duplicated(MSE),]
-    g <- igraph::graph.empty()
-    g <- igraph::add.vertices(g,nrow(P))
-    g <- igraph::add.edges(g,c(t(MSE)))
-    g <- igraph::as.undirected(g)
-    MSE <- igraph::clusters(g)$membership
-    equi <- which(duplicated(MSE))
-    P <- P[-equi,-equi]
-  } else{
-    MSE <- 1:nrow(P)
-  }
-  n <- nrow(P)
-  init.rank <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P,"directed")))
-  res <- mcmc_rank(P,init.rank-1,rp)
-  res$expected <- res$expected+1
-  expected.full <- c(0,n.full)
-  rrp.full <- matrix(0,n.full,n.full)
-  for(i in sort(unique(MSE))){
-    idx <- which(MSE==i)
-    if(length(idx)>1){
-      group.head <- i
-      rrp.full[idx,] <- do.call(rbind, replicate(length(idx), res$rrp[group.head,MSE], simplify=FALSE))
+mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
+    n.full <- nrow(P)
+    MSE <- which((P + t(P)) == 2, arr.ind = T)
+    if (length(MSE) >= 1) {
+        MSE <- t(apply(MSE, 1, sort))
+        MSE <- MSE[!duplicated(MSE), ]
+        g <- igraph::graph.empty()
+        g <- igraph::add.vertices(g, nrow(P))
+        g <- igraph::add.edges(g, c(t(MSE)))
+        g <- igraph::as.undirected(g)
+        MSE <- igraph::clusters(g)$membership
+        equi <- which(duplicated(MSE))
+        P <- P[-equi, -equi]
+    } else {
+        MSE <- 1:nrow(P)
     }
-    else if(length(idx)==1){
-      rrp.full[idx,] <- res$rrp[i,MSE]
+
+    init.rank <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P, "directed")))
+    res <- mcmc_rank(P, init.rank - 1, rp)
+    res$expected <- res$expected + 1
+    expected.full <- c(0, n.full)
+    rrp.full <- matrix(0, n.full, n.full)
+    for (i in sort(unique(MSE))) {
+        idx <- which(MSE == i)
+        if (length(idx) > 1) {
+            group.head <- i
+            rrp.full[idx, ] <- do.call(rbind, replicate(length(idx), res$rrp[group.head, MSE], simplify = FALSE))
+        } else if (length(idx) == 1) {
+            rrp.full[idx, ] <- res$rrp[i, MSE]
+        }
     }
-  }
-  expected.full <- res$expected[MSE]
-  for(val in sort(unique(expected.full),decreasing=T)){
-    idx <- which(expected.full==val)
-    expected.full[idx] <- expected.full[idx]+
-      sum(duplicated(MSE[expected.full<=val]))
-  }
-  return(list(expected.rank=expected.full,relative.rank=rrp.full))
+    expected.full <- res$expected[MSE]
+    for (val in sort(unique(expected.full), decreasing = T)) {
+        idx <- which(expected.full == val)
+        expected.full[idx] <- expected.full[idx] + sum(duplicated(MSE[expected.full <= val]))
+    }
+    return(list(expected.rank = expected.full, relative.rank = rrp.full))
 }
 

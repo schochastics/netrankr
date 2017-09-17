@@ -18,24 +18,25 @@
 #' indices and a class of uniquely ranked graphs. *Social Networks* 50, 46–54.
 #' @examples
 #' require(igraph)
-#' g <- graph.star(5,"undirected")
+#' g <- graph.star(5,'undirected')
 #' majorization_gap(g) #0 since star graphs are threshold graphs
 #'
 #' g <- sample_gnp(100,0.15)
 #' majorization_gap(g,norm=TRUE) #fraction of reverse unit transformation
 #' majorization_gap(g,norm=FALSE) #number of reverse unit transformation
 #' @export
-majorization_gap <- function(g,norm=TRUE){
-
-  n <- igraph::vcount(g)
-  deg.sorted <- sort(igraph::degree(g),decreasing=TRUE)
-  deg.cor <- sapply(1:n,function(k){length(which(deg.sorted[which((1:n)<k)]>=(k-1)))+length(which(deg.sorted[which((1:n)>k)]>=k))})
-  gap <- deg.cor-deg.sorted
-  if(!norm){
-  gap <- 0.5*sum(gap[gap>=0])
-  }
-  else{
-    gap <- 0.5*sum(gap[gap>=0])/igraph::ecount(g)
-  }
-  return(gap)
+majorization_gap <- function(g, norm = TRUE) {
+    
+    n <- igraph::vcount(g)
+    deg.sorted <- sort(igraph::degree(g), decreasing = TRUE)
+    deg.cor <- sapply(1:n, function(k) {
+        length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
+    })
+    gap <- deg.cor - deg.sorted
+    if (!norm) {
+        gap <- 0.5 * sum(gap[gap >= 0])
+    } else {
+        gap <- 0.5 * sum(gap[gap >= 0])/igraph::ecount(g)
+    }
+    return(gap)
 }

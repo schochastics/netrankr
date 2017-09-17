@@ -32,162 +32,157 @@
 #' #Exact result
 #' exact_rank_prob(P)$expected.rank
 #' 
-#' approx_rank_expected(P,"lpom")
-#' approx_rank_expected(P,"glpom")
+#' approx_rank_expected(P,'lpom')
+#' approx_rank_expected(P,'glpom')
 #' @export
-approx_rank_expected <- function(P,method="lpom"){
-  n.full <- nrow(P)
-  P.full <- P
-# Equivalence classes ------------------------------------------------
-  MSE <- which((P+t(P))==2,arr.ind=T)
-  if(length(MSE)>=1){
-    MSE <- t(apply(MSE,1,sort))
-    MSE <- MSE[!duplicated(MSE),]
-    g <- igraph::graph.empty()
-    g <- igraph::add.vertices(g,nrow(P))
-    g <- igraph::add.edges(g,c(t(MSE)))
-    g <- igraph::as.undirected(g)
-    MSE <- igraph::clusters(g)$membership
-    equi <- which(duplicated(MSE))
-    P <- P[-equi,-equi]
-  } else{
-    MSE <- 1:nrow(P)
-  }
-  if(is.null(nrow(P))){
-    warning("all elements are structurally equivalent and have the same rank")
-    return()
-  }
-  
-  #number of Elements
-  n <- length(names)
-  
-  g <- igraph::graph_from_adjacency_matrix(P,"directed")
-  n <- nrow(P)
-  if(method=="lpom"){
-    sx <- igraph::degree(g,mode="in")
-    ix <- (n-1)-igraph::degree(g,mode="all")
-    r.approx <- (sx+1)*(n+1)/(n+1-ix)
-    r.approx <- unname(r.approx)
-  }
-  else if(method=="glpom"){
-    r.approx <- approx_glpom(P)
-  }
-  else if(method=="loof1"){
-    P <- P+diag(1,n)
-    s <- igraph::degree(g,mode="in")
-    l <- igraph::degree(g,mode="out")
-    r.approx=s+1
-    for(x in 1:n){
-      Ix <- which(P[x,]==0 & P[,x]==0)
-      for(y in Ix){
-        r.approx[x] <- r.approx[x]+((s[x]+1)*(l[y]+1))/((s[x]+1)*(l[y]+1)+(s[y]+1)*(l[x]+1))
-      }
+approx_rank_expected <- function(P, method = "lpom") {
+
+    # Equivalence classes ------------------------------------------------
+    MSE <- which((P + t(P)) == 2, arr.ind = T)
+    if (length(MSE) >= 1) {
+        MSE <- t(apply(MSE, 1, sort))
+        MSE <- MSE[!duplicated(MSE), ]
+        g <- igraph::graph.empty()
+        g <- igraph::add.vertices(g, nrow(P))
+        g <- igraph::add.edges(g, c(t(MSE)))
+        g <- igraph::as.undirected(g)
+        MSE <- igraph::clusters(g)$membership
+        equi <- which(duplicated(MSE))
+        P <- P[-equi, -equi]
+    } else {
+        MSE <- 1:nrow(P)
     }
-  }
-  else if(method=="loof2"){
-    P <- P+diag(1,n)
-    s <- igraph::degree(g,mode="in")
-    l <- igraph::degree(g,mode="out")
-    s.approx <- s
-    l.approx <- l
-    for(x in 1:n){
-      Ix <- which(P[x,]==0 & P[,x]==0)
-      for(y in Ix){
-        s.approx[x] <- s.approx[x]+.sl.approx(s[x],s[y],l[x],l[y])
-        l.approx[x] <- l.approx[x]+.sl.approx(s[y],s[x],l[y],l[x])
-      }
+    if (is.null(nrow(P))) {
+        warning("all elements are structurally equivalent and have the same rank")
+        return()
     }
-    r.approx <- s+1
-    s <- s.approx
-    l <- l.approx
-    for(x in 1:n){
-      Ix <- which(P[x,]==0 & P[,x]==0)
-      for(y in Ix){
-        r.approx[x] <- r.approx[x]+((s[x]+1)*(l[y]+1))/((s[x]+1)*(l[y]+1)+(s[y]+1)*(l[x]+1))
-      }
+    
+    # number of Elements
+    n <- length(names)
+    
+    g <- igraph::graph_from_adjacency_matrix(P, "directed")
+    n <- nrow(P)
+    if (method == "lpom") {
+        sx <- igraph::degree(g, mode = "in")
+        ix <- (n - 1) - igraph::degree(g, mode = "all")
+        r.approx <- (sx + 1) * (n + 1)/(n + 1 - ix)
+        r.approx <- unname(r.approx)
+    } else if (method == "glpom") {
+        r.approx <- approx_glpom(P)
+    } else if (method == "loof1") {
+        P <- P + diag(1, n)
+        s <- igraph::degree(g, mode = "in")
+        l <- igraph::degree(g, mode = "out")
+        r.approx = s + 1
+        for (x in 1:n) {
+            Ix <- which(P[x, ] == 0 & P[, x] == 0)
+            for (y in Ix) {
+                r.approx[x] <- r.approx[x] + ((s[x] + 1) * (l[y] + 1))/((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+            }
+        }
+    } else if (method == "loof2") {
+        P <- P + diag(1, n)
+        s <- igraph::degree(g, mode = "in")
+        l <- igraph::degree(g, mode = "out")
+        s.approx <- s
+        l.approx <- l
+        for (x in 1:n) {
+            Ix <- which(P[x, ] == 0 & P[, x] == 0)
+            for (y in Ix) {
+                s.approx[x] <- s.approx[x] + .sl.approx(s[x], s[y], l[x], l[y])
+                l.approx[x] <- l.approx[x] + .sl.approx(s[y], s[x], l[y], l[x])
+            }
+        }
+        r.approx <- s + 1
+        s <- s.approx
+        l <- l.approx
+        for (x in 1:n) {
+            Ix <- which(P[x, ] == 0 & P[, x] == 0)
+            for (y in Ix) {
+                r.approx[x] <- r.approx[x] + ((s[x] + 1) * (l[y] + 1))/((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+            }
+        }
     }
-  }
-  expected.full <- r.approx[MSE]
-  for(val in sort(unique(expected.full),decreasing=T)){
-    idx <- which(expected.full==val)
-    expected.full[idx] <- expected.full[idx]+
-      sum(duplicated(MSE[expected.full<=val]))
-  }
-  return(expected.full)
+    expected.full <- r.approx[MSE]
+    for (val in sort(unique(expected.full), decreasing = T)) {
+        idx <- which(expected.full == val)
+        expected.full[idx] <- expected.full[idx] + 
+          sum(duplicated(MSE[expected.full <= val]))
+    }
+    return(expected.full)
 }
 
-.sl.approx <- function(sx,sy,lx,ly){
-  ((sx+1)*(ly+1))/((sx+1)*(ly+1)+(sy+1)*(lx+1))
+.sl.approx <- function(sx, sy, lx, ly) {
+    ((sx + 1) * (ly + 1))/((sx + 1) * (ly + 1) + (sy + 1) * (lx + 1))
 }
-#############################
-approx_rank_relative <- function(P,iterative=TRUE,num.iter=10){
-  #' @title Approximation of relative rank probabilities
-  #' @description Approximate relative rank probabilities \eqn{P(rk(u)<rk(v))}. 
-  #' In a network context, \eqn{P(rk(u)<rk(v))} is the probability that u is 
-  #' less central than v, given the partial ranking P.
-  #' @param P a partial ranking as matrix object.
-  #' @param iterative boolean. TRUE (default) if iterative approximation should be used. FALSE if not.
-  #' @param num.iter number of iterations to be used. defaults to 10 (see Details).
-  #' @details The iterative approach generally gives better approximations than the non iterative, if only slightly.
-  #' The default number of iterations is based on the observation, that the approximation does not improve
-  #' significantly beyond this value. This observation, however, is based on very small networks such that
-  #' increasing it for large network may yield better results.
-  #' @author David Schoch
-  #' @references De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual
-  #' rank probabilities in partially ordered sets. In *Multicriteria Ordering and
-  #' Ranking: Partial Orders, Ambiguities and Applied Issues*, 145-165.
-  #' 
-  #' @return a matrix containing approximation of mutual rank probabilities. 
-  #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
-  #' @seealso [exact_rank_prob] for exact computations
-  #' @examples
-  #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
-  #' P
-  #' approx_rank_relative(P,iterative=FALSE) 
-  #' approx_rank_relative(P,iterative=TRUE)
-  #' @export
-  
-  # Equivalence classes ------------------------------------------------
-  MSE <- which((P+t(P))==2,arr.ind=T)
-  P.full <- P
-  if(length(MSE)>=1){
-    MSE <- t(apply(MSE,1,sort))
-    MSE <- MSE[!duplicated(MSE),]
-    g <- igraph::graph.empty()
-    g <- igraph::add.vertices(g,nrow(P))
-    g <- igraph::add.edges(g,c(t(MSE)))
-    g <- igraph::as.undirected(g)
-    MSE <- igraph::clusters(g)$membership
-    equi <- which(duplicated(MSE))
-    P <- P[-equi,-equi]
-  } else{
-    MSE<-1:nrow(P)
-  }
-  
-  if(is.null(nrow(P))){
-    warning("all elements are structurally equivalent and have the same rank")
-    return()
-  }
-  n <- nrow(P)
-  relative.rank <- approx_relative(colSums(P),rowSums(P),P,iterative,num.iter)
-  mrp.full <- matrix(0,length(MSE),length(MSE))
-  for(i in sort(unique(MSE))){
-    idx <- which(MSE==i)
-    if(length(idx)>1){
-      group.head <- i
-      mrp.full[idx,] <- do.call(rbind, replicate(length(idx), relative.rank[group.head,MSE], simplify=FALSE))
-    }
-    else if(length(idx)==1){
-      group.head <- idx
-      mrp.full[group.head,] <- relative.rank[i,MSE]
-    }
-  }
+############################# 
+approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
+    #' @title Approximation of relative rank probabilities
+    #' @description Approximate relative rank probabilities \eqn{P(rk(u)<rk(v))}. 
+    #' In a network context, \eqn{P(rk(u)<rk(v))} is the probability that u is 
+    #' less central than v, given the partial ranking P.
+    #' @param P a partial ranking as matrix object.
+    #' @param iterative boolean. TRUE (default) if iterative approximation should be used. FALSE if not.
+    #' @param num.iter number of iterations to be used. defaults to 10 (see Details).
+    #' @details The iterative approach generally gives better approximations than the non iterative, if only slightly.
+    #' The default number of iterations is based on the observation, that the approximation does not improve
+    #' significantly beyond this value. This observation, however, is based on very small networks such that
+    #' increasing it for large network may yield better results.
+    #' @author David Schoch
+    #' @references De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual
+    #' rank probabilities in partially ordered sets. In *Multicriteria Ordering and
+    #' Ranking: Partial Orders, Ambiguities and Applied Issues*, 145-165.
+    #' 
+    #' @return a matrix containing approximation of mutual rank probabilities. 
+    #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
+    #' @seealso [exact_rank_prob] for exact computations
+    #' @examples
+    #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+    #' P
+    #' approx_rank_relative(P,iterative=FALSE) 
+    #' approx_rank_relative(P,iterative=TRUE)
+    #' @export
+    
+    # Equivalence classes ------------------------------------------------
+    MSE <- which((P + t(P)) == 2, arr.ind = T)
 
-  diag(mrp.full) <- 0
-  return(mrp.full)
+    if (length(MSE) >= 1) {
+        MSE <- t(apply(MSE, 1, sort))
+        MSE <- MSE[!duplicated(MSE), ]
+        g <- igraph::graph.empty()
+        g <- igraph::add.vertices(g, nrow(P))
+        g <- igraph::add.edges(g, c(t(MSE)))
+        g <- igraph::as.undirected(g)
+        MSE <- igraph::clusters(g)$membership
+        equi <- which(duplicated(MSE))
+        P <- P[-equi, -equi]
+    } else {
+        MSE <- 1:nrow(P)
+    }
+    
+    if (is.null(nrow(P))) {
+        warning("all elements are structurally equivalent and have the same rank")
+        return()
+    }
+
+    relative.rank <- approx_relative(colSums(P), rowSums(P), P, iterative, num.iter)
+    mrp.full <- matrix(0, length(MSE), length(MSE))
+    for (i in sort(unique(MSE))) {
+        idx <- which(MSE == i)
+        if (length(idx) > 1) {
+            group.head <- i
+            mrp.full[idx, ] <- do.call(rbind, replicate(length(idx), relative.rank[group.head, MSE], simplify = FALSE))
+        } else if (length(idx) == 1) {
+            group.head <- idx
+            mrp.full[group.head, ] <- relative.rank[i, MSE]
+        }
+    }
+    
+    diag(mrp.full) <- 0
+    return(mrp.full)
 }
 
-#buggy as hell
+# buggy as hell
 #' freeman_hierarchy <- function(P){
 #'   #' @title Freemans Hierarchy measure
 #'   #' @description Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix 

@@ -21,7 +21,7 @@
 #' @examples
 #' require(igraph)
 #' #the neighborhood inclusion preorder of a star graph is complete
-#' g <- graph.star(5,"undirected")
+#' g <- graph.star(5,'undirected')
 #' P <- neighborhood_inclusion(g)
 #' comparable_pairs(P)
 #' 
@@ -40,9 +40,9 @@
 #' is_preserved(P,closeness(g))
 #' is_preserved(P,betweenness(g))
 #' @export
-neighborhood_inclusion <- function(g){
-  adj <- lapply(igraph::get.adjlist(g),function(x) x-1)
-  deg <- igraph::degree(g)
-  dom <- nialgo(adj,deg)
-  return(dom)
+neighborhood_inclusion <- function(g) {
+    adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
+    deg <- igraph::degree(g)
+    dom <- nialgo(adj, deg)
+    return(dom)
 }

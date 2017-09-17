@@ -17,7 +17,7 @@
 #' d <- dominance_graph(P)
 #' \dontrun{plot(d)}
 #' @export
-dominance_graph <- function(P){
-  d <- igraph::graph_from_adjacency_matrix(P,"directed")
-  return(d)
+dominance_graph <- function(P) {
+    d <- igraph::graph_from_adjacency_matrix(P, "directed")
+    return(d)
 }

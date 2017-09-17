@@ -15,6 +15,6 @@
 #' P <- neighborhood_inclusion(g)
 #' comparable_pairs(P)
 #' @export
-comparable_pairs <- function(P){
-  round(igraph::graph.density(igraph::graph_from_adjacency_matrix(P,"max")),8)
+comparable_pairs <- function(P) {
+    round(igraph::graph.density(igraph::graph_from_adjacency_matrix(P, "max")), 8)
 }

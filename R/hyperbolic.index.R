@@ -2,7 +2,7 @@
 #' @description The hyperbolic index is a centrality index that considers all closed 
 #' walks of even or odd length on induced neighborhoods of a vertex.
 #' @param g igraph object. 
-#' @param type string. "even" if only even length walks should be considered. "odd" (Default)
+#' @param type string. 'even' if only even length walks should be considered. 'odd' (Default)
 #' if only odd length walks should be used.
 #' @details The hyperbolic index is a illustrative centrality index that should 
 #' not be used for any serious analysis. Its purpose is to show that with enough mathematical 
@@ -18,34 +18,32 @@
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #' hyperbolic_index(g)
 #' @export
-hyperbolic_index <- function(g,type="odd"){
-  n <- igraph::vcount(g)
-  if(type=="even"){
-    ENW <- rep(0,n)
-    for(v in 1:n){
-      Nv <- igraph::neighborhood(g,1,v)[[1]]
-      g1 <- igraph::induced.subgraph(g,Nv)
-      C <- igraph::get.adjacency(g1,type="both")
-      eig.decomp <- eigen(C,symmetric=TRUE)
-      V <- (eig.decomp$vectors)^2
-      lambda <- eig.decomp$values
-      ENW[v] <- sum(V%*%cosh(lambda))*igraph::graph.density(g1)   #cosh(x)
+hyperbolic_index <- function(g, type = "odd") {
+    n <- igraph::vcount(g)
+    if (type == "even") {
+        ENW <- rep(0, n)
+        for (v in 1:n) {
+            Nv <- igraph::neighborhood(g, 1, v)[[1]]
+            g1 <- igraph::induced.subgraph(g, Nv)
+            C <- igraph::get.adjacency(g1, type = "both")
+            eig.decomp <- eigen(C, symmetric = TRUE)
+            V <- (eig.decomp$vectors)^2
+            lambda <- eig.decomp$values
+            ENW[v] <- sum(V %*% cosh(lambda)) * igraph::graph.density(g1)  #cosh(x)
+        }
+    } else if (type == "odd") {
+        ENW <- rep(0, n)
+        for (v in 1:n) {
+            Nv <- igraph::neighborhood(g, 1, v)[[1]]
+            g1 <- igraph::induced.subgraph(g, Nv)
+            C <- igraph::get.adjacency(g1, type = "both")
+            eig.decomp <- eigen(C, symmetric = TRUE)
+            V <- (eig.decomp$vectors)^2
+            lambda <- eig.decomp$values
+            ENW[v] <- sum(V %*% sinh(lambda)) * igraph::graph.density(g1)  #sinh(x)
+        }
+    } else {
+        stop("type must be even or odd")
     }
-  }
-  else if(type=="odd"){
-    ENW <- rep(0,n)
-    for(v in 1:n){
-      Nv <- igraph::neighborhood(g,1,v)[[1]]
-      g1 <- igraph::induced.subgraph(g,Nv)
-      C <- igraph::get.adjacency(g1,type="both")
-      eig.decomp <- eigen(C,symmetric=TRUE)
-      V <- (eig.decomp$vectors)^2
-      lambda <- eig.decomp$values
-      ENW[v] <- sum(V%*%sinh(lambda))*igraph::graph.density(g1)   #sinh(x)
-    }
-  }
-  else{
-    stop("type must be even or odd")
-  }
-  return(ENW)
+    return(ENW)
 }
