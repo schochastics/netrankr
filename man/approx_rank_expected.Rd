@@ -34,8 +34,8 @@ P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #Exact result
 exact_rank_prob(P)$expected.rank
 
-approx_rank_expected(P,"lpom")
-approx_rank_expected(P,"glpom")
+approx_rank_expected(P,'lpom')
+approx_rank_expected(P,'glpom')
 }
 \references{
 Brüggemann R., Simon, U., and Mey,S, 2005. Estimation of averaged

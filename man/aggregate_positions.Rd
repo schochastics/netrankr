@@ -21,10 +21,10 @@ scores.
 }
 \details{
 The predefined functions are mainly wrappers around base R functions.
-type="sum", for instance, is equivalent to \code{rowSums()}. A non-base functions is
-type="invsum" which calculates the inverse of type="sum".
-type="self" is mostly useful for walk based relations, e.g. to count closed walks.
-Other self explanatory options are type="mean", type="min", type="max" and type="prod".
+type='sum', for instance, is equivalent to \code{rowSums()}. A non-base functions is
+type='invsum' which calculates the inverse of type='sum'.
+type='self' is mostly useful for walk based relations, e.g. to count closed walks.
+Other self explanatory options are type='mean', type='min', type='max' and type='prod'.
 }
 \examples{
 require(igraph)
@@ -35,24 +35,24 @@ g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 
-g \%>\% indirect_relations(type="identity") \%>\% 
-aggregate_positions(type="sum")
+g \%>\% indirect_relations(type='identity') \%>\% 
+aggregate_positions(type='sum')
 
 #closeness centrality
-g \%>\% indirect_relations(type="geodesic") \%>\% 
-  aggregate_positions(type="invsum")
+g \%>\% indirect_relations(type='geodesic') \%>\% 
+  aggregate_positions(type='invsum')
   
 #betweenness centrality
-g \%>\% indirect_relations(type="dependencies") \%>\% 
-  aggregate_positions(type="sum")
+g \%>\% indirect_relations(type='dependencies') \%>\% 
+  aggregate_positions(type='sum')
   
 #eigenvector centrality
-g \%>\% indirect_relations(type="walks",FUN=walks_limit_prop) \%>\% 
-  aggregate_positions(type="sum")
+g \%>\% indirect_relations(type='walks',FUN=walks_limit_prop) \%>\% 
+  aggregate_positions(type='sum')
 
 #subgraph centrality
-g \%>\% indirect_relations(type="walks",FUN=walks_exp) \%>\% 
-  aggregate_positions(type="self")
+g \%>\% indirect_relations(type='walks',FUN=walks_exp) \%>\% 
+  aggregate_positions(type='self')
 }
 \seealso{
 \link{indirect_relations}, \link{transform_relations}
