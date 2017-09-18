@@ -57,7 +57,7 @@ set.seed(1886) #for reproducibility
 ```
 
 We work with the following simple graph.
-```{r simple graph, fig.align='center', fig.width=3}
+```{r simple_graph, fig.align='center', fig.width=3}
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -90,7 +90,7 @@ all(Nu%in%Nv)
 Checking all pairs of nodes can efficiently be done with the `neighborhood_inclusion()` 
 function from the `netrankr` package.  
 
-```{r neighborhood inclusion}
+```{r neighborhood_inclusion}
 P <- neighborhood_inclusion(g)
 P
 ```
@@ -100,7 +100,7 @@ If an entry `P[u,v]` is equal to one, we have $N(u)\subseteq N[v]$.
 The function `dominance_graph()` can alternatively be used to visualize the 
 neighborhood inclusion as a directed graph.
 
-```{r dominance graph,fig.align='center',fig.width=5}
+```{r dominance_graph,fig.align='center',fig.width=5}
 g.dom <- dominance_graph(P)
 
 plot(g.dom,
@@ -140,7 +140,7 @@ Besides the top ranked nodes, we can check if the entire partial ranking `P` is 
 In our example, we considered vertex $3$ and $5$, where $3$ was dominated by $5$. It is easy to verify that all centrality scores of $5$ are in fact greater than the ones of $3$ by inspecting the respective rows in the table. To check all pairs, we use the function `is_preserved`. The function takes a partial ranking, as induced by neighborhood inclusion, and a score vector of a centrality index and checks if
 `P[i,j]==1 & scores[i]>scores[j]` is `FALSE` for all pairs `i` and `j`.
 
-```{r rank preserved}
+```{r rank_preserved}
 apply(cent.df[,2:6],2,function(x) is_preserved(P,x))
 ```
 All considered indices preserve the neighborhood inclusion preorder on the example network. 

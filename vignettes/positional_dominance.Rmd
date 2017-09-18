@@ -65,7 +65,7 @@ The function `positional_dominance` can be used to check both, dominance under h
 In accordance with the analytic pipeline of centrality (consult the tutorial REFREF)
 we use the `%>%` operator from the `magrittr` package.
 
-```{r pos dom}
+```{r pos_dom}
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -90,7 +90,7 @@ In the later case, all relations can be ordered non-decreasingly (or non-increas
 if the relation describes costs, such as distances) and afterwards checked front to back.
 Dominance under total homogeneity yields a ranking, if the relation is binary (e.g. adjacent or not).  
 
-```{r homo and hetero}
+```{r homo_and_hetero}
 D <- g %>% 
   indirect_relations(type="identity") %>% 
   positional_dominance(map=TRUE)
@@ -108,7 +108,7 @@ D1 <- g %>%
 From the definition given in the first section, it is clear that there are always 
 at least as many comparable pairs under the total homogeneity assumption as under
 total heterogeneity.
-```{r homo and hetero dist}
+```{r homo_and_hetero_dist}
 D1 <- g %>% 
   indirect_relations(type="geodesic") %>% 
   positional_dominance(map=FALSE,benefit=FALSE)
@@ -125,6 +125,6 @@ c("heterogeneity"=comparable_pairs(D1),
 Additionally, all dominance relations from the heterogeneity assumption are preserved
 under total homogeneity. (Note: $A\implies B$ is equivalent to $\neg A \lor B$)
 
-```{r homo in hetero}
+```{r homo_in_hetero}
 all(D1!=1 | D2==1) 
 ```

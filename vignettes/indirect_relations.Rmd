@@ -98,7 +98,7 @@ and `walks_` for `type="walks"`. The predefined functions are not exhaustive and
 just constitute the most common transformations. It is, however, straightforward to
 pass your own transformation function. 
 
-```{r own func}
+```{r own_func}
 dist_integration <- function(x){
   x <- 1 - (x - 1)/max(x)
 }

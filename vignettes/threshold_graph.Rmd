@@ -35,7 +35,7 @@ set.seed(1886) #for reproducibility
 ```
 Threshold graphs on $n$ vertices can be constructed iteratively with a sequence of $0$'s and $1$'s.
 For each $0$, an isolated vertex is inserted and for each $1$ a vertex that connects to all previously inserted one's. This iterative process is implemented in the `threshold_graph` function. The parameter `n` is used to set the desired number of vertices. The parameter `p` is the probability that a dominated vertex is inserted in each step. This parameter roughly equates to the density of the network.
-```{r tg creation}
+```{r tg_creation}
  g1 <- threshold_graph(500,0.4)
  g2 <- threshold_graph(500,0.05)
  
@@ -43,7 +43,7 @@ For each $0$, an isolated vertex is inserted and for each $1$ a vertex that conn
 ```
 
 The class of threshold graphs includes various well-known graphs, for instance star shaped and complete networks. This graphs can be constructed with `p=0` and `p=1` respectively.
-```{r tg example,fig.show='hold'}
+```{r tg_example,fig.show='hold'}
 star <- threshold_graph(6,0) 
 complete <- threshold_graph(6,1)
 plot(star,vertex.label=NA,vertex.color="black")
@@ -51,7 +51,7 @@ plot(complete,vertex.label=NA,vertex.color="black")
 ```
 
 To check that all pairs are comparable by neighborhood inclusion, we can use the function `comparable_pairs`. The function computes the density of the underlying undirected graph induced by the neighborhood-inclusion relation.
-```{r tg complete}
+```{r tg_complete}
 g <- threshold_graph(10,0.4)
 P <- neighborhood_inclusion(g)
 comparable_pairs(P)
@@ -59,7 +59,7 @@ comparable_pairs(P)
 
 ## Correlation and Threshold Graphs
 We construct a random threshold graph and calculate some standard measures of centrality that are included in the `igraph` package.
-```{R tg cent}
+```{R tg_cent}
 g <- threshold_graph(100,0.1)
 
 cent.df <- data.frame(
@@ -72,7 +72,7 @@ cent.df <- data.frame(
 ```
 
 We expect, that all indices are perfectly rank correlated since all pairs of nodes are comparable by neighborhood-inclusion.
-```{r cor tg}
+```{r cor_tg}
 cor.mat <- cor(round(cent.df,8),method="kendall")
 cor.mat <- round(cor.mat,2)
 cor.mat
@@ -89,7 +89,7 @@ Kendall's $\tau$ considers left and right ties as correlation reducing. That is 
 
 `netrankr` comes with a function called `compare_ranks` which calculates all occurrences of the above cases. Simply counting the cases instead of aggregating them will help circumvent the problem of possibly misinterpreting correlation measures.
 
-```{R compare ranks}
+```{R compare_ranks}
 comp <- compare_ranks(cent.df$degree,cent.df$betweenness)
 unlist(comp)
 ```

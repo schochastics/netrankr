@@ -120,7 +120,7 @@ g %>%
 
 The distance based indices constitute one of the biggest groups of indices in the `netrankr` package.
 
-```{r distance indices,eval=F}
+```{r distance_indices,eval=F}
 #residual closeness (Dangalchev,2006)
 g %>% 
   indirect_relations(type="geodesic",FUN=dist_2pow) %>% 

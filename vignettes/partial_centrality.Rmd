@@ -36,7 +36,7 @@ library(magrittr)
 The function `rank_intervals()` is used to calculate the maximal and minimal possible 
 rank for each node in any ranking that is in accordance with a given partial ranking. 
 
-```{r pos dom}
+```{r pos_dom}
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
