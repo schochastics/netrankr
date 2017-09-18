@@ -11,7 +11,8 @@ double AssignTopDown(int v,
                   ){
   visited[v]=1;
   double e=0;
-  for(int i=0; i<ImSucc[v].size(); ++i){
+  for(std::vector<int>::size_type i = 0; i!=ImSucc[v].size(); ++i){
+  // for(int i=0; i<ImSucc[v].size(); ++i){
     int vPrime=ImSucc[v][i];
     if(vPrime==0){
       e+=1;
@@ -37,7 +38,9 @@ void AssignBottomUp(int nElem,
   std::vector<int> Q;
 
   lei(nElem)=1;
-  for(int i=0; i<ImSucc[nElem].size();++i){
+
+  for(std::vector<int>::size_type i = 0; i!=ImSucc[nElem].size();++i){
+  // for(int i=0; i<ImSucc[nElem].size();++i){
     int vPrime=ImSucc[nElem][i];
     Q.push_back(vPrime);
     lei[vPrime]=1;
@@ -47,7 +50,8 @@ void AssignBottomUp(int nElem,
     int v=Q[0];
     Q.erase(Q.begin());
 
-    for(int j=0;j<ImSucc[v].size();++j){
+    for(std::vector<int>::size_type j = 0; j!=ImSucc[v].size();++j){
+    // for(int j=0;j<ImSucc[v].size();++j){
       int vPrime=ImSucc[v][j];
       lei[vPrime]+=lei[v];
       if(visited[vPrime]==0){
@@ -66,13 +70,15 @@ void ComputeRankProb(int v,int h, NumericMatrix &rp,
                      NumericVector &lef,
                      double &e){
   visited[v]=1;
-  for(int j=0;j<ImSucc[v].size();++j){
+  // std::vector<int>::size_type i = 0; i!=child[0].size(); ++i
+  for(std::vector<int>::size_type j = 0;j!=ImSucc[v].size();++j){
+    // for(int j=0;j<ImSucc[v].size();++j){
     int vPrime=ImSucc[v][j];
     int x;
     std::set_difference(ideals[vPrime].begin(), ideals[vPrime].end(),
                         ideals[v].begin(), ideals[v].end(), &x);
     rp(x,h)=rp(x,h)+double(lei[v])*double(lef[vPrime])/double(e);
-    if(vPrime!=0 & visited[vPrime]==0){
+    if((vPrime!=0) & (visited[vPrime]==0)){
       ComputeRankProb(vPrime,h+1,rp,ImSucc,ideals,visited,lei,lef,e);
     }
   }
@@ -89,7 +95,8 @@ void ComputeMutualRankProb(int v,int h, int &nElem,
                            NumericVector &lef,
                            double &e){
   visited[v]=1;
-  for(int j=0;j<ImSucc[v].size();++j){
+  for(std::vector<int>::size_type j = 0;j!=ImSucc[v].size();++j){
+  // for(int j=0;j<ImSucc[v].size();++j){
     int vPrime=ImSucc[v][j];
     for(int y=0;y<nElem; ++y){
       if(visitedElem[y]==1){
@@ -127,7 +134,8 @@ Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred,
   /* Turn ImPred to ImSucc*/
   std::vector<std::vector<int> > ImSucc(nIdeals);
   for(int i=0; i<nIdeals;++i){
-    for(int j=0;j<ImPred[i].size();++j){
+    for(std::vector<int>::size_type j=0;j!=ImPred[i].size();++j){
+    // for(int j=0;j<ImPred[i].size();++j){
       int idx=ImPred[i][j];
       ImSucc[idx].push_back(i);
     }

@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // approx_glpom
 NumericVector approx_glpom(NumericMatrix P);
-RcppExport SEXP _netrankr_approx_glpom(SEXP PSEXP) {
+RcppExport SEXP netrankr_approx_glpom(SEXP PSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // approx_relative
 NumericMatrix approx_relative(NumericVector Nu, NumericVector Nd, IntegerMatrix P, bool iterative, int max_iter);
-RcppExport SEXP _netrankr_approx_relative(SEXP NuSEXP, SEXP NdSEXP, SEXP PSEXP, SEXP iterativeSEXP, SEXP max_iterSEXP) {
+RcppExport SEXP netrankr_approx_relative(SEXP NuSEXP, SEXP NdSEXP, SEXP PSEXP, SEXP iterativeSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,7 +34,7 @@ END_RCPP
 }
 // checkPairs
 Rcpp::List checkPairs(NumericVector x, NumericVector y);
-RcppExport SEXP _netrankr_checkPairs(SEXP xSEXP, SEXP ySEXP) {
+RcppExport SEXP netrankr_checkPairs(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -46,7 +46,7 @@ END_RCPP
 }
 // dependency
 NumericMatrix dependency(std::vector<std::vector<int> > adj);
-RcppExport SEXP _netrankr_dependency(SEXP adjSEXP) {
+RcppExport SEXP netrankr_dependency(SEXP adjSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -57,7 +57,7 @@ END_RCPP
 }
 // LatticeOfIdeals
 std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > child, std::vector<int> parent, std::vector<std::vector<int> > Ek, int nElem, int nIdeals);
-RcppExport SEXP _netrankr_LatticeOfIdeals(SEXP childSEXP, SEXP parentSEXP, SEXP EkSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
+RcppExport SEXP netrankr_LatticeOfIdeals(SEXP childSEXP, SEXP parentSEXP, SEXP EkSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -72,7 +72,7 @@ END_RCPP
 }
 // listingIdeals
 std::vector<std::vector<int> > listingIdeals(std::vector<std::vector<int> > P, int nElem, int nIdeals);
-RcppExport SEXP _netrankr_listingIdeals(SEXP PSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
+RcppExport SEXP netrankr_listingIdeals(SEXP PSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,7 +85,7 @@ END_RCPP
 }
 // mcmc_rank
 List mcmc_rank(IntegerMatrix P, IntegerVector init_rank, int rp);
-RcppExport SEXP _netrankr_mcmc_rank(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
+RcppExport SEXP netrankr_mcmc_rank(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -98,7 +98,7 @@ END_RCPP
 }
 // nialgo
 IntegerMatrix nialgo(List adjList, IntegerVector deg);
-RcppExport SEXP _netrankr_nialgo(SEXP adjListSEXP, SEXP degSEXP) {
+RcppExport SEXP netrankr_nialgo(SEXP adjListSEXP, SEXP degSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -110,7 +110,7 @@ END_RCPP
 }
 // matdom
 arma::imat matdom(NumericMatrix A, bool map, bool benefit);
-RcppExport SEXP _netrankr_matdom(SEXP ASEXP, SEXP mapSEXP, SEXP benefitSEXP) {
+RcppExport SEXP netrankr_matdom(SEXP ASEXP, SEXP mapSEXP, SEXP benefitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -123,7 +123,7 @@ END_RCPP
 }
 // preserve
 int preserve(IntegerMatrix P, NumericVector s, int n);
-RcppExport SEXP _netrankr_preserve(SEXP PSEXP, SEXP sSEXP, SEXP nSEXP) {
+RcppExport SEXP netrankr_preserve(SEXP PSEXP, SEXP sSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -136,7 +136,7 @@ END_RCPP
 }
 // rankings
 IntegerMatrix rankings(std::vector<std::vector<int> > paths, std::vector<std::vector<int> > ideals, int nRank, int nElem);
-RcppExport SEXP _netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {
+RcppExport SEXP netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -150,7 +150,7 @@ END_RCPP
 }
 // rankprobs
 Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred, std::vector<std::vector<int> > ideals, int nElem, int nIdeals);
-RcppExport SEXP _netrankr_rankprobs(SEXP ImPredSEXP, SEXP idealsSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
+RcppExport SEXP netrankr_rankprobs(SEXP ImPredSEXP, SEXP idealsSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -164,7 +164,7 @@ END_RCPP
 }
 // resistanceDistance
 NumericMatrix resistanceDistance(NumericMatrix C, int n);
-RcppExport SEXP _netrankr_resistanceDistance(SEXP CSEXP, SEXP nSEXP) {
+RcppExport SEXP netrankr_resistanceDistance(SEXP CSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -176,7 +176,7 @@ END_RCPP
 }
 // transreduct
 IntegerMatrix transreduct(IntegerMatrix M);
-RcppExport SEXP _netrankr_transreduct(SEXP MSEXP) {
+RcppExport SEXP netrankr_transreduct(SEXP MSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -187,7 +187,7 @@ END_RCPP
 }
 // treeOfIdeals
 Rcpp::List treeOfIdeals(Rcpp::List imPred);
-RcppExport SEXP _netrankr_treeOfIdeals(SEXP imPredSEXP) {
+RcppExport SEXP netrankr_treeOfIdeals(SEXP imPredSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -198,21 +198,21 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_netrankr_approx_glpom", (DL_FUNC) &_netrankr_approx_glpom, 1},
-    {"_netrankr_approx_relative", (DL_FUNC) &_netrankr_approx_relative, 5},
-    {"_netrankr_checkPairs", (DL_FUNC) &_netrankr_checkPairs, 2},
-    {"_netrankr_dependency", (DL_FUNC) &_netrankr_dependency, 1},
-    {"_netrankr_LatticeOfIdeals", (DL_FUNC) &_netrankr_LatticeOfIdeals, 5},
-    {"_netrankr_listingIdeals", (DL_FUNC) &_netrankr_listingIdeals, 3},
-    {"_netrankr_mcmc_rank", (DL_FUNC) &_netrankr_mcmc_rank, 3},
-    {"_netrankr_nialgo", (DL_FUNC) &_netrankr_nialgo, 2},
-    {"_netrankr_matdom", (DL_FUNC) &_netrankr_matdom, 3},
-    {"_netrankr_preserve", (DL_FUNC) &_netrankr_preserve, 3},
-    {"_netrankr_rankings", (DL_FUNC) &_netrankr_rankings, 4},
-    {"_netrankr_rankprobs", (DL_FUNC) &_netrankr_rankprobs, 4},
-    {"_netrankr_resistanceDistance", (DL_FUNC) &_netrankr_resistanceDistance, 2},
-    {"_netrankr_transreduct", (DL_FUNC) &_netrankr_transreduct, 1},
-    {"_netrankr_treeOfIdeals", (DL_FUNC) &_netrankr_treeOfIdeals, 1},
+    {"netrankr_approx_glpom", (DL_FUNC) &netrankr_approx_glpom, 1},
+    {"netrankr_approx_relative", (DL_FUNC) &netrankr_approx_relative, 5},
+    {"netrankr_checkPairs", (DL_FUNC) &netrankr_checkPairs, 2},
+    {"netrankr_dependency", (DL_FUNC) &netrankr_dependency, 1},
+    {"netrankr_LatticeOfIdeals", (DL_FUNC) &netrankr_LatticeOfIdeals, 5},
+    {"netrankr_listingIdeals", (DL_FUNC) &netrankr_listingIdeals, 3},
+    {"netrankr_mcmc_rank", (DL_FUNC) &netrankr_mcmc_rank, 3},
+    {"netrankr_nialgo", (DL_FUNC) &netrankr_nialgo, 2},
+    {"netrankr_matdom", (DL_FUNC) &netrankr_matdom, 3},
+    {"netrankr_preserve", (DL_FUNC) &netrankr_preserve, 3},
+    {"netrankr_rankings", (DL_FUNC) &netrankr_rankings, 4},
+    {"netrankr_rankprobs", (DL_FUNC) &netrankr_rankprobs, 4},
+    {"netrankr_resistanceDistance", (DL_FUNC) &netrankr_resistanceDistance, 2},
+    {"netrankr_transreduct", (DL_FUNC) &netrankr_transreduct, 1},
+    {"netrankr_treeOfIdeals", (DL_FUNC) &netrankr_treeOfIdeals, 1},
     {NULL, NULL, 0}
 };
 

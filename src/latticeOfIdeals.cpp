@@ -9,14 +9,15 @@ std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > ch
                                                int nElem, int nIdeals) {
 
   std::vector<std::vector<int> > ImPred(nIdeals);
-
-  for(int i=0; i< child[0].size(); ++i){
+  for(std::vector<int>::size_type i = 0; i!=child[0].size(); ++i){
+  // for(int i=0; i< child[0].size(); ++i){
     int tmp=child[0][i];
     ImPred[0].push_back(tmp);
   }
   for(int k=nElem-1;k>=0;--k){
-    for(int i=0; i<Ek[k].size(); ++i){
-      Rcpp::checkUserInterrupt();
+    Rcpp::checkUserInterrupt();
+    for(std::vector<int>::size_type i = 0; i!=Ek[k].size(); ++i){
+    // for(int i=0; i<Ek[k].size(); ++i){
       int v=Ek[k][i];
       int vPrime =ImPred[parent[v]][0];
       int j=0;
@@ -28,13 +29,15 @@ std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > ch
         vPrime=ImPred[parent[v]][j];
       }
       /* append children to ImPred*/
-      for(int c=0;c<child[v].size();++c){
+      for(std::vector<int>::size_type c = 0; c!=child[v].size(); ++c){
+      // for(int c=0;c<child[v].size();++c){
         ImPred[v].push_back(child[v][c]);
       }
 
     }
     /* erase v from parent children */
-    for(int i=0; i<Ek[k].size(); ++i){
+    for(std::vector<int>::size_type i = 0; i!=Ek[k].size(); ++i){
+    // for(int i=0; i<Ek[k].size(); ++i){
       int v=Ek[k][i];
       std::vector<int>::iterator position = std::find(child[parent[v]].begin(), child[parent[v]].end(), v);
       if (position != child[parent[v]].end())
