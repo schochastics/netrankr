@@ -3,7 +3,6 @@
 export(aggregate_positions)
 export(approx_rank_expected)
 export(approx_rank_relative)
-export(bradley_terry)
 export(comparable_pairs)
 export(compare_ranks)
 export(dist_2pow)
