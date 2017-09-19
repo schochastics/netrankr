@@ -1,14 +1,19 @@
 
-netrankr <img src="logo.png" align="right" height="auto" width="125" />
-=======================================================================
-
+<!-- [![CRAN Status Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr) -->
+<!-- [![CRAN Downloads Per Month](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr) -->
 Overview
 --------
 
-netrankr is an R package that can be used for centrality analyses of networks. Although it implements some indices, the main focus lies on an index-free assessment of centrality in networks. Most implemented methods are, however, more general and can be used whenever partial rankings have to be analysed.
+netrankr is an R package to analyze partial rankings in the context of networks centrality. While the package includes the possibility to build a variety of indices, its main focus lies on index-free assessment of centrality. Computed partial rankings can be analyzed with a variety of methods. These include probabilistic methods like computing expected node ranks and relative rank probabilities (how likely is it that a node is more central than another?).
+
+Most implemented methods are very general and can be used whenever partial rankings have to be analysed.
 
 Install
 -------
+
+To install from CRAN: \[not yet published\]
+
+To install the developer version from github:
 
 ``` r
 require(devtools)
@@ -18,20 +23,18 @@ install_github("schochastics/netrankr")
 Details
 -------
 
-Some features of the package are:
+The core functions of the package are:
 
--   Working with the neighborhood inclusion preorder. This forms the bases for any centrality analysis on undirected and unweighted graphs. More details can be found in the dedicated vignette: `vignette("neighborhood_inclusion",package="netrankr")`.
--   Constructing graphs with a unique centrality ranking. This class of graphs, known as threshold graphs, can be used to benchmark centrality indices, since they only allow for one ranking of the nodes. For more details consult the vignette: `vignette("threshold_graph",package="netrankr")`.
--   Probabilistic ranking methods. The package includes several function to perform probabilistic rank analyses of nodes in a network. These include expected ranks and relative rank probabilities (how likely is it that a node is more central than another). An extensive example is given at the end of this document.
+-   Computing the neighborhood inclusion preorder with `neighborhood_inclusion()`. The resulting partial ranking is the foundation for any centrality related analysis on undirected and unweighted graphs. More details can be found in the dedicated vignette: `vignette("neighborhood_inclusion",package="netrankr")`.
+    A generalizded version of neighborhood inclusion is implemented in `positional_dominance()`. See `vignette("positional_dominance",package="netrankr")` for help. Any partial ranking computed with the mentioned functions form the basis
 
-To browse all vignettes use: `browseVignettes(package = "netrankr")`
+-   Constructing graphs with a unique centrality ranking with `threshold_graph()`. This class of graphs, known as threshold graphs, can be used to benchmark centrality indices, since they only allow for one ranking of the nodes. For more details consult the vignette: `vignette("threshold_graph",package="netrankr")`.
 
-Notable functions
------------------
+-   Computing probabilistic centrality rankings. The package includes several function to calculate rank probabilities of nodes in a network, including expected ranks (how central do we expect a node to be?) and relative rank probabilities (how likely is it that a node is more central than another?). These probabilities can either be computed exactly for small networks (`exact_rank_prob()`), based on an almost uniform sample (`mcmc_rank_prob()`) or approximated via several heuristics (`approx_rank_expected()`,`approx_rank_relative()`). Consult `vignette('probabilistic_cent',package='netrankr')` for more information and `vignette('benchmarks',package='netrankr')` for applicability.
 
--   `neighborhood_inclusion` and `positional_dominance` can be used to construct partial orders on a network. While `neighborhood_inclusion` is very specific (undirected, unweighted networks), `positional_dominance` can be used with any kind of input network. If cost variables (e.g. distances) are used, set `benefit=FALSE`. If actor identities don't matter set `map=TRUE`. Consult the respective vignettes for more detailed explanations.
--   `threshold_graphs` constructs a random uniquely ranked graph. That is, a graph where all centrality indices yield the same ranking.
--   `exact_rank_prob` performs a complete and exact rank analysis of a network, including expected ranks and relative rank probabilities (how likely is it that a node is more central than another?) as well as the number of possible centrality rankings. For larger networks, various approximation functions can be used. See vignettes for help.
+-   Although the focus of the package lies on an index-free assessement of centrality, the package provides the possibility to build a variety of indices. Consult `vignette('centrality_indices',package='netrankr')` for more information.
+
+The package includes several additional vignettes, which can be viewed with `browseVignettes(package = "netrankr")` or [online](http://schochastics.github.io/netrankr)
 
 Example
 -------
@@ -50,12 +53,13 @@ Calculate centrality scores with the `igraph` package.
 
 ``` r
 cent_scores <- data.frame(
-   degree=degree(g),
-   betweenness=round(betweenness(g),4),
-   closeness=round(closeness(g),4),
-   eigenvector=round(eigen_centrality(g)$vector,4),
-   subgraph=round(subgraph_centrality(g),4))
+   degree = degree(g),
+   betweenness = round(betweenness(g),4),
+   closeness = round(closeness(g),4),
+   eigenvector = round(eigen_centrality(g)$vector,4),
+   subgraph = round(subgraph_centrality(g),4))
 
+# What are the most central nodes for each index?
 apply(cent_scores,2,which.max)
 ```
 
@@ -64,7 +68,7 @@ apply(cent_scores,2,which.max)
 
 Each index assigns the highest value to a different vertex!
 
-More generic approach via neighborhood-inclusion.
+Calculate the neighborhood inclusion preorder.
 
 ``` r
 P <- neighborhood_inclusion(g)
@@ -84,14 +88,9 @@ P
     #> [10,]    0    0    0    0    0    0    0    0    0     0     0
     #> [11,]    0    0    0    0    0    0    0    0    0     0     0
 
-``` r
-D <- dominance_graph(P)
-# plot(D)
-```
+If `P[u,v]=1`, then *N*(*u*)⊆*N*\[*v*\] which implies that *c*(*u*)≤*c*(*v*) for all centrality indices *c*!
 
-If `P[u,v]=1` or equivalently `(u,v)` is an edge in `D`, then *N*(*u*)⊆*N*\[*v*\] holds, which implies that *c*(*u*)≤*c*(*v*) for all centrality indices *c*!
-
-Neighborhood-inclusion defines a partial ranking on the set of nodes. Each ranking that is in accordance with this partial ranking defines a proper centrality ranking. Each of these ranking can potentially be the outcome of a centrality index.
+Neighborhood-inclusion defines a partial ranking on the set of nodes. Each ranking that is in accordance with this partial ranking yields a proper centrality ranking. Each of these ranking can thus potentially be the outcome of a centrality index.
 
 The function `exact_rank_prob()` can be used to calculate all these ranking and produce probabilistic centrality rankings.
 
@@ -109,12 +108,12 @@ str(res)
     #>  $ expected.rank: num [1:11] 1.71 3 4.29 7.5 8.14 ...
     #>  $ rank.spread  : num [1:11] 0.958 1.897 1.725 2.54 2.16 ...
 
-`lin.ext` is the number of possible rankings. For the graph `g` we could thus come up with 739,200 indices that would rank the nodes differently.
+`lin.ext` is the number of possible rankings. For the graph `g` we could therefore come up with 739,200 indices that would rank the nodes differently.
 
 `rank.prob` contains the probabilities for each node to occupy a certain rank. For instance, the probability for each node to be the most central one is as follows.
 
 ``` r
-round(res$rank.prob[,11],2)
+round(res$rank.prob[ ,11],2)
 ```
 
     #>  [1] 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16
@@ -138,4 +137,5 @@ round(res$expected.rank,2)
 
 The higher the value, the more central a node is expected to be.
 
-**Note**: The set of rankings grows exponentially in the number of nodes. The exact calculation thus becomes infeasible quite quickly. The package also implements a great variety of approximation methods for larger networks. Check the manual for options.
+**Note**: The set of rankings grows exponentially in the number of nodes and the exact calculation becomes infeasible quite quickly and approximations need to be used.
+Check the vignettes for help and further package functionality.
