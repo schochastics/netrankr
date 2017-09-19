@@ -1,6 +1,9 @@
 
-<!-- [![CRAN Status Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr) -->
-<!-- [![CRAN Downloads Per Month](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr) -->
+netrankr
+========
+
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr) <!-- [![CRAN Downloads Per Month](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr) -->
+
 Overview
 --------
 
