@@ -1,3 +1,7 @@
+## netrankr 0.1.0
+
+* first public release
+
 ## netrankr 0.0.5
 
 * most function reimplemented in C++ for efficiency. 
