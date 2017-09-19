@@ -7,17 +7,17 @@
 positional_dominance(A, type = "one-mode", map = FALSE, benefit = TRUE)
 }
 \arguments{
-\item{A}{matrix containing attributes or relations}
+\item{A}{Matrix containing attributes or relations, for instance calculated by \link{indirect_relations}.}
 
-\item{type}{string. Either 'one-mode' (default) if \code{A} is a regular one-mode network
+\item{type}{A string which is either 'one-mode' (Default) if \code{A} is a regular one-mode network
 or 'two-mode' if \code{A} is a general data matrix.}
 
-\item{map}{boolean if rows can be sorted or not (default)}
+\item{map}{Logical scalar, whether rows can be sorted or not (Default). See Details.}
 
-\item{benefit}{boolean if higher values(default) or lower values are better}
+\item{benefit}{Logical scalar, whether the attributes or relations are benefit or cost variables.}
 }
 \value{
-dominance relations as matrix object. \code{P[u,v]=1} if u is dominated by v.
+Dominance relations as matrix object. An entry \code{[u,v]} is \code{1} if u is dominated by v.
 }
 \description{
 generalized dominance relations.
@@ -25,12 +25,13 @@ generalized dominance relations.
 \details{
 Positional dominance is a generalization of neighborhood-inclusion for
 arbitrary network data. In the default case, it checks for all pairs \eqn{u,v} if
-\eqn{A_{ut} \ge A_{vt}} holds for all \eqn{t} if \code{benefit=TRUE} or
-\eqn{A_{ut} \le A_{vt}} holds for all \eqn{t} if \code{benefit=FALSE}.
+\eqn{A_{ut} \ge A_{vt}} holds for all \eqn{t} if \code{benefit = TRUE} or
+\eqn{A_{ut} \le A_{vt}} holds for all \eqn{t} if \code{benefit = FALSE}.
 This form of dominance is referred to as \emph{dominance under total heterogeneity}.
-If \code{map=TRUE}, the rows of \eqn{A} are sorted decreasingly (\code{benefit=TRUE})
-or increasingly (\code{benefit=FALSE}) and then the dominance condition is checked. This second
-form of dominance is referred to as \emph{dominance under total homogeneity}.
+If \code{map=TRUE}, the rows of \eqn{A} are sorted decreasingly (\code{benefit = TRUE})
+or increasingly (\code{benefit = FALSE}) and then the dominance condition is checked. This second
+form of dominance is referred to as \emph{dominance under total homogeneity}, while the
+first is called \emph{dominance under total heterogeneity}.
 }
 \examples{
 require(igraph)
@@ -41,12 +42,14 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 P<-neighborhood_inclusion(g)
 comparable_pairs(P)
 
-dist <- indirect_relations(g,type='geodesic')
-D <- positional_dominance(dist,map=FALSE,benefit=FALSE) 
-comparable_pairs(D) #same as P
+# positional dominance under total heterogeneity
+dist <- indirect_relations(g,type = "geodesic")
+D <- positional_dominance(dist,map = FALSE,benefit = FALSE) 
+comparable_pairs(D) 
 
-D <- positional_dominance(dist,map=TRUE,benefit=FALSE) 
-comparable_pairs(D) #more comparables than P
+# positional dominance under total homogeneity
+D_map <- positional_dominance(dist,map = TRUE,benefit = FALSE) 
+comparable_pairs(D_map) #more comparables than D
 
 }
 \references{

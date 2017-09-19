@@ -1,15 +1,15 @@
-#' @title transformation of indirect relations 
+#' @title Transform indirect relations 
 #' @description Mostly wrapper functions that can be used in conjunction 
 #' with [indirect_relations] to fine tune indirect relations.
-#' @param x matrix of relations.
-#' @param alpha weighting factor.
-#' @param k for walk counts up to a certain length.
+#' @param x Matrix of relations.
+#' @param alpha Potential weighting factor.
+#' @param k For walk counts up to a certain length.
 #' @details The predefined functions follow the naming scheme `relation_transformation`.
-#' Predefined functions `walks_*` are thus best used with type='walks' in
+#' Predefined functions `walks_*` are thus best used with type="walks" in
 #' [indirect_relations]. Theoretically, however, any transformation can be used with any relation.
-#' Yet the results might not be interpretable.
+#' The results might, however, not be interpretable.
 #' 
-#' The following functions are implemented: 
+#' The following functions are implemented so far: 
 #' 
 #' `dist_2pow` returns \eqn{2^{-x}}
 #' 
@@ -42,7 +42,8 @@
 #' 
 #' 
 #' @name transform_relations
-#' @return transformed relations as matrix
+#' @return Transformed relations as matrix
+#' 
 #' @author David Schoch
 NULL
 

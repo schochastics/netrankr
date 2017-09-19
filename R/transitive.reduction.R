@@ -1,14 +1,17 @@
-#' @title Transitive Reduction of Dominance Relations
+#' @title Transitive Reduction 
 #' @description  Calculates the transitive reduction of a partial ranking.
 #'
-#' @param P matrix containing relations
-#' @return transitive reduction of P
+#' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance]. 
+#' @return transitive reduction of `P`
 #' @author David Schoch
 #' @examples
 #' require(igraph)
+#' 
 #' g <- threshold_graph(100,0.1)
 #' P <- neighborhood_inclusion(g)
 #' sum(P)
+#' 
 #' T <- transitive_reduction(P)
 #' sum(T)
 #' @export

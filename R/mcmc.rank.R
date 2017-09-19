@@ -1,24 +1,33 @@
-#' @title Estimate rank probabilities with MCMC
+#' @title Estimate rank probabilities with Markov Chains
 #' @description Performs a probabilistic rank analysis based on an almost uniform 
 #' sample of possible rankings that preserve a partial ranking.
-#' @param P a matrix representing a partial ranking.
-#' @param rp integer indicating the number of samples to be drawn.
+#' @param P P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance].
+#' @param rp Integer indicating the number of samples to be drawn.
 #' @details This function can be used instead of [exact_rank_prob]
-#' if the number of nodes is too large for an exact computation. As a rule of thumb, 
-#' the number of samples should be at least cubic in the number of nodes of the network. 
-#' See online manual for benchmark results.
+#' if the number of elements in `P` is too large for an exact computation. As a rule of thumb, 
+#' the number of samples should be at least cubic in the number of elements in `P`. 
+#' See `vignette("benchmarks",package="netrankr")` for guidelines and benchmark results.
 #' @return 
 #' \item{expected.rank}{Estimated expected ranks of nodes}
 #' \item{relative.rank}{Matrix containing estimated relative rank probabilities:
 #' \code{relative.rank[u,v]} is the probability that u is ranked lower than v.}
 #' 
 #' @references Bubley, R. and Dyer, M., 1999. Faster random generation of linear extensions. 
-#' *Discrete Mathematics*, 201(1):81-88
+#' *Discrete Mathematics*, **201**(1):81-88
 #' 
 #' @seealso [exact_rank_prob], [approx_rank_relative], [approx_rank_expected]
 #' @author David Schoch
 #' @examples
-#' # Will be added in later version
+#' \dontrun{
+#' data("florentine_m")
+#' P <- neighborhood_inclusion(florentine_m)
+#' res <- exact_rank_prob(P)
+#' mcmc <- mcmc_rank_prob(P,rp = vcount(g)^3)
+#' 
+#' # mean absolute error (expected ranks)
+#' mean(abs(res$expected.rank-mcmc$expected.rank))
+#' }
 #' @export
 mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     n.full <- nrow(P)

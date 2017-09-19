@@ -2,20 +2,21 @@
 % Please edit documentation in R/check.preservation.R
 \name{is_preserved}
 \alias{is_preserved}
-\title{Checks if a partial ranking is preserved}
+\title{Check preservation}
 \usage{
 is_preserved(P, scores)
 }
 \arguments{
-\item{P}{a partial ranking as a matrix object.}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 
-\item{scores}{scores for each element.}
+\item{scores}{Numeric vector containing the scores of a centrality index.}
 }
 \value{
-a boolean that is TRUE if \code{scores} preserves the relations in \code{P}.
+Logical scaler whether \code{scores} preserves the relations in \code{P}.
 }
 \description{
-Checks if a partial ranking is preserved in the ranking induced by scores.
+Checks if a partial ranking is preserved in the ranking induced by \code{scores}.
 }
 \details{
 In order for a score vector to preserve a partial ranking, the following
@@ -25,7 +26,7 @@ condition must be fulfilled:
 \examples{
 
 require(igraph)
-### standard measures of centrality preserve the neighborhood inclusion preorder
+# standard measures of centrality preserve the neighborhood inclusion preorder
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))

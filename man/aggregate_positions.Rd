@@ -2,21 +2,21 @@
 % Please edit documentation in R/aggregate.index.R
 \name{aggregate_positions}
 \alias{aggregate_positions}
-\title{quantification of (indirect) relations}
+\title{Quantification of (indirect) relations}
 \usage{
 aggregate_positions(tau_x, type = "sum")
 }
 \arguments{
-\item{tau_x}{matrix containing indirect relations.}
+\item{tau_x}{Numeric matrix containing indirect relations calculated with \link{indirect_relations}.}
 
-\item{type}{string. Type of aggregation used. See details for options.}
+\item{type}{String indicating the type of aggregation to be used. See Details for options.}
 }
 \value{
-scores for the index defined by the indirect relation \code{tau_x} and the
+Scores for the index defined by the indirect relation \code{tau_x} and the
 used aggregation type.
 }
 \description{
-function to aggregate positions defined via indirect relations to construct centrality
+Function to aggregate positions defined via indirect relations to construct centrality
 scores.
 }
 \details{
@@ -30,13 +30,12 @@ Other self explanatory options are type='mean', type='min', type='max' and type=
 require(igraph)
 require(magrittr)
 
-#degree
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-
+#degree
 g \%>\% indirect_relations(type='identity') \%>\% 
-aggregate_positions(type='sum')
+ aggregate_positions(type='sum')
 
 #closeness centrality
 g \%>\% indirect_relations(type='geodesic') \%>\% 
@@ -53,6 +52,7 @@ g \%>\% indirect_relations(type='walks',FUN=walks_limit_prop) \%>\%
 #subgraph centrality
 g \%>\% indirect_relations(type='walks',FUN=walks_exp) \%>\% 
   aggregate_positions(type='self')
+  
 }
 \seealso{
 \link{indirect_relations}, \link{transform_relations}

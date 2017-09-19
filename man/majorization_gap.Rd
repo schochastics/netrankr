@@ -2,21 +2,22 @@
 % Please edit documentation in R/majorization.gap.R
 \name{majorization_gap}
 \alias{majorization_gap}
-\title{Majorization gap of a graph}
+\title{Majorization gap}
 \usage{
 majorization_gap(g, norm = TRUE)
 }
 \arguments{
 \item{g}{An igraph object}
 
-\item{norm}{True (Default) if the normalized majorization gap should be returned.}
+\item{norm}{\code{True} (Default) if the normalized majorization gap should be returned.}
 }
 \value{
-majorization gap of an undirected graph.
+Majorization gap of an undirected graph.
 }
 \description{
-Calculates the (normalized) majorization gap of a graph. The majorization gap indicates how far the
-degree sequence of a graph is from a threshold sequence.
+Calculates the (normalized) majorization gap of an undirected graph.
+The majorization gap indicates how far the degree sequence of a graph is
+from a degree sequence of a \link{threshold_graph}.
 }
 \details{
 The distance is measured by the number of \emph{reverse unit
@@ -39,7 +40,10 @@ majorization_gap(g,norm=FALSE) #number of reverse unit transformation
 }
 \references{
 Schoch, D., Valente, T. W. and Brandes, U., 2017. Correlations among centrality
-indices and a class of uniquely ranked graphs. \emph{Social Networks} 50, 46–54.
+indices and a class of uniquely ranked graphs. \emph{Social Networks} \strong{50}, 46–54.
+
+Arikati, S.R. and Peled, U.N., 1994. Degree sequences and majorization.
+\emph{Linear Algebra and its Applications}, \strong{199}, 179-211.
 }
 \author{
 David Schoch

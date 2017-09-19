@@ -1,13 +1,18 @@
-#' @title Plot Rank Intervals
-#' @description Derive indirect relations like distances for a given network. 
-#' @param P A partial ranking as matrix for which rank intervals should be determined.
-#' @param names string. potential names of nodes used in the plot (optional)
-#' @param cent.df a data frame containing centrality scores of indices (optional). See Details.
-
-#' @details The 
+#' @title Plot rank intervals
+#' @description Compute rank intervals (minimal and maximal possible rank) and visualize them with ggplot. 
+#' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance].
+#' @param names String with potential names of nodes used in the plot (optional).
+#' @param cent.df A data frame containing centrality scores of indices (optional). See Details.
+#' @param ties.method String specifying how ties are treated in the base \code{\link[base]{rank}} function.
+#' @details 
+#' If a data frame of centrality scores is added, the respective ranks of nodes are
+#' shown in the intervals. Note that some points might fall outside of the 
+#' intervals depending how ties are treated.
 #' 
 #' @return a ggplot object.
 #' @author David Schoch
+#' @seealso [rank_intervals]
 #' @examples
 #' require(igraph)
 #' require(ggplot2)
@@ -19,14 +24,14 @@
 #' 
 #' #adding index based rankings
 #' cent_scores <- data.frame(
-#'   degree=degree(g),
-#'   betweenness=round(betweenness(g),4),
-#'   closeness=round(closeness(g),4),
-#'   eigenvector=round(eigen_centrality(g)$vector,4))
+#'   degree = degree(g),
+#'   betweenness = round(betweenness(g),4),
+#'   closeness = round(closeness(g),4),
+#'   eigenvector = round(eigen_centrality(g)$vector,4))
 #' \dontrun{plot_rank_intervals(P,cent.df=cent_scores)}
 #' @export
 
-plot_rank_intervals <- function(P, names, cent.df) {
+plot_rank_intervals <- function(P, names, cent.df,ties.method="min") {
     if (!requireNamespace("ggplot2", quietly = TRUE)) {
         stop("ggplot2 needed for this function to work. Please install it.", call. = FALSE)
     }
@@ -65,7 +70,7 @@ plot_rank_intervals <- function(P, names, cent.df) {
         cent.df.long <- data.frame(node = rep(names, no.indices), 
                                    mid_point = rep(intervals$mid_point, no.indices), 
                                    index = rep(names(cent.df), each = n), 
-                                   rank = c(apply(cent.df, 2, function(x) rank(x, ties.method = "min"))))
+                                   rank = c(apply(cent.df, 2, function(x) rank(x, ties.method = ties.method))))
         ggplot2::ggplot(df, ggplot2::aes_(x = ~stats::reorder(node, mid_point), 
                                           y = ~rank, group = ~node)) + 
           ggplot2::geom_line(col = "#8F8F8F") + 

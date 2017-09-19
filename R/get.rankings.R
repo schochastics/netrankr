@@ -1,17 +1,18 @@
-#' @title All rankings of a partial ranking
-#' @description Returns all possible rankings of a partial ranking.
+#' @title Rankings that extend a partial ranking
+#' @description Returns all possible rankings that extend a partial ranking.
 #'
-#' @param data list as returned by [exact_rank_prob] when run with `only.results=FALSE`
-#' @param force boolean. stops function if the number of rankings is too large.
+#' @param data List as returned by [exact_rank_prob] when run with `only.results = FALSE`
+#' @param force Logical scalar. Stops function if the number of rankings is too large.
 #' Only change to TRUE if you know what you are doing
-#' @details The ith row of the matrix contains the rank of node i in all possible rankings
-#' that are in accordance with the partial ranking P.
-#' @return a matrix containing ranks of nodes in all possible rankings
+#' @details The `i`th row of the matrix contains the rank of node `i` in all possible rankings
+#' that are in accordance with the partial ranking `P`. The lowest rank possible is
+#' associated with `1`.
+#' @return A matrix containing ranks of nodes in all possible rankings.
 #' @author David Schoch
 #' @examples
 #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #' P
-#' res <- exact_rank_prob(P,only.results=FALSE)
+#' res <- exact_rank_prob(P,only.results = FALSE)
 #' get_rankings(res)
 #' 
 #' @export
@@ -21,7 +22,7 @@ get_rankings <- function(data, force = F) {
       stop("no data provided")
     }
     if (!all(c("lattice", "ideals", "topo.order", "lin.ext", "mse")%in%names(data))){
-      stop("data is in wrong format. run exact_rank_prob with only.results=F")
+      stop("data is in wrong format. run exact_rank_prob with only.results = F")
     }
     lattice <- data$lattice
     ideals <- data$ideals
@@ -30,7 +31,8 @@ get_rankings <- function(data, force = F) {
     mse <- data$mse
     
     if (linext > 50000 & !force) {
-      stop("number of possible rankings is very high. Use force=F if you know what you are doing.")
+      stop("number of possible rankings is very high. Use force = F 
+           if you know what you are doing.")
     }
     
     n <- length(unique(mse))

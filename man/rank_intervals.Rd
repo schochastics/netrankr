@@ -7,24 +7,29 @@
 rank_intervals(P)
 }
 \arguments{
-\item{P}{a partial ranking as a matrix}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 }
 \value{
-a data frame with the minimal, maximal rank of each node together with the mid point of the two extrema.
+A data frame with the minimal, maximal rank of each node together
+with the mid point of the two extrema.
 }
 \description{
-Calculate the maximal and minimal rank possible for each node using the partial ranking P.
+Calculate the maximal and minimal rank possible for each node
+in any ranking that is in accordance with the partial ranking \code{P}.
 }
 \details{
-Note that the returned \code{mid_point} is not the same as the expected rank, for instance computed with \link{exact_rank_prob}.
-It is simply the mid point between \code{min_rank} and \code{max_rank}.
+Note that the returned \code{mid_point} is not the same as the expected
+rank, for instance computed with \link{exact_rank_prob}.
+It is simply the average of \code{min_rank} and \code{max_rank}. For exact rank probabilities
+use \link{exact_rank_prob}.
 }
 \examples{
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
-\dontrun{rank_intervals(P)}
+rank_intervals(P)
 }
 \seealso{
-\link{exact_rank_prob}
+\link{plot_rank_intervals}, \link{exact_rank_prob}
 }
 \author{
 David Schoch

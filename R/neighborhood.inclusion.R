@@ -1,4 +1,4 @@
-#' @title Neighborhood-Inclusion Preorder
+#' @title Neighborhood-inclusion preorder
 #' @description Calculates the neighborhood-inclusion preorder of an undirected graph.
 #' @param g An igraph object
 #' @details Neighborhood-inclusion is defined as
@@ -12,7 +12,8 @@
 #' *European Journal of Applied Mathematics* 27(6), 971-985.
 #' 
 #' Brandes, U. Heine, M., Müller, J. and Ortmann, M., 2017.
-#' Positional Dominance: Concepts and Algorithms. *Conference on Algorithms and Discrete Applied Mathematics*, 60-71.
+#' Positional Dominance: Concepts and Algorithms. 
+#' *Conference on Algorithms and Discrete Applied Mathematics*, 60-71.
 #' 
 #' 
 #' 
@@ -30,12 +31,12 @@
 #' P <- neighborhood_inclusion(tg)
 #' comparable_pairs(P)
 #' 
-#' #standard centrality indices preserve 
-#' #the partial ranking of neighborhood inclusion
+#' #standard centrality indices preserve neighborhood-inclusion
 #' g <- graph.empty(n=11,directed = FALSE)
 #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #' P <- neighborhood_inclusion(g)
+#' 
 #' is_preserved(P,degree(g))
 #' is_preserved(P,closeness(g))
 #' is_preserved(P,betweenness(g))

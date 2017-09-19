@@ -2,21 +2,20 @@
 % Please edit documentation in R/dominance.graph.R
 \name{dominance_graph}
 \alias{dominance_graph}
-\title{Directed Comparability Graph}
+\title{Partial ranking as directed graph}
 \usage{
 dominance_graph(P)
 }
 \arguments{
-\item{P}{Partial ranking as matrix object}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 }
 \value{
-igraph object.
+Directed graph as an igraph object.
 }
 \description{
-Turns a partial ranking into a directed graph.
-}
-\details{
-An edge (u,v) is present if u is dominated by v in P.
+Turns a partial ranking into a directed graph. An edge (u,v) is
+present if \code{P[u,v]=1}, meaning that u is dominated by v.
 }
 \examples{
 require(igraph)

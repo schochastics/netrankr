@@ -2,24 +2,27 @@
 % Please edit documentation in R/transitive.reduction.R
 \name{transitive_reduction}
 \alias{transitive_reduction}
-\title{Transitive Reduction of Dominance Relations}
+\title{Transitive Reduction}
 \usage{
 transitive_reduction(P)
 }
 \arguments{
-\item{P}{matrix containing relations}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 }
 \value{
-transitive reduction of P
+transitive reduction of \code{P}
 }
 \description{
 Calculates the transitive reduction of a partial ranking.
 }
 \examples{
 require(igraph)
+
 g <- threshold_graph(100,0.1)
 P <- neighborhood_inclusion(g)
 sum(P)
+
 T <- transitive_reduction(P)
 sum(T)
 }

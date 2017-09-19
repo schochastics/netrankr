@@ -7,25 +7,25 @@
 compare_ranks(x, y)
 }
 \arguments{
-\item{x}{a ranking vector.}
+\item{x}{A numeric vector.}
 
-\item{y}{a ranking vector with the same length as \code{x}.}
+\item{y}{A numeric vector with the same length as \code{x}.}
 }
 \value{
-a list containing
-\item{concordant}{number of concordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}>\code{y[j]}}
-\item{discordant}{number of discordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}<\code{y[j]}}
-\item{ties}{number of tied pairs:  \code{x[i]}=\code{x[j]} and \code{y[i]}=\code{y[j]}}
-\item{left}{number of left ties: \code{x[i]}=\code{x[j]} and \code{y[i]}!=\code{y[j]}}
-\item{right}{number of right ties: \code{x[i]}!=\code{x[j]} and \code{y[i]}=\code{y[j]}}
+A list containing
+\item{concordant}{number of concordant pairs: \code{x[i]} > \code{x[j]} and \code{y[i]} > \code{y[j]}}
+\item{discordant}{number of discordant pairs: \code{x[i]} > \code{x[j]} and \code{y[i]} < \code{y[j]}}
+\item{ties}{number of tied pairs:  \code{x[i]} == \code{x[j]} and \code{y[i]} == \code{y[j]}}
+\item{left}{number of left ties: \code{x[i]} == \code{x[j]} and \code{y[i]} != \code{y[j]}}
+\item{right}{number of right ties: \code{x[i]} != \code{x[j]} and \code{y[i]} == \code{y[j]}}
 }
 \description{
-Counts the number of Concordant, Discordant and (Left/Right) Ties between two rankings.
+Counts the number of concordant, discordant and (left/right) ties between two rankings.
 }
 \details{
-Explicitly calculating the number of occurring cases is more robust than using correlation
-indices as given in the \code{cor} function. Especially left and right ties can significantly alter an
-intuitively high correlation (See example).
+Explicitly calculating the number of occurring cases is more robust
+than using correlation indices as given in the \code{cor} function. Especially
+left and right ties can significantly alter correlations.
 }
 \examples{
 require(igraph)

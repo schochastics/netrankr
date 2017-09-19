@@ -1,9 +1,10 @@
-#' @title Directed Comparability Graph
-#' @description Turns a partial ranking into a directed graph.
+#' @title Partial ranking as directed graph
+#' @description Turns a partial ranking into a directed graph. An edge (u,v) is 
+#' present if `P[u,v]=1`, meaning that u is dominated by v.
 #'
-#' @param P Partial ranking as matrix object
-#' @return igraph object.
-#' @details An edge (u,v) is present if u is dominated by v in P.
+#' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance].
+#' @return Directed graph as an igraph object.
 #' @author David Schoch
 #' @examples
 #' require(igraph)

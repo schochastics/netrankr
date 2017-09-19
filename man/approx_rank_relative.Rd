@@ -7,11 +7,12 @@
 approx_rank_relative(P, iterative = TRUE, num.iter = 10)
 }
 \arguments{
-\item{P}{a partial ranking as matrix object.}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 
-\item{iterative}{boolean. TRUE (default) if iterative approximation should be used. FALSE if not.}
+\item{iterative}{Logical scalar if iterative approximation should be used.}
 
-\item{num.iter}{number of iterations to be used. defaults to 10 (see Details).}
+\item{num.iter}{Number of iterations to be used. defaults to 10 (see Details).}
 }
 \value{
 a matrix containing approximation of mutual rank probabilities.
@@ -23,16 +24,18 @@ In a network context, \eqn{P(rk(u)<rk(v))} is the probability that u is
 less central than v, given the partial ranking P.
 }
 \details{
-The iterative approach generally gives better approximations than the non iterative, if only slightly.
-The default number of iterations is based on the observation, that the approximation does not improve
-significantly beyond this value. This observation, however, is based on very small networks such that
-increasing it for large network may yield better results.
+The iterative approach generally gives better approximations
+than the non iterative, if only slightly. The default number of iterations
+is based on the observation, that the approximation does not improve
+significantly beyond this value. This observation, however, is based on
+very small networks such that increasing it for large network may yield
+better results. See \code{vignette("benchmarks",package="netrankr")} for more details.
 }
 \examples{
-P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 P
-approx_rank_relative(P,iterative=FALSE) 
-approx_rank_relative(P,iterative=TRUE)
+approx_rank_relative(P,iterative = FALSE) 
+approx_rank_relative(P,iterative = TRUE)
 }
 \references{
 De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual
@@ -40,7 +43,7 @@ rank probabilities in partially ordered sets. In \emph{Multicriteria Ordering an
 Ranking: Partial Orders, Ambiguities and Applied Issues}, 145-165.
 }
 \seealso{
-\link{exact_rank_prob} for exact computations
+\link{approx_rank_expected}, \link{exact_rank_prob}, \link{mcmc_rank_prob}
 }
 \author{
 David Schoch

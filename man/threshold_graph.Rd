@@ -7,12 +7,13 @@
 threshold_graph(n, p)
 }
 \arguments{
-\item{n}{number of nodes}
+\item{n}{The number of vertices in the graph.}
 
-\item{p}{fraction of dominating vertices. Equates approximately to the density of the graph}
+\item{p}{The probability of inserting dominating vertices. Equates approximately
+to the density of the graph. See Details.}
 }
 \value{
-a threshold graph as igraph object
+A threshold graph as igraph object
 }
 \description{
 Constructs a random threshold graph.
@@ -21,22 +22,25 @@ A threshold graph is a graph where the neighborhood inclusion preorder is comple
 \details{
 Threshold graphs can be constructed with a binary sequence. For each 0, an isolated
 vertex is inserted and for each 1, a vertex is inserted that connects to all previously inserted
-vertices. An important property of threshold graphs is, that all centrality indices induce the same ranking.
+vertices. The probability of inserting a dominating vertice is controlled with parameter \code{p}.
+An important property of threshold graphs is, that all centrality indices induce the same ranking.
 }
 \examples{
 require(igraph)
 g <- threshold_graph(10,0.3)
-\dontrun{plot(g)}
+\dontrun{
+plot(g)
 
 # star graphs and complete graphs are threshold graphs
 complete <- threshold_graph(10,1) #complete graph
-\dontrun{plot(complete)}
+plot(complete)
 
 star <- threshold_graph(10,0) #star graph
-\dontrun{plot(star)}
+plot(star)
+}
 
-# Centrality scores are perfectly rank correlated
-cor(degree(g),closeness(g),method='kendall')
+# centrality scores are perfectly rank correlated
+cor(degree(g),closeness(g),method = "kendall")
 }
 \references{
 Mahadev, N. and Peled, U. N. , 1995. Threshold graphs and related topics.

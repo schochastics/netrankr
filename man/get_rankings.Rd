@@ -2,30 +2,31 @@
 % Please edit documentation in R/get.rankings.R
 \name{get_rankings}
 \alias{get_rankings}
-\title{All rankings of a partial ranking}
+\title{Rankings that extend a partial ranking}
 \usage{
 get_rankings(data, force = F)
 }
 \arguments{
-\item{data}{list as returned by \link{exact_rank_prob} when run with \code{only.results=FALSE}}
+\item{data}{List as returned by \link{exact_rank_prob} when run with \code{only.results = FALSE}}
 
-\item{force}{boolean. stops function if the number of rankings is too large.
+\item{force}{Logical scalar. Stops function if the number of rankings is too large.
 Only change to TRUE if you know what you are doing}
 }
 \value{
-a matrix containing ranks of nodes in all possible rankings
+A matrix containing ranks of nodes in all possible rankings.
 }
 \description{
-Returns all possible rankings of a partial ranking.
+Returns all possible rankings that extend a partial ranking.
 }
 \details{
-The ith row of the matrix contains the rank of node i in all possible rankings
-that are in accordance with the partial ranking P.
+The \code{i}th row of the matrix contains the rank of node \code{i} in all possible rankings
+that are in accordance with the partial ranking \code{P}. The lowest rank possible is
+associated with \code{1}.
 }
 \examples{
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 P
-res <- exact_rank_prob(P,only.results=FALSE)
+res <- exact_rank_prob(P,only.results = FALSE)
 get_rankings(res)
 
 }

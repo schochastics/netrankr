@@ -2,25 +2,30 @@
 % Please edit documentation in R/plot.rank.intervals.R
 \name{plot_rank_intervals}
 \alias{plot_rank_intervals}
-\title{Plot Rank Intervals}
+\title{Plot rank intervals}
 \usage{
-plot_rank_intervals(P, names, cent.df)
+plot_rank_intervals(P, names, cent.df, ties.method = "min")
 }
 \arguments{
-\item{P}{A partial ranking as matrix for which rank intervals should be determined.}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 
-\item{names}{string. potential names of nodes used in the plot (optional)}
+\item{names}{String with potential names of nodes used in the plot (optional).}
 
-\item{cent.df}{a data frame containing centrality scores of indices (optional). See Details.}
+\item{cent.df}{A data frame containing centrality scores of indices (optional). See Details.}
+
+\item{ties.method}{String specifying how ties are treated in the base \code{\link[base]{rank}} function.}
 }
 \value{
 a ggplot object.
 }
 \description{
-Derive indirect relations like distances for a given network.
+Compute rank intervals (minimal and maximal possible rank) and visualize them with ggplot.
 }
 \details{
-The
+If a data frame of centrality scores is added, the respective ranks of nodes are
+shown in the intervals. Note that some points might fall outside of the
+intervals depending how ties are treated.
 }
 \examples{
 require(igraph)
@@ -33,11 +38,14 @@ P <- neighborhood_inclusion(g)
 
 #adding index based rankings
 cent_scores <- data.frame(
-  degree=degree(g),
-  betweenness=round(betweenness(g),4),
-  closeness=round(closeness(g),4),
-  eigenvector=round(eigen_centrality(g)$vector,4))
+  degree = degree(g),
+  betweenness = round(betweenness(g),4),
+  closeness = round(closeness(g),4),
+  eigenvector = round(eigen_centrality(g)$vector,4))
 \dontrun{plot_rank_intervals(P,cent.df=cent_scores)}
+}
+\seealso{
+\link{rank_intervals}
 }
 \author{
 David Schoch

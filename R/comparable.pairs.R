@@ -1,13 +1,14 @@
-#' @title Comparable pairs of a partial order
-#' @description  Calculates the fraction of comparable pairs in a partial order. This fraction is identical to
-#' the density of the induced undirected graph of P.
-#'
-#' @param P matrix containing comparability relation.
-#' @return fraction of comparable pairs in P.
+#' @title Comparable pairs in a partial ranking
+#' @description  Calculates the fraction of comparable pairs in a partial ranking.
+#' This fraction is identical to the density of the induced undirected graph of 
+#' a partial ranking.
+#' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance].
+#' @return Fraction of comparable pairs in `P`.
 #' @author David Schoch
 #' @examples
 #' require(igraph)
-#' g <- erdos.renyi.game(100,0.1)
+#' g <- sample_gnp(100,0.1)
 #' P <- neighborhood_inclusion(g)
 #' comparable_pairs(P)
 #' # All pairs of vertices are comparable in a threshold graph

@@ -1,17 +1,17 @@
 #' @title Count occurrences of pairs in rankings
-#' @description  Counts the number of Concordant, Discordant and (Left/Right) Ties between two rankings.
+#' @description  Counts the number of concordant, discordant and (left/right) ties between two rankings.
 #'
-#' @param x a ranking vector.
-#' @param y a ranking vector with the same length as \code{x}.
-#' @return a list containing
-#' \item{concordant}{number of concordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}>\code{y[j]}}
-#' \item{discordant}{number of discordant pairs: \code{x[i]}>\code{x[j]} and \code{y[i]}<\code{y[j]}}
-#' \item{ties}{number of tied pairs:  \code{x[i]}=\code{x[j]} and \code{y[i]}=\code{y[j]}}
-#' \item{left}{number of left ties: \code{x[i]}=\code{x[j]} and \code{y[i]}!=\code{y[j]}}
-#' \item{right}{number of right ties: \code{x[i]}!=\code{x[j]} and \code{y[i]}=\code{y[j]}}
-#' @details Explicitly calculating the number of occurring cases is more robust than using correlation 
-#' indices as given in the \code{cor} function. Especially left and right ties can significantly alter an
-#' intuitively high correlation (See example).
+#' @param x A numeric vector.
+#' @param y A numeric vector with the same length as \code{x}.
+#' @return A list containing
+#' \item{concordant}{number of concordant pairs: \code{x[i]} > \code{x[j]} and \code{y[i]} > \code{y[j]}}
+#' \item{discordant}{number of discordant pairs: \code{x[i]} > \code{x[j]} and \code{y[i]} < \code{y[j]}}
+#' \item{ties}{number of tied pairs:  \code{x[i]} == \code{x[j]} and \code{y[i]} == \code{y[j]}}
+#' \item{left}{number of left ties: \code{x[i]} == \code{x[j]} and \code{y[i]} != \code{y[j]}}
+#' \item{right}{number of right ties: \code{x[i]} != \code{x[j]} and \code{y[i]} == \code{y[j]}}
+#' @details Explicitly calculating the number of occurring cases is more robust 
+#' than using correlation indices as given in the \code{cor} function. Especially 
+#' left and right ties can significantly alter correlations. 
 #' @author David Schoch
 #' @examples
 #' require(igraph)

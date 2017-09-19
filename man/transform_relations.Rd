@@ -13,7 +13,7 @@
 \alias{walks_exp_odd}
 \alias{walks_attenuated}
 \alias{walks_uptok}
-\title{transformation of indirect relations}
+\title{Transform indirect relations}
 \usage{
 dist_2pow(x)
 
@@ -38,14 +38,14 @@ walks_attenuated(x, alpha = 1/max(x) * 0.99)
 walks_uptok(x, alpha = 1, k = 3)
 }
 \arguments{
-\item{x}{matrix of relations.}
+\item{x}{Matrix of relations.}
 
-\item{alpha}{weighting factor.}
+\item{alpha}{Potential weighting factor.}
 
-\item{k}{for walk counts up to a certain length.}
+\item{k}{For walk counts up to a certain length.}
 }
 \value{
-transformed relations as matrix
+Transformed relations as matrix
 }
 \description{
 Mostly wrapper functions that can be used in conjunction
@@ -53,11 +53,11 @@ with \link{indirect_relations} to fine tune indirect relations.
 }
 \details{
 The predefined functions follow the naming scheme \code{relation_transformation}.
-Predefined functions \code{walks_*} are thus best used with type='walks' in
+Predefined functions \code{walks_*} are thus best used with type="walks" in
 \link{indirect_relations}. Theoretically, however, any transformation can be used with any relation.
-Yet the results might not be interpretable.
+The results might, however, not be interpretable.
 
-The following functions are implemented:
+The following functions are implemented so far:
 
 \code{dist_2pow} returns \eqn{2^{-x}}
 

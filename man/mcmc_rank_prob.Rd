@@ -2,14 +2,15 @@
 % Please edit documentation in R/mcmc.rank.R
 \name{mcmc_rank_prob}
 \alias{mcmc_rank_prob}
-\title{Estimate rank probabilities with MCMC}
+\title{Estimate rank probabilities with Markov Chains}
 \usage{
 mcmc_rank_prob(P, rp = nrow(P)^3)
 }
 \arguments{
-\item{P}{a matrix representing a partial ranking.}
+\item{P}{P A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 
-\item{rp}{integer indicating the number of samples to be drawn.}
+\item{rp}{Integer indicating the number of samples to be drawn.}
 }
 \value{
 \item{expected.rank}{Estimated expected ranks of nodes}
@@ -22,16 +23,24 @@ sample of possible rankings that preserve a partial ranking.
 }
 \details{
 This function can be used instead of \link{exact_rank_prob}
-if the number of nodes is too large for an exact computation. As a rule of thumb,
-the number of samples should be at least cubic in the number of nodes of the network.
-See online manual for benchmark results.
+if the number of elements in \code{P} is too large for an exact computation. As a rule of thumb,
+the number of samples should be at least cubic in the number of elements in \code{P}.
+See \code{vignette("benchmarks",package="netrankr")} for guidelines and benchmark results.
 }
 \examples{
-# Will be added in later version
+\dontrun{
+data("florentine_m")
+P <- neighborhood_inclusion(florentine_m)
+res <- exact_rank_prob(P)
+mcmc <- mcmc_rank_prob(P,rp = vcount(g)^3)
+
+# mean absolute error (expected ranks)
+mean(abs(res$expected.rank-mcmc$expected.rank))
+}
 }
 \references{
 Bubley, R. and Dyer, M., 1999. Faster random generation of linear extensions.
-\emph{Discrete Mathematics}, 201(1):81-88
+\emph{Discrete Mathematics}, \strong{201}(1):81-88
 }
 \seealso{
 \link{exact_rank_prob}, \link{approx_rank_relative}, \link{approx_rank_expected}

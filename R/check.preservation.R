@@ -1,16 +1,17 @@
-#' @title Checks if a partial ranking is preserved
-#' @description Checks if a partial ranking is preserved in the ranking induced by scores.
-#' @param P a partial ranking as a matrix object.
-#' @param scores scores for each element.
+#' @title Check preservation
+#' @description Checks if a partial ranking is preserved in the ranking induced by `scores`.
+#' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance].
+#' @param scores Numeric vector containing the scores of a centrality index.
 #' @details In order for a score vector to preserve a partial ranking, the following 
 #' condition must be fulfilled:
 #' \code{P[u,v]==1 & scores[i]<=scores[j]}.
-#' @return a boolean that is TRUE if \code{scores} preserves the relations in \code{P}.
+#' @return Logical scaler whether \code{scores} preserves the relations in \code{P}.
 #' @author David Schoch
 #' @examples
 #' 
 #' require(igraph)
-#' ### standard measures of centrality preserve the neighborhood inclusion preorder
+#' # standard measures of centrality preserve the neighborhood inclusion preorder
 #' g <- graph.empty(n=11,directed = FALSE)
 #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 #'                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))

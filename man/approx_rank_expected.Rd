@@ -7,12 +7,13 @@
 approx_rank_expected(P, method = "lpom")
 }
 \arguments{
-\item{P}{a partial order as matrix object.}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 
-\item{method}{string indicating method to be used. see Details.}
+\item{method}{String indicating which method to be used. see Details.}
 }
 \value{
-a vector containing approximations of expected ranks.
+A vector containing approximated expected ranks.
 }
 \description{
 Implements a variety of functions to approximate expected ranks
@@ -26,16 +27,16 @@ The \emph{method} parameter can be set to
 \item{loof1}{based on a connection with relative rank probabilities.}
 \item{loof2}{extension of the previous method.}
 }
-Which of the above methods performs best depends on the structure of the partial
-ranking. See the benchmark results in the online manual.
+Which of the above methods performs best depends on the structure and size of the partial
+ranking. See \code{vignette("benchmarks",package="netrankr")} for more details.
 }
 \examples{
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 #Exact result
 exact_rank_prob(P)$expected.rank
 
-approx_rank_expected(P,'lpom')
-approx_rank_expected(P,'glpom')
+approx_rank_expected(P,method = 'lpom')
+approx_rank_expected(P,method = 'glpom')
 }
 \references{
 Brüggemann R., Simon, U., and Mey,S, 2005. Estimation of averaged

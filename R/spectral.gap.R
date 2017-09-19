@@ -1,17 +1,18 @@
-#' @title Spectral Gap of a Graph
-#' @description  The spectral gap of a graph is the absolute difference between the biggest and second biggest eigenvalue
-#' of the adjacency matrix. To compare spectral gaps across networks, the fraction can be used
-#'
+#' @title Spectral gap of a graph
+#' @description  The spectral (or eigen) gap of a graph is the absolute 
+#'  difference between the biggest and second biggest eigenvalue
+#' of the adjacency matrix. To compare spectral gaps across networks, the fraction can be used.
+#' 
 #' @param g igraph object
-#' @param method a string, either 'frac' or 'abs'
-#' @return numeric value
-#' @details The spectral gap is bounded between 0 and 1 if `method='frac'`, the closer
-#' the value to one, the bigger the gap.
+#' @param method A string, either "frac" or "abs"
+#' @return Numeric value
+#' @details The spectral gap is bounded between 0 and 1 if `method="frac"`. The closer
+#' the value to one, the bigger the gap. 
 #' @author David Schoch
 #' @examples
 #' #The fractional spectral gap of a threshold graph is usually close to 1
 #' g <- threshold_graph(50,0.3)
-#' spectral_gap(g,method='frac')
+#' spectral_gap(g,method = "frac")
 #' 
 #' @export
 #'
@@ -22,6 +23,6 @@ spectral_gap <- function(g, method = "frac") {
     } else if (method == "abs") {
         return(spec_decomp[1] - spec_decomp[2])
     } else {
-        stop("method must be one of frac or abs")
+        stop("method must be one of 'frac' or 'abs'")
     }
 }

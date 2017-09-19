@@ -2,62 +2,62 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 approx_glpom <- function(P) {
-    .Call('_netrankr_approx_glpom', PACKAGE = 'netrankr', P)
+    .Call('netrankr_approx_glpom', PACKAGE = 'netrankr', P)
 }
 
 approx_relative <- function(Nu, Nd, P, iterative, max_iter) {
-    .Call('_netrankr_approx_relative', PACKAGE = 'netrankr', Nu, Nd, P, iterative, max_iter)
+    .Call('netrankr_approx_relative', PACKAGE = 'netrankr', Nu, Nd, P, iterative, max_iter)
 }
 
 checkPairs <- function(x, y) {
-    .Call('_netrankr_checkPairs', PACKAGE = 'netrankr', x, y)
+    .Call('netrankr_checkPairs', PACKAGE = 'netrankr', x, y)
 }
 
 dependency <- function(adj) {
-    .Call('_netrankr_dependency', PACKAGE = 'netrankr', adj)
+    .Call('netrankr_dependency', PACKAGE = 'netrankr', adj)
 }
 
 LatticeOfIdeals <- function(child, parent, Ek, nElem, nIdeals) {
-    .Call('_netrankr_LatticeOfIdeals', PACKAGE = 'netrankr', child, parent, Ek, nElem, nIdeals)
+    .Call('netrankr_LatticeOfIdeals', PACKAGE = 'netrankr', child, parent, Ek, nElem, nIdeals)
 }
 
 listingIdeals <- function(P, nElem, nIdeals) {
-    .Call('_netrankr_listingIdeals', PACKAGE = 'netrankr', P, nElem, nIdeals)
+    .Call('netrankr_listingIdeals', PACKAGE = 'netrankr', P, nElem, nIdeals)
 }
 
 mcmc_rank <- function(P, init_rank, rp) {
-    .Call('_netrankr_mcmc_rank', PACKAGE = 'netrankr', P, init_rank, rp)
+    .Call('netrankr_mcmc_rank', PACKAGE = 'netrankr', P, init_rank, rp)
 }
 
 nialgo <- function(adjList, deg) {
-    .Call('_netrankr_nialgo', PACKAGE = 'netrankr', adjList, deg)
+    .Call('netrankr_nialgo', PACKAGE = 'netrankr', adjList, deg)
 }
 
 matdom <- function(A, map, benefit) {
-    .Call('_netrankr_matdom', PACKAGE = 'netrankr', A, map, benefit)
+    .Call('netrankr_matdom', PACKAGE = 'netrankr', A, map, benefit)
 }
 
 preserve <- function(P, s, n) {
-    .Call('_netrankr_preserve', PACKAGE = 'netrankr', P, s, n)
+    .Call('netrankr_preserve', PACKAGE = 'netrankr', P, s, n)
 }
 
 rankings <- function(paths, ideals, nRank, nElem) {
-    .Call('_netrankr_rankings', PACKAGE = 'netrankr', paths, ideals, nRank, nElem)
+    .Call('netrankr_rankings', PACKAGE = 'netrankr', paths, ideals, nRank, nElem)
 }
 
 rankprobs <- function(ImPred, ideals, nElem, nIdeals) {
-    .Call('_netrankr_rankprobs', PACKAGE = 'netrankr', ImPred, ideals, nElem, nIdeals)
+    .Call('netrankr_rankprobs', PACKAGE = 'netrankr', ImPred, ideals, nElem, nIdeals)
 }
 
 resistanceDistance <- function(C, n) {
-    .Call('_netrankr_resistanceDistance', PACKAGE = 'netrankr', C, n)
+    .Call('netrankr_resistanceDistance', PACKAGE = 'netrankr', C, n)
 }
 
 transreduct <- function(M) {
-    .Call('_netrankr_transreduct', PACKAGE = 'netrankr', M)
+    .Call('netrankr_transreduct', PACKAGE = 'netrankr', M)
 }
 
 treeOfIdeals <- function(imPred) {
-    .Call('_netrankr_treeOfIdeals', PACKAGE = 'netrankr', imPred)
+    .Call('netrankr_treeOfIdeals', PACKAGE = 'netrankr', imPred)
 }
 

@@ -1,9 +1,10 @@
 #' @title Approximation of expected ranks
 #' @description  Implements a variety of functions to approximate expected ranks 
-#' for partial rankings.
-#'
-#' @param P a partial order as matrix object.
-#' @param method string indicating method to be used. see Details.
+#' for partial rankings. 
+#' 
+#' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance].
+#' @param method String indicating which method to be used. see Details.
 #' @details The \emph{method} parameter can be set to 
 #' \describe{
 #' \item{lpom}{local partial order model}
@@ -11,9 +12,9 @@
 #' \item{loof1}{based on a connection with relative rank probabilities.}
 #' \item{loof2}{extension of the previous method.}
 #' }
-#' Which of the above methods performs best depends on the structure of the partial
-#' ranking. See the benchmark results in the online manual.
-#' @return a vector containing approximations of expected ranks.
+#' Which of the above methods performs best depends on the structure and size of the partial
+#' ranking. See `vignette("benchmarks",package="netrankr")` for more details.
+#' @return A vector containing approximated expected ranks.
 #' @author David Schoch
 #' @references Brüggemann R., Simon, U., and Mey,S, 2005. Estimation of averaged
 #'ranks by extended local partial order models. *MATCH Commun. Math.
@@ -32,8 +33,8 @@
 #' #Exact result
 #' exact_rank_prob(P)$expected.rank
 #' 
-#' approx_rank_expected(P,'lpom')
-#' approx_rank_expected(P,'glpom')
+#' approx_rank_expected(P,method = 'lpom')
+#' approx_rank_expected(P,method = 'glpom')
 #' @export
 approx_rank_expected <- function(P, method = "lpom") {
 
@@ -77,7 +78,9 @@ approx_rank_expected <- function(P, method = "lpom") {
         for (x in 1:n) {
             Ix <- which(P[x, ] == 0 & P[, x] == 0)
             for (y in Ix) {
-                r.approx[x] <- r.approx[x] + ((s[x] + 1) * (l[y] + 1))/((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+              approx.rank <- ((s[x] + 1) * (l[y] + 1))
+              approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+              r.approx[x] <- r.approx[x] + approx.rank/approx.num.ranks
             }
         }
     } else if (method == "loof2") {
@@ -99,7 +102,9 @@ approx_rank_expected <- function(P, method = "lpom") {
         for (x in 1:n) {
             Ix <- which(P[x, ] == 0 & P[, x] == 0)
             for (y in Ix) {
-                r.approx[x] <- r.approx[x] + ((s[x] + 1) * (l[y] + 1))/((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+              approx.rank <- ((s[x] + 1) * (l[y] + 1))
+              approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+              r.approx[x] <- r.approx[x] + approx.rank/approx.num.ranks
             }
         }
     }
@@ -121,13 +126,16 @@ approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
     #' @description Approximate relative rank probabilities \eqn{P(rk(u)<rk(v))}. 
     #' In a network context, \eqn{P(rk(u)<rk(v))} is the probability that u is 
     #' less central than v, given the partial ranking P.
-    #' @param P a partial ranking as matrix object.
-    #' @param iterative boolean. TRUE (default) if iterative approximation should be used. FALSE if not.
-    #' @param num.iter number of iterations to be used. defaults to 10 (see Details).
-    #' @details The iterative approach generally gives better approximations than the non iterative, if only slightly.
-    #' The default number of iterations is based on the observation, that the approximation does not improve
-    #' significantly beyond this value. This observation, however, is based on very small networks such that
-    #' increasing it for large network may yield better results.
+    #' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+    #'    or [positional_dominance].
+    #' @param iterative Logical scalar if iterative approximation should be used.
+    #' @param num.iter Number of iterations to be used. defaults to 10 (see Details).
+    #' @details The iterative approach generally gives better approximations 
+    #' than the non iterative, if only slightly. The default number of iterations 
+    #' is based on the observation, that the approximation does not improve
+    #' significantly beyond this value. This observation, however, is based on 
+    #' very small networks such that increasing it for large network may yield 
+    #' better results. See `vignette("benchmarks",package="netrankr")` for more details.
     #' @author David Schoch
     #' @references De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual
     #' rank probabilities in partially ordered sets. In *Multicriteria Ordering and
@@ -135,12 +143,12 @@ approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
     #' 
     #' @return a matrix containing approximation of mutual rank probabilities. 
     #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
-    #' @seealso [exact_rank_prob] for exact computations
+    #' @seealso [approx_rank_expected], [exact_rank_prob], [mcmc_rank_prob]
     #' @examples
-    #' P=matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+    #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
     #' P
-    #' approx_rank_relative(P,iterative=FALSE) 
-    #' approx_rank_relative(P,iterative=TRUE)
+    #' approx_rank_relative(P,iterative = FALSE) 
+    #' approx_rank_relative(P,iterative = TRUE)
     #' @export
     
     # Equivalence classes ------------------------------------------------
@@ -182,7 +190,7 @@ approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
     return(mrp.full)
 }
 
-# buggy as hell
+# buggy as hell so not included
 #' freeman_hierarchy <- function(P){
 #'   #' @title Freemans Hierarchy measure
 #'   #' @description Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix 

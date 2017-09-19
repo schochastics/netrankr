@@ -2,24 +2,28 @@
 % Please edit documentation in R/rank.analysis.R
 \name{exact_rank_prob}
 \alias{exact_rank_prob}
-\title{Probabilistic centrality}
+\title{Probabilistic centrality rankings}
 \usage{
 exact_rank_prob(P, names = "", only.results = T, verbose = F, force = F)
 }
 \arguments{
-\item{P}{matrix representing a partial ranking.}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 
-\item{names}{optional argument for names if P does not have row/column names.}
+\item{names}{Optional argument for names if P does not have row/column names.}
 
-\item{only.results}{logical. return only results (default) or additionally the ideal tree and lattice if FALSE.}
+\item{only.results}{Logical. return only results (default) or additionally
+the ideal tree and lattice if \code{FALSE}.}
 
-\item{verbose}{logical. should diagnostics be printed. Defaults to \code{FALSE}.}
+\item{verbose}{Logical. should diagnostics be printed. Defaults to \code{FALSE}.}
 
-\item{force}{logical. If FALSE(default), stops the analysis if the network has more than 50 nodes and less than 0.2 comparable pairs. Only change if you know what you are doing.}
+\item{force}{Logical. If \code{FALSE} (default), stops the analysis if the partial
+ranking has more than 40 elements and less than 0.4 comparable pairs.
+Only change if you know what you are doing.}
 }
 \value{
-\item{lin.ext}{Number of possible rankings.}
-\item{mse}{Array giving the equivalence classes of P.}
+\item{lin.ext}{Number of possible rankings that extend \code{P}.}
+\item{mse}{Array giving the equivalence classes of \code{P}.}
 \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[u,k]} is the probability that u has rank k.}
 \item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[u,v]} is the probability that u is ranked lower than v.}
 \item{expected.rank}{Expected ranks of nodes in any centrality ranking.}
@@ -39,6 +43,10 @@ This includes rank probabilities, relative rank probabilities and expected ranks
 The function derives rank probabilities from a given partial ranking
 (for instance returned by \link{neighborhood_inclusion} or \link{positional_dominance}). This includes the
 calculation of expected ranks, (relative) rank probabilities and the number of possible rankings.
+Note that the set of rankings grows exponentially in the number of elements and the exact
+calculation becomes infeasible quite quickly and approximations need to be used.
+See \code{vignette("benchmarks")} for guidelines and \link{approx_rank_relative},
+\link{approx_rank_expected}, and \link{mcmc_rank_prob} for approximative methods.
 }
 \examples{
 P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
@@ -51,6 +59,9 @@ P <- neighborhood_inclusion(tg)
 res <- exact_rank_prob(P)
 }
 \references{
+De Loof, K. 2009. Efficient computation of rank probabilities in posets.
+\emph{Phd thesis}, Ghent University.
+
 De Loof, K., De Meyer, H. and De Baets, B., 2006. Exploiting the
 lattice of ideals representation of a poset. \emph{Fundamenta Informaticae}, 71(2,3):309-321.
 }

@@ -2,24 +2,29 @@
 % Please edit documentation in R/indirect.relations.R
 \name{indirect_relations}
 \alias{indirect_relations}
-\title{Indirect relations of a network}
+\title{Indirect relations in a network}
 \usage{
 indirect_relations(g, type = "geodesic", FUN = identity, ...)
 }
 \arguments{
 \item{g}{igraph object. The network for which relations should be derived.}
 
-\item{type}{string. giving the relation to be calculated. See Details for options.}
+\item{type}{String giving the relation to be calculated. See Details for options.}
 
-\item{FUN}{a function that allows the transformation of relations. See Details.}
+\item{FUN}{A function that allows the transformation of relations. See Details.}
 
-\item{...}{additional arguments passed to FUN.}
+\item{...}{Additional arguments passed to FUN.}
 }
 \value{
-a matrix containing indirect relations in a network.
+A matrix containing indirect relations in a network.
 }
 \description{
-Derive indirect relations (like geodesic distances) for a given network.
+Derive indirect relations for a given network.
+Observed relations, like presents or absence of a relation, are commonly not the center
+of analysis, but are transformed in a new set of indirect relation like geodesic
+distances among nodes. These transformations are usually an implicit step when centrality
+indices are used. Making this step explicit gives more possibilities, for example
+calculating partial centrality rankings with \link{positional_dominance}.
 }
 \details{
 The \code{type} parameter has the following options.
@@ -36,7 +41,7 @@ for betweenness-like centrality indices.
 
 \emph{'walks'} returns walk counts between pairs of nodes, usually they are
 weighted decreasingly in their lengths or other properties which can be done by adding
-a function in \code{FUN}.
+a function in \code{FUN}.  See \link{transform_relations} for options.
 
 \emph{'resistance'} returns the resistance distance between all pairs of vertices.
 
@@ -49,10 +54,21 @@ g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
 #geodesic distances
-D <- indirect_relations(g,type='geodesic') 
-#dyadic dependencies
-D <- indirect_relations(g,type='dependencies')
+D <- indirect_relations(g,type = "geodesic") 
 
+#dyadic dependencies
+D <- indirect_relations(g,type = "dependencies")
+
+#walks attenuated exponentially by there length
+W <- indirect_relations(g,type = "walks",FUN = walks_exp)
+
+#positional dominance of a transformed relation...
+D <- indirect_relations(g,type = "geodesic") 
+
+#...under total heterogeneity
+positional_dominance(D, map = FALSE ,benefit = FALSE)
+#...under total homogeneity
+positional_dominance(D, map = TRUE ,benefit = FALSE)
 }
 \seealso{
 \link{aggregate_positions} to build centrality indices, \link{positional_dominance} to derive dominance relations

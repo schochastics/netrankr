@@ -2,23 +2,25 @@
 % Please edit documentation in R/comparable.pairs.R
 \name{comparable_pairs}
 \alias{comparable_pairs}
-\title{Comparable pairs of a partial order}
+\title{Comparable pairs in a partial ranking}
 \usage{
 comparable_pairs(P)
 }
 \arguments{
-\item{P}{matrix containing comparability relation.}
+\item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
+or \link{positional_dominance}.}
 }
 \value{
-fraction of comparable pairs in P.
+Fraction of comparable pairs in \code{P}.
 }
 \description{
-Calculates the fraction of comparable pairs in a partial order. This fraction is identical to
-the density of the induced undirected graph of P.
+Calculates the fraction of comparable pairs in a partial ranking.
+This fraction is identical to the density of the induced undirected graph of
+a partial ranking.
 }
 \examples{
 require(igraph)
-g <- erdos.renyi.game(100,0.1)
+g <- sample_gnp(100,0.1)
 P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 # All pairs of vertices are comparable in a threshold graph
