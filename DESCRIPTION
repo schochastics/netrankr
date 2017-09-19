@@ -1,19 +1,20 @@
 Package: netrankr
 Type: Package
 Title: Analyzing Partial Rankings in Networks
-Version: 0.0.5
-Authors@R: person("David", "Schoch", ,"david.schoch@uni-konstanz.de", c("aut", "cre"))
-Maintainer: David Schoch <david.schoch@uni-konstanz.de>
-Description: Implements methods for network centrality 
-    related analyses of networks. While the package includes the possibility to
-    build a variety of indices, its main focus lies on index-free assessment of centrality via partial 
-    rankings obtained by neighborhood-inclusion or positional dominance. 
-    These partial rankings can be analyzed with a variety of methods.
-    These include probabilistic methods like computing expected node ranks and relative 
+Version: 0.1.0
+Authors@R: c(
+    person("David", "Schoch", email = "david.schoch@uni-konstanz.de", role = c("aut", "cre")),
+    person("Julian","Müller", email = "julian.mueller@uni-konstanz.de", role = "ctb"))
+Description: Implements methods for network centrality related analyses of networks. 
+    While the package includes the possibility to build a variety of indices, 
+    its main focus lies on index-free assessment of centrality via partial 
+    rankings obtained by neighborhood-inclusion or positional dominance. These 
+    partial rankings can be analyzed with a variety of methods, including 
+    probabilistic methods like computing expected node ranks and relative 
     rank probabilities (how likely is it that a node is more central than another?).
-URL: https://github.com/schochastics/netrankr
+URL: https://schochastics.github.io/netrankr
 BugReports: https://github.com/schochastics/netrankr/issues
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.0.1)
