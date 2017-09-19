@@ -24,6 +24,8 @@ rank probabilities (how likely is it that a node is more central than another?).
 Most implemented methods are very general and can be used whenever partial rankings 
 have to be analysed.
 
+Visit the [online manual](https://schochastics.github.io/netrankr) for more Details.
+
 ## Install
 
 To install from CRAN: [not yet published]
