@@ -1,5 +1,5 @@
 title: netrankr
-url: https://github.com/schochastics/netrankr
+url: https://schochastics.github.io/netrankr
 template:
   params:
     bootswatch: sandstone
@@ -27,6 +27,8 @@ navbar:
       href: articles/use_case.html
     - text: "Benchmarks"
       href: articles/benchmarks.html
+    - text: "Periodic Table"
+      href: http://schochastics.net/sna/periodic.html
   right:
       - icon: fa-newspaper-o
         text: "news"
