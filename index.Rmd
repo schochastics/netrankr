@@ -105,7 +105,7 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 ```
 
 ```{r dbces_neutral, echo=FALSE}
-knitr::include_graphics("docs/dbces-neutral.png")
+knitr::include_graphics("dbces-neutral.png")
 ```
 
 Say we are interested in the most central node of the graph and simply compute some 
@@ -123,7 +123,7 @@ cent_scores <- data.frame(
 apply(cent_scores,2,which.max)
 ```
 ```{r dbces_color, echo=FALSE}
-knitr::include_graphics("docs/dbces-color.png")
+knitr::include_graphics("dbces-color.png")
 ```
 
 As you can see, each index assigns the highest value to a different vertex.
