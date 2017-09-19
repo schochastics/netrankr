@@ -176,7 +176,7 @@ round(res$expected.rank,2)
 The higher the value, the more central a node is expected to be.
 
 **Note**: The set of rankings grows exponentially in the number of nodes and the exact 
-calculation becomes infeasible quite quickly and approximations need to be used.  
+calculation becomes infeasible quite quickly and approximations need to be used.
 Check the [benchmark results](articles/benchmarks.html) for guidelines.
 
 ________________________________________________________________________________
