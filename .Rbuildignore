@@ -2,7 +2,10 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README-.*\.png$
-^NEWS\.md$
 ^docs$
 _pkgdown.yaml
-logo.png
+logo.*
+index.Rmd
+index.md
+dbces-color.png
+dbces-neutral.png
