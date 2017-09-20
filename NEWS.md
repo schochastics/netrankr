@@ -1,3 +1,7 @@
+## netranr 0.1.1
+
+* fixed a bug in transitive_reduction
+
 ## netrankr 0.1.0
 
 * first public release
