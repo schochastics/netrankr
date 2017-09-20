@@ -28,10 +28,10 @@
 #' \item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[u,v]} is the probability that u is ranked lower than v.}
 #' \item{expected.rank}{Expected ranks of nodes in any centrality ranking.}
 #' \item{rank.spread}{Variance of the ranking probabilities.}
-#' \item{topo.order}{Random ranking used to build the lattice of ideals (if \code{only.results=FALSE}).}
-#' \item{tree}{igraph object. The tree of ideals (if \code{only.results=FALSE}).}
-#' \item{lattice}{igraph object. The lattice of ideals (if \code{only.results=FALSE}).}
-#' \item{ideals}{list. order ideals (if \code{only.results=FALSE}).}
+#' \item{topo.order}{Random ranking used to build the lattice of ideals (if \code{only.results = FALSE}).}
+#' \item{tree}{Adjacency list (incoming) of the tree of ideals (if \code{only.results = FALSE}).}
+#' \item{lattice}{Adjacency list (incoming) of the lattice of ideals (if \code{only.results = FALSE}).}
+#' \item{ideals}{List of order ideals (if \code{only.results = FALSE}).}
 #' In all cases, higher numerical ranks imply a higher position in the ranking. That is,
 #' the lowest ranked node has rank 1.
 #' @author David Schoch, Julian Müller  
