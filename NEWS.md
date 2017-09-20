@@ -1,6 +1,7 @@
 ## netrankr 0.1.1
 
-* fixed a bug in transitive_reduction
+* fixed a bug in `transitive_reduction()`
+* fixed some errors in the documentation of `exact_rank_prob()`
 
 ## netrankr 0.1.0
 
