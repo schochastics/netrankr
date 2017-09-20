@@ -1,4 +1,4 @@
-## netranr 0.1.1
+## netrankr 0.1.1
 
 * fixed a bug in transitive_reduction
 
