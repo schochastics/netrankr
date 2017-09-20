@@ -9,3 +9,4 @@ index.Rmd
 index.md
 dbces-color.png
 dbces-neutral.png
+^\.travis\.yml$
