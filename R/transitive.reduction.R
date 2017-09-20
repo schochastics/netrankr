@@ -12,10 +12,10 @@
 #' P <- neighborhood_inclusion(g)
 #' sum(P)
 #' 
-#' T <- transitive_reduction(P)
-#' sum(T)
+#' R <- transitive_reduction(P)
+#' sum(R)
 #' @export
 transitive_reduction <- function(P) {
-    B <- transreduct(P)
-    return(B)
+  B <- transreduct(P)
+  return(B)
 }

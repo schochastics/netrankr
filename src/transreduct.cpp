@@ -2,18 +2,19 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-IntegerMatrix transreduct(IntegerMatrix M) {
-  int n =M.rows();
+NumericMatrix transreduct(NumericMatrix M) {
+  NumericMatrix R = M;
+  int n = R.rows();
   for(int j=0;j<n;++j){
     for(int i=0;i<n;++i){
-      if(M(i,j)==1){
+      if(R(i,j)==1){
         for (int k=0; k<n;++k){
-          if (M(j,k)==1){
-            M(i,k)=0;
+          if (R(j,k)==1){
+            R(i,k)=0;
           } 
         }
       }
     }
   }
-  return M;
+  return R;
 }
