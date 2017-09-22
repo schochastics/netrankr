@@ -5,7 +5,10 @@
 #' \deqn{N(u)\subseteq N[v]}
 #' where \eqn{N(u)} is the neighborhood of \eqn{u} and \eqn{N[v]=N(v)\cup \lbrace v\rbrace} is the closed neighborhood of \eqn{v}.
 #' \eqn{N(u) \subseteq N[v]} implies that \eqn{c(u) \leq c(v)},
-#' where \eqn{c} is an arbitrary centrality index. Neighborhood-inclusion is thus preserved in any centrality ranking.
+#' where \eqn{c} is a centrality index based on a specific path algebra. Indices 
+#' falling into this category are closeness (and variants), betweenness 
+#' (and variants) as well as many walk-based indices (eigenvector and subgraph 
+#' centrality, total communicability,...). 
 #' @return The neighborhood-inclusion preorder of \code{g} as matrix object. \code{P[u,v]=1} if \eqn{N(u)\subseteq N[v]}
 #' @author David Schoch
 #' @references Schoch, D. and Brandes, U., 2016. Re-conceptualizing centrality in social networks. 

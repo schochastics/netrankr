@@ -25,7 +25,7 @@ neighborhood of a node $u$ is a subset of the closed neighborhood of a node
 $v$, $N(u)\subseteq N[v]$, we speak of *neighborhood inclusion*. This concept 
 defines a dominance relation among nodes in a network. We say that $u$ is 
 *dominated* by $v$ if $N(u)\subseteq N[v]$. Neighborhood-inclusion induces a 
-partial ranking on the vertices of a network. That is, (usually) some pairs of 
+partial ranking on the vertices of a network. That is, (usually) some (if not most!) pairs of 
 vertices are incomparable, such that neither $N(u)\subseteq N[v]$ nor $N(v)\subseteq N[u]$ holds. 
 There is, however, a special graph class where all pairs are comparable 
 (found in [this](threshold_graph.html) vignette).
@@ -35,10 +35,12 @@ The importance of neighborhood-inclusion is given by the following result:
 $$
 N(u)\subseteq N[v] \implies c(u)\leq c(v),
 $$
-where $c$ is a centrality index. 
+where $c$ is a centrality index defined on special path algebras. These include
+many of the well known measures like closeness (and variants), betweenness (and variants)
+as well as many walk-based indices (eigenvector and subgraph centrality, total communicability,...).
 
-Very informally, if $u$ is dominated by $v$, then u is **always** less central 
-than $v$ no matter which centrality index is used. 
+Very informally, if $u$ is dominated by $v$, then u is less central 
+than $v$ no matter which centrality index is used, that fulfill the requirement. 
 While this is the key result, this short description leaves out many theoretical
 considerations. These and more can be found in 
 
