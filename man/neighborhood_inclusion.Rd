@@ -20,7 +20,10 @@ Neighborhood-inclusion is defined as
 \deqn{N(u)\subseteq N[v]}
 where \eqn{N(u)} is the neighborhood of \eqn{u} and \eqn{N[v]=N(v)\cup \lbrace v\rbrace} is the closed neighborhood of \eqn{v}.
 \eqn{N(u) \subseteq N[v]} implies that \eqn{c(u) \leq c(v)},
-where \eqn{c} is an arbitrary centrality index. Neighborhood-inclusion is thus preserved in any centrality ranking.
+where \eqn{c} is a centrality index based on a specific path algebra. Indices
+falling into this category are closeness (and variants), betweenness
+(and variants) as well as many walk-based indices (eigenvector and subgraph
+centrality, total communicability,...).
 }
 \examples{
 require(igraph)
