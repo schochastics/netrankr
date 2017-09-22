@@ -138,8 +138,11 @@ A more general assessment starts by calculating the neighborhood inclusion preor
 P <- neighborhood_inclusion(g)
 P
 ```
-If `P[u,v]=1`, then $N(u) \subseteq N[v]$ which implies that 
-$c(u) \leq c(v)$ for all centrality indices $c$!  
+[Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401) showed that
+$N(u) \subseteq N[v]$ (i.e. `P[u,v]=1`) implies $c(u) \leq c(v)$ for 
+centrality indices $c$, which are defined via specific path algebras. These include
+many of the well-known measures like closeness (and variants), betweenness (and variants)
+as well as many walk-based indices (eigenvector and subgraph centrality, total communicability,...).
 
 Neighborhood-inclusion defines a partial ranking on the set of nodes. Each ranking 
 that is in accordance with this partial ranking yields a proper centrality ranking.

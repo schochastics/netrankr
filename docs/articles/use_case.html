@@ -127,12 +127,12 @@
 <p>For this tutorial, we use the famous <em>florentine families</em> dataset (<a href="http://www.journals.uchicago.edu/doi/abs/10.1086/230190">Padget &amp; Ansell, 1993</a>). The marriage links of families together with the wealth attribute are included in the <code>netrankr</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">"florentine_m"</span>)
 <span class="co">#Delete Pucci family (isolated)</span>
-florentine_m &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/delete_vertices">delete_vertices</a></span>(florentine_m,<span class="kw">which</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(florentine_m)==<span class="dv">0</span>))
+florentine_m &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/delete_vertices">delete_vertices</a></span>(florentine_m,<span class="kw">which</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(florentine_m)<span class="op">==</span><span class="dv">0</span>))
 
 <span class="co">#plot the graph (label size proportional to wealth)</span>
 <span class="kw">set.seed</span>(<span class="dv">111</span>)
 <span class="kw">plot</span>(florentine_m,
-     <span class="dt">vertex.label.cex=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth*<span class="fl">0.01</span>, 
+     <span class="dt">vertex.label.cex=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth<span class="op">*</span><span class="fl">0.01</span>, 
      <span class="dt">vertex.label.color=</span><span class="st">"black"</span>,
      <span class="dt">vertex.color=</span><span class="st">"white"</span>,
      <span class="dt">vertex.frame.color=</span><span class="st">"gray"</span>)</code></pre></div>
@@ -153,20 +153,20 @@ florentine_m &lt;-<span class="st"> </span><span class="kw"><a href="http://www.
   <span class="dt">degree =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(florentine_m),
   <span class="dt">betweenness =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/betweenness">betweenness</a></span>(florentine_m),
   <span class="dt">closeness =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness</a></span>(florentine_m),
-  <span class="dt">eigenvector =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(florentine_m)$vector,
+  <span class="dt">eigenvector =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(florentine_m)<span class="op">$</span>vector,
   <span class="dt">subgraph =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/subgraph_centrality">subgraph_centrality</a></span>(florentine_m))
 
 <span class="co"># most central family according to the 5 indices</span>
-<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name[<span class="kw">apply</span>(cent.df,<span class="dv">2</span>,which.max)]</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name[<span class="kw">apply</span>(cent.df,<span class="dv">2</span>,which.max)]</code></pre></div>
 <pre><code>## [1] "Medici" "Medici" "Medici" "Medici" "Medici"</code></pre>
 <p>In all cases, the Medici are considered to be the most central family. However, it is possible to find indices that rank other families on top. An example is <em>odd subgraph centrality</em>, which can be assembled with the <code>netrankr</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#odd subgraph centrality</span>
-sc_odd &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type =</span> <span class="st">"walks"</span>,<span class="dt">FUN =</span> walks_exp_odd) %&gt;%<span class="st"> </span>
+sc_odd &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type =</span> <span class="st">"walks"</span>,<span class="dt">FUN =</span> walks_exp_odd) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type =</span> <span class="st">"self"</span>)
 
 <span class="co">#family with highest score </span>
-<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name[<span class="kw">which.max</span>(sc_odd)]</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name[<span class="kw">which.max</span>(sc_odd)]</code></pre></div>
 <pre><code>## [1] "Strozzi"</code></pre>
 <p>In this example, the Strozzi family are considered to be the most central family and the Medici are ranked third.</p>
 <p>Although we have found <span class="math inline">\(5\)</span> indices that consider the Medici the most central family, we can not guarantee, that there do not exist hundreds (or thousands?) of indices that would give an entirely different result.</p>
@@ -183,7 +183,7 @@ sc_odd &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span
 <p>Only around 15% of pairs of families are comparable, leaving 85% of pairs of families that could be ordered (basically) arbitrarily.</p>
 <p>If we want to visually assess the dominance relations we can use the function <code><a href="../reference/dominance_graph.html">dominance_graph()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw"><a href="../reference/dominance_graph.html">dominance_graph</a></span>(P)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(d)$name &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name
+<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(d)<span class="op">$</span>name &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name
 <span class="kw">set.seed</span>(<span class="dv">113</span>)
 <span class="kw">plot</span>(d,<span class="dt">vertex.label.color=</span><span class="st">"black"</span>,
      <span class="dt">vertex.color=</span><span class="st">"white"</span>,
@@ -192,22 +192,22 @@ sc_odd &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span
 <p><img src="use_case_files/figure-html/dom_graph-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>The Castellan family neither dominates nor is dominated by any other family. This means, that we can find indices that potentially rank them on top or on the bottom, or anything in between.</p>
 <p>To better assess the potential ranks of nodes, we can plot the rank intervals with <code><a href="../reference/plot_rank_intervals.html">plot_rank_intervals()</a></code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name)</code></pre></div>
 <p><img src="use_case_files/figure-html/rk_inter-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>Observe how big the intervals are, indicating that there is ample scope to rank the families differently. These intervals, however, only give us a rough estimate of this arbitrariness and not any rank probabilities. To get all exact probabilities, we use the function <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name)</code></pre></div>
 <p>There are 3,972,630,480 different possibilities to rank the families! (<em>the value is stored in <code>res$lin.ext</code>. </em>). This means that theoretically, we can find almost 4 Billion indices that rank the families differently.</p>
 <p>The <em>rank probabilities</em> of families can be found in <code>res$rank.prob</code>. They are returned as a matrix where rows are families and columns are ranks. That is, an entry in row <span class="math inline">\(u\)</span> and column <span class="math inline">\(k\)</span> gives the probability that <span class="math inline">\(u\)</span> has rank <span class="math inline">\(k\)</span> (larger <span class="math inline">\(k\)</span> indicate higher ranks) Mostly, you will be interested in the probability to be the most central node of a network. Below, we calculate these probability for all families and return the one’s that have a higher probability than <span class="math inline">\(0.1\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top_rank_prob &lt;-<span class="st"> </span>res$rank.prob[,<span class="dv">15</span>]
-<span class="kw">names</span>(top_rank_prob) &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name
-<span class="kw">round</span>(top_rank_prob[top_rank_prob&gt;<span class="fl">0.1</span>],<span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top_rank_prob &lt;-<span class="st"> </span>res<span class="op">$</span>rank.prob[,<span class="dv">15</span>]
+<span class="kw">names</span>(top_rank_prob) &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name
+<span class="kw">round</span>(top_rank_prob[top_rank_prob<span class="op">&gt;</span><span class="fl">0.1</span>],<span class="dv">3</span>)</code></pre></div>
 <pre><code>##  Albizzi Guadagni   Medici Salviati  Strozzi 
 ##    0.109    0.106    0.123    0.111    0.133</code></pre>
 <p>The Strozzi family, with <span class="math inline">\(0.13\)</span>, has the highest probability to be top ranked, followed by the Medici with <span class="math inline">\(0.12\)</span>.</p>
 <p>If we are only interested in a subset of nodes, in our case maybe the Strozzi and Medici, we can assess the <em>relative rank probabilities</em> in <code>res$relative.rank</code>. Again, probabilities are returned as matrix objects, where an entry in row <span class="math inline">\(u\)</span> and column <span class="math inline">\(v\)</span> gives the probability that <span class="math inline">\(u\)</span> is ranked below <span class="math inline">\(v\)</span>. Below we calculate this probability for the Strozzi and Medici.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id_strozzi &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name==<span class="st">"Strozzi"</span>) 
-id_medici  &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name==<span class="st">"Medici"</span>)
-res$relative.rank[id_strozzi,id_medici]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id_strozzi &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name<span class="op">==</span><span class="st">"Strozzi"</span>) 
+id_medici  &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name<span class="op">==</span><span class="st">"Medici"</span>)
+res<span class="op">$</span>relative.rank[id_strozzi,id_medici]</code></pre></div>
 <pre><code>## [1] 0.5219845</code></pre>
 <p>The probability that the Strozzi are less central than the Medici is 0.52 and thus very close to a “fifty-fifty” chance.</p>
 <p>The last result of interest returned by <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> are the <em>expected ranks</em> in <code>res$expected.rank</code>. The expected ranks, as the name indicates, returns the ranks that we expect families to have in a centrality ranking.</p>
@@ -289,33 +289,33 @@ res$relative.rank[id_strozzi,id_medici]</code></pre></div>
 <p>Usually, we are not simply interested in a ranking of nodes, but we rather would like to use centrality to explain certain node attributes. In our case, we might be interested in the question: “can an index explain the wealth of families?”, or if we already have a more concrete idea “can proximity to other families explain the wealth attribute?”</p>
 <p>“Proximity” can be translated to the graph-theoretic concept of geodesic distances, such that closeness centrality would be an adequate candidate as an index. We here use the pipeline approach of the <code>netrankr</code> package instead of the <code><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness()</a></code> function of <code>igraph</code>. The reasons will become evident in the next section.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Closeness</span>
-c_C &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) %&gt;%<span class="st"> </span>
+c_C &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"invsum"</span>)
 
-<span class="kw">cor</span>(c_C,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,<span class="dt">method=</span><span class="st">"kendall"</span>)</code></pre></div>
+<span class="kw">cor</span>(c_C,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>)</code></pre></div>
 <pre><code>## [1] 0.08823953</code></pre>
 <p>The correlation between closeness and wealth (0.0882) is far to low to constitute that “proximity” is related to wealth. However, there exist various other indices, that are based on the geodesic distances in a graph. Refer to the literature for more details on these indices.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#harmonic closeness</span>
-c_HC &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_inv) %&gt;%<span class="st"> </span>
+c_HC &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_inv) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#residual closeness (Dangalchev,2006)</span>
-c_RC &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_2pow) %&gt;%<span class="st"> </span>
+c_RC &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_2pow) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#integration centrality (Valente &amp; Foreman, 1998)</span>
-dist_integration &lt;-<span class="st"> </span>function(x){
-  x &lt;-<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span>(x -<span class="st"> </span><span class="dv">1</span>)/<span class="kw">max</span>(x)
+dist_integration &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  x &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">/</span><span class="kw">max</span>(x)
 }
-c_IN &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_integration) %&gt;%<span class="st"> </span>
+c_IN &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_integration) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
-<span class="kw">c</span>(<span class="kw">cor</span>(c_HC,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,<span class="dt">method=</span><span class="st">"kendall"</span>),
-<span class="kw">cor</span>(c_RC,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,<span class="dt">method=</span><span class="st">"kendall"</span>),
-<span class="kw">cor</span>(c_IN,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,<span class="dt">method=</span><span class="st">"kendall"</span>)
+<span class="kw">c</span>(<span class="kw">cor</span>(c_HC,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>),
+<span class="kw">cor</span>(c_RC,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>),
+<span class="kw">cor</span>(c_IN,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>)
 )</code></pre></div>
 <pre><code>## [1] 0.09756214 0.11594338 0.08823953</code></pre>
 <p>The highest correlation (0.1159) is achieved for residual closeness, however, this is still too low to conclude that proximity is related to wealth.</p>
@@ -323,26 +323,26 @@ c_IN &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#generalized closeness (Agneessens et al.,2017) (alpha&gt;0) sum(dist^-alpha)</span>
 alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="fl">0.01</span>,<span class="fl">0.99</span>,<span class="fl">0.01</span>),<span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="fl">0.1</span>))
 scores &lt;-<span class="st"> </span>
-<span class="kw">sapply</span>(alpha,function(x)
-    florentine_m %&gt;%<span class="st"> </span>
-<span class="st">      </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span>x) %&gt;%<span class="st"> </span>
+<span class="kw">sapply</span>(alpha,<span class="cf">function</span>(x)
+    florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span>x) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">      </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 )
 cors_gc &lt;-<span class="st"> </span><span class="kw">apply</span>(scores,<span class="dv">2</span>,
-              function(x)<span class="kw">cor</span>(x,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,<span class="dt">method=</span><span class="st">"kendall"</span>))
+              <span class="cf">function</span>(x)<span class="kw">cor</span>(x,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>))
 
 res_gc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">max</span>(cors_gc),alpha[<span class="kw">which.max</span>(cors_gc)])
 
 <span class="co">#decay centrality (Jackson, 2010) (alpha in [0,1]) sum(alpha^dist)</span>
 alpha &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.01</span>,<span class="fl">0.99</span>,<span class="fl">0.01</span>)
 scores &lt;-<span class="st"> </span>
-<span class="kw">sapply</span>(alpha,function(x)
-  florentine_m %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span>x) %&gt;%<span class="st"> </span>
+<span class="kw">sapply</span>(alpha,<span class="cf">function</span>(x)
+  florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span>x) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 )
 cors_dc &lt;-<span class="st"> </span><span class="kw">apply</span>(scores,<span class="dv">2</span>,
-              function(x)<span class="kw">cor</span>(x,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,<span class="dt">method=</span><span class="st">"kendall"</span>))
+              <span class="cf">function</span>(x)<span class="kw">cor</span>(x,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>))
 
 res_dc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">max</span>(cors_dc),alpha[<span class="kw">which.max</span>(cors_dc)])</code></pre></div>
 <p>The highest correlation for generalized closeness is 0.1159434 achieved for <span class="math inline">\(\alpha\)</span>= 0.51</p>
@@ -354,16 +354,16 @@ res_dc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">
 <h2 class="hasAnchor">
 <a href="#centrality-as-explanatory-variable-dominance-approach" class="anchor"></a>Centrality as explanatory variable (Dominance approach)</h2>
 <p>Since we are postulating a connection between proximity and wealth, we compute the pairwise geodesic distances as our <em>indirect relation</em> of interest and calculate the positional dominance relations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/positional_dominance.html">positional_dominance</a></span>(<span class="dt">benefit=</span>F)
 
 <span class="kw"><a href="../reference/comparable_pairs.html">comparable_pairs</a></span>(D)</code></pre></div>
 <pre><code>## [1] 0.1523809</code></pre>
 <p>Note that exactly the same pairs are comparable as for neighborhood-inclusion. However, with one additional assumption, we will be able to increase the number of comparable pairs significantly (and thus reduce the space of potential rankings). By summing up distances in various ways, as done by the indices above, we assume families to be <em>homogeneous</em>. It doesn’t matter to whom we have a small distance, it just matters that they are small.</p>
 <p>If we can safely comply with this assumption, we can use positional dominance <em>under total homogeneity</em>. It is important to note, that if a family is dominated by another under this premise, it will have a lower score in <strong>any</strong> distance based centrality index.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D &lt;-<span class="st"> </span>florentine_m %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/positional_dominance.html">positional_dominance</a></span>(<span class="dt">benefit=</span>F,<span class="dt">map=</span>T)
 
 <span class="kw"><a href="../reference/comparable_pairs.html">comparable_pairs</a></span>(D)</code></pre></div>
@@ -374,20 +374,20 @@ res_dc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">
 <p><img src="use_case_files/figure-html/plot%20dist_dom-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>In total, we find <span class="math inline">\(41\)</span> such pairs (<span class="math inline">\(39\)</span>% of all pairs). This implies that we are (potentially) quite far from being able to explain wealth perfectly with geodesic distances. In the following we will explore <em>how</em> far away.</p>
 <p>We start by calculating the rank intervals to illustrate the difference to neighborhood-inclusion.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(D,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(D,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name)</code></pre></div>
 <p><img src="use_case_files/figure-html/rk_inter_dist-1.png" width="480" style="display: block; margin: auto;"> All intervals shrunk significantly and even correspond to a single point for two families (Pazzi and Medici). This implies that no matter which distance based index we use, the Pazzi family will always be ranked last and the Medici always on top.</p>
 <p>For a more exact assessment we again use the function <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span>(D,<span class="dt">names =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span>(D,<span class="dt">names =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name)</code></pre></div>
 <p>In total, there are 654 distance based rankings possible. This is a huge reduction from the general case where almost <span class="math inline">\(4\)</span> billion are possible.</p>
 <p>To determine the best possible correlation between wealth and any distance based ranking, we first need to determine all 654 rankings. For this purpose, we rerun the previous analysis with <code>only.results=FALSE</code> to obtain the necessary data structure.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span>(D,<span class="dt">names =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$name,<span class="dt">only.results =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span>(D,<span class="dt">names =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name,<span class="dt">only.results =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>Now, we can use the function <code><a href="../reference/get_rankings.html">get_rankings()</a></code> which returns all rankings as a matrix.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_ranks &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_rankings.html">get_rankings</a></span>(res)
 <span class="kw">dim</span>(all_ranks)</code></pre></div>
 <pre><code>## [1]  15 654</code></pre>
 <p>No we can simply loop over all rankings and calculate the correlation between the ranking and the wealth attribute.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dist_cor &lt;-<span class="st"> </span><span class="kw">apply</span>(all_ranks,<span class="dv">2</span>,
-              function(x)<span class="kw">cor</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,x,<span class="dt">method=</span><span class="st">"kendall"</span>))
+              <span class="cf">function</span>(x)<span class="kw">cor</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,x,<span class="dt">method=</span><span class="st">"kendall"</span>))
 <span class="kw">c</span>(<span class="dt">max_cor =</span> <span class="kw">max</span>(dist_cor),<span class="dt">mean_cor =</span> <span class="kw">mean</span>(dist_cor))</code></pre></div>
 <pre><code>##    max_cor   mean_cor 
 ## 0.15459118 0.04600506</code></pre>
@@ -395,7 +395,7 @@ res_dc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">
 <p>The figure below shows all correlations as a boxplot. <img src="use_case_files/figure-html/vis_rank_cor-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>We can conclude, that there can not be any distance based centrality index that can reasonably explain the wealth attribute.</p>
 <p>We can additionally consider the correlation between degree and wealth, calculated below.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(florentine_m),<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)$wealth,<span class="dt">method=</span><span class="st">"kendall"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(florentine_m),<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>)</code></pre></div>
 <pre><code>## [1] 0.1958605</code></pre>
 <p>The correlation is higher than any distance based index can have. Thus, we can additionally conclude that marriage ties are more indicative for wealth than proximity in the marriage network.</p>
 </div>

@@ -145,23 +145,23 @@ The former, however, comes with enhanced readability and is in accordance with t
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/make_empty_graph">graph.empty</a></span>(<span class="dt">n=</span><span class="dv">11</span>,<span class="dt">directed =</span> <span class="ot">FALSE</span>)
 g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/add_edges">add_edges</a></span>(g,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">11</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">11</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">11</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">8</span>,
                    <span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">11</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">10</span>))
-<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)$name &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">11</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">11</span>
 
 <span class="co">#Degree</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"identity"</span>) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"identity"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#Closeness</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"invsum"</span>)
 <span class="co">#Betweenness Centrality</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dependencies"</span>) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dependencies"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#Eigenvector Centrality</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_limit_prop) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_limit_prop) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)</code></pre></div>
 <p>For closeness <code>type="invsum"</code> is used since traditional closeness is defined as <span class="math display">\[
 c_c(i)=\frac{1}{\sum_t dist(i,t)}.
@@ -169,57 +169,57 @@ c_c(i)=\frac{1}{\sum_t dist(i,t)}.
 c_c(i)=\sum_t \frac{1}{dist(i,t)},
 \]</span> the following code can be used:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#harmonic closeness</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_inv) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_inv) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)</code></pre></div>
 <p>The distance based indices constitute one of the biggest groups of indices in the <code>netrankr</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#residual closeness (Dangalchev,2006)</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_2pow) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_2pow) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#generalized closeness (Agneessens et al.,2017) (alpha&gt;0)</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span><span class="dv">2</span>) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#decay centrality (Jackson, 2010) (alpha in [0,1])</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span><span class="fl">0.7</span>) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span><span class="fl">0.7</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#integration centrality (Valente &amp; Foreman, 1998)</span>
-dist_integration &lt;-<span class="st"> </span>function(x){
-  x &lt;-<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span>(x -<span class="st"> </span><span class="dv">1</span>)/<span class="kw">max</span>(x)
+dist_integration &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  x &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">/</span><span class="kw">max</span>(x)
 }
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_integration) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_integration) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)</code></pre></div>
 <p>Another large group of indices is based on counting walks</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#subgraph centrality</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"self"</span>)
 <span class="co">#communicability centrality</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#odd subgraph centrality</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp_odd) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp_odd) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"self"</span>)
 <span class="co">#even subgraph centrality</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp_even) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp_even) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"self"</span>)
 <span class="co">#katz status</span>
-g %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_attenuated) %&gt;%<span class="st"> </span>
+g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_attenuated) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)</code></pre></div>
 <p><strong>Note</strong>: The analytic pipeline can of course be wrapped into a function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">degree_centrality &lt;-<span class="st"> </span>function(g){
-  DC &lt;-<span class="st"> </span>g %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"identity"</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">degree_centrality &lt;-<span class="st"> </span><span class="cf">function</span>(g){
+  DC &lt;-<span class="st"> </span>g <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"identity"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
   <span class="kw">return</span>(DC)
 }</code></pre></div>

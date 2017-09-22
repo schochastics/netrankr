@@ -120,12 +120,12 @@
 <div id="theoretical-background" class="section level2">
 <h2 class="hasAnchor">
 <a href="#theoretical-background" class="anchor"></a>Theoretical Background</h2>
-<p>In an undirected graph <span class="math inline">\(G=(V,E)\)</span>, the <em>neighborhood</em> of a node <span class="math inline">\(u \in V\)</span> is defined as <span class="math display">\[N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace\]</span> and its <em>closed neighborhood</em> as <span class="math inline">\(N[v]=N(v) \cup \lbrace v \rbrace\)</span>. If the neighborhood of a node <span class="math inline">\(u\)</span> is a subset of the closed neighborhood of a node <span class="math inline">\(v\)</span>, <span class="math inline">\(N(u)\subseteq N[v]\)</span>, we speak of <em>neighborhood inclusion</em>. This concept defines a dominance relation among nodes in a network. We say that <span class="math inline">\(u\)</span> is <em>dominated</em> by <span class="math inline">\(v\)</span> if <span class="math inline">\(N(u)\subseteq N[v]\)</span>. Neighborhood-inclusion induces a partial ranking on the vertices of a network. That is, (usually) some pairs of vertices are incomparable, such that neither <span class="math inline">\(N(u)\subseteq N[v]\)</span> nor <span class="math inline">\(N(v)\subseteq N[u]\)</span> holds. There is, however, a special graph class where all pairs are comparable (found in <a href="threshold_graph.html">this</a> vignette).</p>
+<p>In an undirected graph <span class="math inline">\(G=(V,E)\)</span>, the <em>neighborhood</em> of a node <span class="math inline">\(u \in V\)</span> is defined as <span class="math display">\[N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace\]</span> and its <em>closed neighborhood</em> as <span class="math inline">\(N[v]=N(v) \cup \lbrace v \rbrace\)</span>. If the neighborhood of a node <span class="math inline">\(u\)</span> is a subset of the closed neighborhood of a node <span class="math inline">\(v\)</span>, <span class="math inline">\(N(u)\subseteq N[v]\)</span>, we speak of <em>neighborhood inclusion</em>. This concept defines a dominance relation among nodes in a network. We say that <span class="math inline">\(u\)</span> is <em>dominated</em> by <span class="math inline">\(v\)</span> if <span class="math inline">\(N(u)\subseteq N[v]\)</span>. Neighborhood-inclusion induces a partial ranking on the vertices of a network. That is, (usually) some (if not most!) pairs of vertices are incomparable, such that neither <span class="math inline">\(N(u)\subseteq N[v]\)</span> nor <span class="math inline">\(N(v)\subseteq N[u]\)</span> holds. There is, however, a special graph class where all pairs are comparable (found in <a href="threshold_graph.html">this</a> vignette).</p>
 <p>The importance of neighborhood-inclusion is given by the following result:</p>
 <p><span class="math display">\[
 N(u)\subseteq N[v] \implies c(u)\leq c(v),
-\]</span> where <span class="math inline">\(c\)</span> is a centrality index.</p>
-<p>Very informally, if <span class="math inline">\(u\)</span> is dominated by <span class="math inline">\(v\)</span>, then u is <strong>always</strong> less central than <span class="math inline">\(v\)</span> no matter which centrality index is used. While this is the key result, this short description leaves out many theoretical considerations. These and more can be found in</p>
+\]</span> where <span class="math inline">\(c\)</span> is a centrality index defined on special path algebras. These include many of the well known measures like closeness (and variants), betweenness (and variants) as well as many walk-based indices (eigenvector and subgraph centrality, total communicability,…).</p>
+<p>Very informally, if <span class="math inline">\(u\)</span> is dominated by <span class="math inline">\(v\)</span>, then u is less central than <span class="math inline">\(v\)</span> no matter which centrality index is used, that fulfill the requirement. While this is the key result, this short description leaves out many theoretical considerations. These and more can be found in</p>
 <blockquote>
 <p>Schoch, David &amp; Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks. <em>European Journal of Appplied Mathematics</em>, <strong>27</strong>(6), 971–985. (<a href="https://doi.org/10.1017/S0956792516000401">link</a>)</p>
 </blockquote>
@@ -141,7 +141,7 @@ N(u)\subseteq N[v] \implies c(u)\leq c(v),
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/make_empty_graph">graph.empty</a></span>(<span class="dt">n=</span><span class="dv">11</span>,<span class="dt">directed =</span> <span class="ot">FALSE</span>)
 g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/add_edges">add_edges</a></span>(g,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">11</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">11</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">11</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">8</span>,
                    <span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">11</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">10</span>))
-<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)$name &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">11</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">11</span>
 
 <span class="kw">plot</span>(g,
      <span class="dt">vertex.color=</span><span class="st">"black"</span>,<span class="dt">vertex.label.color=</span><span class="st">"white"</span>, <span class="dt">vertex.size=</span><span class="dv">16</span>,<span class="dt">vertex.label.cex=</span><span class="fl">0.75</span>,
@@ -155,13 +155,13 @@ Nu &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 Nv &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/ego">neighborhood</a></span>(g,<span class="dt">order=</span><span class="dv">1</span>,<span class="dt">nodes=</span>v,<span class="dt">mindist =</span> <span class="dv">0</span>)[[<span class="dv">1</span>]] <span class="co">#N[v] </span>
 
 Nu</code></pre></div>
-<pre><code>## + 2/11 vertices, named, from 0d132f4:
+<pre><code>## + 2/11 vertices, named, from 67734ca:
 ## [1] 5  11</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Nv</code></pre></div>
-<pre><code>## + 4/11 vertices, named, from 0d132f4:
+<pre><code>## + 4/11 vertices, named, from 67734ca:
 ## [1] 5  3  9  11</code></pre>
 <p>Although it is obvious that <code>Nu</code> is a subset of <code>Nv</code>, we can verify it with <code>R</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(Nu%in%Nv)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(Nu<span class="op">%in%</span>Nv)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Checking all pairs of nodes can efficiently be done with the <code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> function from the <code>netrankr</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">P &lt;-<span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>(g)
@@ -191,11 +191,11 @@ P</code></pre></div>
 <a href="#centrality-and-neighborhood-inclusion" class="anchor"></a>Centrality and Neighborhood-inclusion</h3>
 <p>We start by calculating some standard measures of centrality found in the <code>ìgraph</code> package for our example network. Note that the <code>netrankr</code> package also implements a great variety of indices, but they need further specifications described in <a href="centrality_indices.html">this</a> vignette.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cent.df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">vertex=</span><span class="dv">1</span>:<span class="dv">11</span>,
+  <span class="dt">vertex=</span><span class="dv">1</span><span class="op">:</span><span class="dv">11</span>,
   <span class="dt">degree=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(g),
   <span class="dt">betweenness=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/betweenness">betweenness</a></span>(g),
   <span class="dt">closeness=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness</a></span>(g),
-  <span class="dt">eigenvector=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)$vector,
+  <span class="dt">eigenvector=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)<span class="op">$</span>vector,
   <span class="dt">subgraph=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/subgraph_centrality">subgraph_centrality</a></span>(g)
 )
 
@@ -215,12 +215,12 @@ cent.df.rounded</code></pre></div>
 ## 10     10      4      1.3333    0.0526      0.9986   8.2421
 ## 11     11      5     14.6667    0.0556      0.8450   7.3896</code></pre>
 <p>Notice how for each centrality index, different vertices are considered to be the most central node. The most central from degree to subgraph centrality are <span class="math inline">\(11\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(7\)</span> and <span class="math inline">\(10\)</span>. Note that only <em>undominated</em> vertices can achieve the highest score for any reasonable index. As soon as a vertex is dominated by at least one other, it will always be ranked below the dominator. We can check for undominated vertices simply by forming the row Sums in <code>P</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>(<span class="kw">rowSums</span>(P)==<span class="dv">0</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>(<span class="kw">rowSums</span>(P)<span class="op">==</span><span class="dv">0</span>)</code></pre></div>
 <pre><code>## [1]  4  5  6  7  8  9 10 11</code></pre>
 <p>8 nodes are undominated in the graph. It is thus entirely possible to find indices that would also rank <span class="math inline">\(4, 5\)</span> and <span class="math inline">\(9\)</span> on top.</p>
 <p>Besides the top ranked nodes, we can check if the entire partial ranking <code>P</code> is preserved in each centrality ranking. If there exists a pair <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> and index <span class="math inline">\(c()\)</span> such that <span class="math inline">\(N(u)\subseteq N[v]\)</span> but <span class="math inline">\(c(v)&gt;c(u)\)</span>, we do not consider <span class="math inline">\(c\)</span> to be a valid index.</p>
 <p>In our example, we considered vertex <span class="math inline">\(3\)</span> and <span class="math inline">\(5\)</span>, where <span class="math inline">\(3\)</span> was dominated by <span class="math inline">\(5\)</span>. It is easy to verify that all centrality scores of <span class="math inline">\(5\)</span> are in fact greater than the ones of <span class="math inline">\(3\)</span> by inspecting the respective rows in the table. To check all pairs, we use the function <code>is_preserved</code>. The function takes a partial ranking, as induced by neighborhood inclusion, and a score vector of a centrality index and checks if <code>P[i,j]==1 &amp; scores[i]&gt;scores[j]</code> is <code>FALSE</code> for all pairs <code>i</code> and <code>j</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(cent.df[,<span class="dv">2</span>:<span class="dv">6</span>],<span class="dv">2</span>,function(x) <span class="kw"><a href="../reference/is_preserved.html">is_preserved</a></span>(P,x))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(cent.df[,<span class="dv">2</span><span class="op">:</span><span class="dv">6</span>],<span class="dv">2</span>,<span class="cf">function</span>(x) <span class="kw"><a href="../reference/is_preserved.html">is_preserved</a></span>(P,x))</code></pre></div>
 <pre><code>##      degree betweenness   closeness eigenvector    subgraph 
 ##        TRUE        TRUE        TRUE        TRUE        TRUE</code></pre>
 <p>All considered indices preserve the neighborhood inclusion preorder on the example network.</p>

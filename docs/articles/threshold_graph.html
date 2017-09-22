@@ -163,7 +163,7 @@ cent.df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">degree=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(g),
   <span class="dt">betweenness=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/betweenness">betweenness</a></span>(g),
   <span class="dt">closeness=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness</a></span>(g),
-  <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)$vector,<span class="dv">8</span>),
+  <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)<span class="op">$</span>vector,<span class="dv">8</span>),
   <span class="dt">subgraph=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/subgraph_centrality">subgraph_centrality</a></span>(g)
 )</code></pre></div>
 <p>We expect, that all indices are perfectly rank correlated since all pairs of nodes are comparable by neighborhood-inclusion.</p>
@@ -189,22 +189,22 @@ cor.mat</code></pre></div>
 </ul>
 <p>Kendall’s <span class="math inline">\(\tau\)</span> considers left and right ties as correlation reducing. That is if two vertices are tied in one ranking, but not the other, the correlations is weakened. Left and right ties are, however, not forbidden according to the neighborhood inclusion property. The only forbidden case are discordant pairs. That is, <span class="math inline">\(N(u)\subseteq N[v]\)</span> can not result in <span class="math inline">\(c(u)&gt;c(v)\)</span> but it may result in <span class="math inline">\(c(u)=c(v)\)</span>. Also, one can argue that left and right ties distinguish between fine/coarse grained indices.</p>
 <p><code>netrankr</code> comes with a function called <code>compare_ranks</code> which calculates all occurrences of the above cases. Simply counting the cases instead of aggregating them will help circumvent the problem of possibly misinterpreting correlation measures.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">comp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df$degree,cent.df$betweenness)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">comp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df<span class="op">$</span>degree,cent.df<span class="op">$</span>betweenness)
 <span class="kw">unlist</span>(comp)</code></pre></div>
 <pre><code>## concordant discordant       ties       left      right 
 ##       1209          0        464          0       3277</code></pre>
 <p>Notice that there is a high number of right ties which influences the correlation if measured with Kendall’s <span class="math inline">\(\tau\)</span>. However, there do not exist any discordant pairs for any pair of indices.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dis.pairs &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">5</span>)
 dis.pairs[<span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="kw">apply</span>(cent.df,<span class="dv">2</span>,
-                       function(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df$degree,x)$discordant)
+                       <span class="cf">function</span>(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df<span class="op">$</span>degree,x)<span class="op">$</span>discordant)
 dis.pairs[<span class="dv">2</span>,] &lt;-<span class="st"> </span><span class="kw">apply</span>(cent.df,<span class="dv">2</span>,
-                       function(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df$betweenness,x)$discordant)
+                       <span class="cf">function</span>(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df<span class="op">$</span>betweenness,x)<span class="op">$</span>discordant)
 dis.pairs[<span class="dv">3</span>,] &lt;-<span class="st"> </span><span class="kw">apply</span>(cent.df,<span class="dv">2</span>,
-                       function(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df$closeness,x)$discordant)
+                       <span class="cf">function</span>(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df<span class="op">$</span>closeness,x)<span class="op">$</span>discordant)
 dis.pairs[<span class="dv">4</span>,] &lt;-<span class="st"> </span><span class="kw">apply</span>(cent.df,<span class="dv">2</span>,
-                       function(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df$eigenvector,x)$discordant)
+                       <span class="cf">function</span>(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df<span class="op">$</span>eigenvector,x)<span class="op">$</span>discordant)
 dis.pairs[<span class="dv">5</span>,] &lt;-<span class="st"> </span><span class="kw">apply</span>(cent.df,<span class="dv">2</span>,
-                       function(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df$subgraph,x)$discordant)
+                       <span class="cf">function</span>(x)<span class="kw"><a href="../reference/compare_ranks.html">compare_ranks</a></span>(cent.df<span class="op">$</span>subgraph,x)<span class="op">$</span>discordant)
 dis.pairs</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    0    0    0    0    0
