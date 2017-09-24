@@ -52,8 +52,7 @@ The core functions of the package are:
   on undirected and unweighted graphs. More details can be found in the dedicated vignette: 
   `vignette("neighborhood_inclusion",package="netrankr")`.  
   A generalizded version of neighborhood inclusion is implemented in `positional_dominance()`.
-  See `vignette("positional_dominance",package="netrankr")` for help. Any partial
-  ranking computed with the mentioned functions form the basis 
+  See `vignette("positional_dominance",package="netrankr")` for help.
   
 * Constructing graphs with a unique centrality ranking with `threshold_graph()`. 
   This class of graphs, known as threshold graphs, can be used to benchmark 
