@@ -25,5 +25,6 @@ SystemRequirements: C++11
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Suggests: knitr, rmarkdown, magrittr,
-    ggplot2
+    ggplot2,
+    testthat
 VignetteBuilder: knitr
