@@ -14,7 +14,7 @@ test_that("complete and star graph correct",{
 test_that("all pairs are comparable by ni",{
   library(igraph)
   tg <- threshold_graph(20,0.2)
-  cp <- comparable_pairs(neighborhood_inclusion(cp))
+  cp <- comparable_pairs(neighborhood_inclusion(tg))
   expect_equal(cp,1)
 })
 
