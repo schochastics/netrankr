@@ -48,4 +48,21 @@ test_that("positional dominance is correct",{
   
   expect_equal(D,A)
   expect_equal(Dmap,Amap)
+  
+  Data_mat <- matrix(c(10:1,1:10),10,2)
+  D <- positional_dominance(Data_mat,type = "two-mode")
+  expect_equal(sum(abs(D)),0)
+})
+
+test_that("dominance_graph is correct",{
+  library(igraph)
+  library(magrittr)
+  
+  g <- graph.empty(n=11,directed = FALSE)
+  g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
+                     6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+  P <- neighborhood_inclusion(g)
+  g_dom <- dominance_graph(P)
+  expect_equal(sum(P),ecount(g_dom))
+  
 })
