@@ -16,6 +16,12 @@ test_that("exact_rank_prob is correct",{
   P <- neighborhood_inclusion(tg)
   expect_warning(exact_rank_prob(P))
   
+  #### 
+  
+  A <- matrix(1,10,10)
+  diag(A) <- 0
+  expect_warning(exact_rank_prob(A))
+  
 })
 
 test_that("ideal lattice is correct",{

@@ -51,16 +51,3 @@ test_that("subgraph centrality correct",{
     aggregate_positions(type = "self") %>% round(4)
   expect_equal(sc,round(subgraph_centrality(g),4))
 })
-
-# test_that("communicability centrality correct",{
-#   library(igraph)
-#   library(magrittr)
-#   
-#   g <- graph.empty(n=11,directed = FALSE)
-#   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
-#                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-#   comc <- g %>% 
-#     indirect_relations("walks",FUN = walks_exp) %>% 
-#     aggregate_positions(type = "sum")
-#   expect_equal(comc,subgraph_centrality(g))
-# })

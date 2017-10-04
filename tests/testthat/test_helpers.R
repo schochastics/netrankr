@@ -25,6 +25,7 @@ test_that("spectral gap is correct",{
   
   expect_equal(spectral_gap(g,method = "frac"),1)
   expect_equal(spectral_gap(g,method = "abs"),3)
+  expect_error(spectral_gap(g,method = "hello"))
 })
 
 test_that("compare_ranks is correct",{
@@ -38,6 +39,8 @@ test_that("compare_ranks is correct",{
   expect_equal(res$right,0)
   expect_equal(res$left,0)
   expect_equal(res$concordant+res$ties,190)
+  
+  expect_error(compare_ranks(1:5,1:7))
 })
 
 test_that("transitive_reduction is correct",{
@@ -58,6 +61,7 @@ test_that("is_preserved is correct",{
   expect_equal(is_preserved(P,degree(g)),TRUE)
   expect_equal(is_preserved(P,closeness(g)),TRUE)
   expect_equal(is_preserved(P,betweenness(g)),TRUE)
+  expect_equal(is_preserved(P,rowSums(P)),FALSE)
 })
 
 
