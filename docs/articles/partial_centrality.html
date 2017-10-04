@@ -133,10 +133,10 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/make_empty_graph">graph.empty</a></span>(<span class="dt">n=</span><span class="dv">11</span>,<span class="dt">directed =</span> <span class="ot">FALSE</span>)
 g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/add_edges">add_edges</a></span>(g,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">11</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">11</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">11</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">8</span>,
                    <span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">11</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">10</span>))
-<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)$name &lt;-<span class="st"> </span>LETTERS[<span class="dv">1</span>:<span class="dv">11</span>]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name &lt;-<span class="st"> </span>LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">11</span>]
 
 <span class="co">#neighborhood inclusion </span>
-P &lt;-<span class="st"> </span>g %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>()
+P &lt;-<span class="st"> </span>g <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>()
 
 <span class="co">#without %&gt;% operator:</span>
 <span class="co"># P &lt;- neighborhood_inclusion(g)</span>
@@ -160,16 +160,16 @@ The intervals can be visualized with the function <code><a href="../reference/pl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P)</code></pre></div>
 <p><img src="partial_centrality_files/figure-html/vis_intervals-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>Nodes are ordered according to the mid point for better readability. If the nodes of the input network are named, the parameter <code>names</code> can be set accordingly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)$name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name)</code></pre></div>
 <p><img src="partial_centrality_files/figure-html/vis_intervals_names-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>The function can take a data frame of centrality scores as an additional parameter <code>cent.df</code>. The ranks of each node for each index are then plotted within each interval. Again, the higher the numerical rank the higher ranked the node is according to the index.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cent_scores &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
    <span class="dt">degree=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(g),
    <span class="dt">betweenness=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/betweenness">betweenness</a></span>(g),<span class="dv">4</span>),
    <span class="dt">closeness=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness</a></span>(g),<span class="dv">4</span>),
-   <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)$vector,<span class="dv">4</span>))
+   <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)<span class="op">$</span>vector,<span class="dv">4</span>))
 
-<span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)$name,<span class="dt">cent.df =</span> cent_scores)</code></pre></div>
+<span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name,<span class="dt">cent.df =</span> cent_scores)</code></pre></div>
 <p><img src="partial_centrality_files/figure-html/vis_intervals_cent-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>A small jitter effect is added to the points to reduce over-plotting.<br><br>
 Observe the inconsistency of betweenness for node <span class="math inline">\(C\)</span>. Betweenness centrality is, so far, the only index that does not <em>strictly</em> preserve neighborhood-inclusion. That is, while <span class="math display">\[
@@ -180,7 +180,7 @@ The intervals reduce to single points for <a href="threshold_graph.html">thresho
 tg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/threshold_graph.html">threshold_graph</a></span>(<span class="dv">20</span>,<span class="fl">0.2</span>)
 
 <span class="co">#neighborhood inclusion </span>
-P &lt;-<span class="st"> </span>tg %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>()
+P &lt;-<span class="st"> </span>tg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>()
 
 <span class="co">#without %&gt;% operator:</span>
 <span class="co"># P &lt;- neighborhood_inclusion(tg)</span>
@@ -191,7 +191,7 @@ P &lt;-<span class="st"> </span>tg %&gt;%<span class="st"> </span><span class="k
    <span class="dt">degree=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(tg),
    <span class="dt">betweenness=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/betweenness">betweenness</a></span>(tg),<span class="dv">4</span>),
    <span class="dt">closeness=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness</a></span>(tg),<span class="dv">4</span>),
-   <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(tg)$vector,<span class="dv">4</span>))
+   <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(tg)<span class="op">$</span>vector,<span class="dv">4</span>))
 
 
 <span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">cent.df=</span>cent_scores)</code></pre></div>

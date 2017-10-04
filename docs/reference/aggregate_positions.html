@@ -173,12 +173,8 @@ Other self explanatory options are type='mean', type='min', type='max' and type=
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>require</span>(<span class='no'>igraph</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: igraph</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    decompose, spectrum</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    union</span></div><div class='input'><span class='fu'>require</span>(<span class='no'>magrittr</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: magrittr</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>require</span>(<span class='no'>igraph</span>)
+<span class='fu'>require</span>(<span class='no'>magrittr</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: magrittr</span></div><div class='input'>
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/make_empty_graph'>graph.empty</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>11</span>,<span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/add_edges'>add_edges</a></span>(<span class='no'>g</span>,<span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>11</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>11</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>5</span>,<span class='fl'>9</span>,<span class='fl'>5</span>,<span class='fl'>11</span>,<span class='fl'>6</span>,<span class='fl'>7</span>,<span class='fl'>6</span>,<span class='fl'>8</span>,
                    <span class='fl'>6</span>,<span class='fl'>10</span>,<span class='fl'>6</span>,<span class='fl'>11</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>7</span>,<span class='fl'>10</span>,<span class='fl'>7</span>,<span class='fl'>11</span>,<span class='fl'>8</span>,<span class='fl'>9</span>,<span class='fl'>8</span>,<span class='fl'>10</span>,<span class='fl'>9</span>,<span class='fl'>10</span>))

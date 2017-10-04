@@ -142,10 +142,10 @@ It most be noted though, that deriving the set <span class="math inline">\(\math
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/make_empty_graph">graph.empty</a></span>(<span class="dt">n=</span><span class="dv">11</span>,<span class="dt">directed =</span> <span class="ot">FALSE</span>)
 g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/add_edges">add_edges</a></span>(g,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">11</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">11</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">11</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">8</span>,
                    <span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">11</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">10</span>))
-<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)$name &lt;-<span class="st"> </span>LETTERS[<span class="dv">1</span>:<span class="dv">11</span>]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name &lt;-<span class="st"> </span>LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">11</span>]
 
 <span class="co">#neighborhood inclusion </span>
-P &lt;-<span class="st"> </span>g %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>()
+P &lt;-<span class="st"> </span>g <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>()
 
 <span class="co">#without %&gt;% operator:</span>
 <span class="co"># P &lt;- neighborhood_inclusion(g)</span>
@@ -154,7 +154,7 @@ cent_scores &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
    <span class="dt">degree=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(g),
    <span class="dt">betweenness=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/betweenness">betweenness</a></span>(g),<span class="dv">4</span>),
    <span class="dt">closeness=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness</a></span>(g),<span class="dv">4</span>),
-   <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)$vector,<span class="dv">4</span>),
+   <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)<span class="op">$</span>vector,<span class="dv">4</span>),
    <span class="dt">subgraph=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/subgraph_centrality">subgraph_centrality</a></span>(g),<span class="dv">4</span>))
 
 <span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">cent.df =</span> cent_scores)</code></pre></div>
@@ -178,7 +178,7 @@ In the following subsections the output of the function <code>exact_rank_probabi
 <p>Instead of insisting on fixed ranks of nodes as given by indices, we can use <em>rank probabilities</em> to assess the likelihood of certain rank. Formally, rank probabilities are simply defined as <span class="math display">\[
 P(rk(u)=k)=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)=k\} \rvert}{\lvert \mathcal{R}(\leq) \rvert}.
 \]</span> Rank probabilities are given by the return value <code>rank.prob</code> of the <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rp &lt;-<span class="st"> </span><span class="kw">round</span>(res$rank.prob,<span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rp &lt;-<span class="st"> </span><span class="kw">round</span>(res<span class="op">$</span>rank.prob,<span class="dv">2</span>)
 rp</code></pre></div>
 <pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
 ##  [1,] 0.55 0.27 0.12 0.05 0.01 0.00 0.00 0.00 0.00  0.00  0.00
@@ -204,7 +204,7 @@ The most interesting probabilities are certainly <span class="math inline">\(P(r
 <p>In some cases, we might not necessarily be interested in a complete ranking of nodes, but only in the relative position of a subset of nodes. This idea leads to <em>relative rank probabilities</em>, that is formally defined as <span class="math display">\[
 P(rk(u)\leq rk(v))=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)\leq rk(v)\} \rvert}{\lvert \mathcal{R}(\leq) \rvert}.
 \]</span> Relative rank probabilities are given by the return value <code>relative.rank</code> of the <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rrp &lt;-<span class="st"> </span><span class="kw">round</span>(res$relative.rank,<span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rrp &lt;-<span class="st"> </span><span class="kw">round</span>(res<span class="op">$</span>relative.rank,<span class="dv">2</span>)
 rrp</code></pre></div>
 <pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
 ##  [1,] 0.00 0.67 1.00 0.95 1.00 1.00 1.00 0.95 0.86  0.86  1.00
@@ -227,7 +227,7 @@ The more a value <code>rrp[u,v]</code> deviates from <span class="math inline">\
 <p>The <em>expected rank</em> of a node in centrality rankings is defined as the expected value of the rank probability distribution. That is, <span class="math display">\[
 \rho(u)=\sum_{k=1}^n k\cdot P(rk(u)=k).
 \]</span> Expected ranks are given by the return value <code>expected.rank</code> of the <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_rk &lt;-<span class="st"> </span><span class="kw">round</span>(res$expected.rank,<span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_rk &lt;-<span class="st"> </span><span class="kw">round</span>(res<span class="op">$</span>expected.rank,<span class="dv">2</span>)
 ex_rk</code></pre></div>
 <pre><code>##  [1] 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14</code></pre>
 <p>As a reminder, the higher the numeric rank, the more central a node is. In this case, node <span class="math inline">\(11\)</span> has the highest expected rank in any centrality ranking.</p>
