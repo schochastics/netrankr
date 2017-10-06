@@ -27,7 +27,7 @@ Only change if you know what you are doing.}
 \item{rank.prob}{Matrix containing rank probabilities: \code{rank.prob[u,k]} is the probability that u has rank k.}
 \item{relative.rank}{Matrix containing relative rank probabilities: \code{relative.rank[u,v]} is the probability that u is ranked lower than v.}
 \item{expected.rank}{Expected ranks of nodes in any centrality ranking.}
-\item{rank.spread}{Variance of the ranking probabilities.}
+\item{rank.spread}{Standard deviation of the ranking probabilities.}
 \item{topo.order}{Random ranking used to build the lattice of ideals (if \code{only.results = FALSE}).}
 \item{tree}{Adjacency list (incoming) of the tree of ideals (if \code{only.results = FALSE}).}
 \item{lattice}{Adjacency list (incoming) of the lattice of ideals (if \code{only.results = FALSE}).}
