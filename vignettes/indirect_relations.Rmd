@@ -68,7 +68,7 @@ A <- indirect_relations(g,type = "identity")
 #geodesic distances
 D <- indirect_relations(g,type = "geodesic")
 #dyadic dependencies (as used in betweenness centrality)
-B <- indirect_relations(g,type = "dependencies")
+B <- indirect_relations(g,type = "depend_sp")
 #resistance distance (as used in information centrality)
 R <- indirect_relations(g,type = "resistance")
 #Logarithmic forest distance (parametrized relation)

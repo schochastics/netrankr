@@ -94,7 +94,7 @@ g %>%
   aggregate_positions(type="invsum")
 #Betweenness Centrality
 g %>% 
-  indirect_relations(type="dependencies") %>% 
+  indirect_relations(type="depend_sp") %>% 
   aggregate_positions(type="sum")
 #Eigenvector Centrality
 g %>% 
