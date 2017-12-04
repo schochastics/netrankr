@@ -36,7 +36,7 @@ The \code{type} parameter has the following options.
 
 \emph{'geodesic'} returns geodesic distances between all pairs of nodes.
 
-\emph{'dependencies'} returns dyadic dependencies
+\emph{'depend_sp'} returns dyadic dependencies
 \deqn{\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}}
 where \eqn{\sigma(s,t|u)} is the number of shortest paths from s to t that include u and
 \eqn{\sigma(s,t)} is the total number of shortest (s,t)-paths. This relation is used
@@ -69,7 +69,7 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 D <- indirect_relations(g,type = "geodesic") 
 
 #dyadic dependencies
-D <- indirect_relations(g,type = "dependencies")
+D <- indirect_relations(g,type = "depend_sp")
 
 #walks attenuated exponentially by there length
 W <- indirect_relations(g,type = "walks",FUN = walks_exp)

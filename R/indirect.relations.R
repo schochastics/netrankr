@@ -16,7 +16,7 @@
 #' 
 #' \emph{'geodesic'} returns geodesic distances between all pairs of nodes.  
 #' 
-#' \emph{'dependencies'} returns dyadic dependencies 
+#' \emph{'depend_sp'} returns dyadic dependencies 
 #' \deqn{\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}}
 #' where \eqn{\sigma(s,t|u)} is the number of shortest paths from s to t that include u and
 #' \eqn{\sigma(s,t)} is the total number of shortest (s,t)-paths. This relation is used
@@ -52,7 +52,7 @@
 #' D <- indirect_relations(g,type = "geodesic") 
 #' 
 #' #dyadic dependencies
-#' D <- indirect_relations(g,type = "dependencies")
+#' D <- indirect_relations(g,type = "depend_sp")
 #' 
 #' #walks attenuated exponentially by there length
 #' W <- indirect_relations(g,type = "walks",FUN = walks_exp)
@@ -67,6 +67,10 @@
 #' @export
 indirect_relations <- function(g, type = "geodesic", 
                                log_param = NULL,FUN = identity, ...) {
+    if(type=="dependencies"){
+      warning('"dependencies" is depricated. Use "depend_sp" instead ')
+      type <- "depend_sp"
+    }
     if (type == "geodesic") {
         rel <- igraph::distances(g, mode = "all")
         rel <- FUN(rel, ...)
@@ -74,7 +78,7 @@ indirect_relations <- function(g, type = "geodesic",
         rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE)
         rel <- FUN(rel, ...)
         diag(rel) <- 0
-    } else if (type == "dependencies") {
+    } else if (type == "depend_sp") {
         adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
         rel <- dependency(adj)
     } else if (type == "walks") {
@@ -107,9 +111,10 @@ indirect_relations <- function(g, type = "geodesic",
       }
       rel <- 0.5 * (diag(H)%*%t(rep(1,n)) + rep(1,n)%*%t(diag(H))) - H
       rel <- FUN(rel, ...)
-    }
+    } 
   else stop(paste(type, "is not defined as indirect relation"))
     return(rel)
 }
 
 #-------------------------------------------------------------------------------
+
