@@ -42,7 +42,7 @@ g \%>\% indirect_relations(type='geodesic') \%>\%
   aggregate_positions(type='invsum')
   
 #betweenness centrality
-g \%>\% indirect_relations(type='dependencies') \%>\% 
+g \%>\% indirect_relations(type='depend_sp') \%>\% 
   aggregate_positions(type='sum')
   
 #eigenvector centrality
