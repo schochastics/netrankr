@@ -8,7 +8,7 @@ test_that("betweenness correct",{
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
   bc <- g %>% 
-    indirect_relations("dependencies") %>% 
+    indirect_relations("depend_sp") %>% 
     aggregate_positions()
   expect_equal(round(bc/2,4),round(betweenness(g),4))
 })
@@ -21,7 +21,7 @@ test_that("closeness correct",{
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
   cc <- g %>% 
-    indirect_relations("geodesic") %>% 
+    indirect_relations("dist_sp") %>% 
     aggregate_positions(type = "invsum")
   expect_equal(round(cc,4),round(closeness(g),4))
 })

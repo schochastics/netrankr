@@ -22,7 +22,7 @@ describes the dyadic domain of actors $\mathcal{N}$.
 Observed presence or absence of ties (the value range is binary) is usually not 
 the relation of interest for network analytic tasks. Instead, mostly implicitly, 
 relations are *transformed* into a new set of *indirect* relations on the basis 
-of the *observed* relations. As an example, consider (geodesic) distances in the 
+of the *observed* relations. As an example, consider (shortes path) distances in the 
 underlying graph. While they are fairly easy to derive from an observed network 
 of contacts, it is impossible for actors in a network to answer the question 
 "How far away are you from others you are not connected with?". We denote generic 
@@ -65,14 +65,14 @@ V(g)$name <- 1:11
 
 #adjacency
 A <- indirect_relations(g,type = "identity")
-#geodesic distances
-D <- indirect_relations(g,type = "geodesic")
+#shortes path distances
+D <- indirect_relations(g,type="dist_sp")
 #dyadic dependencies (as used in betweenness centrality)
 B <- indirect_relations(g,type = "depend_sp")
 #resistance distance (as used in information centrality)
-R <- indirect_relations(g,type = "resistance")
+R <- indirect_relations(g,type="dist_resist")
 #Logarithmic forest distance (parametrized relation)
-LF <- indirect_relations(g, type = "log_forest",log_param = 1) 
+LF <- indirect_relations(g, type = "dist_lf",log_param = 1) 
 ```
 
 The function takes an additional parameter `FUN` which passes an additional function
@@ -90,12 +90,12 @@ Additional parameters can also be passed to calculate parameterized versions of
 relations.
 ```{r indirparam}
 #Calculate dist(s,t)^-alpha
-D <- indirect_relations(g,type = "geodesic",FUN=dist_dpow,alpha = 2)
+D <- indirect_relations(g,type="dist_sp",FUN=dist_dpow,alpha = 2)
 ```
 
 To view all predefined transformation functions type `?transform_relations`. The 
 predefined functions follow the naming scheme `<relation>_<transformation>`. 
-The functions `dist_` are thus only meaningful for `type="geodesic"` or `type="resistance"`
+The functions `dist_` are thus only meaningful for `type="dist_sp"` or `type="dist_resist"`
 and `walks_` for `type="walks"`. The predefined functions are not exhaustive and
 just constitute the most common transformations. It is, however, straightforward to
 pass your own transformation function. 
@@ -104,7 +104,7 @@ pass your own transformation function.
 dist_integration <- function(x){
   x <- 1 - (x - 1)/max(x)
 }
-D <- indirect_relations(g,type="geodesic",FUN=dist_integration)
+D <- indirect_relations(g,type="dist_sp",FUN=dist_integration)
 ```
 
 The function `dist_integration()` computes

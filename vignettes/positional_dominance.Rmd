@@ -98,10 +98,10 @@ D <- g %>%
 comparable_pairs(D)
 ```
 
-For cost variables like geodesic distances, the `benefit` parameter is set to `FALSE`.
+For cost variables like shortes path distances, the `benefit` parameter is set to `FALSE`.
 ```{r dist}
 D1 <- g %>% 
-  indirect_relations(type="geodesic") %>% 
+  indirect_relations(type="dist_sp") %>% 
   positional_dominance(map=FALSE,benefit=FALSE)
 ```
 
@@ -110,11 +110,11 @@ at least as many comparable pairs under the total homogeneity assumption as unde
 total heterogeneity.
 ```{r homo_and_hetero_dist}
 D1 <- g %>% 
-  indirect_relations(type="geodesic") %>% 
+  indirect_relations(type="dist_sp") %>% 
   positional_dominance(map=FALSE,benefit=FALSE)
 
 D2 <- g %>% 
-  indirect_relations(type="geodesic") %>% 
+  indirect_relations(type="dist_sp") %>% 
   positional_dominance(map=TRUE,benefit=FALSE)
 
 c("heterogeneity"=comparable_pairs(D1),

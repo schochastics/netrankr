@@ -24,7 +24,7 @@
 #'  aggregate_positions(type='sum')
 #'
 #' #closeness centrality
-#' g %>% indirect_relations(type='geodesic') %>% 
+#' g %>% indirect_relations(type='dist_sp') %>% 
 #'   aggregate_positions(type='invsum')
 #'   
 #' #betweenness centrality

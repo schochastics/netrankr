@@ -203,7 +203,7 @@ like to use centrality to explain certain node attributes. In our case, we might
 be interested in the question: "can an index explain the wealth of families?", or if
 we already have a more concrete idea "can proximity to other families explain the wealth attribute?" 
 
-"Proximity" can be translated to the graph-theoretic concept of geodesic distances, 
+"Proximity" can be translated to the graph-theoretic concept of shortes path distances, 
 such that closeness centrality would be an adequate candidate as an index. We here
 use the pipeline approach of the `netrankr` package instead of the `closeness()`
 function of `igraph`. The reasons will become evident in the next section.
@@ -212,24 +212,24 @@ function of `igraph`. The reasons will become evident in the next section.
 
 #Closeness
 c_C <- florentine_m %>% 
-  indirect_relations(type="geodesic") %>% 
+  indirect_relations(type="dist_sp") %>% 
   aggregate_positions(type="invsum")
 
 cor(c_C,V(florentine_m)$wealth,method="kendall")
 ```
 
 The correlation between closeness and wealth (`r round(cor(c_C,V(florentine_m)$wealth,method="kendall"),4)`) is far to low to constitute that "proximity" is related to wealth. However, there 
-exist various other indices, that are based on the geodesic distances in a graph.
+exist various other indices, that are based on the shortes path distances in a graph.
 Refer to the literature for more details on these indices.
 
 ```{r harmclos_wealth}
 #harmonic closeness
 c_HC <- florentine_m %>% 
-  indirect_relations(type="geodesic",FUN=dist_inv) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_inv) %>% 
   aggregate_positions(type="sum")
 #residual closeness (Dangalchev,2006)
 c_RC <- florentine_m %>% 
-  indirect_relations(type="geodesic",FUN=dist_2pow) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_2pow) %>% 
   aggregate_positions(type="sum")
 
 #integration centrality (Valente & Foreman, 1998)
@@ -237,7 +237,7 @@ dist_integration <- function(x){
   x <- 1 - (x - 1)/max(x)
 }
 c_IN <- florentine_m %>% 
-  indirect_relations(type="geodesic",FUN=dist_integration) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_integration) %>% 
   aggregate_positions(type="sum")
 
 c(cor(c_HC,V(florentine_m)$wealth,method="kendall"),
@@ -260,7 +260,7 @@ alpha <- c(seq(0.01,0.99,0.01),seq(1,10,0.1))
 scores <- 
 sapply(alpha,function(x)
     florentine_m %>% 
-      indirect_relations(type="geodesic",FUN=dist_dpow,alpha=x) %>% 
+      indirect_relations(type="dist_sp",FUN=dist_dpow,alpha=x) %>% 
       aggregate_positions(type="sum")
 )
 cors_gc <- apply(scores,2,
@@ -273,7 +273,7 @@ alpha <- seq(0.01,0.99,0.01)
 scores <- 
 sapply(alpha,function(x)
   florentine_m %>% 
-    indirect_relations(type="geodesic",FUN=dist_powd,alpha=x) %>% 
+    indirect_relations(type="dist_sp",FUN=dist_powd,alpha=x) %>% 
     aggregate_positions(type="sum")
 )
 cors_dc <- apply(scores,2,
@@ -288,7 +288,7 @@ $\alpha$= `r res_gc[2]`
 The highest correlation for decay centrality is `r res_dc[1]` achieved for 
 $\alpha$=`r res_dc[2]`
 
-We could know accept that there is no index based on geodesic distances that could 
+We could know accept that there is no index based on shortes path distances that could 
 explain wealth. Or, we could start to craft new indices that might yield a better
 correlation with wealth. However, we then enter the dilemma that was mentioned at the end of
 the last section. If we find one, we can not be certain that there might not even be a 
@@ -300,12 +300,12 @@ ________________________________________________________________________________
 ## Centrality as explanatory variable (Dominance approach)
 
 Since we are postulating a connection between proximity and wealth, we compute 
-the pairwise geodesic distances as our *indirect relation* of interest and calculate
+the pairwise shortes path distances as our *indirect relation* of interest and calculate
 the positional dominance relations.
 
 ```{r pos_dom_hetero}
 D <- florentine_m %>% 
-  indirect_relations(type="geodesic") %>% 
+  indirect_relations(type="dist_sp") %>% 
   positional_dominance(benefit=F)
 
 comparable_pairs(D)
@@ -324,7 +324,7 @@ centrality index.
 
 ```{r pos_dom_homo}
 D <- florentine_m %>% 
-  indirect_relations(type="geodesic") %>% 
+  indirect_relations(type="dist_sp") %>% 
   positional_dominance(benefit=F,map=T)
 
 comparable_pairs(D)
@@ -367,7 +367,7 @@ plot(d,layout=cbind(x,y),
 ```
 
 In total, we find $41$ such pairs ($39$% of all pairs). This implies that we are
-(potentially) quite far from being able to explain wealth perfectly with geodesic 
+(potentially) quite far from being able to explain wealth perfectly with shortes path 
 distances. In the following we will explore *how* far away. 
 
 We start by calculating the rank intervals to illustrate the difference to 

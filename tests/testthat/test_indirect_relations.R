@@ -13,10 +13,10 @@ test_that("distance based relations are correct",{
   D_igraph_dpow <- D_igraph^-0.5
   diag(D_igraph_dpow) <- 0
   
-  D <- indirect_relations(g, type = "geodesic")
-  D_inv <- indirect_relations(g, type = "geodesic",FUN = dist_inv)
-  D_2pow <- indirect_relations(g, type = "geodesic",FUN = dist_2pow)
-  D_dpow <- indirect_relations(g, type = "geodesic",FUN = dist_dpow,alpha = 0.5)
+  D <- indirect_relations(g, type="dist_sp")
+  D_inv <- indirect_relations(g, type="dist_sp",FUN = dist_inv)
+  D_2pow <- indirect_relations(g, type="dist_sp",FUN = dist_2pow)
+  D_dpow <- indirect_relations(g, type="dist_sp",FUN = dist_dpow,alpha = 0.5)
   
   expect_equal(D_igraph,D)
   expect_equal(D_igraph_inv,D_inv)

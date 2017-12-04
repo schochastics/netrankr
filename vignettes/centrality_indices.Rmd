@@ -26,7 +26,7 @@ describes the dyadic domain of actors $\mathcal{N}$.
 Observed presence or absence of ties (the value range is binary) is usually not 
 the relation of interest for network analytic tasks. Instead, mostly implicitly, 
 relations are *transformed* into a new set of *indirect* relations on the basis 
-of the *observed* relations. As an example, consider (geodesic) distances in the 
+of the *observed* relations. As an example, consider (shortes path) distances in the 
 underlying graph. While they are fairly easy to derive from an observed network 
 of contacts, it is impossible for actors in a network to answer the question 
 "How far away are you from others you are not connected with?". We denote generic 
@@ -90,7 +90,7 @@ g %>%
   aggregate_positions(type="sum")
 #Closeness
 g %>% 
-  indirect_relations(type="geodesic") %>% 
+  indirect_relations(type="dist_sp") %>% 
   aggregate_positions(type="invsum")
 #Betweenness Centrality
 g %>% 
@@ -114,7 +114,7 @@ the following code can be used:
 ```{r closeness_variant, eval=F}
 #harmonic closeness
 g %>% 
-  indirect_relations(type="geodesic",FUN=dist_inv) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_inv) %>% 
   aggregate_positions(type="sum")
 ```
 
@@ -123,17 +123,17 @@ The distance based indices constitute one of the biggest groups of indices in th
 ```{r distance_indices,eval=F}
 #residual closeness (Dangalchev,2006)
 g %>% 
-  indirect_relations(type="geodesic",FUN=dist_2pow) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_2pow) %>% 
   aggregate_positions(type="sum")
 
 #generalized closeness (Agneessens et al.,2017) (alpha>0)
 g %>% 
-  indirect_relations(type="geodesic",FUN=dist_dpow,alpha=2) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_dpow,alpha=2) %>% 
   aggregate_positions(type="sum")
 
 #decay centrality (Jackson, 2010) (alpha in [0,1])
 g %>% 
-  indirect_relations(type="geodesic",FUN=dist_powd,alpha=0.7) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_powd,alpha=0.7) %>% 
   aggregate_positions(type="sum")
 
 #integration centrality (Valente & Foreman, 1998)
@@ -141,7 +141,7 @@ dist_integration <- function(x){
   x <- 1 - (x - 1)/max(x)
 }
 g %>% 
-  indirect_relations(type="geodesic",FUN=dist_integration) %>% 
+  indirect_relations(type="dist_sp",FUN=dist_integration) %>% 
   aggregate_positions(type="sum")
 
 ```

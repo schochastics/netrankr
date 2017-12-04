@@ -36,7 +36,7 @@
 #' comparable_pairs(P)
 #' 
 #' # positional dominance under total heterogeneity
-#' dist <- indirect_relations(g,type = "geodesic")
+#' dist <- indirect_relations(g,type = "dist_sp")
 #' D <- positional_dominance(dist,map = FALSE,benefit = FALSE) 
 #' comparable_pairs(D) 
 #' 
