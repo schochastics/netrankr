@@ -1,3 +1,10 @@
+## netrankr 0.2.0.9000
+
+* API breaking: changed "dependencies" to "depend_sp" in `indirect_relations()`
+* API breaking: changed "geodesic" to "dist_sp" in `indirect_relations()`
+* added indirect relations: log_forest,depend_netflow, depend_exp
+* changed `require` to `library` in examples
+
 ## netrankr 0.1.1
 
 * fixed a bug in `transitive_reduction()`
