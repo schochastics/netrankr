@@ -68,7 +68,7 @@
 indirect_relations <- function(g, type = "geodesic", 
                                log_param = NULL,FUN = identity, ...) {
     if(type=="dependencies"){
-      warning('"dependencies" is deprecated. Use "depend_sp" instead ')
+      warning('"dependencies" is deprecated. Use "depend_sp" instead.\n')
       type <- "depend_sp"
     }
     if (type == "geodesic") {
