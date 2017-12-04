@@ -13,8 +13,8 @@
 #' @author David Schoch
 #' @seealso [indirect_relations], [transform_relations]
 #' @examples
-#' require(igraph)
-#' require(magrittr)
+#' library(igraph)
+#' library(magrittr)
 #' 
 #' g <- graph.empty(n=11,directed = FALSE)
 #' g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,

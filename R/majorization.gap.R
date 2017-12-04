@@ -22,7 +22,7 @@
 #' *Linear Algebra and its Applications*, **199**, 179-211.
 #' 
 #' @examples
-#' require(igraph)
+#' library(igraph)
 #' g <- graph.star(5,'undirected')
 #' majorization_gap(g) #0 since star graphs are threshold graphs
 #'

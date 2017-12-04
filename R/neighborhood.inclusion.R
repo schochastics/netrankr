@@ -23,7 +23,7 @@
 #' 
 #' @seealso [positional_dominance], [exact_rank_prob]
 #' @examples
-#' require(igraph)
+#' library(igraph)
 #' #the neighborhood inclusion preorder of a star graph is complete
 #' g <- graph.star(5,'undirected')
 #' P <- neighborhood_inclusion(g)

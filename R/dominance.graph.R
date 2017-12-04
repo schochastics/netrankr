@@ -7,7 +7,7 @@
 #' @return Directed graph as an igraph object.
 #' @author David Schoch
 #' @examples
-#' require(igraph)
+#' library(igraph)
 #' g <- threshold_graph(20,0.1)
 #' P <- neighborhood_inclusion(g)
 #' d <- dominance_graph(P)

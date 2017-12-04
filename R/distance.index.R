@@ -15,7 +15,7 @@
 #' \item{pow2}{'distance to the power of 2'. \deqn{c(u)=\sum_{t \in V} 2^{-dist(i,t)}}}
 #' }
 #' @examples
-#' require(igraph)
+#' library(igraph)
 #' g <- sample_gnp(100,0.1)
 #' d_ros <- distance_index(g,type='ros')
 #' d_sor <- distance_index(g,type='sor')

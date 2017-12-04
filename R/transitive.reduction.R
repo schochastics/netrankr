@@ -6,7 +6,7 @@
 #' @return transitive reduction of `P`
 #' @author David Schoch
 #' @examples
-#' require(igraph)
+#' library(igraph)
 #' 
 #' g <- threshold_graph(100,0.1)
 #' P <- neighborhood_inclusion(g)

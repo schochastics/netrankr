@@ -7,7 +7,7 @@
 #' @return Fraction of comparable pairs in `P`.
 #' @author David Schoch
 #' @examples
-#' require(igraph)
+#' library(igraph)
 #' g <- sample_gnp(100,0.1)
 #' P <- neighborhood_inclusion(g)
 #' comparable_pairs(P)

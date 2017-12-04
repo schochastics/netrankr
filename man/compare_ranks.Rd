@@ -28,7 +28,7 @@ than using correlation indices as given in the \code{cor} function. Especially
 left and right ties can significantly alter correlations.
 }
 \examples{
-require(igraph)
+library(igraph)
 tg <- threshold_graph(100,0.2)
 compare_ranks(degree(tg),closeness(tg)) #only concordant pairs
 compare_ranks(degree(tg),betweenness(tg)) #no discordant pairs

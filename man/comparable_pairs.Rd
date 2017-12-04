@@ -19,7 +19,7 @@ This fraction is identical to the density of the induced undirected graph of
 a partial ranking.
 }
 \examples{
-require(igraph)
+library(igraph)
 g <- sample_gnp(100,0.1)
 P <- neighborhood_inclusion(g)
 comparable_pairs(P)

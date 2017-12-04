@@ -26,7 +26,7 @@ trickery, any desired result can be obtained when centrality indices are used.
 }
 \examples{
 
-require(igraph)
+library(igraph)
 
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,

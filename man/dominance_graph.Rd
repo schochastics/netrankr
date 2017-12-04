@@ -18,7 +18,7 @@ Turns a partial ranking into a directed graph. An edge (u,v) is
 present if \code{P[u,v]=1}, meaning that u is dominated by v.
 }
 \examples{
-require(igraph)
+library(igraph)
 g <- threshold_graph(20,0.1)
 P <- neighborhood_inclusion(g)
 d <- dominance_graph(P)

@@ -27,8 +27,8 @@ type='self' is mostly useful for walk based relations, e.g. to count closed walk
 Other self explanatory options are type='mean', type='min', type='max' and type='prod'.
 }
 \examples{
-require(igraph)
-require(magrittr)
+library(igraph)
+library(magrittr)
 
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,

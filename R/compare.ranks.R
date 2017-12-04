@@ -14,7 +14,7 @@
 #' left and right ties can significantly alter correlations. 
 #' @author David Schoch
 #' @examples
-#' require(igraph)
+#' library(igraph)
 #' tg <- threshold_graph(100,0.2)
 #' compare_ranks(degree(tg),closeness(tg)) #only concordant pairs
 #' compare_ranks(degree(tg),betweenness(tg)) #no discordant pairs
