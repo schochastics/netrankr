@@ -4,15 +4,17 @@
 \alias{indirect_relations}
 \title{Indirect relations in a network}
 \usage{
-indirect_relations(g, type = "geodesic", log_param = NULL, FUN = identity,
-  ...)
+indirect_relations(g, type = "dist_sp", log_param = NULL,
+  netflow_mode = "", FUN = identity, ...)
 }
 \arguments{
 \item{g}{igraph object. The network for which relations should be derived.}
 
 \item{type}{String giving the relation to be calculated. See Details for options.}
 
-\item{log_param}{Numeric parameter. Only used for logarithmic forest distance.}
+\item{log_param}{Numeric parameter. Only used if type = "log_forest".}
+
+\item{netflow_mode}{String, one of raw, frac, or norm. Only used if type = "depend_netflow".}
 
 \item{FUN}{A function that allows the transformation of relations. See Details.}
 
@@ -24,7 +26,7 @@ A matrix containing indirect relations in a network.
 \description{
 Derive indirect relations for a given network.
 Observed relations, like presents or absence of a relation, are commonly not the center
-of analysis, but are transformed in a new set of indirect relation like geodesic
+of analysis, but are transformed in a new set of indirect relation like shortest path
 distances among nodes. These transformations are usually an implicit step when centrality
 indices are used. Making this step explicit gives more possibilities, for example
 calculating partial centrality rankings with \link{positional_dominance}.
@@ -34,7 +36,7 @@ The \code{type} parameter has the following options.
 
 \emph{'identity'} returns the adjacency matrix of the network.
 
-\emph{'geodesic'} returns geodesic distances between all pairs of nodes.
+\emph{'dist_sp'} returns shortest path distances between all pairs of nodes.
 
 \emph{'depend_sp'} returns dyadic dependencies
 \deqn{\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}}
@@ -46,18 +48,22 @@ for betweenness-like centrality indices.
 weighted decreasingly in their lengths or other properties which can be done by adding
 a function in \code{FUN}.  See \link{transform_relations} for options.
 
-\emph{'resistance'} returns the resistance distance between all pairs of nodes.
+\emph{'dist_resist'} returns the resistance distance between all pairs of nodes.
 
-\emph{'log_forest'} returns a logarithmic forest distance \eqn{d_\alpha(s,t)}. The logarithmic forest
-distances form a one-parametric family converging to the geodesic distance as \eqn{\alpha \to 0^+}
+\emph{'dist_lf'} returns a logarithmic forest distance \eqn{d_\alpha(s,t)}. The logarithmic forest
+distances form a one-parametric family converging to shortest path distances as \eqn{\alpha \to 0^+}
 and to the resistance distance as \eqn{\alpha \to \infty}. See
 
 Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
 the resistance distances. \emph{Discrete Applied Mathematics} 159,295-302.
 
-for more details.
+for more details. The parameter \code{log_param} can be used to tune \eqn{\alpha}.
 
-The function \code{FUN} is used to further specify the indirect
+\emph{'depend_netflow'}
+
+\emph{'depend_exp'}
+
+The function \code{FUN} is used to transform the indirect
 relation. See \link{transform_relations} for predefined functions and additional help.
 }
 \examples{
@@ -65,22 +71,16 @@ library(igraph)
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-#geodesic distances
-D <- indirect_relations(g,type = "geodesic") 
 
-#dyadic dependencies
+#shortest path distances
+D <- indirect_relations(g,type = "dist_sp") 
+
+#dyadic dependencies (used for betweenness)
 D <- indirect_relations(g,type = "depend_sp")
 
 #walks attenuated exponentially by there length
 W <- indirect_relations(g,type = "walks",FUN = walks_exp)
 
-#positional dominance of a transformed relation...
-D <- indirect_relations(g,type = "geodesic") 
-
-#...under total heterogeneity
-positional_dominance(D, map = FALSE ,benefit = FALSE)
-#...under total homogeneity
-positional_dominance(D, map = TRUE ,benefit = FALSE)
 }
 \seealso{
 \link{aggregate_positions} to build centrality indices, \link{positional_dominance} to derive dominance relations
