@@ -4,12 +4,15 @@
 \alias{indirect_relations}
 \title{Indirect relations in a network}
 \usage{
-indirect_relations(g, type = "geodesic", FUN = identity, ...)
+indirect_relations(g, type = "geodesic", log_param = NULL, FUN = identity,
+  ...)
 }
 \arguments{
 \item{g}{igraph object. The network for which relations should be derived.}
 
 \item{type}{String giving the relation to be calculated. See Details for options.}
+
+\item{log_param}{Numeric parameter. Only used for logarithmic forest distance.}
 
 \item{FUN}{A function that allows the transformation of relations. See Details.}
 
@@ -31,25 +34,34 @@ The \code{type} parameter has the following options.
 
 \emph{'identity'} returns the adjacency matrix of the network.
 
-\emph{'distances'} returns geodesic distances between all pairs of nodes.
+\emph{'geodesic'} returns geodesic distances between all pairs of nodes.
 
 \emph{'dependencies'} returns dyadic dependencies
 \deqn{\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}}
 where \eqn{\sigma(s,t|u)} is the number of shortest paths from s to t that include u and
-\eqn{\sigma(s,t)} is the total number of shortest (s,t)-paths. This relation is mostly used
+\eqn{\sigma(s,t)} is the total number of shortest (s,t)-paths. This relation is used
 for betweenness-like centrality indices.
 
 \emph{'walks'} returns walk counts between pairs of nodes, usually they are
 weighted decreasingly in their lengths or other properties which can be done by adding
 a function in \code{FUN}.  See \link{transform_relations} for options.
 
-\emph{'resistance'} returns the resistance distance between all pairs of vertices.
+\emph{'resistance'} returns the resistance distance between all pairs of nodes.
+
+\emph{'log_forest'} returns a logarithmic forest distance \eqn{d_\alpha(s,t)}. The logarithmic forest
+distances form a one-parametric family converging to the geodesic distance as \eqn{\alpha \to 0^+}
+and to the resistance distance as \eqn{\alpha \to \infty}. See
+
+Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
+the resistance distances. \emph{Discrete Applied Mathematics} 159,295-302.
+
+for more details.
 
 The function \code{FUN} is used to further specify the indirect
 relation. See \link{transform_relations} for predefined functions and additional help.
 }
 \examples{
-require(igraph)
+library(igraph)
 g <- graph.empty(n=11,directed = FALSE)
 g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))

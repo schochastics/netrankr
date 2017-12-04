@@ -64,13 +64,15 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 V(g)$name <- 1:11
 
 #adjacency
-A <- indirect_relations(g,type="identity")
+A <- indirect_relations(g,type = "identity")
 #geodesic distances
-D <- indirect_relations(g,type="geodesic")
+D <- indirect_relations(g,type = "geodesic")
 #dyadic dependencies (as used in betweenness centrality)
-B <- indirect_relations(g,type="dependencies")
+B <- indirect_relations(g,type = "dependencies")
 #resistance distance (as used in information centrality)
-R <- indirect_relations(g,type="resistance")
+R <- indirect_relations(g,type = "resistance")
+#Logarithmic forest distance (parametrized relation)
+LF <- indirect_relations(g, type = "log_forest",log_param = 1) 
 ```
 
 The function takes an additional parameter `FUN` which passes an additional function
@@ -78,17 +80,17 @@ to further specify the transformation. The main use is to obtain walk based indi
 
 ```{r indirwalks}
 #count the limit proportion of walks (used for eigenvector centrality)
-W <-  indirect_relations(g,type="walks",FUN=walks_limit_prop)
+W <-  indirect_relations(g,type = "walks",FUN = walks_limit_prop)
 #count the number of walks of arbitrary length between nodes, weighted by 
 #the inverse factorial of their length (used for subgraph centrality)
-S <-  indirect_relations(g,type="walks",FUN=walks_exp)
+S <-  indirect_relations(g,type = "walks",FUN = walks_exp)
 ```
 
 Additional parameters can also be passed to calculate parameterized versions of
 relations.
 ```{r indirparam}
 #Calculate dist(s,t)^-alpha
-D <- indirect_relations(g,type="geodesic",FUN=dist_dpow,alpha=2)
+D <- indirect_relations(g,type = "geodesic",FUN=dist_dpow,alpha = 2)
 ```
 
 To view all predefined transformation functions type `?transform_relations`. The 
