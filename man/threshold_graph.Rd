@@ -26,7 +26,7 @@ vertices. The probability of inserting a dominating vertice is controlled with p
 An important property of threshold graphs is, that all centrality indices induce the same ranking.
 }
 \examples{
-require(igraph)
+library(igraph)
 g <- threshold_graph(10,0.3)
 \dontrun{
 plot(g)
