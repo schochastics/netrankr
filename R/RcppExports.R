@@ -13,8 +13,16 @@ checkPairs <- function(x, y) {
     .Call('_netrankr_checkPairs', PACKAGE = 'netrankr', x, y)
 }
 
+dependCurFlow <- function(Tmat, el, m, n) {
+    .Call('_netrankr_dependCurFlow', PACKAGE = 'netrankr', Tmat, el, m, n)
+}
+
 dependency <- function(adj) {
     .Call('_netrankr_dependency', PACKAGE = 'netrankr', adj)
+}
+
+dependRspn <- function(A, Z, Zdiv, W, n) {
+    .Call('_netrankr_dependRspn', PACKAGE = 'netrankr', A, Z, Zdiv, W, n)
 }
 
 LatticeOfIdeals <- function(child, parent, Ek, nElem, nIdeals) {

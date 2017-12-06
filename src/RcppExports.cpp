@@ -44,6 +44,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dependCurFlow
+NumericMatrix dependCurFlow(NumericMatrix Tmat, IntegerMatrix el, int m, int n);
+RcppExport SEXP _netrankr_dependCurFlow(SEXP TmatSEXP, SEXP elSEXP, SEXP mSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type Tmat(TmatSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type el(elSEXP);
+    Rcpp::traits::input_parameter< int >::type m(mSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(dependCurFlow(Tmat, el, m, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dependency
 NumericMatrix dependency(std::vector<std::vector<int> > adj);
 RcppExport SEXP _netrankr_dependency(SEXP adjSEXP) {
@@ -52,6 +66,21 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type adj(adjSEXP);
     rcpp_result_gen = Rcpp::wrap(dependency(adj));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dependRspn
+arma::mat dependRspn(std::vector<std::vector<int> > A, arma::mat Z, arma::mat Zdiv, arma::mat W, int n);
+RcppExport SEXP _netrankr_dependRspn(SEXP ASEXP, SEXP ZSEXP, SEXP ZdivSEXP, SEXP WSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Zdiv(ZdivSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type W(WSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(dependRspn(A, Z, Zdiv, W, n));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -201,7 +230,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_netrankr_approx_glpom", (DL_FUNC) &_netrankr_approx_glpom, 1},
     {"_netrankr_approx_relative", (DL_FUNC) &_netrankr_approx_relative, 5},
     {"_netrankr_checkPairs", (DL_FUNC) &_netrankr_checkPairs, 2},
+    {"_netrankr_dependCurFlow", (DL_FUNC) &_netrankr_dependCurFlow, 4},
     {"_netrankr_dependency", (DL_FUNC) &_netrankr_dependency, 1},
+    {"_netrankr_dependRspn", (DL_FUNC) &_netrankr_dependRspn, 5},
     {"_netrankr_LatticeOfIdeals", (DL_FUNC) &_netrankr_LatticeOfIdeals, 5},
     {"_netrankr_listingIdeals", (DL_FUNC) &_netrankr_listingIdeals, 3},
     {"_netrankr_mcmc_rank", (DL_FUNC) &_netrankr_mcmc_rank, 3},

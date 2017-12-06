@@ -4,17 +4,19 @@
 \alias{indirect_relations}
 \title{Indirect relations in a network}
 \usage{
-indirect_relations(g, type = "dist_sp", log_param = NULL,
-  netflow_mode = "", FUN = identity, ...)
+indirect_relations(g, type = "dist_sp", lfparam = NULL, netflowmode = "",
+  rspxparam = NULL, FUN = identity, ...)
 }
 \arguments{
 \item{g}{igraph object. The network for which relations should be derived.}
 
 \item{type}{String giving the relation to be calculated. See Details for options.}
 
-\item{log_param}{Numeric parameter. Only used if type = "log_forest".}
+\item{lfparam}{Numeric parameter. Only used if type = "dist_lf".}
 
-\item{netflow_mode}{String, one of raw, frac, or norm. Only used if type = "depend_netflow".}
+\item{netflowmode}{String, one of raw, frac, or norm. Only used if type = "depend_netflow".}
+
+\item{rspxparam}{Numeric parameter. Only used if type = "depend_rsps" or type = "depend_rspn".}
 
 \item{FUN}{A function that allows the transformation of relations. See Details.}
 
@@ -52,16 +54,18 @@ a function in \code{FUN}.  See \link{transform_relations} for options.
 
 \emph{'dist_lf'} returns a logarithmic forest distance \eqn{d_\alpha(s,t)}. The logarithmic forest
 distances form a one-parametric family converging to shortest path distances as \eqn{\alpha \to 0^+}
-and to the resistance distance as \eqn{\alpha \to \infty}. See
-
-Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
-the resistance distances. \emph{Discrete Applied Mathematics} 159,295-302.
-
-for more details. The parameter \code{log_param} can be used to tune \eqn{\alpha}.
+and to the resistance distance as \eqn{\alpha \to \infty}. See (Chebotarev, 2011) for more details.
+The parameter \code{lfparam} can be used to tune \eqn{\alpha}.
 
 \emph{'depend_netflow'}
 
 \emph{'depend_exp'}
+
+\emph{'depend_rsps'}
+
+\emph{'depend_rspn'}
+
+\emph{'depend_curflow'}
 
 The function \code{FUN} is used to transform the indirect
 relation. See \link{transform_relations} for predefined functions and additional help.
@@ -81,6 +85,20 @@ D <- indirect_relations(g,type = "depend_sp")
 #walks attenuated exponentially by there length
 W <- indirect_relations(g,type = "walks",FUN = walks_exp)
 
+}
+\references{
+Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
+the resistance distances. \emph{Discrete Applied Mathematics} 159,295-302.
+
+Freeman, L.C., Borgatti, S.P., and White, D.R., 1991.
+Centrality in Valued Graphs: A Measure of Betweenness Based on Network Flow. \emph{Social Networks} 13(2), 141-154.
+
+Estrada, E., Higham, D.J., and Hatano, N., 2009.
+Communicability betweenness in complex networks. \emph{Physica A} 388,764-774.
+
+Kivimäki, I., Lebichot, B., Saramäki, J., and Saerens, M., 2016.
+Two betweenness centrality measures based on Randomized Shortest Paths
+\emph{Scientific Reports} 6: 19668
 }
 \seealso{
 \link{aggregate_positions} to build centrality indices, \link{positional_dominance} to derive dominance relations
