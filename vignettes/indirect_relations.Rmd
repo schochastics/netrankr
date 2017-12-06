@@ -72,7 +72,7 @@ B <- indirect_relations(g,type = "depend_sp")
 #resistance distance (as used in information centrality)
 R <- indirect_relations(g,type="dist_resist")
 #Logarithmic forest distance (parametrized relation)
-LF <- indirect_relations(g, type = "dist_lf",log_param = 1) 
+LF <- indirect_relations(g, type = "dist_lf",lfparam = 1) 
 ```
 
 The function takes an additional parameter `FUN` which passes an additional function
