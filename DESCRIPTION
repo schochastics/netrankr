@@ -26,5 +26,8 @@ RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Suggests: knitr, rmarkdown, magrittr,
     ggplot2,
-    testthat
+    testthat,
+    shiny (>= 0.13),
+    miniUI (>= 0.1.1),
+    rstudioapi (>= 0.5)
 VignetteBuilder: knitr
