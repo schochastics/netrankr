@@ -1,0 +1,4 @@
+Name: Centrality Index Builder
+Description: Build a centrality index
+Binding: index_builder
+Interactive: true
