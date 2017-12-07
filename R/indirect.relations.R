@@ -35,8 +35,11 @@
 #' and to the resistance distance as \eqn{\alpha \to \infty}. See (Chebotarev, 2011) for more details.
 #' The parameter `lfparam` can be used to tune \eqn{\alpha}.  
 #' 
+#' \emph{'dist_rwalk'}
 #'
 #' \emph{'depend_netflow'}
+#' 
+#' \emph{'depend_curflow'} 
 #' 
 #' \emph{'depend_exp'}
 #'
@@ -44,7 +47,6 @@
 #' 
 #' \emph{'depend_rspn'}
 #'
-#' \emph{'depend_curflow'}
 #'
 #' The function \code{FUN} is used to transform the indirect
 #' relation. See [transform_relations] for predefined functions and additional help.
@@ -140,7 +142,7 @@ indirect_relations <- function(g, type = "dist_sp",
     }
     rel <- depend_rsps_fct(g,rspxparam)
     rel <- FUN(rel,...)
-  }else if(type=="depend_rspn"){
+  } else if(type=="depend_rspn"){
     if(is.null(rspxparam)){
       stop('argument "rspxparam" is missing for "depend_rspn", with no default')
     }
@@ -149,7 +151,10 @@ indirect_relations <- function(g, type = "dist_sp",
   } else if(type == "depend_curflow"){
     rel <- depend_curflow_fct(g)
     rel <- FUN(rel,...)
-  }else stop(paste(type, "is not defined as indirect relation."))
+  } else if(type == "dist_rwalk"){
+    rel <- depend_curflow_fct(g)
+    rel <- FUN(rel,...)
+  } else stop(paste(type, "is not defined as indirect relation."))
   
   return(rel)
 }
@@ -290,4 +295,18 @@ depend_curflow_fct <- function(g){
   
   bet.mat <- dependCurFlow(Tmat,el,m,n)
   return(bet.mat)
+}
+
+dist_rwalk_fct <- function(g){
+  n <- igraph::vcount(g)
+  A <- igraph::get.adjacency(g,sparse=FALSE)
+  M <- A/rowSums(A)
+  e <- rep(1,n-1)
+  H <- matrix(0,n,n)
+  for(j in 1:n){
+    Mj <- M[-j,-j]
+    Hij <- solve(diag(e)-Mj)%*%e 
+    H[j,-j] <- Hij # transposed to original (to fit framework with rowSums)
+  }
+  return(H)
 }

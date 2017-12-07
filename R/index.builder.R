@@ -20,6 +20,7 @@ index_builder <- function() {
                      dist_sp=dist_transform,
                      dist_resist=dist_transform,
                      dist_lf=dist_transform,
+                     dist_rwalk=dist_transform,
                      depend_sp=c(identity="identity"),
                      depend_netflow=c(identity="identity"),
                      depend_curflow=c(identity="identity"),
@@ -48,7 +49,8 @@ index_builder <- function() {
                   "rcc"=c("dist_sp","dist_2pow","sum"),
                   "inf"=c("dist_resist","identity","invsum"),
                   "gencc"=c("dist_sp","dist_dpow","sum"),
-                  "decay"=c("dist_sp","dist_powd","sum")
+                  "decay"=c("dist_sp","dist_powd","sum"),
+                  "drwalk"=c("dist_rwalk","identity","invsum")
   )
   #ui ----    
   ui <- miniUI::miniPage(
@@ -70,7 +72,8 @@ index_builder <- function() {
                                                                  "Residual Closeness"="rcc",
                                                                  "Information Centrality"="inf",
                                                                  "Generalized Closeness"="gencc",
-                                                                 "Decay Centrality"="decay")))),
+                                                                 "Decay Centrality"="decay",
+                                                                 "Random Walk Closeness"="drwalk")))),
       shiny::column(6)
     ),
     shiny::fluidRow(

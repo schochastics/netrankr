@@ -57,15 +57,17 @@ distances form a one-parametric family converging to shortest path distances as 
 and to the resistance distance as \eqn{\alpha \to \infty}. See (Chebotarev, 2011) for more details.
 The parameter \code{lfparam} can be used to tune \eqn{\alpha}.
 
+\emph{'dist_rwalk'}
+
 \emph{'depend_netflow'}
+
+\emph{'depend_curflow'}
 
 \emph{'depend_exp'}
 
 \emph{'depend_rsps'}
 
 \emph{'depend_rspn'}
-
-\emph{'depend_curflow'}
 
 The function \code{FUN} is used to transform the indirect
 relation. See \link{transform_relations} for predefined functions and additional help.
