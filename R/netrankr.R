@@ -1,8 +1,9 @@
-#' netrankr: An R package to analyze partial rankings in networks
+#' netrankr: An R package for centrality and partial rankings in networks
 #' 
 #' @description netrankr provides several functions to analyze partial rankings for network
-#' centrality. The main focus lies on methods that do not rely on indices like degree, 
-#' betweenness or closeness.   
+#' centrality. The main focus lies on methods that do not necessarily rely on indices like degree, 
+#' betweenness or closeness. However, the package also provides more than 20 indices,
+#' which can be constructed via a Rstudio addin.   
 #'   
 #' The package follows the philosophy, that centrality 
 #' can be decomposed in a series of micro steps. Starting from a network, 
