@@ -138,7 +138,7 @@ index_builder <- function() {
                                             shiny::sliderInput("alpha","alpha",0,1,0.33,0.1)
                     )
       ),
-      shiny::column(3,checkboxInput("pipe", "Use pipes", value = TRUE, width = NULL))
+      shiny::column(3,shiny::checkboxInput("pipe", "Use pipes", value = TRUE, width = NULL))
     ),
     shiny::fluidRow(
       shiny::column(3),
@@ -183,13 +183,13 @@ index_builder <- function() {
                           "type = \"", 
                           input$relation,"\"",lfparam_text,netflow_text,rspx_text,
                           ", FUN = ",input$transformation,alpha_text,tok_text,") %>%\n\t",
-                          "aggregate_position(type = \"",input$aggregation,"\")")
+                          "aggregate_positions(type = \"",input$aggregation,"\")")
       } else {
         indexText <- paste0("rel <- indirect_relations(g,",
                             "type = \"", 
                             input$relation,"\"",lfparam_text,netflow_text,rspx_text,
                             ", FUN = ",input$transformation,alpha_text,tok_text,")\n",
-                            "cent <- aggregate_position(rel,type = \"",input$aggregation,"\")")
+                            "cent <- aggregate_positions(rel,type = \"",input$aggregation,"\")")
       }
       rstudioapi::insertText(indexText)
       shiny::stopApp()
