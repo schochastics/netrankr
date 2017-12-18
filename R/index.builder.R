@@ -20,6 +20,7 @@ index_builder <- function() {
                      dist_sp=dist_transform,
                      dist_resist=dist_transform,
                      dist_lf=dist_transform,
+                     dist_walk=dist_transform,
                      dist_rwalk=dist_transform,
                      depend_sp=c(identity="identity"),
                      depend_netflow=c(identity="identity"),
@@ -82,9 +83,10 @@ index_builder <- function() {
                                           list("Adjacency"=c("Adjacency"="identity"),
                                                "Distances"=c("Shortest Paths" = "dist_sp",
                                                              "Resistance" = "dist_resist",
-                                                             "Log Forest" = "dist_lf"),
+                                                             "Log Forest" = "dist_lf",
+                                                             "Walk Distance" = "dist_walk"),
                                                "Walks"=c("Walk Counts" = "walks"),
-                                               "Dependencies"=c("Shortes Paths" = "depend_sp",
+                                               "Dependencies"=c("SP dependencies" = "depend_sp",
                                                                 "Network Flow"="depend_netflow",
                                                                 "Current Flow"="depend_curflow",
                                                                 "Exponential Walks"="depend_exp",
@@ -106,6 +108,9 @@ index_builder <- function() {
                     ),
                     shiny::conditionalPanel("input.relation=='dist_lf'",
                                             shiny::sliderInput("lfparam","Log Forest Parameter",0,500,1,0.1)
+                    ),
+                    shiny::conditionalPanel("input.relation=='dist_walk'",
+                                            shiny::sliderInput("dwparam","Walk Distance Parameter",0,500,1,0.1)
                     ),
                     shiny::conditionalPanel("input.relation=='depend_rsps'",
                                             shiny::sliderInput("rspxparam","Randomized SP Parameter",0,500,1,0.1)
@@ -169,6 +174,7 @@ index_builder <- function() {
     })
     shiny::observeEvent(input$done, {
       lfparam_text <- ifelse(input$relation!="dist_lf","",paste0(", lfparam = ",input$lfparam))
+      dwparam_text <- ifelse(input$relation!="dist_walk","",paste0(", dwparam = ",input$lfparam))
       netflow_text <- ifelse(input$relation!="depend_netflow","",paste0(", netflowmode = \"",input$netflow,"\""))
       rspx_text <- ifelse(!input$relation%in%c("depend_rsps","depend_rspn"),
                           "",paste0(", rspxparam = ",input$rspxparam))
@@ -181,13 +187,13 @@ index_builder <- function() {
                           " %>% \n\t",
                           "indirect_relations(",
                           "type = \"", 
-                          input$relation,"\"",lfparam_text,netflow_text,rspx_text,
+                          input$relation,"\"",lfparam_text,dwparam_text,netflow_text,rspx_text,
                           ", FUN = ",input$transformation,alpha_text,tok_text,") %>%\n\t",
                           "aggregate_positions(type = \"",input$aggregation,"\")")
       } else {
         indexText <- paste0("rel <- indirect_relations(g,",
                             "type = \"", 
-                            input$relation,"\"",lfparam_text,netflow_text,rspx_text,
+                            input$relation,"\"",lfparam_text,dwparam_text,netflow_text,rspx_text,
                             ", FUN = ",input$transformation,alpha_text,tok_text,")\n",
                             "cent <- aggregate_positions(rel,type = \"",input$aggregation,"\")")
       }

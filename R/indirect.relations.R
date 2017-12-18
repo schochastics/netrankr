@@ -8,6 +8,7 @@
 #' @param g igraph object. The network for which relations should be derived.
 #' @param type String giving the relation to be calculated. See Details for options.
 #' @param lfparam Numeric parameter. Only used if type = "dist_lf".
+#' @param dwparam Numeric parameter. Only used if type = "dist_walk".
 #' @param netflowmode String, one of raw, frac, or norm. Only used if type = "depend_netflow".
 #' @param rspxparam Numeric parameter. Only used if type = "depend_rsps" or type = "depend_rspn".
 #' @param FUN A function that allows the transformation of relations. See Details.
@@ -31,21 +32,52 @@
 #' \emph{'dist_resist'} returns the resistance distance between all pairs of nodes.
 #'
 #' \emph{'dist_lf'} returns a logarithmic forest distance \eqn{d_\alpha(s,t)}. The logarithmic forest
-#' distances form a one-parametric family converging to shortest path distances as \eqn{\alpha \to 0^+}
-#' and to the resistance distance as \eqn{\alpha \to \infty}. See (Chebotarev, 2011) for more details.
+#' distances form a one-parametric family of distances, converging to shortest path distances as \eqn{\alpha -> 0}
+#' and to the resistance distance as \eqn{\alpha -> \infty}. See (Chebotarev, 2011) for more details.
 #' The parameter `lfparam` can be used to tune \eqn{\alpha}.
 #'
-#' \emph{'dist_rwalk'}
+#'\emph{'dist_walk'} returns the walk distance \eqn{d_\alpha^W(s,t)} between nodes. The walk distances form a one-parametric
+#'family of distances, converging to shortest path distances as \eqn{\alpha -> 0} and to longest
+#'walk distances for \eqn{\alpha -> \infty}. Walk distances contain the logarithmic forest
+#'distances as a special case. See (Chebotarev, 2012) for more details.
 #'
-#' \emph{'depend_netflow'}
+#' \emph{'dist_rwalk'} returns the expected length of a random walk between two nodes. For more
+#' details see (Noh and Rieger, 2004)
 #'
-#' \emph{'depend_curflow'}
+#' \emph{'depend_netflow'} returns dependencies based on network flow (See Freeman et al.,1991). 
+#' If `netflowmode="raw"`, the function returns 
+#' \deqn{\delta(u,s) = \sum_{t \in V} f(s,t,G)-f(s,t,G-v)} 
+#' where f(s,t,G) is the maximum flow from s to t in G and f(s,t,G-v) in G without the node v.
+#' For `netflowmode="frac"` it returns dependencies in the form, similar to shortest path dependencies:
+#'\deqn{\delta(u,s) = \sum_{t \in V} \frac{f(s,t,G)-f(s,t,G-v)}{f(s,t,G)}} 
 #'
-#' \emph{'depend_exp'}
+#' \emph{'depend_curflow'} returns pairwise dependencies based on current flow. The relation is
+#' based on the same foundation as 'depend_sp' and 'depend_netflow'. However, instead of considering
+#' shortest paths or network flow, the current flow (or equivalent: random walks) between nodes
+#' are of interest. See (Newman, 2005) for details.
 #'
-#' \emph{'depend_rsps'}
+#' \emph{'depend_exp'} returns pairwise dependencies based on 'communicability':
+#' \deqn{\delta(u,s)=\sum_{t \in V} \frac{exp(A)_{st}-exp(A+E(u))_{st}}{exp(A)_{st}},}
+#' where E(u) has nonzeros only in row and column u, and 
+#' in this row and column has − 1 wherever A has + 1. See (Estrada et al., 2009) for additional details.
 #'
-#' \emph{'depend_rspn'}
+#' \emph{'depend_rsps'}. Simple randomized shortest path dependencies. 
+#' The simple RSP dependency of a node u with respect to absorbing paths from s to t, 
+#' is defined as the expected number of visits through u over all s-t-walks. The
+#' parameter `rspxparam` is the "inverse temperature parameter". 
+#' If it converges to infinity, only shortest paths are considered and the expected
+#' number of visits to a node on a shortest path approaches the probability of
+#' following that particular path. When the parameter converges to zero, then the 
+#' dependencies converge to the expected number of visits to a node over all absorbing
+#' walks with respect to the unbiased random walk probabilities. This means for undirected networks,
+#' that the relations converge to adjacency. See (Kivimäki et al., 2016) for details.
+#'
+#' \emph{'depend_rspn'} Net randomized shortest path dependencies. 
+#' The parameter `rspxparam` is the "inverse temperature parameter". The asymptotic 
+#' for the infinity case are the same as for 'depend_rsps'. If the parameter approaches zero, then
+#' it converges to 'depend_curflow'. The net randomized shortest path dependencies
+#' are closely related to the random walk interpretation of current flows.
+#'  See (Kivimäki et al., 2016) for technical details.
 #'
 #'
 #' The function \code{FUN} is used to transform the indirect
@@ -54,11 +86,17 @@
 #' @return A matrix containing indirect relations in a network.
 #' @author David Schoch
 #' @seealso [aggregate_positions] to build centrality indices, [positional_dominance] to derive dominance relations
-#' @references  Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
+#' @references Chebotarev, P., 2012. The walk distances in graphs. *Discrete Applied Mathematics*, 160(10), pp.1484-1500.  
+#' 
+#' Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
 #' the resistance distances. *Discrete Applied Mathematics* 159,295-302.
+#'
+#' Noh, J.D. and Rieger, H., 2004. Random walks on complex networks. *Physical Review Letters*, 92(11), p.118701.
 #'
 #' Freeman, L.C., Borgatti, S.P., and White, D.R., 1991.
 #' Centrality in Valued Graphs: A Measure of Betweenness Based on Network Flow. *Social Networks* 13(2), 141-154.
+#'
+#' Newman, M.E., 2005. A measure of betweenness centrality based on random walks. *Social Networks*, 27(1), pp.39-54.
 #'
 #' Estrada, E., Higham, D.J., and Hatano, N., 2009.
 #' Communicability betweenness in complex networks. *Physica A* 388,764-774.
@@ -75,7 +113,10 @@
 #' #shortest path distances
 #' D <- indirect_relations(g,type = "dist_sp")
 #'
-#' #dyadic dependencies (used for betweenness)
+#' #inverted shortest path distances
+#' D <- indirect_relations(g,type = "dist_sp", FUN = "dist_inv")
+
+#' #shortes path dependencies (used for betweenness)
 #' D <- indirect_relations(g,type = "depend_sp")
 #'
 #' #walks attenuated exponentially by there length
@@ -83,7 +124,9 @@
 #'
 #' @export
 indirect_relations <- function(g, type = "dist_sp",
-                               lfparam = NULL, netflowmode = "",
+                               lfparam = NULL, 
+                               dwparam = NULL,
+                               netflowmode = "",
                                rspxparam = NULL,
                                FUN = identity, ...) {
   if (type == "dependencies") {
@@ -93,6 +136,10 @@ indirect_relations <- function(g, type = "dist_sp",
   if (type == "geodesic") {
     warning('type="geodesic" is deprecated. Using "dist_sp" instead.\n')
     type <- "dist_sp"
+  }
+  if (type == "resistance") {
+    warning('type="resistance" is deprecated. Using "dist_resist" instead.\n')
+    type <- "dist_resist"
   }
   if (type == "dist_sp") {
     rel <- igraph::distances(g, mode = "all")
@@ -121,6 +168,12 @@ indirect_relations <- function(g, type = "dist_sp",
       stop('argument "lfparam" is missing for "dist_lf", with no default')
     }
     rel <- log_forest_fct(g, lfparam)
+    rel <- FUN(rel, ...)
+  } else if (type == "dist_walk") {
+    if (is.null(lfparam)) {
+      stop('argument "dwparam" is missing for "dist_walk", with no default')
+    }
+    rel <- dist_walk_fct(g, dwparam)
     rel <- FUN(rel, ...)
   } else if (type == "depend_netflow") {
     if (netflowmode == "" | !netflowmode %in% c("raw", "frac", "norm")) {
@@ -310,4 +363,25 @@ dist_rwalk_fct <- function(g) {
     H[j, -j] <- Hij # transposed to original (to fit framework with rowSums)
   }
   return(H)
+}
+
+dist_walk_fct <- function(g,dwparam) {
+  n <- igraph::vcount(g)
+  A <- igraph::get.adjacency(g, sparse = FALSE)
+  bigeig <- eigen(A,only.values = TRUE)$values[1]
+  if(dwparam>bigeig){
+    stop(paste0("dwparam to large. To ensure convergence, use a value greater 0 and less than 1/",bigeig))
+  }
+  I <- diag(1,n)
+  Rt <- solve((I-dwparam*A))
+  Ht <- log(Rt)
+  Dt <- 0.5 * (diag(Ht) %*% t(rep(1, n)) + rep(1, n) %*% t(diag(Ht))) - Ht
+  alpha <- (1/dwparam - bigeig)^(-1)
+  if(alpha!=1){
+    gamma <- log(exp(1)+alpha^(2/n))*(alpha-1)/log(alpha)
+  } else {
+    gamma <- log(exp(1)+1)
+  }
+  Dt <- gamma * Dt
+  return(Dt)
 }

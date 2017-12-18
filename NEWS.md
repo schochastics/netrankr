@@ -1,7 +1,7 @@
 ## netrankr 0.2.0.9000
 
 * added Rstudio addin to build centrality indices
-* added indirect relations: dist_lf,depend_netflow, 
+* added indirect relations: dist_lf,dist_walk, depend_netflow, 
 depend_exp, depend_rsps, depend_rspn, depend_curflow,dist_rwalk
 * API breaking: changed "dependencies" to "depend_sp" in `indirect_relations()`
 * API breaking: changed "geodesic" to "dist_sp" in `indirect_relations()`
