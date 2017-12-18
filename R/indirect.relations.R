@@ -370,7 +370,7 @@ dist_walk_fct <- function(g,dwparam) {
   n <- igraph::vcount(g)
   A <- igraph::get.adjacency(g, sparse = FALSE)
   bigeig <- eigen(A,only.values = TRUE)$values[1]
-  if(dwparam>bigeig){
+  if(dwparam > (1/bigeig)){
     stop(paste0("dwparam to large. To ensure convergence, use a value greater 0 and less than 1/",bigeig))
   }
   I <- diag(1,n)
