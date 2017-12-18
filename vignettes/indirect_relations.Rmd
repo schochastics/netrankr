@@ -74,7 +74,7 @@ R <- indirect_relations(g,type="dist_resist")
 #Logarithmic forest distance (parametrized family of distances)
 LF <- indirect_relations(g, type = "dist_lf",lfparam = 1) 
 #Walk distance (parametrized family of distances)
-WD <- indirect_relations(g, type = "dist_walk",dwparam = 1) 
+WD <- indirect_relations(g, type = "dist_walk",dwparam = 0.001) 
 #Random walk distance
 WD <- indirect_relations(g, type = "dist_rwalk") 
 #See ?indirect_relations for further options

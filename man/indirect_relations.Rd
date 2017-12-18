@@ -75,14 +75,14 @@ For \code{netflowmode="frac"} it returns dependencies in the form, similar to sh
 \deqn{\delta(u,s) = \sum_{t \in V} \frac{f(s,t,G)-f(s,t,G-v)}{f(s,t,G)}}
 
 \emph{'depend_curflow'} returns pairwise dependencies based on current flow. The relation is
-based on the same foundation as 'depend_sp' and 'depend_netflow'. However, instead of considering
+based on the same idea as 'depend_sp' and 'depend_netflow'. However, instead of considering
 shortest paths or network flow, the current flow (or equivalent: random walks) between nodes
 are of interest. See (Newman, 2005) for details.
 
 \emph{'depend_exp'} returns pairwise dependencies based on 'communicability':
 \deqn{\delta(u,s)=\sum_{t \in V} \frac{exp(A)_{st}-exp(A+E(u))_{st}}{exp(A)_{st}},}
 where E(u) has nonzeros only in row and column u, and
-in this row and column has − 1 wherever A has + 1. See (Estrada et al., 2009) for additional details.
+in this row and column has -1 if A has +1. See (Estrada et al., 2009) for additional details.
 
 \emph{'depend_rsps'}. Simple randomized shortest path dependencies.
 The simple RSP dependency of a node u with respect to absorbing paths from s to t,
@@ -115,7 +115,7 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 D <- indirect_relations(g,type = "dist_sp")
 
 #inverted shortest path distances
-D <- indirect_relations(g,type = "dist_sp", FUN = "dist_inv")
+D <- indirect_relations(g,type = "dist_sp", FUN = dist_inv)
 #shortes path dependencies (used for betweenness)
 D <- indirect_relations(g,type = "depend_sp")
 
