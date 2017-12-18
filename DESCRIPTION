@@ -5,11 +5,11 @@ Version: 0.2.0.9000
 Authors@R: c(
     person("David", "Schoch", email = "david.schoch@uni-konstanz.de", role = c("aut", "cre")),
     person("Julian","Müller", email = "julian.mueller@uni-konstanz.de", role = "ctb"))
-Description: Implements methods for network centrality related analyses of networks. 
-    While the package includes the possibility to build a variety of indices, 
+Description: Implements methods for centrality related analyses of networks. 
+    While the package includes the possibility to build more than 20 indices, 
     its main focus lies on index-free assessment of centrality via partial 
     rankings obtained by neighborhood-inclusion or positional dominance. These 
-    partial rankings can be analyzed with a variety of methods, including 
+    partial rankings can be analyzed with different methods, including 
     probabilistic methods like computing expected node ranks and relative 
     rank probabilities (how likely is it that a node is more central than another?).
 URL: https://schochastics.github.io/netrankr
