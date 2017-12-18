@@ -120,7 +120,7 @@ hundred elements.
 Although the function `approx_rank_expected()` and `approx_rank_relative()` performed
 the worst in the above tests, they are computationally the least expensive with a 
 time complexity of $\mathcal{O}(n^2)$. Thus, they are able to at least give a rough
-approximation also for partial rankings beyond a 1000 elements.
+approximation also for partial rankings beyond 1000 elements.
 
 ________________________________________________________________________________
 

@@ -11,8 +11,8 @@ This vignette describes how to build different centrality indices on the basis o
 indirect relations as described in [this](indirect_relations.html) vignette. Note,
 however, that the primary purpose of the netrankr package is **not** to provide a great
 variety of indices, but to offer alternative methods for centrality assessment. 
-Consult the tutorial and this vignette, before starting trial-and-error usage of indices.
-
+Nevertheless, the package also provides an Rstudio addin 'index_builder()', which 
+allows to create and customize more than 20 different indices. 
 ________________________________________________________________________________
 
 ## Theoretical Background
@@ -118,7 +118,7 @@ g %>%
   aggregate_positions(type="sum")
 ```
 
-The distance based indices constitute one of the biggest groups of indices in the `netrankr` package.
+Indices based on shortes path distances constitute the biggest group of indices in the `netrankr` package.
 
 ```{r distance_indices,eval=F}
 #residual closeness (Dangalchev,2006)
@@ -146,7 +146,10 @@ g %>%
 
 ```
 
-Another large group of indices is based on counting walks
+The package implements several additional distance measures for networks, for which
+no index exists so far. Consult the help of `indirect_relations()` for possibilities.
+
+Another large group of indices is based on walk counts.
 
 ```{r othercent,eval=F}
 #subgraph centrality
@@ -183,3 +186,4 @@ degree_centrality <- function(g){
 }
 ```
 
+Additionally, the Rstudio addin `index_builder()` provides a convenient way to produce the code for any desired index.

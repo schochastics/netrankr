@@ -38,7 +38,9 @@ DiagrammeR::DiagrammeR('graph LR
 )
 ```
 
-The only degree of freedom is the choice of index.
+The only degree of freedom is the choice of index. The package comes with an Rstudio addin (`index_builder()`),
+which allows to build or choose from more than 20 different indices. Blindly (ab)using
+this function is highly discouraged!
 
 The `netrankr` package is based on the idea that centrality is more than a 
 conglomeration of indices. Decomposing them in a series of microsteps offers 
@@ -88,8 +90,8 @@ To install from CRAN: [not released yet]
 
 To install the developer version from github:
 ```{r install_git, eval=FALSE}
-require(devtools)
-install_github("schochastics/netrankr")
+#install.packages("devtools")
+devtools::install_github("schochastics/netrankr",)
 ```
 
 ________________________________________________________________________________
@@ -207,5 +209,5 @@ consult the following literature:
 > Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
 and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
 
-<!-- > Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank  -->
-<!-- Probabilities in Networks. *under review* -->
+> Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank
+Probabilities in Networks. *Social Networks*, **to appear**
