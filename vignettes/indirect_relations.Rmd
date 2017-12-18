@@ -30,7 +30,7 @@ transformed networks from an observed network $x$ as $\tau(x)$.
 \
 \
 
-With this notion of indirect relations, we can express all centrality indices in
+With this notion of indirect relations, we can express centrality indices in
 a common framework as
 $$
 c_\tau(i)=\sum\limits_{t \in \mathcal{N}} \tau(x)_{it}
@@ -40,7 +40,7 @@ and $\tau=dist$, respectively. Others need several additional specifications whi
 can be found in [Brandes (2016)](http://dx.doi.org/10.1177/2059799116630650) or 
 [Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401). 
 \
-With this framework, all centrality indices can be characterized as degree-like 
+With this framework, we can characterize centrality indices as degree-like 
 measures in a suitably transformed network $\tau(x)$. 
 
 ________________________________________________________________________________
@@ -71,12 +71,17 @@ D <- indirect_relations(g,type="dist_sp")
 B <- indirect_relations(g,type = "depend_sp")
 #resistance distance (as used in information centrality)
 R <- indirect_relations(g,type="dist_resist")
-#Logarithmic forest distance (parametrized relation)
+#Logarithmic forest distance (parametrized family of distances)
 LF <- indirect_relations(g, type = "dist_lf",lfparam = 1) 
+#Walk distance (parametrized family of distances)
+WD <- indirect_relations(g, type = "dist_walk",dwparam = 1) 
+#Random walk distance
+WD <- indirect_relations(g, type = "dist_rwalk") 
+#See ?indirect_relations for further options
 ```
 
-The function takes an additional parameter `FUN` which passes an additional function
-to further specify the transformation. The main use is to obtain walk based indirect relations
+The function takes an additional parameter `FUN` which can be used to pass a function
+to further transform relations. The main use is to obtain indirect relations based on walk counts.
 
 ```{r indirwalks}
 #count the limit proportion of walks (used for eigenvector centrality)
@@ -93,12 +98,12 @@ relations.
 D <- indirect_relations(g,type="dist_sp",FUN=dist_dpow,alpha = 2)
 ```
 
-To view all predefined transformation functions type `?transform_relations`. The 
+To view all predefined transformation functions see `?transform_relations`. The 
 predefined functions follow the naming scheme `<relation>_<transformation>`. 
-The functions `dist_` are thus only meaningful for `type="dist_sp"` or `type="dist_resist"`
-and `walks_` for `type="walks"`. The predefined functions are not exhaustive and
-just constitute the most common transformations. It is, however, straightforward to
-pass your own transformation function. 
+The functions `dist_` are thus only meaningful fordistance type relations such as 
+`type="dist_sp"` or `type="dist_resist"`. Equivalently, `walks_` for `type="walks"`. 
+The predefined functions are not exhaustive and just constitute the most common 
+transformations. It is, however, straightforward to pass your own transformation function. 
 
 ```{r own_func}
 dist_integration <- function(x){
@@ -112,3 +117,7 @@ $$
 \tau(x)_{ij}=1-\frac{dist(i,j)-1}{max_{i,j}\; dist(i,j)}
 $$
 which is used in the centrality index *integration* defined by [Valente and Foreman (1998)](https://doi.org/10.1016/S0378-8733(97)00007-5)
+
+The computed relations CAN be used to build centrality indices (e.g. with the provided Rstudio
+`index_builder()`), but also to derive partial rankings with `positional_dominance()`.
+Consult the respective [vignette](positional_dominance.html) for help.
