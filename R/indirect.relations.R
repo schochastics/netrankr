@@ -180,10 +180,10 @@ indirect_relations <- function(g,
     if (netflowmode == "" | !netflowmode %in% c("raw", "frac", "norm")) {
       stop('netflowmode must be one of"raw","frac","norm"\n')
     }
-    if (netflowmode == "norm") {
-      warning('"norm" not supported yet. Using "frac" instead.\n')
-      netflowmode <- "frac"
-    }
+    # if (netflowmode == "norm") {
+    #   warning('"norm" not supported yet. Using "frac" instead.\n')
+    #   netflowmode <- "frac"
+    # }
     rel <- depend_netflow_fct(g, netflowmode)
     rel <- FUN(rel, ...)
   } else if (type == "depend_exp") {
