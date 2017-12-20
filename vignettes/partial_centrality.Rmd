@@ -13,7 +13,7 @@ from [neighborhood-inclusion](neighborhood_inclusion.html) or, more general,
 partial rankings can be found in the following literature.
 
 > Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank 
-Probabilities in Networks. *submitted*
+Probabilities in Networks. *Social Networks*, **to appear**
 
 > Patil, G.P. & Taillie, C. (2004). Multiple Indicators, partially ordered sets, 
 and linear extensions: Multi-criterion ranking and prioritization. 
