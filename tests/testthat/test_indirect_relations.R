@@ -1,7 +1,7 @@
 context("indirect relations")
-
-test_that("distance based relations are correct",{
-  library(igraph)
+library(igraph)
+test_that("shortest path distances are correct",{
+  # library(igraph)
   
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
@@ -25,8 +25,8 @@ test_that("distance based relations are correct",{
 })
 
 
-test_that("walks are correct",{
-  library(igraph)
+test_that("walk counts are correct",{
+  # library(igraph)
   
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
@@ -39,6 +39,11 @@ test_that("walks are correct",{
   W_exp <- indirect_relations(g, type = "walks",FUN = walks_exp)
   
   expect_equal(round(W_spec,7),round(W_exp,7))
-  
+})
+
+test_that("walk distances are correct",{
+  g <- graph.star(4,mode = "undirected")
+  testthat::expect_equal(indirect_relations(g,type="dist_walk",dwparam = 1e-08),distances(g),
+                         tolerance = 1e-04)
   
 })
