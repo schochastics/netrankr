@@ -69,8 +69,8 @@ test_that("current flow betweenness correct",{
 })
 
 test_that("flow betweenness correct",{
-  library(igraph)
-  library(magrittr)
+  # library(igraph)
+  # library(magrittr)
   g <- graph.empty(n=11,directed=FALSE)
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5))
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5)+5)
@@ -84,8 +84,8 @@ test_that("flow betweenness correct",{
 })
 
 test_that("communicability betweenness correct",{
-  library(igraph)
-  library(magrittr)
+  # library(igraph)
+  # library(magrittr)
   g <- graph.empty(n=11,directed=FALSE)
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5))
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5)+5)
@@ -97,4 +97,13 @@ test_that("communicability betweenness correct",{
     indirect_relations(type = "depend_exp", FUN = identity) %>%
     aggregate_positions(type = "sum")
   expect_equal(round(cent,4),exact)
+})
+
+test_that("all aggregate functions work",{
+  tau_x <- matrix(c(1,2,3,4),2,2,byrow = TRUE)
+  expect_equal(aggregate_positions(tau_x,type = "prod"),c(2,12))
+  expect_equal(aggregate_positions(tau_x,type = "mean"),c(1.5,3.5))
+  expect_equal(aggregate_positions(tau_x,type = "max"),c(2,4))
+  expect_equal(aggregate_positions(tau_x,type = "min"),c(1,3))
+  expect_error(aggregate_positions(tau_x,type = "other"))
 })

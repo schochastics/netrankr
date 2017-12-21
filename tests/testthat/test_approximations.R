@@ -28,4 +28,14 @@ test_that("approximate relative is correct",{
   
   expect_equal(rel_noiter,rel_iter1)
   
+  P <- matrix(1,10,10)
+  P[lower.tri(P,diag = T)] <- 0
+  rel_iter10 <- approx_rank_relative(P,iterative = TRUE,num.iter = 10)
+  rel_mcmc <- mcmc_rank_prob(P,rp = 100)$relative.rank
+  expect_equal(P,rel_iter10)
+  expect_equal(P,rel_mcmc)
+  
+  P <- matrix(1,5,5)-diag(1,5)
+  testthat::expect_warning(approx_rank_expected(P))
+  testthat::expect_warning(approx_rank_relative(P))
 })
