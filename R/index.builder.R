@@ -1,7 +1,7 @@
 #' Centrality Index Builder
 #'
-#' This gadget can be used to build centrality indices based on specific indirect relations,
-#' transformations and aggregation functions.
+#' This shiny gadget can be used to build centrality indices based on specific indirect relations,
+#' transformations and aggregation functions. 
 #'
 #' @return code to calculate the specified index.
 #' @export
@@ -81,17 +81,18 @@ index_builder <- function() {
       shiny::column(3, shiny::textInput("network", "network", value = "g", width = NULL, placeholder = NULL)),
       shiny::column(3, shiny::selectInput("relation", "Indirect Relation",
                                           list("Adjacency"=c("Adjacency"="identity"),
-                                               "Distances"=c("Shortest Paths" = "dist_sp",
-                                                             "Resistance" = "dist_resist",
-                                                             "Log Forest" = "dist_lf",
-                                                             "Walk Distance" = "dist_walk"),
+                                               "Distances"=c("Shortest Path Distance" = "dist_sp",
+                                                             "Resistance Distance" = "dist_resist",
+                                                             "Log Forest Distance" = "dist_lf",
+                                                             "Walk Distance" = "dist_walk",
+                                                             "Random Walk Distance" = "dist_rwalk"),
                                                "Walks"=c("Walk Counts" = "walks"),
-                                               "Dependencies"=c("SP dependencies" = "depend_sp",
-                                                                "Network Flow"="depend_netflow",
-                                                                "Current Flow"="depend_curflow",
-                                                                "Exponential Walks"="depend_exp",
-                                                                "Simple RSP" = "depend_rsps",
-                                                                "Net RSP" = "depend_rspn")))),
+                                               "Dependencies"=c("Shortest Path Dep." = "depend_sp",
+                                                                "Network Flow Dep. "="depend_netflow",
+                                                                "Current Flow Dep."="depend_curflow",
+                                                                "Exponential Walks Dep."="depend_exp",
+                                                                "Simple RSP Dep." = "depend_rsps",
+                                                                "Net RSP Dep." = "depend_rspn")))),
       
       shiny::column(3, shiny::selectInput("transformation", "Transformation",c(""))),
       
@@ -162,13 +163,15 @@ index_builder <- function() {
     
     shiny::observe({
       shiny::updateSelectInput(session, "transformation", 
-                               label = "Transformation", 
+                               label   = "Transformation", 
                                choices = transforms[[input$relation]])
     })
     shiny::observe({
       index_focus <- indices[[input$index]]
       shiny::updateSelectInput(session,"relation",selected=index_focus[1])
-      shiny::updateSelectInput(session,"transformation",selected=index_focus[2])
+      shiny::updateSelectInput(session,"transformation",
+                               choices = transforms[[input$relation]],
+                               selected=index_focus[2])
       shiny::updateSelectInput(session,"aggregation",selected=index_focus[3])
       
     })

@@ -10,6 +10,6 @@ index_builder()
 code to calculate the specified index.
 }
 \description{
-This gadget can be used to build centrality indices based on specific indirect relations,
+This shiny gadget can be used to build centrality indices based on specific indirect relations,
 transformations and aggregation functions.
 }
