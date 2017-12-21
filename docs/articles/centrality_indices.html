@@ -115,13 +115,12 @@
     
     
 <div class="contents">
-<p>This vignette describes how to build different centrality indices on the basis of indirect relations as described in <a href="indirect_relations.html">this</a> vignette. Note, however, that the primary purpose of the netrankr package is <strong>not</strong> to provide a great variety of indices, but to offer alternative methods for centrality assessment. Consult the tutorial and this vignette, before starting trial-and-error usage of indices.</p>
-<hr>
+<p>This vignette describes how to build different centrality indices on the basis of indirect relations as described in <a href="indirect_relations.html">this</a> vignette. Note, however, that the primary purpose of the netrankr package is <strong>not</strong> to provide a great variety of indices, but to offer alternative methods for centrality assessment. Nevertheless, the package also provides an Rstudio addin ‘index_builder()’, which allows to create and customize more than 20 different indices. ________________________________________________________________________________</p>
 <div id="theoretical-background" class="section level2">
 <h2 class="hasAnchor">
 <a href="#theoretical-background" class="anchor"></a>Theoretical Background</h2>
 <p>A one-mode network can be described as a <em>dyadic variable</em> <span class="math inline">\(x\in \mathcal{W}^\mathcal{D}\)</span>, where <span class="math inline">\(\mathcal{W}\)</span> is the value range of the network (in the simple case of unweighted networks <span class="math inline">\(\mathcal{W}=\{0,1\}\)</span>) and <span class="math inline">\(\mathcal{D}=\mathcal{N}\times\mathcal{N}\)</span> describes the dyadic domain of actors <span class="math inline">\(\mathcal{N}\)</span>.<br><br>
-Observed presence or absence of ties (the value range is binary) is usually not the relation of interest for network analytic tasks. Instead, mostly implicitly, relations are <em>transformed</em> into a new set of <em>indirect</em> relations on the basis of the <em>observed</em> relations. As an example, consider (geodesic) distances in the underlying graph. While they are fairly easy to derive from an observed network of contacts, it is impossible for actors in a network to answer the question “How far away are you from others you are not connected with?”. We denote generic transformed networks from an observed network <span class="math inline">\(x\)</span> as <span class="math inline">\(\tau(x)\)</span>.<br><br>
+Observed presence or absence of ties (the value range is binary) is usually not the relation of interest for network analytic tasks. Instead, mostly implicitly, relations are <em>transformed</em> into a new set of <em>indirect</em> relations on the basis of the <em>observed</em> relations. As an example, consider (shortes path) distances in the underlying graph. While they are fairly easy to derive from an observed network of contacts, it is impossible for actors in a network to answer the question “How far away are you from others you are not connected with?”. We denote generic transformed networks from an observed network <span class="math inline">\(x\)</span> as <span class="math inline">\(\tau(x)\)</span>.<br><br>
 With this notion of indirect relations, we can express all centrality indices in a common framework as <span class="math display">\[
 c_\tau(i)=\sum\limits_{t \in \mathcal{N}} \tau(x)_{it}
 \]</span> Degree and closeness centrality, for instance, can be obtained by setting <span class="math inline">\(\tau=id\)</span> and <span class="math inline">\(\tau=dist\)</span>, respectively. Others need several additional specifications which can be found in <a href="http://dx.doi.org/10.1177/2059799116630650">Brandes (2016)</a> or <a href="https://doi.org/10.1017/S0956792516000401">Schoch &amp; Brandes (2016)</a>.<br>
@@ -153,11 +152,11 @@ g <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#Closeness</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"invsum"</span>)
 <span class="co">#Betweenness Centrality</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dependencies"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"depend_sp"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#Eigenvector Centrality</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
@@ -170,22 +169,22 @@ c_c(i)=\sum_t \frac{1}{dist(i,t)},
 \]</span> the following code can be used:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#harmonic closeness</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_inv) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_inv) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)</code></pre></div>
-<p>The distance based indices constitute one of the biggest groups of indices in the <code>netrankr</code> package.</p>
+<p>Indices based on shortes path distances constitute the biggest group of indices in the <code>netrankr</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#residual closeness (Dangalchev,2006)</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_2pow) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_2pow) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#generalized closeness (Agneessens et al.,2017) (alpha&gt;0)</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#decay centrality (Jackson, 2010) (alpha in [0,1])</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span><span class="fl">0.7</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span><span class="fl">0.7</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#integration centrality (Valente &amp; Foreman, 1998)</span>
@@ -193,9 +192,10 @@ dist_integration &lt;-<span class="st"> </span><span class="cf">function</span>(
   x &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">/</span><span class="kw">max</span>(x)
 }
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_integration) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_integration) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)</code></pre></div>
-<p>Another large group of indices is based on counting walks</p>
+<p>The package implements several additional distance measures for networks, for which no index exists so far. Consult the help of <code><a href="../reference/indirect_relations.html">indirect_relations()</a></code> for possibilities.</p>
+<p>Another large group of indices is based on walk counts.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#subgraph centrality</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -223,6 +223,7 @@ g <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
   <span class="kw">return</span>(DC)
 }</code></pre></div>
+<p>Additionally, the Rstudio addin <code><a href="../reference/index_builder.html">index_builder()</a></code> provides a convenient way to produce the code for any desired index.</p>
 </div>
 </div>
   </div>

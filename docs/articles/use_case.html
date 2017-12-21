@@ -287,22 +287,22 @@ res<span class="op">$</span>relative.rank[id_strozzi,id_medici]</code></pre></di
 <h2 class="hasAnchor">
 <a href="#centrality-as-explanatory-variable-index-approach" class="anchor"></a>Centrality as explanatory variable (Index approach)</h2>
 <p>Usually, we are not simply interested in a ranking of nodes, but we rather would like to use centrality to explain certain node attributes. In our case, we might be interested in the question: “can an index explain the wealth of families?”, or if we already have a more concrete idea “can proximity to other families explain the wealth attribute?”</p>
-<p>“Proximity” can be translated to the graph-theoretic concept of geodesic distances, such that closeness centrality would be an adequate candidate as an index. We here use the pipeline approach of the <code>netrankr</code> package instead of the <code><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness()</a></code> function of <code>igraph</code>. The reasons will become evident in the next section.</p>
+<p>“Proximity” can be translated to the graph-theoretic concept of shortes path distances, such that closeness centrality would be an adequate candidate as an index. We here use the pipeline approach of the <code>netrankr</code> package instead of the <code><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness()</a></code> function of <code>igraph</code>. The reasons will become evident in the next section.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Closeness</span>
 c_C &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"invsum"</span>)
 
 <span class="kw">cor</span>(c_C,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>)</code></pre></div>
 <pre><code>## [1] 0.08823953</code></pre>
-<p>The correlation between closeness and wealth (0.0882) is far to low to constitute that “proximity” is related to wealth. However, there exist various other indices, that are based on the geodesic distances in a graph. Refer to the literature for more details on these indices.</p>
+<p>The correlation between closeness and wealth (0.0882) is far to low to constitute that “proximity” is related to wealth. However, there exist various other indices, that are based on the shortes path distances in a graph. Refer to the literature for more details on these indices.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#harmonic closeness</span>
 c_HC &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_inv) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_inv) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#residual closeness (Dangalchev,2006)</span>
 c_RC &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_2pow) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_2pow) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="co">#integration centrality (Valente &amp; Foreman, 1998)</span>
@@ -310,7 +310,7 @@ dist_integration &lt;-<span class="st"> </span><span class="cf">function</span>(
   x &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">/</span><span class="kw">max</span>(x)
 }
 c_IN &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_integration) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_integration) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 
 <span class="kw">c</span>(<span class="kw">cor</span>(c_HC,<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>wealth,<span class="dt">method=</span><span class="st">"kendall"</span>),
@@ -325,7 +325,7 @@ alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">s
 scores &lt;-<span class="st"> </span>
 <span class="kw">sapply</span>(alpha,<span class="cf">function</span>(x)
     florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">      </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span>x) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span>x) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">      </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 )
 cors_gc &lt;-<span class="st"> </span><span class="kw">apply</span>(scores,<span class="dv">2</span>,
@@ -338,7 +338,7 @@ alpha &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl"
 scores &lt;-<span class="st"> </span>
 <span class="kw">sapply</span>(alpha,<span class="cf">function</span>(x)
   florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span>x) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_powd,<span class="dt">alpha=</span>x) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 )
 cors_dc &lt;-<span class="st"> </span><span class="kw">apply</span>(scores,<span class="dv">2</span>,
@@ -347,15 +347,15 @@ cors_dc &lt;-<span class="st"> </span><span class="kw">apply</span>(scores,<span
 res_dc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">max</span>(cors_dc),alpha[<span class="kw">which.max</span>(cors_dc)])</code></pre></div>
 <p>The highest correlation for generalized closeness is 0.1159434 achieved for <span class="math inline">\(\alpha\)</span>= 0.51</p>
 <p>The highest correlation for decay centrality is 0.1159434 achieved for <span class="math inline">\(\alpha\)</span>=0.26</p>
-<p>We could know accept that there is no index based on geodesic distances that could explain wealth. Or, we could start to craft new indices that might yield a better correlation with wealth. However, we then enter the dilemma that was mentioned at the end of the last section. If we find one, we can not be certain that there might not even be a better one out there. In contrast, if we do not succeed, we can not guarantee that there does not exist an index with a higher correlation.</p>
+<p>We could know accept that there is no index based on shortes path distances that could explain wealth. Or, we could start to craft new indices that might yield a better correlation with wealth. However, we then enter the dilemma that was mentioned at the end of the last section. If we find one, we can not be certain that there might not even be a better one out there. In contrast, if we do not succeed, we can not guarantee that there does not exist an index with a higher correlation.</p>
 <hr>
 </div>
 <div id="centrality-as-explanatory-variable-dominance-approach" class="section level2">
 <h2 class="hasAnchor">
 <a href="#centrality-as-explanatory-variable-dominance-approach" class="anchor"></a>Centrality as explanatory variable (Dominance approach)</h2>
-<p>Since we are postulating a connection between proximity and wealth, we compute the pairwise geodesic distances as our <em>indirect relation</em> of interest and calculate the positional dominance relations.</p>
+<p>Since we are postulating a connection between proximity and wealth, we compute the pairwise shortes path distances as our <em>indirect relation</em> of interest and calculate the positional dominance relations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/positional_dominance.html">positional_dominance</a></span>(<span class="dt">benefit=</span>F)
 
 <span class="kw"><a href="../reference/comparable_pairs.html">comparable_pairs</a></span>(D)</code></pre></div>
@@ -363,7 +363,7 @@ res_dc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">
 <p>Note that exactly the same pairs are comparable as for neighborhood-inclusion. However, with one additional assumption, we will be able to increase the number of comparable pairs significantly (and thus reduce the space of potential rankings). By summing up distances in various ways, as done by the indices above, we assume families to be <em>homogeneous</em>. It doesn’t matter to whom we have a small distance, it just matters that they are small.</p>
 <p>If we can safely comply with this assumption, we can use positional dominance <em>under total homogeneity</em>. It is important to note, that if a family is dominated by another under this premise, it will have a lower score in <strong>any</strong> distance based centrality index.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D &lt;-<span class="st"> </span>florentine_m <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"geodesic"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"dist_sp"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/positional_dominance.html">positional_dominance</a></span>(<span class="dt">benefit=</span>F,<span class="dt">map=</span>T)
 
 <span class="kw"><a href="../reference/comparable_pairs.html">comparable_pairs</a></span>(D)</code></pre></div>
@@ -372,7 +372,7 @@ res_dc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">
 <p>We proceed to explore if there is potential for a distance based ranking to explain wealth perfectly. This is only possible, if families with lower wealth do not dominate wealthier family. Otherwise they would always be ranked higher, prohibiting a perfect correlation.</p>
 <p>The figure below shows the dominance relations as a directed graph, where the x coordinate of nodes is proportional to the wealth attribute and the y coordinate to the number of dominated families. Any edge pointing to the left (shown in red) denotes a pair of “wrongly” ordered families, i.e. a wealthy family is dominated by a less wealthy one.</p>
 <p><img src="use_case_files/figure-html/plot%20dist_dom-1.png" width="480" style="display: block; margin: auto;"></p>
-<p>In total, we find <span class="math inline">\(41\)</span> such pairs (<span class="math inline">\(39\)</span>% of all pairs). This implies that we are (potentially) quite far from being able to explain wealth perfectly with geodesic distances. In the following we will explore <em>how</em> far away.</p>
+<p>In total, we find <span class="math inline">\(41\)</span> such pairs (<span class="math inline">\(39\)</span>% of all pairs). This implies that we are (potentially) quite far from being able to explain wealth perfectly with shortes path distances. In the following we will explore <em>how</em> far away.</p>
 <p>We start by calculating the rank intervals to illustrate the difference to neighborhood-inclusion.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(D,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(florentine_m)<span class="op">$</span>name)</code></pre></div>
 <p><img src="use_case_files/figure-html/rk_inter_dist-1.png" width="480" style="display: block; margin: auto;"> All intervals shrunk significantly and even correspond to a single point for two families (Pazzi and Medici). This implies that no matter which distance based index we use, the Pazzi family will always be ranked last and the Medici always on top.</p>

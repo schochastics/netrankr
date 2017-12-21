@@ -121,11 +121,11 @@
 <h2 class="hasAnchor">
 <a href="#theoretical-background" class="anchor"></a>Theoretical Background</h2>
 <p>A one-mode network can be described as a <em>dyadic variable</em> <span class="math inline">\(x\in \mathcal{W}^\mathcal{D}\)</span>, where <span class="math inline">\(\mathcal{W}\)</span> is the value range of the network (in the simple case of unweighted networks <span class="math inline">\(\mathcal{W}=\{0,1\}\)</span>) and <span class="math inline">\(\mathcal{D}=\mathcal{N}\times\mathcal{N}\)</span> describes the dyadic domain of actors <span class="math inline">\(\mathcal{N}\)</span>.<br><br>
-Observed presence or absence of ties (the value range is binary) is usually not the relation of interest for network analytic tasks. Instead, mostly implicitly, relations are <em>transformed</em> into a new set of <em>indirect</em> relations on the basis of the <em>observed</em> relations. As an example, consider (geodesic) distances in the underlying graph. While they are fairly easy to derive from an observed network of contacts, it is impossible for actors in a network to answer the question “How far away are you from others you are not connected with?”. We denote generic transformed networks from an observed network <span class="math inline">\(x\)</span> as <span class="math inline">\(\tau(x)\)</span>.<br><br>
-With this notion of indirect relations, we can express all centrality indices in a common framework as <span class="math display">\[
+Observed presence or absence of ties (the value range is binary) is usually not the relation of interest for network analytic tasks. Instead, mostly implicitly, relations are <em>transformed</em> into a new set of <em>indirect</em> relations on the basis of the <em>observed</em> relations. As an example, consider (shortes path) distances in the underlying graph. While they are fairly easy to derive from an observed network of contacts, it is impossible for actors in a network to answer the question “How far away are you from others you are not connected with?”. We denote generic transformed networks from an observed network <span class="math inline">\(x\)</span> as <span class="math inline">\(\tau(x)\)</span>.<br><br>
+With this notion of indirect relations, we can express centrality indices in a common framework as <span class="math display">\[
 c_\tau(i)=\sum\limits_{t \in \mathcal{N}} \tau(x)_{it}
 \]</span> Degree and closeness centrality, for instance, can be obtained by setting <span class="math inline">\(\tau=id\)</span> and <span class="math inline">\(\tau=dist\)</span>, respectively. Others need several additional specifications which can be found in <a href="http://dx.doi.org/10.1177/2059799116630650">Brandes (2016)</a> or <a href="https://doi.org/10.1017/S0956792516000401">Schoch &amp; Brandes (2016)</a>.<br>
-With this framework, all centrality indices can be characterized as degree-like measures in a suitably transformed network <span class="math inline">\(\tau(x)\)</span>.</p>
+With this framework, we can characterize centrality indices as degree-like measures in a suitably transformed network <span class="math inline">\(\tau(x)\)</span>.</p>
 <hr>
 </div>
 <div id="indirect-relations-in-the-netrankr-package" class="section level2">
@@ -140,30 +140,38 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 <span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">11</span>
 
 <span class="co">#adjacency</span>
-A &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"identity"</span>)
-<span class="co">#geodesic distances</span>
-D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"geodesic"</span>)
+A &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type =</span> <span class="st">"identity"</span>)
+<span class="co">#shortes path distances</span>
+D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"dist_sp"</span>)
 <span class="co">#dyadic dependencies (as used in betweenness centrality)</span>
-B &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"dependencies"</span>)
+B &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type =</span> <span class="st">"depend_sp"</span>)
 <span class="co">#resistance distance (as used in information centrality)</span>
-R &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"resistance"</span>)</code></pre></div>
-<p>The function takes an additional parameter <code>FUN</code> which passes an additional function to further specify the transformation. The main use is to obtain walk based indirect relations</p>
+R &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"dist_resist"</span>)
+<span class="co">#Logarithmic forest distance (parametrized family of distances)</span>
+LF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g, <span class="dt">type =</span> <span class="st">"dist_lf"</span>,<span class="dt">lfparam =</span> <span class="dv">1</span>) 
+<span class="co">#Walk distance (parametrized family of distances)</span>
+WD &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g, <span class="dt">type =</span> <span class="st">"dist_walk"</span>,<span class="dt">dwparam =</span> <span class="fl">0.001</span>) 
+<span class="co">#Random walk distance</span>
+WD &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g, <span class="dt">type =</span> <span class="st">"dist_rwalk"</span>) 
+<span class="co">#See ?indirect_relations for further options</span></code></pre></div>
+<p>The function takes an additional parameter <code>FUN</code> which can be used to pass a function to further transform relations. The main use is to obtain indirect relations based on walk counts.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#count the limit proportion of walks (used for eigenvector centrality)</span>
-W &lt;-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_limit_prop)
+W &lt;-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type =</span> <span class="st">"walks"</span>,<span class="dt">FUN =</span> walks_limit_prop)
 <span class="co">#count the number of walks of arbitrary length between nodes, weighted by </span>
 <span class="co">#the inverse factorial of their length (used for subgraph centrality)</span>
-S &lt;-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"walks"</span>,<span class="dt">FUN=</span>walks_exp)</code></pre></div>
+S &lt;-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type =</span> <span class="st">"walks"</span>,<span class="dt">FUN =</span> walks_exp)</code></pre></div>
 <p>Additional parameters can also be passed to calculate parameterized versions of relations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Calculate dist(s,t)^-alpha</span>
-D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha=</span><span class="dv">2</span>)</code></pre></div>
-<p>To view all predefined transformation functions type <code><a href="../reference/transform_relations.html">?transform_relations</a></code>. The predefined functions follow the naming scheme <code>&lt;relation&gt;_&lt;transformation&gt;</code>. The functions <code>dist_</code> are thus only meaningful for <code>type="geodesic"</code> or <code>type="resistance"</code> and <code>walks_</code> for <code>type="walks"</code>. The predefined functions are not exhaustive and just constitute the most common transformations. It is, however, straightforward to pass your own transformation function.</p>
+D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_dpow,<span class="dt">alpha =</span> <span class="dv">2</span>)</code></pre></div>
+<p>To view all predefined transformation functions see <code><a href="../reference/transform_relations.html">?transform_relations</a></code>. The predefined functions follow the naming scheme <code>&lt;relation&gt;_&lt;transformation&gt;</code>. The functions <code>dist_</code> are thus only meaningful fordistance type relations such as <code>type="dist_sp"</code> or <code>type="dist_resist"</code>. Equivalently, <code>walks_</code> for <code>type="walks"</code>. The predefined functions are not exhaustive and just constitute the most common transformations. It is, however, straightforward to pass your own transformation function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dist_integration &lt;-<span class="st"> </span><span class="cf">function</span>(x){
   x &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">/</span><span class="kw">max</span>(x)
 }
-D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"geodesic"</span>,<span class="dt">FUN=</span>dist_integration)</code></pre></div>
+D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(g,<span class="dt">type=</span><span class="st">"dist_sp"</span>,<span class="dt">FUN=</span>dist_integration)</code></pre></div>
 <p>The function <code>dist_integration()</code> computes <span class="math display">\[
 \tau(x)_{ij}=1-\frac{dist(i,j)-1}{max_{i,j}\; dist(i,j)}
 \]</span> which is used in the centrality index <em>integration</em> defined by <a href="https://doi.org/10.1016/S0378-8733(97)00007-5">Valente and Foreman (1998)</a></p>
+<p>The computed relations CAN be used to build centrality indices (e.g. with the provided Rstudio <code><a href="../reference/index_builder.html">index_builder()</a></code>), but also to derive partial rankings with <code><a href="../reference/positional_dominance.html">positional_dominance()</a></code>. Consult the respective <a href="positional_dominance.html">vignette</a> for help.</p>
 </div>
 </div>
   </div>

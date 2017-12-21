@@ -153,19 +153,19 @@
 <h2 class="hasAnchor">
 <a href="#runtimes-of-approximation" class="anchor"></a>Runtimes of approximation</h2>
 <p>The function <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> generally gives the best approximations. The larger the number of samples, the better. Since the number of samples should be at least cubic in the number of elements, it is limited to partial rankings with a couple of hundred elements.</p>
-<p>Although the function <code><a href="../reference/approx_rank_expected.html">approx_rank_expected()</a></code> and <code><a href="../reference/approx_rank_relative.html">approx_rank_relative()</a></code> performed the worst in the above tests, they are computationally the least expensive with a time complexity of <span class="math inline">\(\mathcal{O}(n^2)\)</span>. Thus, they are able to at least give a rough approximation also for partial rankings beyond a 1000 elements.</p>
+<p>Although the function <code><a href="../reference/approx_rank_expected.html">approx_rank_expected()</a></code> and <code><a href="../reference/approx_rank_relative.html">approx_rank_relative()</a></code> performed the worst in the above tests, they are computationally the least expensive with a time complexity of <span class="math inline">\(\mathcal{O}(n^2)\)</span>. Thus, they are able to at least give a rough approximation also for partial rankings beyond 1000 elements.</p>
 <hr>
 </div>
 <div id="session-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h2>
-<pre><code>## R version 3.4.1 (2017-06-30)
+<pre><code>## R version 3.4.2 (2017-09-28)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 16.04.3 LTS
+## Running under: Ubuntu 17.10
 ## 
 ## Matrix products: default
-## BLAS: /usr/lib/libblas/libblas.so.3.6.0
-## LAPACK: /usr/lib/lapack/liblapack.so.3.6.0
+## BLAS: /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.7.1
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.7.1
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -179,10 +179,10 @@
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.4.1  backports_1.1.0 magrittr_1.5    rprojroot_1.2  
-##  [5] tools_3.4.1     htmltools_0.3.6 yaml_2.1.14     Rcpp_0.12.12   
-##  [9] stringi_1.1.5   rmarkdown_1.6   knitr_1.16      stringr_1.2.0  
-## [13] digest_0.6.12   evaluate_0.10.1</code></pre>
+##  [1] compiler_3.4.2  backports_1.1.2 magrittr_1.5    rprojroot_1.3-1
+##  [5] tools_3.4.2     htmltools_0.3.6 yaml_2.1.16     Rcpp_0.12.14   
+##  [9] stringi_1.1.5   rmarkdown_1.8   knitr_1.17      stringr_1.2.0  
+## [13] digest_0.6.13   evaluate_0.10.1</code></pre>
 </div>
 </div>
   </div>
