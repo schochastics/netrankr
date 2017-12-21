@@ -6,7 +6,6 @@
 \alias{dist_inv}
 \alias{dist_dpow}
 \alias{dist_powd}
-\alias{dist_triang}
 \alias{walks_limit_prop}
 \alias{walks_exp}
 \alias{walks_exp_even}
@@ -22,8 +21,6 @@ dist_inv(x)
 dist_dpow(x, alpha = 1)
 
 dist_powd(x, alpha = 0.5)
-
-dist_triang(x)
 
 walks_limit_prop(x)
 
@@ -66,9 +63,6 @@ The following functions are implemented so far:
 \code{dist_dpow} returns \eqn{x^{-\alpha}} where \eqn{\alpha} should be chosen greater than 0.
 
 \code{dist_powd} returns \eqn{\alpha^x} where \eqn{\alpha} should be chosen between 0 and 1.
-
-\code{dist_triang} returns \eqn{\sum_t\frac{x_{st}}{x_{su}+x_{st}}}. This function is used for
-a corrected betweenness version.
 
 \code{walks_limit_prop} returns the limit proportion of walks between pairs of nodes. Calculating
 rowSums of this relation will result in the principle eigenvector of the network.
