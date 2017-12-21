@@ -163,7 +163,7 @@ to the density of the graph. See Details.</p></td>
 
     <p>Threshold graphs can be constructed with a binary sequence. For each 0, an isolated
 vertex is inserted and for each 1, a vertex is inserted that connects to all previously inserted
-vertices. The probability of inserting a dominating vertice is controlled with parameter <code>p</code>.
+vertices. The probability of inserting a dominating vertices is controlled with parameter <code>p</code>.
 An important property of threshold graphs is, that all centrality indices induce the same ranking.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -178,7 +178,7 @@ indices and a class of uniquely ranked graphs. <em>Social Networks</em> 50, 46â€
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>require</span>(<span class='no'>igraph</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>igraph</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>threshold_graph</span>(<span class='fl'>10</span>,<span class='fl'>0.3</span>)</div><span class='co'># NOT RUN {</span>
 <span class='fu'>plot</span>(<span class='no'>g</span>)
 

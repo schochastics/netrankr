@@ -147,8 +147,6 @@ with <a href='indirect_relations.html'>indirect_relations</a> to fine tune indir
 
 <span class='fu'>dist_powd</span>(<span class='no'>x</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
 
-<span class='fu'>dist_triang</span>(<span class='no'>x</span>)
-
 <span class='fu'>walks_limit_prop</span>(<span class='no'>x</span>)
 
 <span class='fu'>walks_exp</span>(<span class='no'>x</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
@@ -193,8 +191,6 @@ The results might, however, not be interpretable.</p>
     <code>dist_inv</code> returns \(1/x\)
     <code>dist_dpow</code> returns \(x^{-\alpha}\) where \(\alpha\) should be chosen greater than 0.
     <code>dist_powd</code> returns \(\alpha^x\) where \(\alpha\) should be chosen between 0 and 1.
-    <code>dist_triang</code> returns \(\sum_t\frac{x_{st}}{x_{su}+x_{st}}\). This function is used for
-a corrected betweenness version.
     <code>walks_limit_prop</code> returns the limit proportion of walks between pairs of nodes. Calculating
 rowSums of this relation will result in the principle eigenvector of the network.
     <code>walks_exp</code> returns \(\sum_{k=0}^\infty \frac{A^k}{k!}\)

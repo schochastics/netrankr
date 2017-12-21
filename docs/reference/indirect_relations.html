@@ -137,13 +137,14 @@
     
     <p>Derive indirect relations for a given network.
 Observed relations, like presents or absence of a relation, are commonly not the center
-of analysis, but are transformed in a new set of indirect relation like geodesic
+of analysis, but are transformed in a new set of indirect relation like shortest path
 distances among nodes. These transformations are usually an implicit step when centrality
 indices are used. Making this step explicit gives more possibilities, for example
 calculating partial centrality rankings with <a href='positional_dominance.html'>positional_dominance</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>indirect_relations</span>(<span class='no'>g</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"geodesic"</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>indirect_relations</span>(<span class='no'>g</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"dist_sp"</span>, <span class='kw'>lfparam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dwparam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>netflowmode</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>rspxparam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -155,6 +156,22 @@ calculating partial centrality rankings with <a href='positional_dominance.html'
     <tr>
       <th>type</th>
       <td><p>String giving the relation to be calculated. See Details for options.</p></td>
+    </tr>
+    <tr>
+      <th>lfparam</th>
+      <td><p>Numeric parameter. Only used if type = "dist_lf".</p></td>
+    </tr>
+    <tr>
+      <th>dwparam</th>
+      <td><p>Numeric parameter. Only used if type = "dist_walk".</p></td>
+    </tr>
+    <tr>
+      <th>netflowmode</th>
+      <td><p>String, one of raw, frac, or norm. Only used if type = "depend_netflow".</p></td>
+    </tr>
+    <tr>
+      <th>rspxparam</th>
+      <td><p>Numeric parameter. Only used if type = "depend_rsps" or type = "depend_rspn".</p></td>
     </tr>
     <tr>
       <th>FUN</th>
@@ -174,18 +191,73 @@ calculating partial centrality rankings with <a href='positional_dominance.html'
 
     <p>The <code>type</code> parameter has the following options.
     <em>'identity'</em> returns the adjacency matrix of the network.
-    <em>'distances'</em> returns geodesic distances between all pairs of nodes.
-    <em>'dependencies'</em> returns dyadic dependencies
+    <em>'dist_sp'</em> returns shortest path distances between all pairs of nodes.
+    <em>'depend_sp'</em> returns dyadic dependencies
 $$\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}$$
 where \(\sigma(s,t|u)\) is the number of shortest paths from s to t that include u and
-\(\sigma(s,t)\) is the total number of shortest (s,t)-paths. This relation is mostly used
+\(\sigma(s,t)\) is the total number of shortest (s,t)-paths. This relation is used
 for betweenness-like centrality indices.
     <em>'walks'</em> returns walk counts between pairs of nodes, usually they are
 weighted decreasingly in their lengths or other properties which can be done by adding
 a function in <code>FUN</code>.  See <a href='transform_relations.html'>transform_relations</a> for options.
-    <em>'resistance'</em> returns the resistance distance between all pairs of vertices.</p>
-<p>The function <code>FUN</code> is used to further specify the indirect
+    <em>'dist_resist'</em> returns the resistance distance between all pairs of nodes.
+    <em>'dist_lf'</em> returns a logarithmic forest distance \(d_\alpha(s,t)\). The logarithmic forest
+distances form a one-parametric family of distances, converging to shortest path distances as \(\alpha -&gt; 0\)
+and to the resistance distance as \(\alpha -&gt; \infty\). See (Chebotarev, 2011) for more details.
+The parameter <code>lfparam</code> can be used to tune \(\alpha\).
+    <em>'dist_walk'</em> returns the walk distance \(d_\alpha^W(s,t)\) between nodes. The walk distances form a one-parametric
+family of distances, converging to shortest path distances as \(\alpha -&gt; 0\) and to longest
+walk distances for \(\alpha -&gt; \infty\). Walk distances contain the logarithmic forest
+distances as a special case. See (Chebotarev, 2012) for more details.
+    <em>'dist_rwalk'</em> returns the expected length of a random walk between two nodes. For more
+details see (Noh and Rieger, 2004)
+    <em>'depend_netflow'</em> returns dependencies based on network flow (See Freeman et al.,1991).
+If <code>netflowmode="raw"</code>, the function returns
+$$\delta(u,s) = \sum_{t \in V} f(s,t,G)-f(s,t,G-v)$$
+where f(s,t,G) is the maximum flow from s to t in G and f(s,t,G-v) in G without the node v.
+For <code>netflowmode="frac"</code> it returns dependencies in the form, similar to shortest path dependencies:
+$$\delta(u,s) = \sum_{t \in V} \frac{f(s,t,G)-f(s,t,G-v)}{f(s,t,G)}$$
+    <em>'depend_curflow'</em> returns pairwise dependencies based on current flow. The relation is
+based on the same idea as 'depend_sp' and 'depend_netflow'. However, instead of considering
+shortest paths or network flow, the current flow (or equivalent: random walks) between nodes
+are of interest. See (Newman, 2005) for details.
+    <em>'depend_exp'</em> returns pairwise dependencies based on 'communicability':
+$$\delta(u,s)=\sum_{t \in V} \frac{exp(A)_{st}-exp(A+E(u))_{st}}{exp(A)_{st}},$$
+where E(u) has nonzeros only in row and column u, and
+in this row and column has -1 if A has +1. See (Estrada et al., 2009) for additional details.
+    <em>'depend_rsps'</em>. Simple randomized shortest path dependencies.
+The simple RSP dependency of a node u with respect to absorbing paths from s to t,
+is defined as the expected number of visits through u over all s-t-walks. The
+parameter <code>rspxparam</code> is the "inverse temperature parameter".
+If it converges to infinity, only shortest paths are considered and the expected
+number of visits to a node on a shortest path approaches the probability of
+following that particular path. When the parameter converges to zero, then the
+dependencies converge to the expected number of visits to a node over all absorbing
+walks with respect to the unbiased random walk probabilities. This means for undirected networks,
+that the relations converge to adjacency. See (Kivimäki et al., 2016) for details.
+    <em>'depend_rspn'</em> Net randomized shortest path dependencies.
+The parameter <code>rspxparam</code> is the "inverse temperature parameter". The asymptotic
+for the infinity case are the same as for 'depend_rsps'. If the parameter approaches zero, then
+it converges to 'depend_curflow'. The net randomized shortest path dependencies
+are closely related to the random walk interpretation of current flows.
+See (Kivimäki et al., 2016) for technical details.</p>
+<p>The function <code>FUN</code> is used to transform the indirect
 relation. See <a href='transform_relations.html'>transform_relations</a> for predefined functions and additional help.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Chebotarev, P., 2012. The walk distances in graphs. <em>Discrete Applied Mathematics</em>, 160(10), pp.1484-1500.</p>
+<p>Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
+the resistance distances. <em>Discrete Applied Mathematics</em> 159,295-302.</p>
+<p>Noh, J.D. and Rieger, H., 2004. Random walks on complex networks. <em>Physical Review Letters</em>, 92(11), p.118701.</p>
+<p>Freeman, L.C., Borgatti, S.P., and White, D.R., 1991.
+Centrality in Valued Graphs: A Measure of Betweenness Based on Network Flow. <em>Social Networks</em> 13(2), 141-154.</p>
+<p>Newman, M.E., 2005. A measure of betweenness centrality based on random walks. <em>Social Networks</em>, 27(1), pp.39-54.</p>
+<p>Estrada, E., Higham, D.J., and Hatano, N., 2009.
+Communicability betweenness in complex networks. <em>Physica A</em> 388,764-774.</p>
+<p>Kivimäki, I., Lebichot, B., Saramäki, J., and Saerens, M., 2016.
+Two betweenness centrality measures based on Randomized Shortest Paths
+<em>Scientific Reports</em> 6: 19668</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -193,47 +265,21 @@ relation. See <a href='transform_relations.html'>transform_relations</a> for pre
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>require</span>(<span class='no'>igraph</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>igraph</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/make_empty_graph'>graph.empty</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>11</span>,<span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/add_edges'>add_edges</a></span>(<span class='no'>g</span>,<span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>11</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>11</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>5</span>,<span class='fl'>9</span>,<span class='fl'>5</span>,<span class='fl'>11</span>,<span class='fl'>6</span>,<span class='fl'>7</span>,<span class='fl'>6</span>,<span class='fl'>8</span>,
                    <span class='fl'>6</span>,<span class='fl'>10</span>,<span class='fl'>6</span>,<span class='fl'>11</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>7</span>,<span class='fl'>10</span>,<span class='fl'>7</span>,<span class='fl'>11</span>,<span class='fl'>8</span>,<span class='fl'>9</span>,<span class='fl'>8</span>,<span class='fl'>10</span>,<span class='fl'>9</span>,<span class='fl'>10</span>))
-<span class='co'>#geodesic distances</span>
-<span class='no'>D</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"geodesic"</span>)
 
-<span class='co'>#dyadic dependencies</span>
-<span class='no'>D</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"dependencies"</span>)
+<span class='co'>#shortest path distances</span>
+<span class='no'>D</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"dist_sp"</span>)
+
+<span class='co'>#inverted shortest path distances</span>
+<span class='no'>D</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"dist_sp"</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>dist_inv</span>)
+<span class='co'>#shortes path dependencies (used for betweenness)</span>
+<span class='no'>D</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"depend_sp"</span>)
 
 <span class='co'>#walks attenuated exponentially by there length</span>
-<span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"walks"</span>,<span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>walks_exp</span>)
-
-<span class='co'>#positional dominance of a transformed relation...</span>
-<span class='no'>D</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"geodesic"</span>)
-
-<span class='co'>#...under total heterogeneity</span>
-<span class='fu'><a href='positional_dominance.html'>positional_dominance</a></span>(<span class='no'>D</span>, <span class='kw'>map</span> <span class='kw'>=</span> <span class='fl'>FALSE</span> ,<span class='kw'>benefit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-#&gt;  [1,]    0    0    1    0    1    1    1    0    0     0     1
-#&gt;  [2,]    0    0    0    1    0    0    0    1    0     0     0
-#&gt;  [3,]    0    0    0    0    1    0    0    0    0     0     1
-#&gt;  [4,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt;  [5,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt;  [6,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt;  [7,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt;  [8,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt;  [9,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt; [10,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt; [11,]    0    0    0    0    0    0    0    0    0     0     0</div><div class='input'><span class='co'>#...under total homogeneity</span>
-<span class='fu'><a href='positional_dominance.html'>positional_dominance</a></span>(<span class='no'>D</span>, <span class='kw'>map</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> ,<span class='kw'>benefit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-#&gt;  [1,]    0    0    1    1    1    1    1    1    1     1     1
-#&gt;  [2,]    1    0    1    1    1    1    1    1    1     1     1
-#&gt;  [3,]    0    0    0    0    1    1    1    1    1     1     1
-#&gt;  [4,]    0    0    0    0    1    1    1    1    1     1     1
-#&gt;  [5,]    0    0    0    0    0    1    1    1    1     0     1
-#&gt;  [6,]    0    0    0    0    0    0    0    0    0     0     0
-#&gt;  [7,]    0    0    0    0    0    1    0    1    1     0     1
-#&gt;  [8,]    0    0    0    0    0    1    0    0    1     0     0
-#&gt;  [9,]    0    0    0    0    0    1    0    1    0     0     0
-#&gt; [10,]    0    0    0    0    0    1    0    1    1     0     0
-#&gt; [11,]    0    0    0    0    0    0    0    0    0     0     0</div></pre>
+<span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"walks"</span>,<span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>walks_exp</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -243,6 +289,8 @@ relation. See <a href='transform_relations.html'>transform_relations</a> for pre
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

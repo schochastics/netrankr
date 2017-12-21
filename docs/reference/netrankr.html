@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>netrankr: An R package to analyze partial rankings in networks — netrankr • netrankr</title>
+<title>netrankr: An R package for centrality and partial rankings in networks — netrankr • netrankr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -131,13 +131,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>netrankr: An R package to analyze partial rankings in networks</h1>
+    <h1>netrankr: An R package for centrality and partial rankings in networks</h1>
     </div>
 
     
     <p>netrankr provides several functions to analyze partial rankings for network
-centrality. The main focus lies on methods that do not rely on indices like degree,
-betweenness or closeness.</p>
+centrality. The main focus lies on methods that do not necessarily rely on indices like degree,
+betweenness or closeness. However, the package also provides more than 20 indices,
+which can be constructed via a Rstudio addin.</p>
 <p>The package follows the philosophy, that centrality
 can be decomposed in a series of micro steps. Starting from a network,
 <a href='indirect_relations.html'>indirect_relations</a> can be derived which can either be aggregated into an index with

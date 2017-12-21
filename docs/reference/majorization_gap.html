@@ -179,7 +179,7 @@ indices and a class of uniquely ranked graphs. <em>Social Networks</em> <strong>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>require</span>(<span class='no'>igraph</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>igraph</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/make_star'>graph.star</a></span>(<span class='fl'>5</span>,<span class='st'>'undirected'</span>)
 <span class='fu'>majorization_gap</span>(<span class='no'>g</span>) <span class='co'>#0 since star graphs are threshold graphs</span></div><div class='output co'>#&gt; [1] 0</div><div class='input'>
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/sample_gnp'>sample_gnp</a></span>(<span class='fl'>100</span>,<span class='fl'>0.15</span>)
