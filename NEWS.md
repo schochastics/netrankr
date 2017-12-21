@@ -1,4 +1,4 @@
-## netrankr 0.2.0.9000
+## netrankr 0.2.0
 
 * added Rstudio addin to build more than 20 centrality indices
 * added indirect relations: dist_lf,dist_walk, depend_netflow, 
