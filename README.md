@@ -21,7 +21,7 @@ To install from CRAN: \[not yet published\]
 To install the developer version from github:
 
 ``` r
-require(devtools)
+library(devtools)
 install_github("schochastics/netrankr")
 ```
 
