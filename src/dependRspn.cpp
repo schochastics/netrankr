@@ -1,9 +1,6 @@
 #include <RcppArmadillo.h>
-
 using namespace Rcpp;
-using namespace arma;
 
-// [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 arma::mat dependRspn(std::vector<std::vector<int> > A,arma::mat Z,
                      arma::mat Zdiv, arma::mat W, int n) {
@@ -14,21 +11,21 @@ arma::mat dependRspn(std::vector<std::vector<int> > A,arma::mat Z,
   e.fill(1);
   for(int i=0;i<n; ++i){
     
-    arma::colvec z_ci = Z.col(i);//(_,i);
-    arma::rowvec z_ri = Z.row(i);//(i,_);
+    arma::colvec z_ci = Z.col(i);
+    arma::rowvec z_ri = Z.row(i);
     for(std::vector<int>::size_type jiter = 0; jiter!=A[i].size(); ++jiter){
       int j = A[i][jiter];
       
-      arma::colvec z_cj = Z.col(j);//  Z(_,j);
-      arma::rowvec z_rj = Z.row(j);// Z(j,_);
+      arma::colvec z_cj = Z.col(j);
+      arma::rowvec z_rj = Z.row(j);
       
-      arma::mat s1_ij = (z_ci*z_rj) % Zdiv; //-.t()
-      arma::mat s1_ji = (z_cj*z_ri) % Zdiv; //-.t()
+      arma::mat s1_ij = (z_ci*z_rj) % Zdiv;
+      arma::mat s1_ji = (z_cj*z_ri) % Zdiv;
       
-      arma::colvec s2_vec_ij = (z_ci % z_rj.t()) % Zdiv.diag(); //+.t()
+      arma::colvec s2_vec_ij = (z_ci % z_rj.t()) % Zdiv.diag();
       arma::mat s2_ij = e*s2_vec_ij.t();
       
-      arma::colvec s2_vec_ji = (z_cj % z_ri.t()) % Zdiv.diag(); //+.t()
+      arma::colvec s2_vec_ji = (z_cj % z_ri.t()) % Zdiv.diag();
       arma::mat s2_ji = e * s2_vec_ji.t();
       
       arma::mat N_ij = arma::as_scalar(W(i,j)) * (s1_ij - s2_ij);
