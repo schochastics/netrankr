@@ -205,7 +205,7 @@ indirect_relations <- function(g,
     rel <- depend_curflow_fct(g)
     rel <- FUN(rel, ...)
   } else if (type == "dist_rwalk") {
-    rel <- depend_curflow_fct(g)
+    rel <- dist_rwalk_fct(g)
     rel <- FUN(rel, ...)
   } else {
     stop(paste(type, "is not defined as indirect relation."))
