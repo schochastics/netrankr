@@ -3,8 +3,8 @@ Type: Package
 Title: Analyzing Partial Rankings in Networks
 Version: 0.2.0
 Authors@R: c(
-    person("David", "Schoch", email = "david.schoch@uni-konstanz.de", role = c("aut", "cre")),
-    person("Julian","Müller", email = "julian.mueller@uni-konstanz.de", role = "ctb"))
+    person("David", "Schoch", email = "david.schoch@gess.ethz.ch", role = c("aut", "cre")),
+    person("Julian","Müller", email = "julian.mueller@gess.ethz.ch", role = "ctb"))
 Description: Implements methods for centrality related analyses of networks. 
     While the package includes the possibility to build more than 20 indices, 
     its main focus lies on index-free assessment of centrality via partial 
