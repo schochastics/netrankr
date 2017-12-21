@@ -2,7 +2,7 @@
 
 * added Rstudio addin to build more than 20 centrality indices
 * added indirect relations: dist_lf,dist_walk, depend_netflow, 
-depend_exp, depend_rsps, depend_rspn, depend_curflow,dist_rwalk
+depend_exp, depend_rsps, depend_rspn, depend_curflow, dist_rwalk, dist_walk
 * API breaking: changed "dependencies" to "depend_sp" in `indirect_relations()`
 * API breaking: changed "geodesic" to "dist_sp" in `indirect_relations()`
 * API breaking: changed "resistance" to "dist_resist" in `indirect_relations()`
