@@ -2,7 +2,7 @@
 title: "Use Case: Florentine Families"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{07 use case}
+  %\VignetteIndexEntry{08 use case}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

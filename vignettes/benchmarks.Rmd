@@ -2,7 +2,7 @@
 title: "Benchmark Results"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{08 benchmarks}
+  %\VignetteIndexEntry{09 benchmarks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
