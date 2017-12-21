@@ -11,7 +11,7 @@ This is the first submission of the netrankr package.
 
 There were no ERRORs or WARNINGs
 
-**NOTE on Ubuntu:**
+**NOTEs on Ubuntu:**
 
 ```
 checking installed package size ... NOTE
@@ -28,4 +28,10 @@ happy to resubmit (after all, I am very new to C++).
 
 This note does not appear when using the win-builder or on mac.
 
+```
+* checking top-level files ... NOTE
+Files ‘README.md’ or ‘NEWS.md’ cannot be checked without ‘pandoc’ being installed.
+```
+
+I feel like this should not be a problem. But I may be mistaken.
 
