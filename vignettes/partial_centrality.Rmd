@@ -12,8 +12,8 @@ from [neighborhood-inclusion](neighborhood_inclusion.html) or, more general,
 [positional dominance](positional_dominance.html). More on the topic of
 partial rankings can be found in the following literature.
 
-> Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank 
-Probabilities in Networks. *Social Networks*, **to appear**
+> Schoch, David. (2018). Centrality without Indices: Partial Rankings and Rank
+Probabilities in Networks. *Social Networks*, **54**, 50-60.([link](https://doi.org/10.1016/j.socnet.2017.12.003))
 
 > Patil, G.P. & Taillie, C. (2004). Multiple Indicators, partially ordered sets, 
 and linear extensions: Multi-criterion ranking and prioritization. 

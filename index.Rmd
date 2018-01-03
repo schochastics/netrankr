@@ -198,16 +198,17 @@ ________________________________________________________________________________
 want to learn more about the theoretical background of the package, 
 consult the following literature:
 
-> Brandes, Ulrik. (2016). Network Positions.
-*Methodological Innovations*, **9**, 2059799116630650.
-([link](http://dx.doi.org/10.1177/2059799116630650))
+> Schoch, David. (2018). Centrality without Indices: Partial Rankings and Rank
+Probabilities in Networks. *Social Networks*, **54**, 50-60.([link](https://doi.org/10.1016/j.socnet.2017.12.003))
+
+> Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
+and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
 
 > Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks.
 *European Journal of Appplied Mathematics*, **27**(6), 971–985.
 ([link](https://doi.org/10.1017/S0956792516000401))
 
-> Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
-and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
+> Brandes, Ulrik. (2016). Network Positions.
+*Methodological Innovations*, **9**, 2059799116630650.
+([link](http://dx.doi.org/10.1177/2059799116630650))
 
-> Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank
-Probabilities in Networks. *Social Networks*, **to appear**

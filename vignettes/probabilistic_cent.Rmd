@@ -46,8 +46,8 @@ It most be noted though, that deriving the set $\mathcal{R}(\leq)$ quickly becom
 infeasible for larger networks, and one has to resort to approximation methods.
 These and more theoretical details can be found in
 
-<!-- > Schoch, David. (2017). Centrality without Indices: Partial Rankings and Rank -->
-<!-- Probabilities in Networks. *submitted* -->
+> Schoch, David. (2018). Centrality without Indices: Partial Rankings and Rank
+Probabilities in Networks. *Social Networks*, **54**, 50-60.([link](https://doi.org/10.1016/j.socnet.2017.12.003))
 
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width=5,fig.align = 'center')
