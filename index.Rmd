@@ -198,8 +198,8 @@ ________________________________________________________________________________
 want to learn more about the theoretical background of the package, 
 consult the following literature:
 
-> Schoch, David. (2018). Centrality without Indices: Partial Rankings and Rank
-Probabilities in Networks. *Social Networks*, **54**, 50-60.([link](https://doi.org/10.1016/j.socnet.2017.12.003))
+> Schoch, David. (2018). Centrality without Indices: Partial rankings and rank
+Probabilities in networks. *Social Networks*, **54**, 50-60.([link](https://doi.org/10.1016/j.socnet.2017.12.003))
 
 > Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
 and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
