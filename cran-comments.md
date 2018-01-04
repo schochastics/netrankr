@@ -1,8 +1,13 @@
-This is the first submission of the netrankr package.
+## Resubmission
+
+This is a resubmission of the package. In this version I have
+added an appropriate reference for the method in the 'Description' field of the 
+DESCRIPTION file. 
 
 ---
 
 ## Test environments
+
 * Ubuntu 17.10, R 3.4.2
 * win-builder (devel and release)
 * macOS 10.11 El Capitan, R 3.4.1 
