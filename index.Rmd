@@ -84,7 +84,6 @@ ________________________________________________________________________________
 
 To install from CRAN: 
 ```{r install_cran, eval=FALSE}
- require(devtools)
  install.packages("netrankr")
 ```
 

@@ -19,7 +19,6 @@ Install
 To install from CRAN:
 
 ``` r
- require(devtools)
  install.packages("netrankr")
 ```
 
