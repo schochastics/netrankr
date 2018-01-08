@@ -82,16 +82,16 @@ ________________________________________________________________________________
 
 ## Installation
 
-To install from CRAN: [not released yet]
-<!-- ```{r install_cran, eval=FALSE,echo=FALSE} -->
-<!--  require(devtools) -->
-<!--  install_github("schochastics/netrankr") -->
-<!-- ``` -->
+To install from CRAN: 
+```{r install_cran, eval=FALSE}
+ require(devtools)
+ install.packages("netrankr")
+```
 
 To install the developer version from github:
 ```{r install_git, eval=FALSE}
 #install.packages("devtools")
-devtools::install_github("schochastics/netrankr",)
+devtools::install_github("schochastics/netrankr")
 ```
 
 ________________________________________________________________________________

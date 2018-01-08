@@ -31,7 +31,12 @@ Visit the [online manual](https://schochastics.github.io/netrankr) for more Deta
 
 ## Install
 
-To install from CRAN: [not yet published]
+To install from CRAN: 
+```{r install_cran, eval=FALSE}
+ require(devtools)
+ install.packages("netrankr")
+```
+
 
 To install the developer version from github:
 ```{r install_git, eval=FALSE}
