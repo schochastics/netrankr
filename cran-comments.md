@@ -1,8 +1,11 @@
 ## Resubmission
 
-This is a resubmission of the package. In this version I have
+This is a resubmission of the initial submission. In this version I have
 added an appropriate reference for the method in the 'Description' field of the 
 DESCRIPTION file. 
+
+Note: This is the second try of the resubmission since the first apparently failed.
+If you receive the submission twice, I appologize for any inconvenience.
 
 ---
 

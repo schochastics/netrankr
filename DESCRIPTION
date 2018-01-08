@@ -13,7 +13,7 @@ Description: Implements methods for centrality related analyses of networks.
     probabilistic methods like computing expected node ranks and relative 
     rank probabilities (how likely is it that a node is more central than another?).
     The methodology is described in depth in the vignettes and in
-    Schoch (2018) <doi:10.1016/j.socnet.2017.12.003>
+    Schoch (2018) <doi:10.1016/j.socnet.2017.12.003>.
 URL: https://schochastics.github.io/netrankr
 BugReports: https://github.com/schochastics/netrankr/issues
 License: MIT + file LICENSE
