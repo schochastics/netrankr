@@ -1,3 +1,7 @@
+## netrankr 0.2.1
+
+* fixed a bug in `index_builder` which prevented the building of self defined indices
+
 ## netrankr 0.2.0
 
 * added Rstudio addin to build more than 20 centrality indices
