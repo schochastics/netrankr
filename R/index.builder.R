@@ -58,7 +58,8 @@ index_builder <- function() {
     miniUI::gadgetTitleBar("Centrality Index Builder"),
     shiny::fluidRow(
       shiny::column(6,shiny::selectInput("index", "Prebuild Indices",
-                                         list("Classic Indices"=c("Degree"="degree","Closeness"="ccclassic",
+                                         list("Build your own"="buildself",
+                                              "Classic Indices"=c("Degree"="degree","Closeness"="ccclassic",
                                                                   "Betweenness"="bcsp", "Eigenvector"="eigen"),
                                               "Feedback"=c("Subgraph"="scall","Subgraph even"="sceven",
                                                            "Subgraph odd"="scodd", "Katz Status"="katz",
@@ -168,12 +169,13 @@ index_builder <- function() {
     })
     shiny::observe({
       index_focus <- indices[[input$index]]
-      shiny::updateSelectInput(session,"relation",selected=index_focus[1])
-      shiny::updateSelectInput(session,"transformation",
-                               choices = transforms[[input$relation]],
-                               selected=index_focus[2])
-      shiny::updateSelectInput(session,"aggregation",selected=index_focus[3])
-      
+      if(input$index!="buildself"){
+        shiny::updateSelectInput(session,"relation",selected=index_focus[1])
+        shiny::updateSelectInput(session,"transformation",
+                                 choices = transforms[[input$relation]],
+                                 selected=index_focus[2])
+        shiny::updateSelectInput(session,"aggregation",selected=index_focus[3])
+      }
     })
     shiny::observeEvent(input$done, {
       lfparam_text <- ifelse(input$relation!="dist_lf","",paste0(", lfparam = ",input$lfparam))
