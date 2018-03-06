@@ -16,7 +16,7 @@ index_builder <- function() {
                       `attenuated walks`="walks_attenuated",
                       `up to length k` = "walks_uptok")
   
-  transforms <- list(identity="identity",
+  transforms <- list(adjacency="identity",
                      dist_sp=dist_transform,
                      dist_resist=dist_transform,
                      dist_lf=dist_transform,
@@ -30,7 +30,7 @@ index_builder <- function() {
                      depend_rspn=c(identity="identity"),
                      walks=walk_transform)
   
-  indices <- list("degree"=c("identity","identity","sum"),
+  indices <- list("degree"=c("adjacency","identity","sum"),
                   "ccclassic"=c("dist_sp","identity","invsum"),
                   "bcsp"=c("depend_sp","identity","sum"),
                   "eigen"=c("walks","walks_limit_prop","sum"),
@@ -81,7 +81,7 @@ index_builder <- function() {
     shiny::fluidRow(
       shiny::column(3, shiny::textInput("network", "network", value = "g", width = NULL, placeholder = NULL)),
       shiny::column(3, shiny::selectInput("relation", "Indirect Relation",
-                                          list("Adjacency"=c("Adjacency"="identity"),
+                                          list("Adjacency"=c("Adjacency"="adjacency"),
                                                "Distances"=c("Shortest Path Distance" = "dist_sp",
                                                              "Resistance Distance" = "dist_resist",
                                                              "Log Forest Distance" = "dist_lf",
