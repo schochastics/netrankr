@@ -38,7 +38,10 @@ calculating partial centrality rankings with \link{positional_dominance}.
 \details{
 The \code{type} parameter has the following options.
 
-\emph{'identity'} returns the adjacency matrix of the network.
+\emph{'adjacency'} returns the adjacency matrix of the network.
+
+\emph{'weights'} returns the weighted adjacency matrix of the network if an edge
+attribute 'weight' is present.
 
 \emph{'dist_sp'} returns shortest path distances between all pairs of nodes.
 
@@ -119,7 +122,7 @@ D <- indirect_relations(g,type = "dist_sp", FUN = dist_inv)
 #shortes path dependencies (used for betweenness)
 D <- indirect_relations(g,type = "depend_sp")
 
-#walks attenuated exponentially by there length
+#walks attenuated exponentially by their length
 W <- indirect_relations(g,type = "walks",FUN = walks_exp)
 
 }
