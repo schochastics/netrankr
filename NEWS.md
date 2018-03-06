@@ -1,6 +1,8 @@
-## netrankr 0.2.1
+## netrankr 0.2.1.9000
 
 * fixed a bug in `index_builder` which prevented the building of self defined indices
+* added `type = weights` in `indirect_relations()`
+* `type = "identity"` in `indirect_relations()` is now deprecated. Use `type = "adjacency"` instead.
 
 ## netrankr 0.2.0
 
@@ -27,7 +29,7 @@ depend_exp, depend_rsps, depend_rspn, depend_curflow, dist_rwalk, dist_walk
 
 * most function reimplemented in C++ for efficiency. 
 * vignettes added: `browseVignettes("netrankr")`
-* added visualization function `plot_rank_intervals`
+* added visualization function `plot_rank_intervals()`
 * spell checked and extended help
 
 ## netrankr 0.0.1-0.0.4
