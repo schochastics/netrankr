@@ -47,15 +47,21 @@
 #' @export
 
 positional_dominance <- function(A, type = "one-mode", map = FALSE, benefit = TRUE) {
-    if (grepl("one", type)) {
-        D <- matdom(A, map, benefit)
-    } else if (grepl("two", type)) {
-        # should be implemented in C++
-        fct <- function(x, y) all(x <= y) + 0
-        vecfct <- Vectorize(fct)
-        r.rows <- split(A, row(A))
-        D <- outer(r.rows, r.rows, vecfct)
-        diag(D) <- 0
-    }
-    return(D)
+  if (grepl("one", type)) {
+      D <- matdom(A, map, benefit)
+  } else if (grepl("two", type)) {
+      # should be implemented in C++
+      fct <- function(x, y) all(x <= y) + 0
+      vecfct <- Vectorize(fct)
+      r.rows <- split(A, row(A))
+      D <- outer(r.rows, r.rows, vecfct)
+      diag(D) <- 0
+  }
+  if(!is.null(rownames(A)) ){
+    rownames(D) <- rownames(A)
+  }
+  if(!is.null(colnames(A)) ){
+    colnames(D) <- colnames(A)
+  }
+  return(D)
 }

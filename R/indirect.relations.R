@@ -228,7 +228,10 @@ indirect_relations <- function(g,
   } else {
     stop(paste(type, "is not defined as indirect relation."))
   }
-
+  #add names if present
+  if(is.null(rownames(rel)) & !is.null(igraph::V(g)$name) ){
+    rownames(rel) <- colnames(rel) <- V(g)$name
+  }
   return(rel)
 }
 

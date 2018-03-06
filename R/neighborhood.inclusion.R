@@ -48,5 +48,8 @@ neighborhood_inclusion <- function(g) {
     adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
     deg <- igraph::degree(g)
     dom <- nialgo(adj, deg)
+    if(!is.null(igraph::V(g)$name) ){
+      rownames(dom) <- colnames(dom) <- V(g)$name
+    }
     return(dom)
 }
