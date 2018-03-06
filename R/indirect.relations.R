@@ -15,7 +15,10 @@
 #' @param ... Additional arguments passed to FUN.
 #' @details The `type` parameter has the following options.
 #'
-#' \emph{'identity'} returns the adjacency matrix of the network.
+#' \emph{'adjacency'} returns the adjacency matrix of the network.
+#' 
+#' \emph{'weights'} returns the weighted adjacency matrix of the network if an edge
+#' attribute 'weight' is present.
 #'
 #' \emph{'dist_sp'} returns shortest path distances between all pairs of nodes.
 #'
@@ -119,7 +122,7 @@
 #' #shortes path dependencies (used for betweenness)
 #' D <- indirect_relations(g,type = "depend_sp")
 #'
-#' #walks attenuated exponentially by there length
+#' #walks attenuated exponentially by their length
 #' W <- indirect_relations(g,type = "walks",FUN = walks_exp)
 #'
 #' @export
@@ -142,71 +145,86 @@ indirect_relations <- function(g,
     warning('type="resistance" is deprecated. Using "dist_resist" instead.\n')
     type <- "dist_resist"
   }
+  if (type == "identity") {
+    warning('type="identity" is deprecated. Using "adjacency" instead.\n')
+    type <- "adjacency"
+  }
   if (type == "dist_sp") {
     rel <- igraph::distances(g, mode = "all")
     rel <- FUN(rel, ...)
-  } else if (type == "identity") {
-    rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE)
-    rel <- FUN(rel, ...)
-    diag(rel) <- 0
+  } else if (type == "weights") {
+    if(is.null(igraph::get.edge.attribute(g,"weight"))){
+      warning('no weight attribute present. using "adjacency" instead.\n')
+      rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
+      rel <- FUN(rel, ...)
+      diag(rel) <- 0
+    } else {
+      rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = "weight")
+      rel <- FUN(rel, ...)
+      diag(rel) <- 0
+    }
+  } else if (type == "adjacency") {
+      rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
+      rel <- FUN(rel, ...)
+      diag(rel) <- 0
   } else if (type == "depend_sp") {
-    adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
-    rel <- dependency(adj)
+      adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
+      rel <- dependency(adj)
   } else if (type == "walks") {
-    eigen.decomp <- eigen(igraph::get.adjacency(g, type = "both"))
-    lambda <- eigen.decomp$values
-    X <- eigen.decomp$vectors
-    rel <- X %*% diag(FUN(lambda, ...)) %*% t(X)
+      eigen.decomp <- eigen(igraph::get.adjacency(g, type = "both"))
+      lambda <- eigen.decomp$values
+      X <- eigen.decomp$vectors
+      rel <- X %*% diag(FUN(lambda, ...)) %*% t(X)
   } else if (type == "dist_resist") {
-    L <- igraph::graph.laplacian(g, sparse = FALSE)
-    n <- igraph::vcount(g)
-    A <- L + matrix(1 / n, n, n)
-    C <- solve(A)
-    rel <- resistanceDistance(C, n)
-    rel <- FUN(rel, ...)
+      L <- igraph::graph.laplacian(g, sparse = FALSE)
+      n <- igraph::vcount(g)
+      A <- L + matrix(1 / n, n, n)
+      C <- solve(A)
+      rel <- resistanceDistance(C, n)
+      rel <- FUN(rel, ...)
   } else if (type == "dist_lf") {
-    if (is.null(lfparam)) {
-      stop('argument "lfparam" is missing for "dist_lf", with no default')
-    }
-    rel <- log_forest_fct(g, lfparam)
-    rel <- FUN(rel, ...)
+      if (is.null(lfparam)) {
+        stop('argument "lfparam" is missing for "dist_lf", with no default')
+      }
+      rel <- log_forest_fct(g, lfparam)
+      rel <- FUN(rel, ...)
   } else if (type == "dist_walk") {
-    if (is.null(dwparam)) {
-      stop('argument "dwparam" is missing for "dist_walk", with no default')
-    }
-    rel <- dist_walk_fct(g, dwparam)
-    rel <- FUN(rel, ...)
+      if (is.null(dwparam)) {
+        stop('argument "dwparam" is missing for "dist_walk", with no default')
+      }
+      rel <- dist_walk_fct(g, dwparam)
+      rel <- FUN(rel, ...)
   } else if (type == "depend_netflow") {
-    if (netflowmode == "" | !netflowmode %in% c("raw", "frac", "norm")) {
-      stop('netflowmode must be one of"raw","frac","norm"\n')
-    }
-    # if (netflowmode == "norm") {
-    #   warning('"norm" not supported yet. Using "frac" instead.\n')
-    #   netflowmode <- "frac"
-    # }
-    rel <- depend_netflow_fct(g, netflowmode)
-    rel <- FUN(rel, ...)
+      if (netflowmode == "" | !netflowmode %in% c("raw", "frac", "norm")) {
+        stop('netflowmode must be one of"raw","frac","norm"\n')
+      }
+      # if (netflowmode == "norm") {
+      #   warning('"norm" not supported yet. Using "frac" instead.\n')
+      #   netflowmode <- "frac"
+      # }
+      rel <- depend_netflow_fct(g, netflowmode)
+      rel <- FUN(rel, ...)
   } else if (type == "depend_exp") {
-    rel <- depend_exp_fct(g)
-    rel <- FUN(rel, ...)
+      rel <- depend_exp_fct(g)
+      rel <- FUN(rel, ...)
   } else if (type == "depend_rsps") {
-    if (is.null(rspxparam)) {
-      stop('argument "rspxparam" is missing for "depend_rsps", with no default')
-    }
-    rel <- depend_rsps_fct(g, rspxparam)
-    rel <- FUN(rel, ...)
+      if (is.null(rspxparam)) {
+        stop('argument "rspxparam" is missing for "depend_rsps", with no default')
+      }
+      rel <- depend_rsps_fct(g, rspxparam)
+      rel <- FUN(rel, ...)
   } else if (type == "depend_rspn") {
-    if (is.null(rspxparam)) {
-      stop('argument "rspxparam" is missing for "depend_rspn", with no default')
-    }
-    rel <- depend_rspn_fct(g, rspxparam)
-    rel <- FUN(rel, ...)
+      if (is.null(rspxparam)) {
+        stop('argument "rspxparam" is missing for "depend_rspn", with no default')
+      }
+      rel <- depend_rspn_fct(g, rspxparam)
+      rel <- FUN(rel, ...)
   } else if (type == "depend_curflow") {
-    rel <- depend_curflow_fct(g)
-    rel <- FUN(rel, ...)
+      rel <- depend_curflow_fct(g)
+      rel <- FUN(rel, ...)
   } else if (type == "dist_rwalk") {
-    rel <- dist_rwalk_fct(g)
-    rel <- FUN(rel, ...)
+      rel <- dist_rwalk_fct(g)
+      rel <- FUN(rel, ...)
   } else {
     stop(paste(type, "is not defined as indirect relation."))
   }
