@@ -230,7 +230,7 @@ indirect_relations <- function(g,
   }
   #add names if present
   if(is.null(rownames(rel)) & !is.null(igraph::V(g)$name) ){
-    rownames(rel) <- colnames(rel) <- V(g)$name
+    rownames(rel) <- colnames(rel) <- igraph::V(g)$name
   }
   return(rel)
 }

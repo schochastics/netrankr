@@ -49,7 +49,7 @@ neighborhood_inclusion <- function(g) {
     deg <- igraph::degree(g)
     dom <- nialgo(adj, deg)
     if(!is.null(igraph::V(g)$name) ){
-      rownames(dom) <- colnames(dom) <- V(g)$name
+      rownames(dom) <- colnames(dom) <- igraph::V(g)$name
     }
     return(dom)
 }
