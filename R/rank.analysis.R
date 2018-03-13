@@ -7,7 +7,6 @@
 #' 
 #' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
 #'    or [positional_dominance].
-#' @param names Optional argument for names if P does not have row/column names.
 #' @param only.results Logical. return only results (default) or additionally 
 #'     the ideal tree and lattice if \code{FALSE}.
 #' @param verbose Logical. should diagnostics be printed. Defaults to \code{FALSE}.
@@ -52,13 +51,11 @@
 #' P <- neighborhood_inclusion(tg)
 #' res <- exact_rank_prob(P)
 #' @export
-exact_rank_prob <- function(P, names = "", only.results = T, verbose = F, force = F) {
+exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
     # Check for names ------------------------------------------------
-    if (is.null(rownames(P)) & length(names) != nrow(P)) {
-        rownames(P) <- 1:nrow(P)
-    } else if (is.null(rownames(P)) & length(names) == nrow(P)) {
-        rownames(P) <- names
-    }
+    if (is.null(rownames(P)) & is.null(colnames(P))) {
+        rownames(P) <- colnames(P) <- paste0("V",1:nrow(P))
+    } 
     n_full <- nrow(P)
     P_full <- P
     # Equivalence classes ------------------------------------------------
@@ -80,9 +77,9 @@ exact_rank_prob <- function(P, names = "", only.results = T, verbose = F, force 
         warning("all elements are structurally equivalent and have the same rank")
         return()
     }
-    names <- rownames(P)
+    # names <- rownames(P)
     # number of Elements
-    nElem <- length(names)
+    nElem <- nrow(P)
     
     # check for linear order ---------------------------------------------
     if (comparable_pairs(P) == 1) {
@@ -95,9 +92,11 @@ exact_rank_prob <- function(P, names = "", only.results = T, verbose = F, force 
         for (i in 1:nrow(P_full)) {
             rp_full[i, expected_full[i]] <- 1
         }
-        
+        # add names
+        rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
+        names(expected_full) <- names(rank.spread_full) <- rownames(P_full)
+        colnames(rp_full) <- 1:ncol(rp_full)
         return(list(lin.ext = 1, 
-                    names = rownames(P_full), 
                     mse = MSE, 
                     rank.prob = rp_full, 
                     relative.rank = mrp_full, 
@@ -184,17 +183,20 @@ exact_rank_prob <- function(P, names = "", only.results = T, verbose = F, force 
         idx <- which(expected_full == val)
         expected_full[idx] <- expected_full[idx] + sum(duplicated(MSE[expected_full <= val]))
     }
+    # add names
+    rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
+    names(expected_full) <- names(rank.spread_full) <- rownames(P_full)
+    colnames(rp_full) <- 1:ncol(rp_full)
     ############################### 
     if (only.results) {
         return(list(lin.ext = res$linext, 
-                    names = rownames(P_full), 
-                    mse = MSE, rank.prob = rp_full, 
+                    mse = MSE, 
+                    rank.prob = rp_full, 
                     relative.rank = t(mrp_full), 
                     expected.rank = expected_full, 
                     rank.spread = sqrt(rank.spread_full)))
     } else {
         return(list(lin.ext = res$linext, 
-                    names = rownames(P_full), 
                     mse = MSE, 
                     rank.prob = rp_full, 
                     relative.rank = t(mrp_full), 

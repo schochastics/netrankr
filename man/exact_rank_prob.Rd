@@ -4,13 +4,11 @@
 \alias{exact_rank_prob}
 \title{Probabilistic centrality rankings}
 \usage{
-exact_rank_prob(P, names = "", only.results = T, verbose = F, force = F)
+exact_rank_prob(P, only.results = T, verbose = F, force = F)
 }
 \arguments{
 \item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
 or \link{positional_dominance}.}
-
-\item{names}{Optional argument for names if P does not have row/column names.}
 
 \item{only.results}{Logical. return only results (default) or additionally
 the ideal tree and lattice if \code{FALSE}.}
