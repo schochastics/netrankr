@@ -98,7 +98,7 @@ D <- g %>%
 comparable_pairs(D)
 ```
 
-For cost variables like shortes path distances, the `benefit` parameter is set to `FALSE`.
+For cost variables like shortest path distances, the `benefit` parameter is set to `FALSE`.
 ```{r dist}
 D1 <- g %>% 
   indirect_relations(type="dist_sp") %>% 

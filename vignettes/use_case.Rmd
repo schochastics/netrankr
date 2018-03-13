@@ -203,7 +203,7 @@ like to use centrality to explain certain node attributes. In our case, we might
 be interested in the question: "can an index explain the wealth of families?", or if
 we already have a more concrete idea "can proximity to other families explain the wealth attribute?" 
 
-"Proximity" can be translated to the graph-theoretic concept of shortes path distances, 
+"Proximity" can be translated to the graph-theoretic concept of shortest path distances, 
 such that closeness centrality would be an adequate candidate as an index. We here
 use the pipeline approach of the `netrankr` package instead of the `closeness()`
 function of `igraph`. The reasons will become evident in the next section.
@@ -219,7 +219,7 @@ cor(c_C,V(florentine_m)$wealth,method="kendall")
 ```
 
 The correlation between closeness and wealth (`r round(cor(c_C,V(florentine_m)$wealth,method="kendall"),4)`) is far to low to constitute that "proximity" is related to wealth. However, there 
-exist various other indices, that are based on the shortes path distances in a graph.
+exist various other indices, that are based on the shortest path distances in a graph.
 Refer to the literature for more details on these indices.
 
 ```{r harmclos_wealth}
@@ -288,7 +288,7 @@ $\alpha$= `r res_gc[2]`
 The highest correlation for decay centrality is `r res_dc[1]` achieved for 
 $\alpha$=`r res_dc[2]`
 
-We could know accept that there is no index based on shortes path distances that could 
+We could know accept that there is no index based on shortest path distances that could 
 explain wealth. Or, we could start to craft new indices that might yield a better
 correlation with wealth. However, we then enter the dilemma that was mentioned at the end of
 the last section. If we find one, we can not be certain that there might not even be a 
@@ -300,7 +300,7 @@ ________________________________________________________________________________
 ## Centrality as explanatory variable (Dominance approach)
 
 Since we are postulating a connection between proximity and wealth, we compute 
-the pairwise shortes path distances as our *indirect relation* of interest and calculate
+the pairwise shortest path distances as our *indirect relation* of interest and calculate
 the positional dominance relations.
 
 ```{r pos_dom_hetero}
@@ -367,7 +367,7 @@ plot(d,layout=cbind(x,y),
 ```
 
 In total, we find $41$ such pairs ($39$% of all pairs). This implies that we are
-(potentially) quite far from being able to explain wealth perfectly with shortes path 
+(potentially) quite far from being able to explain wealth perfectly with shortest path 
 distances. In the following we will explore *how* far away. 
 
 We start by calculating the rank intervals to illustrate the difference to 
