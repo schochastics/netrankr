@@ -3,6 +3,9 @@
 * fixed a bug in `index_builder` which prevented the building of self defined indices
 * added `type = weights` in `indirect_relations()`
 * `type = "identity"` in `indirect_relations()` is now deprecated. Use `type = "adjacency"` instead.
+* `type = "weight"` added to `indirect_relations()` to return the weighted adjacency matrix
+* vertex names are now properly added as column and rownames to matrices produced by `indirect_relations()` and
+`exact_rank_prob()`.
 
 ## netrankr 0.2.0
 
