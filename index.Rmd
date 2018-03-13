@@ -153,7 +153,7 @@ Each of these ranking can thus potentially be the outcome of a centrality index.
 Using rank intervals, we can examine the minimal and maximal possible rank of each node.
 The bigger the intervals are, the more freedom exists for indices to rank nodes differently.
 ```{r partial}
-plot_rank_intervals(P,names = 1:11,cent.df = cent_scores,ties.method="average")
+plot_rank_intervals(P,cent.df = cent_scores,ties.method="average")
 ```
 
 The potential ranks of nodes are not uniformly distributed in the intervals. To get
