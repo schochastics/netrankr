@@ -4,13 +4,11 @@
 \alias{plot_rank_intervals}
 \title{Plot rank intervals}
 \usage{
-plot_rank_intervals(P, names, cent.df, ties.method = "min")
+plot_rank_intervals(P, cent.df, ties.method = "min")
 }
 \arguments{
 \item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}
 or \link{positional_dominance}.}
-
-\item{names}{String with potential names of nodes used in the plot (optional).}
 
 \item{cent.df}{A data frame containing centrality scores of indices (optional). See Details.}
 

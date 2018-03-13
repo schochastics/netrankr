@@ -129,7 +129,7 @@ To better assess the potential ranks of nodes, we can plot the rank intervals wi
 `plot_rank_intervals()`
 
 ```{r rk_inter,fig.align='center',fig.width=5,fig.height=5}
-plot_rank_intervals(P,names=V(florentine_m)$name)
+plot_rank_intervals(P)
 ```
 
 Observe how big the intervals are, indicating that there is ample scope to rank the
@@ -138,7 +138,7 @@ arbitrariness and not any rank probabilities. To get all exact probabilities,
 we use the function `exact_rank_prob()`.
 
 ```{r probs}
-res <- exact_rank_prob(P,names=V(florentine_m)$name)
+res <- exact_rank_prob(P)
 
 ```
 There are `r format(res$lin.ext,scientific = F,big.mark = ",")` different possibilities to rank
@@ -373,7 +373,7 @@ distances. In the following we will explore *how* far away.
 We start by calculating the rank intervals to illustrate the difference to 
 neighborhood-inclusion.
 ```{r rk_inter_dist,fig.align='center',fig.width=5,fig.height=5}
-plot_rank_intervals(D,names=V(florentine_m)$name)
+plot_rank_intervals(D)
 ```
 All intervals shrunk significantly and even correspond to a single point for two
 families (Pazzi and Medici). This implies that no matter which distance based index we
@@ -382,7 +382,7 @@ use, the Pazzi family will always be ranked last and the Medici always on top.
 For a more exact assessment we again use the function `exact_rank_prob()`.
 
 ```{r dist_probs}
-res <- exact_rank_prob(D,names = V(florentine_m)$name)
+res <- exact_rank_prob(D)
 ```
 In total, there are `r format(res$lin.ext,scientific = F,big.mark = ",")` distance
 based rankings possible. This is a huge reduction from the general case where almost
@@ -393,7 +393,7 @@ we first need to determine all `r format(res$lin.ext,scientific = F,big.mark = "
 rankings. For this purpose, we rerun the previous analysis with `only.results=FALSE` to obtain 
 the necessary data structure.
 ```{r dist_probs_lat}
-res <- exact_rank_prob(D,names = V(florentine_m)$name,only.results = FALSE)
+res <- exact_rank_prob(D,only.results = FALSE)
 ```
 
 Now, we can use the function `get_rankings()` which returns all rankings as a matrix.

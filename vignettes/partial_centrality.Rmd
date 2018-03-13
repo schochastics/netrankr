@@ -66,17 +66,6 @@ that the package `ggplot2` is required to use the function properly. The functio
 takes a partial ranking as input and *not* already calculated rank intervals. 
 These are calculated internally.
 
-```{r vis_intervals}
-plot_rank_intervals(P)
-```
-
-Nodes are ordered according to the mid point for better readability. If the nodes
-of the input network are named, the parameter `names` can be set accordingly.
-
-```{r vis_intervals_names}
-plot_rank_intervals(P,names=V(g)$name)
-```
-
 The function can take a data frame of centrality scores as an additional parameter 
 `cent.df`. The ranks of each node for each index are then plotted within each interval.
 Again, the higher the numerical rank the higher ranked the node is according to the index.
@@ -89,7 +78,7 @@ cent_scores <- data.frame(
    closeness=round(closeness(g),4),
    eigenvector=round(eigen_centrality(g)$vector,4))
 
-plot_rank_intervals(P,names=V(g)$name,cent.df = cent_scores)
+plot_rank_intervals(P,cent.df = cent_scores)
 ```
 
 A small jitter effect is added to the points to reduce over-plotting.  

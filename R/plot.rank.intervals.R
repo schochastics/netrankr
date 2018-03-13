@@ -30,7 +30,7 @@
 #' \dontrun{plot_rank_intervals(P,cent.df=cent_scores)}
 #' @export
 
-plot_rank_intervals <- function(P, names, cent.df,ties.method="min") {
+plot_rank_intervals <- function(P, cent.df,ties.method="min") {
     if (!requireNamespace("ggplot2", quietly = TRUE)) {
         stop("ggplot2 needed for this function to work. Please install it.", call. = FALSE)
     }
