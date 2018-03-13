@@ -164,14 +164,21 @@ cent_scores &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 In the following subsections the output of the function <code>exact_rank_probabilities()</code> are described which may help to circumvent the potential arbitrariness of index induced rankings. But first, let us briefly look at all the return values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span>(P)
 <span class="kw">str</span>(res)</code></pre></div>
-<pre><code>## List of 7
+<pre><code>## List of 6
 ##  $ lin.ext      : num 739200
-##  $ names        : chr [1:11] "1" "2" "3" "4" ...
 ##  $ mse          : int [1:11] 1 2 3 4 5 6 7 8 9 10 ...
 ##  $ rank.prob    : num [1:11, 1:11] 0.545 0.273 0 0 0 ...
+##   ..- attr(*, "dimnames")=List of 2
+##   .. ..$ : chr [1:11] "A" "B" "C" "D" ...
+##   .. ..$ : chr [1:11] "1" "2" "3" "4" ...
 ##  $ relative.rank: num [1:11, 1:11] 0 0.3333 0 0.0476 0 ...
-##  $ expected.rank: num [1:11] 1.71 3 4.29 7.5 8.14 ...
-##  $ rank.spread  : num [1:11] 0.958 1.897 1.725 2.54 2.16 ...</code></pre>
+##   ..- attr(*, "dimnames")=List of 2
+##   .. ..$ : chr [1:11] "A" "B" "C" "D" ...
+##   .. ..$ : chr [1:11] "A" "B" "C" "D" ...
+##  $ expected.rank: Named num [1:11] 1.71 3 4.29 7.5 8.14 ...
+##   ..- attr(*, "names")= chr [1:11] "A" "B" "C" "D" ...
+##  $ rank.spread  : Named num [1:11] 0.958 1.897 1.725 2.54 2.16 ...
+##   ..- attr(*, "names")= chr [1:11] "A" "B" "C" "D" ...</code></pre>
 <p>The return value <code>lin.ext</code> gives the number of possible rankings that are in accordance with the partial ranking <code>P</code>. The <code>names</code> vector returns the names of nodes if they were supplied with the <code>names</code> parameter. Otherwise, node ids are returned as a character vector. The vector <code>mse</code> returns the equivalence classes of <code>P</code>. Nodes <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are equivalent if <span class="math inline">\(N(u)\subseteq N[v]\)</span> and <span class="math inline">\(N(v)\subseteq N[u]\)</span> holds. The remaining return values are discussed in the following.</p>
 <div id="rank-probabilities" class="section level3">
 <h3 class="hasAnchor">
@@ -181,22 +188,23 @@ P(rk(u)=k)=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)=k\} \rvert}{\l
 \]</span> Rank probabilities are given by the return value <code>rank.prob</code> of the <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rp &lt;-<span class="st"> </span><span class="kw">round</span>(res<span class="op">$</span>rank.prob,<span class="dv">2</span>)
 rp</code></pre></div>
-<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-##  [1,] 0.55 0.27 0.12 0.05 0.01 0.00 0.00 0.00 0.00  0.00  0.00
-##  [2,] 0.27 0.22 0.17 0.13 0.09 0.06 0.04 0.02 0.01  0.00  0.00
-##  [3,] 0.00 0.16 0.22 0.21 0.17 0.12 0.07 0.04 0.01  0.00  0.00
-##  [4,] 0.00 0.03 0.05 0.07 0.09 0.11 0.12 0.13 0.13  0.14  0.14
-##  [5,] 0.00 0.00 0.02 0.05 0.08 0.10 0.13 0.15 0.16  0.16  0.16
-##  [6,] 0.00 0.05 0.08 0.10 0.11 0.11 0.11 0.11 0.11  0.11  0.11
-##  [7,] 0.00 0.05 0.08 0.10 0.11 0.11 0.11 0.11 0.11  0.11  0.11
-##  [8,] 0.00 0.03 0.05 0.07 0.09 0.11 0.12 0.13 0.13  0.14  0.14
-##  [9,] 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09  0.09  0.09
-## [10,] 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09  0.09  0.09
-## [11,] 0.00 0.00 0.02 0.05 0.08 0.10 0.13 0.15 0.16  0.16  0.16</code></pre>
+<pre><code>##      1    2    3    4    5    6    7    8    9   10   11
+## A 0.55 0.27 0.12 0.05 0.01 0.00 0.00 0.00 0.00 0.00 0.00
+## B 0.27 0.22 0.17 0.13 0.09 0.06 0.04 0.02 0.01 0.00 0.00
+## C 0.00 0.16 0.22 0.21 0.17 0.12 0.07 0.04 0.01 0.00 0.00
+## D 0.00 0.03 0.05 0.07 0.09 0.11 0.12 0.13 0.13 0.14 0.14
+## E 0.00 0.00 0.02 0.05 0.08 0.10 0.13 0.15 0.16 0.16 0.16
+## F 0.00 0.05 0.08 0.10 0.11 0.11 0.11 0.11 0.11 0.11 0.11
+## G 0.00 0.05 0.08 0.10 0.11 0.11 0.11 0.11 0.11 0.11 0.11
+## H 0.00 0.03 0.05 0.07 0.09 0.11 0.12 0.13 0.13 0.14 0.14
+## I 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09
+## J 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09
+## K 0.00 0.00 0.02 0.05 0.08 0.10 0.13 0.15 0.16 0.16 0.16</code></pre>
 <p>Entries <code>rp[u,k]</code> correspond to <span class="math inline">\(P(rk(u)=k)\)</span>.<br><br>
 The most interesting probabilities are certainly <span class="math inline">\(P(rk(u)=n)\)</span>, that is how likely is it for a node to be the most central.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rp[,<span class="dv">11</span>]</code></pre></div>
-<pre><code>##  [1] 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16</code></pre>
+<pre><code>##    A    B    C    D    E    F    G    H    I    J    K 
+## 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16</code></pre>
 <p>Recall from the previous section that we found five indices that ranked <span class="math inline">\(6,7,8,10\)</span> and <span class="math inline">\(11\)</span> on top. The probability tell us now, how likely it is to find an index that rank these nodes on top. In this case, node <span class="math inline">\(11\)</span> has the highest probability to be the most central node.</p>
 </div>
 <div id="relative-rank-probabilities" class="section level3">
@@ -207,18 +215,18 @@ P(rk(u)\leq rk(v))=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)\leq rk
 \]</span> Relative rank probabilities are given by the return value <code>relative.rank</code> of the <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rrp &lt;-<span class="st"> </span><span class="kw">round</span>(res<span class="op">$</span>relative.rank,<span class="dv">2</span>)
 rrp</code></pre></div>
-<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-##  [1,] 0.00 0.67 1.00 0.95 1.00 1.00 1.00 0.95 0.86  0.86  1.00
-##  [2,] 0.33 0.00 0.67 1.00 0.92 0.83 0.83 1.00 0.75  0.75  0.92
-##  [3,] 0.00 0.33 0.00 0.80 1.00 0.75 0.75 0.80 0.64  0.64  1.00
-##  [4,] 0.05 0.00 0.20 0.00 0.56 0.44 0.44 0.50 0.38  0.38  0.56
-##  [5,] 0.00 0.08 0.00 0.44 0.00 0.38 0.38 0.44 0.32  0.32  0.50
-##  [6,] 0.00 0.17 0.25 0.56 0.62 0.00 0.50 0.56 0.43  0.43  0.62
-##  [7,] 0.00 0.17 0.25 0.56 0.62 0.50 0.00 0.56 0.43  0.43  0.62
-##  [8,] 0.05 0.00 0.20 0.50 0.56 0.44 0.44 0.00 0.38  0.38  0.56
-##  [9,] 0.14 0.25 0.36 0.62 0.68 0.57 0.57 0.62 0.00  0.50  0.68
-## [10,] 0.14 0.25 0.36 0.62 0.68 0.57 0.57 0.62 0.50  0.00  0.68
-## [11,] 0.00 0.08 0.00 0.44 0.50 0.37 0.37 0.44 0.32  0.32  0.00</code></pre>
+<pre><code>##      A    B    C    D    E    F    G    H    I    J    K
+## A 0.00 0.67 1.00 0.95 1.00 1.00 1.00 0.95 0.86 0.86 1.00
+## B 0.33 0.00 0.67 1.00 0.92 0.83 0.83 1.00 0.75 0.75 0.92
+## C 0.00 0.33 0.00 0.80 1.00 0.75 0.75 0.80 0.64 0.64 1.00
+## D 0.05 0.00 0.20 0.00 0.56 0.44 0.44 0.50 0.38 0.38 0.56
+## E 0.00 0.08 0.00 0.44 0.00 0.38 0.38 0.44 0.32 0.32 0.50
+## F 0.00 0.17 0.25 0.56 0.62 0.00 0.50 0.56 0.43 0.43 0.62
+## G 0.00 0.17 0.25 0.56 0.62 0.50 0.00 0.56 0.43 0.43 0.62
+## H 0.05 0.00 0.20 0.50 0.56 0.44 0.44 0.00 0.38 0.38 0.56
+## I 0.14 0.25 0.36 0.62 0.68 0.57 0.57 0.62 0.00 0.50 0.68
+## J 0.14 0.25 0.36 0.62 0.68 0.57 0.57 0.62 0.50 0.00 0.68
+## K 0.00 0.08 0.00 0.44 0.50 0.37 0.37 0.44 0.32 0.32 0.00</code></pre>
 <p>Entries <code>rrp[u,v]</code> correspond to <span class="math inline">\(P(rk(u)\leq rk(v))\)</span>.<br><br>
 The more a value <code>rrp[u,v]</code> deviates from <span class="math inline">\(0.5\)</span> towards <span class="math inline">\(1\)</span>, the more confidence we gain that a node <span class="math inline">\(v\)</span> is more central than a node <span class="math inline">\(u\)</span>.</p>
 </div>
@@ -230,7 +238,8 @@ The more a value <code>rrp[u,v]</code> deviates from <span class="math inline">\
 \]</span> Expected ranks are given by the return value <code>expected.rank</code> of the <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_rk &lt;-<span class="st"> </span><span class="kw">round</span>(res<span class="op">$</span>expected.rank,<span class="dv">2</span>)
 ex_rk</code></pre></div>
-<pre><code>##  [1] 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14</code></pre>
+<pre><code>##    A    B    C    D    E    F    G    H    I    J    K 
+## 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14</code></pre>
 <p>As a reminder, the higher the numeric rank, the more central a node is. In this case, node <span class="math inline">\(11\)</span> has the highest expected rank in any centrality ranking.</p>
 </div>
 </div>

@@ -105,7 +105,7 @@
 <!--/.navbar -->
 
       
-      </header><script src="index_files/htmlwidgets-0.9/htmlwidgets.js"></script><script src="index_files/d3-3.3.8/d3.min.js"></script><script src="index_files/dagre-0.4.0/dagre-d3.min.js"></script><link href="index_files/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+      </header><script src="index_files/htmlwidgets-1.0/htmlwidgets.js"></script><script src="index_files/d3-3.3.8/d3.min.js"></script><script src="index_files/dagre-0.4.0/dagre-d3.min.js"></script><link href="index_files/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
 <script src="index_files/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="index_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
 <script src="index_files/chromatography-0.1/chromatography.js"></script><script src="index_files/DiagrammeR-binding-0.9.2/DiagrammeR.js"></script><div class="row">
   <div class="col-md-9">
@@ -119,11 +119,11 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1></div>
 <p>The literature is flooded with centrality indices and new ones are introduced on a regular basis. Although there exist several theoretical and empirical guidelines on when to use certain indices, there still exists plenty of ambiguity in the concept of network centrality. To date, network centrality is nothing more than applying indices to a network:</p>
-<div id="htmlwidget-38e0a3485c8048e79aa9" style="width:70%;height:200px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-38e0a3485c8048e79aa9">{"x":{"diagram":"graph LR\n  A[network]==>B{centrality <br> indices}\n style A fill:#fff,stroke:#000, stroke-width:2px\n style B fill:#fff,stroke:#000, stroke-width:2px\n "},"evals":[],"jsHooks":[]}</script><p>The only degree of freedom is the choice of index. The package comes with an Rstudio addin (<code><a href="reference/index_builder.html">index_builder()</a></code>), which allows to build or choose from more than 20 different indices. Blindly (ab)using this function is highly discouraged!</p>
+<div id="htmlwidget-dedd63166bb8d7d2f039" style="width:70%;height:200px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dedd63166bb8d7d2f039">{"x":{"diagram":"graph LR\n  A[network]==>B{centrality <br> indices}\n style A fill:#fff,stroke:#000, stroke-width:2px\n style B fill:#fff,stroke:#000, stroke-width:2px\n "},"evals":[],"jsHooks":[]}</script><p>The only degree of freedom is the choice of index. The package comes with an Rstudio addin (<code><a href="reference/index_builder.html">index_builder()</a></code>), which allows to build or choose from more than 20 different indices. Blindly (ab)using this function is highly discouraged!</p>
 <p>The <code>netrankr</code> package is based on the idea that centrality is more than a conglomeration of indices. Decomposing them in a series of microsteps offers the posibility to gradually add ideas about centrality, without succumbing to trial-and-error approaches. Further, it allows for alternative assessment methods which can be more general than the index-driven approach:</p>
-<div id="htmlwidget-24dd83f44151e2d24cdc" style="width:70%;height:300px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-24dd83f44151e2d24cdc">{"x":{"diagram":"graph LR\n  A[network]==>B{indirect relation}\n  B ==>P[position]\n  P==>C[aggregate position]\n  C==>D[centrality index]\n  P==>E{positional <br> dominance}\n  E==>F[partial centrality]\n  E==>G[probabilistic centrality]\n style A fill:#fff,stroke:#000, stroke-width:2px\n style B fill:#fff,stroke:#000, stroke-width:2px\n style C fill:#fff,stroke:#000, stroke-width:2px\n style D fill:#fff,stroke:#000, stroke-width:2px\n style E fill:#fff,stroke:#000, stroke-width:2px\n style F fill:#fff,stroke:#000, stroke-width:2px\n style G fill:#fff,stroke:#000, stroke-width:2px\n style P fill:#EEC900,stroke:#000, stroke-width:3px\n"},"evals":[],"jsHooks":[]}</script><p>The new approach is centered around the concept of <em>positions</em>, which are defined as the relations and potential attributes of a node in a network. The aggregation of the relations leads to the definition of indices. However, positions can also be compared via <em>positional dominance</em>, leading to partial centrality rankings and the option to calculate probabilistic centrality rankings.</p>
+<div id="htmlwidget-6f6c84f005fa1084f9de" style="width:70%;height:300px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6f6c84f005fa1084f9de">{"x":{"diagram":"graph LR\n  A[network]==>B{indirect relation}\n  B ==>P[position]\n  P==>C[aggregate position]\n  C==>D[centrality index]\n  P==>E{positional <br> dominance}\n  E==>F[partial centrality]\n  E==>G[probabilistic centrality]\n style A fill:#fff,stroke:#000, stroke-width:2px\n style B fill:#fff,stroke:#000, stroke-width:2px\n style C fill:#fff,stroke:#000, stroke-width:2px\n style D fill:#fff,stroke:#000, stroke-width:2px\n style E fill:#fff,stroke:#000, stroke-width:2px\n style F fill:#fff,stroke:#000, stroke-width:2px\n style G fill:#fff,stroke:#000, stroke-width:2px\n style P fill:#EEC900,stroke:#000, stroke-width:3px\n"},"evals":[],"jsHooks":[]}</script><p>The new approach is centered around the concept of <em>positions</em>, which are defined as the relations and potential attributes of a node in a network. The aggregation of the relations leads to the definition of indices. However, positions can also be compared via <em>positional dominance</em>, leading to partial centrality rankings and the option to calculate probabilistic centrality rankings.</p>
 <p>For a more detailed theoretical background, consult the <a href="#literature">Literature</a> at the end of this page.</p>
 <hr>
 <div id="installation" class="section level2">
@@ -180,30 +180,39 @@ P</code></pre></div>
 <p><a href="https://doi.org/10.1017/S0956792516000401">Schoch &amp; Brandes (2016)</a> showed that <span class="math inline">\(N(u) \subseteq N[v]\)</span> (i.e. <code>P[u,v]=1</code>) implies <span class="math inline">\(c(u) \leq c(v)\)</span> for centrality indices <span class="math inline">\(c\)</span>, which are defined via specific path algebras. These include many of the well-known measures like closeness (and variants), betweenness (and variants) as well as many walk-based indices (eigenvector and subgraph centrality, total communicability,…).</p>
 <p>Neighborhood-inclusion defines a partial ranking on the set of nodes. Each ranking that is in accordance with this partial ranking yields a proper centrality ranking. Each of these ranking can thus potentially be the outcome of a centrality index.</p>
 <p>Using rank intervals, we can examine the minimal and maximal possible rank of each node. The bigger the intervals are, the more freedom exists for indices to rank nodes differently.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>,<span class="dt">cent.df =</span> cent_scores,<span class="dt">ties.method=</span><span class="st">"average"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">cent.df =</span> cent_scores,<span class="dt">ties.method=</span><span class="st">"average"</span>)</code></pre></div>
 <p><img src="index-partial-1.png" width="70%" style="display: block; margin: auto;"></p>
 <p>The potential ranks of nodes are not uniformly distributed in the intervals. To get the exact probabilities, the function <code><a href="reference/exact_rank_prob.html">exact_rank_prob()</a></code> can be used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/exact_rank_prob.html">exact_rank_prob</a></span>(P)
 <span class="kw">str</span>(res)</code></pre></div>
-<pre><code>#&gt; List of 7
+<pre><code>#&gt; List of 6
 #&gt;  $ lin.ext      : num 739200
-#&gt;  $ names        : chr [1:11] "1" "2" "3" "4" ...
 #&gt;  $ mse          : int [1:11] 1 2 3 4 5 6 7 8 9 10 ...
 #&gt;  $ rank.prob    : num [1:11, 1:11] 0.545 0.273 0 0 0 ...
+#&gt;   ..- attr(*, "dimnames")=List of 2
+#&gt;   .. ..$ : chr [1:11] "V1" "V2" "V3" "V4" ...
+#&gt;   .. ..$ : chr [1:11] "1" "2" "3" "4" ...
 #&gt;  $ relative.rank: num [1:11, 1:11] 0 0.3333 0 0.0476 0 ...
-#&gt;  $ expected.rank: num [1:11] 1.71 3 4.29 7.5 8.14 ...
-#&gt;  $ rank.spread  : num [1:11] 0.958 1.897 1.725 2.54 2.16 ...</code></pre>
+#&gt;   ..- attr(*, "dimnames")=List of 2
+#&gt;   .. ..$ : chr [1:11] "V1" "V2" "V3" "V4" ...
+#&gt;   .. ..$ : chr [1:11] "V1" "V2" "V3" "V4" ...
+#&gt;  $ expected.rank: Named num [1:11] 1.71 3 4.29 7.5 8.14 ...
+#&gt;   ..- attr(*, "names")= chr [1:11] "V1" "V2" "V3" "V4" ...
+#&gt;  $ rank.spread  : Named num [1:11] 0.958 1.897 1.725 2.54 2.16 ...
+#&gt;   ..- attr(*, "names")= chr [1:11] "V1" "V2" "V3" "V4" ...</code></pre>
 <p><code>lin.ext</code> is the number of possible rankings. For the graph <code>g</code> we could therefore come up with 739,200 indices that would rank the nodes differently.</p>
 <p><code>rank.prob</code> contains the probabilities for each node to occupy a certain rank. For instance, the probability for each node to be the most central one is as follows.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(res<span class="op">$</span>rank.prob[ ,<span class="dv">11</span>],<span class="dv">2</span>)</code></pre></div>
-<pre><code>#&gt;  [1] 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16</code></pre>
+<pre><code>#&gt;   V1   V2   V3   V4   V5   V6   V7   V8   V9  V10  V11 
+#&gt; 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16</code></pre>
 <p><code>relative.rank</code> contains the relative rank probabilities. An entry <code>relative.rank[u,v]</code> indicates how likely it is that <code>v</code> is more central than <code>u</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># How likely is it, that 6 is more central than 3?</span>
 <span class="kw">round</span>(res<span class="op">$</span>relative.rank[<span class="dv">3</span>,<span class="dv">6</span>],<span class="dv">2</span>)</code></pre></div>
 <pre><code>#&gt; [1] 0.75</code></pre>
 <p><code>expected.ranks</code> contains the expected centrality ranks for all nodes. They are derived on the basis of <code>rank.prob</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(res<span class="op">$</span>expected.rank,<span class="dv">2</span>)</code></pre></div>
-<pre><code>#&gt;  [1] 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14</code></pre>
+<pre><code>#&gt;   V1   V2   V3   V4   V5   V6   V7   V8   V9  V10  V11 
+#&gt; 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14</code></pre>
 <p>The higher the value, the more central a node is expected to be.</p>
 <p><strong>Note</strong>: The set of rankings grows exponentially in the number of nodes and the exact calculation becomes infeasible quite quickly and approximations need to be used. Check the <a href="articles/benchmarks.html">benchmark results</a> for guidelines.</p>
 <hr>
@@ -233,8 +242,6 @@ P</code></pre></div>
     <h2 class="hasAnchor">
 <a href="#sidebar" class="anchor"></a>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=netrankr">https://​cran.r-project.org/​package=netrankr</a>
-</li>
 <li>Report a bug at <br><a href="https://github.com/schochastics/netrankr/issues">https://​github.com/​schochastics/​netrankr/​issues</a>
 </li>
 </ul>

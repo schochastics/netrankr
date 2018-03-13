@@ -142,26 +142,21 @@ P &lt;-<span class="st"> </span>g <span class="op">%&gt;%</span><span class="st"
 <span class="co"># P &lt;- neighborhood_inclusion(g)</span>
 
 <span class="kw"><a href="../reference/rank_intervals.html">rank_intervals</a></span>(P)</code></pre></div>
-<pre><code>##    min_rank max_rank mid_point
-## 1         1        6       3.5
-## 2         1        9       5.0
-## 3         2        9       5.5
-## 4         2       11       6.5
-## 5         3       11       7.0
-## 6         2       11       6.5
-## 7         2       11       6.5
-## 8         2       11       6.5
-## 9         1       11       6.0
-## 10        1       11       6.0
-## 11        3       11       7.0</code></pre>
+<pre><code>##   min_rank max_rank mid_point
+## A        1        6       3.5
+## B        1        9       5.0
+## C        2        9       5.5
+## D        2       11       6.5
+## E        3       11       7.0
+## F        2       11       6.5
+## G        2       11       6.5
+## H        2       11       6.5
+## I        1       11       6.0
+## J        1       11       6.0
+## K        3       11       7.0</code></pre>
 <p>The package uses the convention, that higher numerical ranks correspond to top ranked position. The lowest possible rank is thus 1. The column <code>mid_point</code> should not be confused with the <em>expected rank</em> of nodes, which is calculated with the function <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code>. See <a href="probabilistic_cent.html">this</a> vignette for more details.<br><br>
 Rank intervals are useful to assess the ambiguity of ranking nodes. The bigger the intervals are, the more freedom exists, e.g. for centrality indices, to rank nodes differently.<br><br>
 The intervals can be visualized with the function <code><a href="../reference/plot_rank_intervals.html">plot_rank_intervals()</a></code>. Note that the package <code>ggplot2</code> is required to use the function properly. The function takes a partial ranking as input and <em>not</em> already calculated rank intervals. These are calculated internally.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P)</code></pre></div>
-<p><img src="partial_centrality_files/figure-html/vis_intervals-1.png" width="480" style="display: block; margin: auto;"></p>
-<p>Nodes are ordered according to the mid point for better readability. If the nodes of the input network are named, the parameter <code>names</code> can be set accordingly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name)</code></pre></div>
-<p><img src="partial_centrality_files/figure-html/vis_intervals_names-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>The function can take a data frame of centrality scores as an additional parameter <code>cent.df</code>. The ranks of each node for each index are then plotted within each interval. Again, the higher the numerical rank the higher ranked the node is according to the index.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cent_scores &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
    <span class="dt">degree=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/degree">degree</a></span>(g),
@@ -169,7 +164,7 @@ The intervals can be visualized with the function <code><a href="../reference/pl
    <span class="dt">closeness=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/closeness">closeness</a></span>(g),<span class="dv">4</span>),
    <span class="dt">eigenvector=</span><span class="kw">round</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/eigen_centrality">eigen_centrality</a></span>(g)<span class="op">$</span>vector,<span class="dv">4</span>))
 
-<span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">names=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(g)<span class="op">$</span>name,<span class="dt">cent.df =</span> cent_scores)</code></pre></div>
+<span class="kw"><a href="../reference/plot_rank_intervals.html">plot_rank_intervals</a></span>(P,<span class="dt">cent.df =</span> cent_scores)</code></pre></div>
 <p><img src="partial_centrality_files/figure-html/vis_intervals_cent-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>A small jitter effect is added to the points to reduce over-plotting.<br><br>
 Observe the inconsistency of betweenness for node <span class="math inline">\(C\)</span>. Betweenness centrality is, so far, the only index that does not <em>strictly</em> preserve neighborhood-inclusion. That is, while <span class="math display">\[

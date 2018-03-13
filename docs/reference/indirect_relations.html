@@ -190,7 +190,9 @@ calculating partial centrality rankings with <a href='positional_dominance.html'
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>type</code> parameter has the following options.
-    <em>'identity'</em> returns the adjacency matrix of the network.
+    <em>'adjacency'</em> returns the adjacency matrix of the network.
+    <em>'weights'</em> returns the weighted adjacency matrix of the network if an edge
+attribute 'weight' is present.
     <em>'dist_sp'</em> returns shortest path distances between all pairs of nodes.
     <em>'depend_sp'</em> returns dyadic dependencies
 $$\delta(u,s) = \sum_{t \in V} \frac{\sigma(s,t|u)}{\sigma(s,t)}$$
@@ -278,7 +280,7 @@ Two betweenness centrality measures based on Randomized Shortest Paths
 <span class='co'>#shortes path dependencies (used for betweenness)</span>
 <span class='no'>D</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"depend_sp"</span>)
 
-<span class='co'>#walks attenuated exponentially by there length</span>
+<span class='co'>#walks attenuated exponentially by their length</span>
 <span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='fu'>indirect_relations</span>(<span class='no'>g</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"walks"</span>,<span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>walks_exp</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

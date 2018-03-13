@@ -155,10 +155,10 @@ Nu &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 Nv &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/ego">neighborhood</a></span>(g,<span class="dt">order=</span><span class="dv">1</span>,<span class="dt">nodes=</span>v,<span class="dt">mindist =</span> <span class="dv">0</span>)[[<span class="dv">1</span>]] <span class="co">#N[v] </span>
 
 Nu</code></pre></div>
-<pre><code>## + 2/11 vertices, named, from 6ce8e16:
+<pre><code>## + 2/11 vertices, named, from d7d8b4b:
 ## [1] 5  11</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Nv</code></pre></div>
-<pre><code>## + 4/11 vertices, named, from 6ce8e16:
+<pre><code>## + 4/11 vertices, named, from d7d8b4b:
 ## [1] 5  3  9  11</code></pre>
 <p>Although it is obvious that <code>Nu</code> is a subset of <code>Nv</code>, we can verify it with <code>R</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(Nu<span class="op">%in%</span>Nv)</code></pre></div>
@@ -166,18 +166,18 @@ Nu</code></pre></div>
 <p>Checking all pairs of nodes can efficiently be done with the <code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> function from the <code>netrankr</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">P &lt;-<span class="st"> </span><span class="kw"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span>(g)
 P</code></pre></div>
-<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-##  [1,]    0    0    1    0    1    1    1    0    0     0     1
-##  [2,]    0    0    0    1    0    0    0    1    0     0     0
-##  [3,]    0    0    0    0    1    0    0    0    0     0     1
-##  [4,]    0    0    0    0    0    0    0    0    0     0     0
-##  [5,]    0    0    0    0    0    0    0    0    0     0     0
-##  [6,]    0    0    0    0    0    0    0    0    0     0     0
-##  [7,]    0    0    0    0    0    0    0    0    0     0     0
-##  [8,]    0    0    0    0    0    0    0    0    0     0     0
-##  [9,]    0    0    0    0    0    0    0    0    0     0     0
-## [10,]    0    0    0    0    0    0    0    0    0     0     0
-## [11,]    0    0    0    0    0    0    0    0    0     0     0</code></pre>
+<pre><code>##    1 2 3 4 5 6 7 8 9 10 11
+## 1  0 0 1 0 1 1 1 0 0  0  1
+## 2  0 0 0 1 0 0 0 1 0  0  0
+## 3  0 0 0 0 1 0 0 0 0  0  1
+## 4  0 0 0 0 0 0 0 0 0  0  0
+## 5  0 0 0 0 0 0 0 0 0  0  0
+## 6  0 0 0 0 0 0 0 0 0  0  0
+## 7  0 0 0 0 0 0 0 0 0  0  0
+## 8  0 0 0 0 0 0 0 0 0  0  0
+## 9  0 0 0 0 0 0 0 0 0  0  0
+## 10 0 0 0 0 0 0 0 0 0  0  0
+## 11 0 0 0 0 0 0 0 0 0  0  0</code></pre>
 <p>If an entry <code>P[u,v]</code> is equal to one, we have <span class="math inline">\(N(u)\subseteq N[v]\)</span>.</p>
 <p>The function <code><a href="../reference/dominance_graph.html">dominance_graph()</a></code> can alternatively be used to visualize the neighborhood inclusion as a directed graph.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g.dom &lt;-<span class="st"> </span><span class="kw"><a href="../reference/dominance_graph.html">dominance_graph</a></span>(P)
@@ -216,7 +216,8 @@ cent.df.rounded</code></pre></div>
 ## 11     11      5     14.6667    0.0556      0.8450   7.3896</code></pre>
 <p>Notice how for each centrality index, different vertices are considered to be the most central node. The most central from degree to subgraph centrality are <span class="math inline">\(11\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(7\)</span> and <span class="math inline">\(10\)</span>. Note that only <em>undominated</em> vertices can achieve the highest score for any reasonable index. As soon as a vertex is dominated by at least one other, it will always be ranked below the dominator. We can check for undominated vertices simply by forming the row Sums in <code>P</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>(<span class="kw">rowSums</span>(P)<span class="op">==</span><span class="dv">0</span>)</code></pre></div>
-<pre><code>## [1]  4  5  6  7  8  9 10 11</code></pre>
+<pre><code>##  4  5  6  7  8  9 10 11 
+##  4  5  6  7  8  9 10 11</code></pre>
 <p>8 nodes are undominated in the graph. It is thus entirely possible to find indices that would also rank <span class="math inline">\(4, 5\)</span> and <span class="math inline">\(9\)</span> on top.</p>
 <p>Besides the top ranked nodes, we can check if the entire partial ranking <code>P</code> is preserved in each centrality ranking. If there exists a pair <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> and index <span class="math inline">\(c()\)</span> such that <span class="math inline">\(N(u)\subseteq N[v]\)</span> but <span class="math inline">\(c(v)&gt;c(u)\)</span>, we do not consider <span class="math inline">\(c\)</span> to be a valid index.</p>
 <p>In our example, we considered vertex <span class="math inline">\(3\)</span> and <span class="math inline">\(5\)</span>, where <span class="math inline">\(3\)</span> was dominated by <span class="math inline">\(5\)</span>. It is easy to verify that all centrality scores of <span class="math inline">\(5\)</span> are in fact greater than the ones of <span class="math inline">\(3\)</span> by inspecting the respective rows in the table. To check all pairs, we use the function <code>is_preserved</code>. The function takes a partial ranking, as induced by neighborhood inclusion, and a score vector of a centrality index and checks if <code>P[i,j]==1 &amp; scores[i]&gt;scores[j]</code> is <code>FALSE</code> for all pairs <code>i</code> and <code>j</code>.</p>
