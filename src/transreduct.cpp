@@ -3,7 +3,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericMatrix transreduct(NumericMatrix M) {
-  NumericMatrix R = M;
+  NumericMatrix R(clone(M));
   int n = R.rows();
   for(int j=0;j<n;++j){
     for(int i=0;i<n;++i){

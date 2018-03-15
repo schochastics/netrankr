@@ -1,6 +1,7 @@
 ## netrankr 0.2.1.9000
 
 * fixed a bug in `index_builder` which prevented the building of self defined indices
+* fixed a still existing bug in `transitive_reduction()`
 * added `type = weights` in `indirect_relations()`
 * `type = "identity"` in `indirect_relations()` is now deprecated. Use `type = "adjacency"` instead.
 * `type = "weight"` added to `indirect_relations()` to return the weighted adjacency matrix
