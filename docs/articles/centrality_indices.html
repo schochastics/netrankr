@@ -115,7 +115,8 @@
     
     
 <div class="contents">
-<p>This vignette describes how to build different centrality indices on the basis of indirect relations as described in <a href="indirect_relations.html">this</a> vignette. Note, however, that the primary purpose of the netrankr package is <strong>not</strong> to provide a great variety of indices, but to offer alternative methods for centrality assessment. Nevertheless, the package also provides an Rstudio addin ‘index_builder()’, which allows to create and customize more than 20 different indices. ________________________________________________________________________________</p>
+<p>This vignette describes how to build different centrality indices on the basis of indirect relations as described in <a href="indirect_relations.html">this</a> vignette. Note, however, that the primary purpose of the netrankr package is <strong>not</strong> to provide a great variety of indices, but to offer alternative methods for centrality assessment. Nevertheless, the package also provides an Rstudio addin ‘index_builder()’, which allows to create and customize more than 20 different indices.</p>
+<hr>
 <div id="theoretical-background" class="section level2">
 <h2 class="hasAnchor">
 <a href="#theoretical-background" class="anchor"></a>Theoretical Background</h2>
@@ -148,7 +149,7 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 
 <span class="co">#Degree</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"identity"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"adjacency"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
 <span class="co">#Closeness</span>
 g <span class="op">%&gt;%</span><span class="st"> </span>
@@ -219,7 +220,7 @@ g <span class="op">%&gt;%</span><span class="st"> </span>
 <p><strong>Note</strong>: The analytic pipeline can of course be wrapped into a function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">degree_centrality &lt;-<span class="st"> </span><span class="cf">function</span>(g){
   DC &lt;-<span class="st"> </span>g <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"identity"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="../reference/indirect_relations.html">indirect_relations</a></span>(<span class="dt">type=</span><span class="st">"adjacency"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/aggregate_positions.html">aggregate_positions</a></span>(<span class="dt">type=</span><span class="st">"sum"</span>)
   <span class="kw">return</span>(DC)
 }</code></pre></div>
