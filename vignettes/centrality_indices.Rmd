@@ -12,7 +12,8 @@ indirect relations as described in [this](indirect_relations.html) vignette. Not
 however, that the primary purpose of the netrankr package is **not** to provide a great
 variety of indices, but to offer alternative methods for centrality assessment. 
 Nevertheless, the package also provides an Rstudio addin 'index_builder()', which 
-allows to create and customize more than 20 different indices. 
+allows to create and customize more than 20 different indices.
+
 ________________________________________________________________________________
 
 ## Theoretical Background
