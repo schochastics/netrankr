@@ -1,4 +1,4 @@
-## netrankr 0.2.1
+# netrankr 0.2.1
 
 * fixed a bug in `index_builder` which prevented the building of self defined indices
 * fixed a still existing bug in `transitive_reduction()`
