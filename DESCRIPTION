@@ -1,9 +1,9 @@
 Package: netrankr
 Type: Package
 Title: Analyzing Partial Rankings in Networks
-Version: 0.2.1.9000
+Version: 0.2.1
 Authors@R: c(
-    person("David", "Schoch", email = "david.schoch@gess.ethz.ch", role = c("aut", "cre")),
+    person("David", "Schoch", email = "david.schoch@manchester.ac.uk", role = c("aut", "cre")),
     person("Julian","Müller", email = "julian.mueller@gess.ethz.ch", role = "ctb"))
 Description: Implements methods for centrality related analyses of networks. 
     While the package includes the possibility to build more than 20 indices, 

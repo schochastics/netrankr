@@ -1,11 +1,6 @@
-## Resubmission
+## Update from 0.2.0 to 0.2.1
 
-This is a resubmission of the initial submission. In this version I have
-added an appropriate reference for the method in the 'Description' field of the 
-DESCRIPTION file. 
-
-Note: This is the second try of the resubmission since the first apparently failed.
-If you receive the submission twice, I appologize for any inconvenience.
+This is an updated version of the package which contains bug fixes.
 
 ---
 
@@ -27,12 +22,6 @@ checking installed package size ... NOTE
   sub-directories of 1Mb or more:
     libs   5.9Mb
 ```
-
-I think the size of the libs subdirectory is due to the use of Rcpp, since many functions
-of the netrankr package have been written in C++ using Rcpp and Armadillo. The
-implementations are needed due to the speed up of C++ code vs plain R, especially
-for the function `exact_rank_prob()`. If you think that the size can be reduced in any way, I am more than
-happy to resubmit (after all, I am very new to C++).
 
 This note does not appear when using the win-builder or on mac.
 
