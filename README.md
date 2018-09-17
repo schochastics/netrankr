@@ -32,6 +32,8 @@ devtools::install_github("schochastics/netrankr")
 Details
 -------
 
+Check out the [online](http://schochastics.github.io/netrankr) manual for more help.
+
 The core functions of the package are:
 
 -   Computing the neighborhood inclusion preorder with `neighborhood_inclusion()`. The resulting partial ranking is the foundation for any centrality related analysis on undirected and unweighted graphs. More details can be found in the dedicated vignette: `vignette("neighborhood_inclusion",package="netrankr")`.

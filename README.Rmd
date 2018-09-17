@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-#netrankr
+# netrankr
 
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/netrankr)](https://CRAN.R-project.org/package=netrankr) 
@@ -44,6 +44,8 @@ devtools::install_github("schochastics/netrankr")
 ```
 
 ## Details
+
+Check out the [online](http://schochastics.github.io/netrankr) manual for more help.
 
 The core functions of the package are: 
 
