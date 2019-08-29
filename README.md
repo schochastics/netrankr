@@ -4,7 +4,7 @@
 [![CRAN Status
 Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
 [![CRAN
-Downloads](http://cranlogs.r-pkg.org/badges/grand-total/netrankr)](https://CRAN.R-project.org/package=netrankr)
+Downloads](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr)
 [![Travis-CI Build
 Status](https://travis-ci.org/schochastics/netrankr.svg?branch=master)](https://travis-ci.org/schochastics/netrankr)
 [![codecov](https://codecov.io/gh/schochastics/netrankr/branch/master/graph/badge.svg)](https://codecov.io/gh/schochastics/netrankr)
