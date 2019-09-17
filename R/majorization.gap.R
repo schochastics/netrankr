@@ -31,17 +31,39 @@
 #' majorization_gap(g,norm=FALSE) #number of reverse unit transformation
 #' @export
 majorization_gap <- function(g, norm = TRUE) {
-    
-    n <- igraph::vcount(g)
-    deg.sorted <- sort(igraph::degree(g), decreasing = TRUE)
-    deg.cor <- sapply(1:n, function(k) {
-        length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
-    })
-    gap <- deg.cor - deg.sorted
-    if (!norm) {
-        gap <- 0.5 * sum(gap[gap >= 0])
-    } else {
-        gap <- 0.5 * sum(gap[gap >= 0])/igraph::ecount(g)
+    if(!igraph::is_connected(g)){
+        warning("graph is not connected. Computing for each component separately and returning sum.")
+    }
+    comps <- igraph::components(g)
+    if(comps$no>1){
+        gap <- 0
+        for(i in 1:comps$no){
+            g1 <- igraph::induced_subgraph(g,which(comps$membership==i))
+            n <- igraph::vcount(g)
+            deg.sorted <- sort(igraph::degree(g1), decreasing = TRUE)
+            deg.cor <- sapply(1:n, function(k) {
+                length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
+            })
+            gap1 <- deg.cor - deg.sorted
+            if (!norm) {
+                gap1 <- 0.5 * sum(gap1[gap1 >= 0])
+            } else {
+                gap1 <- 0.5 * sum(gap1[gap1 >= 0])/igraph::ecount(g1)
+            }
+            gap <- gap+gap1
+        }
+    } else{
+        n <- igraph::vcount(g)
+        deg.sorted <- sort(igraph::degree(g), decreasing = TRUE)
+        deg.cor <- sapply(1:n, function(k) {
+            length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
+        })
+        gap <- deg.cor - deg.sorted
+        if (!norm) {
+            gap <- 0.5 * sum(gap[gap >= 0])
+        } else {
+            gap <- 0.5 * sum(gap[gap >= 0])/igraph::ecount(g)
+        }
     }
     return(gap)
 }

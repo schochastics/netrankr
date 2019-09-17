@@ -4,8 +4,9 @@
 \alias{indirect_relations}
 \title{Indirect relations in a network}
 \usage{
-indirect_relations(g, type = "dist_sp", lfparam = NULL, dwparam = NULL,
-  netflowmode = "", rspxparam = NULL, FUN = identity, ...)
+indirect_relations(g, type = "dist_sp", lfparam = NULL,
+  dwparam = NULL, netflowmode = "", rspxparam = NULL,
+  FUN = identity, ...)
 }
 \arguments{
 \item{g}{igraph object. The network for which relations should be derived.}

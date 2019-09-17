@@ -17,12 +17,12 @@ dependCurFlow <- function(Tmat, el, m, n) {
     .Call('_netrankr_dependCurFlow', PACKAGE = 'netrankr', Tmat, el, m, n)
 }
 
-dependency <- function(adj) {
-    .Call('_netrankr_dependency', PACKAGE = 'netrankr', adj)
-}
-
 dependRspn <- function(A, Z, Zdiv, W, n) {
     .Call('_netrankr_dependRspn', PACKAGE = 'netrankr', A, Z, Zdiv, W, n)
+}
+
+dependency <- function(adj) {
+    .Call('_netrankr_dependency', PACKAGE = 'netrankr', adj)
 }
 
 LatticeOfIdeals <- function(child, parent, Ek, nElem, nIdeals) {
@@ -49,12 +49,12 @@ preserve <- function(P, s, n) {
     .Call('_netrankr_preserve', PACKAGE = 'netrankr', P, s, n)
 }
 
-rankings <- function(paths, ideals, nRank, nElem) {
-    .Call('_netrankr_rankings', PACKAGE = 'netrankr', paths, ideals, nRank, nElem)
-}
-
 rankprobs <- function(ImPred, ideals, nElem, nIdeals) {
     .Call('_netrankr_rankprobs', PACKAGE = 'netrankr', ImPred, ideals, nElem, nIdeals)
+}
+
+rankings <- function(paths, ideals, nRank, nElem) {
+    .Call('_netrankr_rankings', PACKAGE = 'netrankr', paths, ideals, nRank, nElem)
 }
 
 resistanceDistance <- function(C, n) {

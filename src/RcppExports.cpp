@@ -58,17 +58,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// dependency
-NumericMatrix dependency(std::vector<std::vector<int> > adj);
-RcppExport SEXP _netrankr_dependency(SEXP adjSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type adj(adjSEXP);
-    rcpp_result_gen = Rcpp::wrap(dependency(adj));
-    return rcpp_result_gen;
-END_RCPP
-}
 // dependRspn
 arma::mat dependRspn(std::vector<std::vector<int> > A, arma::mat Z, arma::mat Zdiv, arma::mat W, int n);
 RcppExport SEXP _netrankr_dependRspn(SEXP ASEXP, SEXP ZSEXP, SEXP ZdivSEXP, SEXP WSEXP, SEXP nSEXP) {
@@ -81,6 +70,17 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type W(WSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     rcpp_result_gen = Rcpp::wrap(dependRspn(A, Z, Zdiv, W, n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dependency
+NumericMatrix dependency(std::vector<std::vector<int> > adj);
+RcppExport SEXP _netrankr_dependency(SEXP adjSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type adj(adjSEXP);
+    rcpp_result_gen = Rcpp::wrap(dependency(adj));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -163,20 +163,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rankings
-IntegerMatrix rankings(std::vector<std::vector<int> > paths, std::vector<std::vector<int> > ideals, int nRank, int nElem);
-RcppExport SEXP _netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type paths(pathsSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type ideals(idealsSEXP);
-    Rcpp::traits::input_parameter< int >::type nRank(nRankSEXP);
-    Rcpp::traits::input_parameter< int >::type nElem(nElemSEXP);
-    rcpp_result_gen = Rcpp::wrap(rankings(paths, ideals, nRank, nElem));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rankprobs
 Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred, std::vector<std::vector<int> > ideals, int nElem, int nIdeals);
 RcppExport SEXP _netrankr_rankprobs(SEXP ImPredSEXP, SEXP idealsSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
@@ -188,6 +174,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type nElem(nElemSEXP);
     Rcpp::traits::input_parameter< int >::type nIdeals(nIdealsSEXP);
     rcpp_result_gen = Rcpp::wrap(rankprobs(ImPred, ideals, nElem, nIdeals));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rankings
+IntegerMatrix rankings(std::vector<std::vector<int> > paths, std::vector<std::vector<int> > ideals, int nRank, int nElem);
+RcppExport SEXP _netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type paths(pathsSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type ideals(idealsSEXP);
+    Rcpp::traits::input_parameter< int >::type nRank(nRankSEXP);
+    Rcpp::traits::input_parameter< int >::type nElem(nElemSEXP);
+    rcpp_result_gen = Rcpp::wrap(rankings(paths, ideals, nRank, nElem));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -231,16 +231,16 @@ static const R_CallMethodDef CallEntries[] = {
     {"_netrankr_approx_relative", (DL_FUNC) &_netrankr_approx_relative, 5},
     {"_netrankr_checkPairs", (DL_FUNC) &_netrankr_checkPairs, 2},
     {"_netrankr_dependCurFlow", (DL_FUNC) &_netrankr_dependCurFlow, 4},
-    {"_netrankr_dependency", (DL_FUNC) &_netrankr_dependency, 1},
     {"_netrankr_dependRspn", (DL_FUNC) &_netrankr_dependRspn, 5},
+    {"_netrankr_dependency", (DL_FUNC) &_netrankr_dependency, 1},
     {"_netrankr_LatticeOfIdeals", (DL_FUNC) &_netrankr_LatticeOfIdeals, 5},
     {"_netrankr_listingIdeals", (DL_FUNC) &_netrankr_listingIdeals, 3},
     {"_netrankr_mcmc_rank", (DL_FUNC) &_netrankr_mcmc_rank, 3},
     {"_netrankr_nialgo", (DL_FUNC) &_netrankr_nialgo, 2},
     {"_netrankr_matdom", (DL_FUNC) &_netrankr_matdom, 3},
     {"_netrankr_preserve", (DL_FUNC) &_netrankr_preserve, 3},
-    {"_netrankr_rankings", (DL_FUNC) &_netrankr_rankings, 4},
     {"_netrankr_rankprobs", (DL_FUNC) &_netrankr_rankprobs, 4},
+    {"_netrankr_rankings", (DL_FUNC) &_netrankr_rankings, 4},
     {"_netrankr_resistanceDistance", (DL_FUNC) &_netrankr_resistanceDistance, 2},
     {"_netrankr_transreduct", (DL_FUNC) &_netrankr_transreduct, 1},
     {"_netrankr_treeOfIdeals", (DL_FUNC) &_netrankr_treeOfIdeals, 1},

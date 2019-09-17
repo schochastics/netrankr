@@ -1,3 +1,7 @@
+# netrankr 0.3.0.9000
+
+* extended `majorization_gap()` to unconnected graphs
+
 # netrankr 0.2.1
 
 * fixed a bug in `index_builder` which prevented the building of self defined indices

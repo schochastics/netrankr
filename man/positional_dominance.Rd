@@ -4,7 +4,8 @@
 \alias{positional_dominance}
 \title{Generalized Dominance in Graphs}
 \usage{
-positional_dominance(A, type = "one-mode", map = FALSE, benefit = TRUE)
+positional_dominance(A, type = "one-mode", map = FALSE,
+  benefit = TRUE)
 }
 \arguments{
 \item{A}{Matrix containing attributes or relations, for instance calculated by \link{indirect_relations}.}
