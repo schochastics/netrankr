@@ -39,18 +39,20 @@ majorization_gap <- function(g, norm = TRUE) {
         gap <- 0
         for(i in 1:comps$no){
             g1 <- igraph::induced_subgraph(g,which(comps$membership==i))
-            n <- igraph::vcount(g)
-            deg.sorted <- sort(igraph::degree(g1), decreasing = TRUE)
-            deg.cor <- sapply(1:n, function(k) {
-                length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
-            })
-            gap1 <- deg.cor - deg.sorted
-            if (!norm) {
-                gap1 <- 0.5 * sum(gap1[gap1 >= 0])
-            } else {
-                gap1 <- 0.5 * sum(gap1[gap1 >= 0])/igraph::ecount(g1)
+            if(igraph::ecount(g1)!=0){
+                n <- igraph::vcount(g)
+                deg.sorted <- sort(igraph::degree(g1), decreasing = TRUE)
+                deg.cor <- sapply(1:n, function(k) {
+                    length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
+                })
+                gap1 <- deg.cor - deg.sorted
+                if (!norm) {
+                    gap1 <- 0.5 * sum(gap1[gap1 >= 0])
+                } else {
+                    gap1 <- 0.5 * sum(gap1[gap1 >= 0])/igraph::ecount(g1)
+                }
+                gap <- gap+gap1
             }
-            gap <- gap+gap1
         }
     } else{
         n <- igraph::vcount(g)
