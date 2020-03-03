@@ -23,6 +23,13 @@ navbar:
          href: articles/partial_centrality.html
       -  text: Probabilistic Centrality
          href: articles/probabilistic_cent.html
+      -  text: '---'
+      -  text: Blog Post I
+         href: http://blog.schochastics.net/post/network-centrality-in-r-introduction/
+      -  text: Blog Post II
+         href: http://blog.schochastics.net/post/network-centrality-in-r-neighborhood-inclusion/
+      -  text: Blog Post III
+         href: http://blog.schochastics.net/post/network-centrality-in-r-new-ways-of-measuring-centrality/
     - text: "Use Case"
       href: articles/use_case.html
     - text: "Benchmarks"
