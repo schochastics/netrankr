@@ -4,8 +4,7 @@
 \alias{positional_dominance}
 \title{Generalized Dominance in Graphs}
 \usage{
-positional_dominance(A, type = "one-mode", map = FALSE,
-  benefit = TRUE)
+positional_dominance(A, type = "one-mode", map = FALSE, benefit = TRUE)
 }
 \arguments{
 \item{A}{Matrix containing attributes or relations, for instance calculated by \link{indirect_relations}.}
@@ -18,7 +17,7 @@ or 'two-mode' if \code{A} is a general data matrix.}
 \item{benefit}{Logical scalar, whether the attributes or relations are benefit or cost variables.}
 }
 \value{
-Dominance relations as matrix object. An entry \code{[u,v]} is \code{1} if u is dominated by v.
+Dominance relations as matrix object. An entry \verb{[u,v]} is \code{1} if u is dominated by v.
 }
 \description{
 generalized dominance relations.

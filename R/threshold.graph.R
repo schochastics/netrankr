@@ -4,9 +4,12 @@
 #' @param n The number of vertices in the graph.
 #' @param p The probability of inserting dominating vertices. Equates approximately 
 #'     to the density of the graph. See Details.
-#' @details Threshold graphs can be constructed with a binary sequence. For each 0, an isolated 
+#' @param bseq (0,1)-vector a binary sequence that produces a threshold grah. See details
+#' @details Either `n` and `p` must be specified or `bseq`.
+#' Threshold graphs can be constructed with a binary sequence. For each 0, an isolated 
 #' vertex is inserted and for each 1, a vertex is inserted that connects to all previously inserted 
 #' vertices. The probability of inserting a dominating vertices is controlled with parameter `p`.
+#' If `bseq` is gicen instead, a threshold graph is constructed from that sequence.
 #' An important property of threshold graphs is, that all centrality indices induce the same ranking.
 #' @return A threshold graph as igraph object
 #' @author David Schoch
@@ -33,20 +36,31 @@
 #' # centrality scores are perfectly rank correlated
 #' cor(degree(g),closeness(g),method = "kendall")
 #' @export
-threshold_graph <- function(n, p) {
-  if(missing(n)){
-    stop('argument "n" is missing, with no default')
+threshold_graph <- function(n, p,bseq) {
+  if(missing(n) & missing(bseq)){
+    stop('Either specify both n and p, or bseq ')
   }
-  if(missing(p)){
-    stop('argument "p" is missing, with no default')
+  if(missing(p) & missing(bseq)){
+    stop('Either specify both n and p, or bseq ')
   }
   
-  vschedule <- rep(0, n)
-  pvals <- stats::runif(n)
-  
-  vschedule[pvals <= p] <- 1
-  vschedule[n] <- 1
-  vschedule[1] <- 0
+  if(!missing(n) & !missing(p)){
+    vschedule <- rep(0, n)
+    pvals <- stats::runif(n)
+    
+    vschedule[pvals <= p] <- 1
+    vschedule[n] <- 1
+    vschedule[1] <- 0
+  } else if(!missing(bseq)){
+    n <- length(bseq)
+    if(bseq[n]==0){
+      warning("bseq[n]=0 produces unconnected graphs. using bseq[n]=1 instead")
+      bseq[n] <- 1
+    }
+    vschedule <- bseq
+    vschedule[1] <- 0
+    
+  }
   dom_vertices <- which(vschedule == 1)
   if (length(dom_vertices) != 1) {
       edgelist <- do.call(rbind, sapply(dom_vertices, function(v) cbind(rep(v, (v - 1)), seq(1, (v - 1)))))
@@ -55,6 +69,6 @@ threshold_graph <- function(n, p) {
       edgelist <- cbind(rep(n, (n - 1)), seq(1, (n - 1)))
   }
   g <- igraph::graph_from_edgelist(edgelist, directed = FALSE)
-  
+  g$sequence <- vschedule
   return(g)
 }

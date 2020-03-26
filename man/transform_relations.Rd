@@ -50,7 +50,7 @@ with \link{indirect_relations} to fine tune indirect relations.
 }
 \details{
 The predefined functions follow the naming scheme \code{relation_transformation}.
-Predefined functions \code{walks_*} are thus best used with type="walks" in
+Predefined functions \verb{walks_*} are thus best used with type="walks" in
 \link{indirect_relations}. Theoretically, however, any transformation can be used with any relation.
 The results might, however, not be interpretable.
 

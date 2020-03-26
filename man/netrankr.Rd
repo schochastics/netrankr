@@ -3,7 +3,6 @@
 \docType{package}
 \name{netrankr}
 \alias{netrankr}
-\alias{netrankr-package}
 \title{netrankr: An R package for centrality and partial rankings in networks}
 \description{
 netrankr provides several functions to analyze partial rankings for network

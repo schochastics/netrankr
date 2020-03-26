@@ -1,6 +1,7 @@
 # netrankr 0.3.0.9000
 
 * extended `majorization_gap()` to unconnected graphs
+* added `incomparable_pairs()`
 
 # netrankr 0.2.1
 
