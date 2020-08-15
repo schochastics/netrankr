@@ -4,7 +4,9 @@
 \name{florentine_m}
 \alias{florentine_m}
 \title{Florentine family marriage network}
-\format{An igraph object containing marriage links of florentine families}
+\format{
+An igraph object containing marriage links of florentine families
+}
 \usage{
 florentine_m
 }
