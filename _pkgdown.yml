@@ -1,6 +1,16 @@
 title: netrankr
 destination: ../pkgdown_sites/netrankr
+home:
+  title: An R package for network centrality
+  description: Centrality indices and alternative methods to measure importance in networks.
 template:
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "R package for network centrality"
+    twitter:
+      creator: "@schochastics"
+      card: summary_large_image
   params:
     bootswatch: simplex
 navbar:

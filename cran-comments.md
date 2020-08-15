@@ -1,3 +1,8 @@
+## Update from 0.2.1 to 0.3
+
+an existing function was extended and one new function added.  
+No API breaking changes
+
 ## Update from 0.2.0 to 0.2.1 (Resubmission)
 
 This is an updated version of the package which contains bug fixes.
