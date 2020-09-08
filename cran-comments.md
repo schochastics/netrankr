@@ -1,7 +1,9 @@
-## Update from 0.2.1 to 0.3
+## Update from 0.2.1 to 0.3 (Resubmission)
 
 an existing function was extended and one new function added.  
 No API breaking changes
+
+Fixed issues with non existing urls and changed http to https. 
 
 ## Update from 0.2.0 to 0.2.1 (Resubmission)
 
