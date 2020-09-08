@@ -67,7 +67,7 @@ devtools::install_github("schochastics/netrankr")
 
 This example briefly explains some of the functionality of the package
 and the difference to an index driven approach. For a more realistic
-application see the [use case](articles/use_case.html) example.
+application see the use case vignette.
 
 We work with the following small graph.
 
@@ -84,8 +84,8 @@ g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
 
 Say we are interested in the most central node of the graph and simply
 compute some standard centrality scores with the `igraph` package.
-Defining centrality indices in the `netrankr` package is explained
-[here](articles/centrality_indices.html).
+Defining centrality indices in the `netrankr` package is explained in
+the centrality indices vignette.
 
 ``` r
 cent_scores <- data.frame(
@@ -210,8 +210,8 @@ The higher the value, the more central a node is expected to be.
 
 **Note**: The set of rankings grows exponentially in the number of nodes
 and the exact calculation becomes infeasible quite quickly and
-approximations need to be used. Check the [benchmark
-results](articles/benchmarks.html) for guidelines.
+approximations need to be used. Check the benchmark results for
+guidelines.
 
 -----
 
@@ -228,7 +228,7 @@ package, consult the following literature:
 > Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017).
 > Correlations among centrality indices and a class of uniquely ranked
 > graphs. *Social Networks*, **50**,
-> 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
+> 46-54.([link](https://doi.org/10.1016/j.socnet.2017.03.010))
 
 > Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality
 > in social networks. *European Journal of Appplied Mathematics*,
@@ -237,4 +237,4 @@ package, consult the following literature:
 
 > Brandes, Ulrik. (2016). Network Positions. *Methodological
 > Innovations*, **9**, 2059799116630650.
-> ([link](http://dx.doi.org/10.1177/2059799116630650))
+> ([link](https://dx.doi.org/10.1177/2059799116630650))

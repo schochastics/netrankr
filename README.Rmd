@@ -100,7 +100,7 @@ ________________________________________________________________________________
 
 This example briefly explains some of the functionality of the package and the 
 difference to an index driven approach. For a more realistic application see 
-the [use case](articles/use_case.html) example. 
+the use case vignette. 
 
 We work with the following small graph.
 ```{r example_graph, warning=FALSE,message=FALSE}
@@ -124,7 +124,7 @@ ggraph(g,"stress")+
 
 Say we are interested in the most central node of the graph and simply compute some 
 standard centrality scores with the `igraph` package. Defining centrality indices
-in the `netrankr` package is explained [here](articles/centrality_indices.html).
+in the `netrankr` package is explained in the centrality indices vignette.
 ```{r cent,warning=FALSE}
 cent_scores <- data.frame(
    degree = degree(g),
@@ -206,7 +206,7 @@ The higher the value, the more central a node is expected to be.
 
 **Note**: The set of rankings grows exponentially in the number of nodes and the exact 
 calculation becomes infeasible quite quickly and approximations need to be used.
-Check the [benchmark results](articles/benchmarks.html) for guidelines.
+Check the benchmark results for guidelines.
 
 ________________________________________________________________________________
 
@@ -220,7 +220,7 @@ consult the following literature:
 Probabilities in networks. *Social Networks*, **54**, 50-60.([link](https://doi.org/10.1016/j.socnet.2017.12.003))
 
 > Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
-and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
+and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](https://doi.org/10.1016/j.socnet.2017.03.010))
 
 > Schoch, David & Brandes, Ulrik. (2016). Re-conceptualizing centrality in social networks.
 *European Journal of Appplied Mathematics*, **27**(6), 971–985.
@@ -228,4 +228,4 @@ and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](
 
 > Brandes, Ulrik. (2016). Network Positions.
 *Methodological Innovations*, **9**, 2059799116630650.
-([link](http://dx.doi.org/10.1177/2059799116630650))
+([link](https://dx.doi.org/10.1177/2059799116630650))

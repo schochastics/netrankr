@@ -48,7 +48,7 @@ More about the positional dominance and the positional approach to network analy
 
 > Brandes, Ulrik. (2016). Network Positions.
 *Methodological Innovations*, **9**, 2059799116630650.
-([link](http://dx.doi.org/10.1177/2059799116630650))
+([link](https://dx.doi.org/10.1177/2059799116630650))
 
 ________________________________________________________________________________
 

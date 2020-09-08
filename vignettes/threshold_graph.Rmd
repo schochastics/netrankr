@@ -22,7 +22,7 @@ $$
 According to [this](neighborhood_inclusion.html) vignette, it is thus clear that all centrality indices induce the same ranking on a threshold graph. More technical details on threshold graphs and results related to centrality can be found in
 
 > Schoch, David & Valente, Thomas W., & Brandes, Ulrik. (2017). Correlations among centrality indices
-and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](http://doi.org/10.1016/j.socnet.2017.03.010))
+and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](https://doi.org/10.1016/j.socnet.2017.03.010))
 
 ________________________________________________________________________________
 

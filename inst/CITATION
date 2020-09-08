@@ -4,7 +4,6 @@ citEntry(entry = "Manual",
   title        = "netrankr: An R package to analyze partial rankings in networks",
   author       = personList(as.person("David Schoch")),
   year         = "2017",
-  url          = "https://schochastics.github.io/netrankr",
   
   textVersion  =
   paste("David Schoch (2017).",

@@ -22,7 +22,7 @@ library(ggplot2)
 ```
 
 ## Data
-For this tutorial, we use the famous *florentine families* dataset ([Padget & Ansell, 1993](http://www.journals.uchicago.edu/doi/abs/10.1086/230190)). The marriage links
+For this tutorial, we use the famous *florentine families* dataset ([Padget & Ansell, 1993](https://www.journals.uchicago.edu/doi/abs/10.1086/230190)). The marriage links
 of families together with the wealth attribute are included in the `netrankr` package.
 
 ```{r plot,fig.height=5,fig.width=5,fig.align='center'}

@@ -42,7 +42,7 @@ c_\tau(i)=\sum\limits_{t \in \mathcal{N}} \tau(x)_{it}
 $$
 Degree and closeness centrality, for instance, can be obtained by setting $\tau=id$ 
 and $\tau=dist$, respectively. Others need several additional specifications which 
-can be found in [Brandes (2016)](http://dx.doi.org/10.1177/2059799116630650) or 
+can be found in [Brandes (2016)](https://dx.doi.org/10.1177/2059799116630650) or 
 [Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401). 
 \
 With this framework, all centrality indices can be characterized as degree-like 
