@@ -33,7 +33,6 @@
 #' 
 #' The package provides several additional vignettes that explain the functionality 
 #' of netrankr and its conceptual ideas. See `browseVignettes(package = 'netrankr')`
-#' or the [online manual](https://schochastics.github.io/netrankr).
 #' 
 #' @docType package
 #' @name netrankr

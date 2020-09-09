@@ -39,5 +39,4 @@ Consult \code{vignette("probabilistic_cent",package = "netrankr")} for more info
 
 The package provides several additional vignettes that explain the functionality
 of netrankr and its conceptual ideas. See \code{browseVignettes(package = 'netrankr')}
-or the \href{https://schochastics.github.io/netrankr}{online manual}.
 }
