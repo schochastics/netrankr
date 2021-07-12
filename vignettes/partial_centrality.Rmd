@@ -37,10 +37,8 @@ The function `rank_intervals()` is used to calculate the maximal and minimal pos
 rank for each node in any ranking that is in accordance with a given partial ranking. 
 
 ```{r pos_dom}
-g <- graph.empty(n=11,directed = FALSE)
-g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
-                   6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-V(g)$name <- LETTERS[1:11]
+data("dbces11")
+g <- dbces11
 
 #neighborhood inclusion 
 P <- g %>% neighborhood_inclusion()
