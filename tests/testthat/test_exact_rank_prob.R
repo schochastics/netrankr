@@ -20,7 +20,7 @@ test_that("exact_rank_prob is correct",{
   
   A <- matrix(1,10,10)
   diag(A) <- 0
-  expect_warning(exact_rank_prob(A))
+  expect_error(exact_rank_prob(A))
   
 })
 

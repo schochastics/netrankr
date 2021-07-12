@@ -30,6 +30,11 @@
 #' }
 #' @export
 mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
+    if (is.null(rownames(P)) & is.null(colnames(P))) {
+        name_vec <- rownames(P) <- colnames(P) <- paste0("V",1:nrow(P))
+    } else{
+        name_vec <- rownames(P)
+    }
     n.full <- nrow(P)
     MSE <- which((P + t(P)) == 2, arr.ind = T)
     if (length(MSE) >= 1) {
@@ -65,6 +70,9 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
         idx <- which(expected.full == val)
         expected.full[idx] <- expected.full[idx] + sum(duplicated(MSE[expected.full <= val]))
     }
-    return(list(expected.rank = expected.full, relative.rank = rrp.full))
+    rownames(rrp.full) <- colnames(rrp.full) <- names(expected.full) <- name_vec
+    res <- list(relative.rank = rrp.full,expected.rank = expected.full)
+    class(res) <- "netrankr_mcmc"
+    return(res)
 }
 

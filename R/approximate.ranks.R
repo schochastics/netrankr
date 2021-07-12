@@ -141,7 +141,7 @@ approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
     #' rank probabilities in partially ordered sets. In *Multicriteria Ordering and
     #' Ranking: Partial Orders, Ambiguities and Applied Issues*, 145-165.
     #' 
-    #' @return a matrix containing approximation of mutual rank probabilities. 
+    #' @return a matrix containing approximation of relative rank probabilities. 
     #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
     #' @seealso [approx_rank_expected], [exact_rank_prob], [mcmc_rank_prob]
     #' @examples

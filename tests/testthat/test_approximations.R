@@ -29,8 +29,10 @@ test_that("approximate relative is correct",{
   expect_equal(rel_noiter,rel_iter1)
   
   P <- matrix(1,10,10)
+  rownames(P) <- colnames(P) <- paste0("V",1:10)
   P[lower.tri(P,diag = T)] <- 0
   rel_iter10 <- approx_rank_relative(P,iterative = TRUE,num.iter = 10)
+  rownames(rel_iter10) <- colnames(rel_iter10) <- paste0("V",1:10)
   rel_mcmc <- mcmc_rank_prob(P,rp = 100)$relative.rank
   expect_equal(P,rel_iter10)
   expect_equal(P,rel_mcmc)

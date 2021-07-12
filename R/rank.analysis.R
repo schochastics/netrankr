@@ -74,8 +74,7 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
         MSE <- 1:nrow(P)
     }
     if (is.null(nrow(P))) {
-        warning("all elements are structurally equivalent and have the same rank")
-        return()
+        stop("all elements are structurally equivalent and have the same rank")
     }
     # names <- rownames(P)
     # number of Elements
@@ -96,17 +95,24 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
         rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
         names(expected_full) <- names(rank.spread_full) <- rownames(P_full)
         colnames(rp_full) <- 1:ncol(rp_full)
-        return(list(lin.ext = 1, 
+        res <- list(lin.ext = 1, 
                     mse = MSE, 
                     rank.prob = rp_full, 
                     relative.rank = mrp_full, 
                     expected.rank = expected_full, 
-                    rank.spread = rank.spread_full))
+                    rank.spread = rank.spread_full,
+                    topo.order = NULL, 
+                    tree = NULL, 
+                    lattice = NULL, 
+                    ideals = NULL
+                    )
+        class(res) <- "netrankr_full"
+        return(res)
     }
     
     # sanity check if applicable ------------------------------------------------
     if (nrow(P) > 40 & comparable_pairs(P) < 0.4 & force == F) {
-        stop("Input data too big. Use approximations or set force=T if you know what you are doing")
+        stop("Input data too big. Use approximations or set `force=TRUE` if you know what you are doing")
     }
     # Prepare Data structures---------------------
     topo.order <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P, "directed")))
@@ -156,11 +162,14 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
     }
     res$rp <- res$rp[order(topo.order), ]
     res$mrp <- res$mrp[order(topo.order), order(topo.order)]
+    
     ############################### END
     expected <- res$rp %*% 1:nElem
     rank.spread <- rowSums((matrix(rep(1:nElem, each = nElem), nElem, nElem) - c(expected))^2 * res$rp)
     expected <- c(expected)
-    ############################### Insert equivalent nodes again
+    
+    ############################### 
+    # Insert equivalent nodes again ----
     rp_full <- matrix(0, n_full, ncol(res$rp))
     mrp_full <- matrix(0, n_full, n_full)
     expected_full <- c(0, n_full)
@@ -187,25 +196,35 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
     rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
     names(expected_full) <- names(rank.spread_full) <- rownames(P_full)
     colnames(rp_full) <- 1:ncol(rp_full)
+    
     ############################### 
     if (only.results) {
-        return(list(lin.ext = res$linext, 
-                    mse = MSE, 
-                    rank.prob = rp_full, 
-                    relative.rank = t(mrp_full), 
-                    expected.rank = expected_full, 
-                    rank.spread = sqrt(rank.spread_full)))
-    } else {
-        return(list(lin.ext = res$linext, 
+        res <- list(lin.ext = res$linext, 
                     mse = MSE, 
                     rank.prob = rp_full, 
                     relative.rank = t(mrp_full), 
                     expected.rank = expected_full, 
                     rank.spread = sqrt(rank.spread_full), 
-                    topo.order = topo.order, 
-                    tree = tree, 
-                    lattice = latofI, 
-                    ideals = ideallist))
+                    topo.order = NULL, 
+                    tree = NULL, 
+                    lattice = NULL, 
+                    ideals = NULL)
+        class(res) <- "netrankr_full"
+        return(res)
+    } else {
+        res <- list(lin.ext = res$linext, 
+                   mse = MSE, 
+                   rank.prob = rp_full, 
+                   relative.rank = t(mrp_full), 
+                   expected.rank = expected_full, 
+                   rank.spread = sqrt(rank.spread_full), 
+                   topo.order = topo.order, 
+                   tree = tree, 
+                   lattice = latofI, 
+                   ideals = ideallist)
+        class(res) <- "netrankr_full"
+        return(res)
+        
     }
 }
 

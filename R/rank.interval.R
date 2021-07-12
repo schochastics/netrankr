@@ -7,10 +7,9 @@
 #' rank, for instance computed with [exact_rank_prob].
 #' It is simply the average of `min_rank` and `max_rank`. For exact rank probabilities
 #' use [exact_rank_prob]. 
-#' @return A data frame with the minimal, maximal rank of each node together 
-#' with the mid point of the two extrema.
+#' @return An object of type netrankr_interval
 #' @author David Schoch
-#' @seealso [plot_rank_intervals], [exact_rank_prob]
+#' @seealso [exact_rank_prob]
 #'
 #' @examples
 #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
@@ -22,7 +21,17 @@ rank_intervals <- function(P) {
     min_rank_all <- colSums((P - t(P)) == 1) + 1
     mid_point_all <- (max_rank_all + min_rank_all)/2
     
-    return(data.frame(min_rank = min_rank_all, 
-                      max_rank = max_rank_all, 
-                      mid_point = mid_point_all))
+    if (is.null(rownames(P))) {
+        names <- paste0("V",1:nrow(P))
+    } else {
+        names <- rownames(P)
+    }
+    
+    res <- data.frame(
+        node = names,
+        min_rank = min_rank_all, 
+        max_rank = max_rank_all, 
+        mid_point = mid_point_all)
+    class(res) <- c("netrankr_interval",class(res))
+    return(res)
 }
