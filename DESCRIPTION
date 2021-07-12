@@ -1,7 +1,7 @@
 Package: netrankr
 Type: Package
 Title: Analyzing Partial Rankings in Networks
-Version: 0.3.0
+Version: 1.0.0.9999
 Authors@R: c(
     person("David", "Schoch", email = "david.schoch@manchester.ac.uk", role = c("aut", "cre")),
     person("Julian","Müller", email = "julian.mueller@gess.ethz.ch", role = "ctb"))
@@ -24,10 +24,9 @@ Imports: igraph (>= 1.0.1),
     Rcpp (>= 0.12.8)
 LinkingTo: Rcpp,RcppArmadillo
 SystemRequirements: C++11
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: knitr, rmarkdown, magrittr,
-    ggplot2,
     testthat,
     shiny (>= 0.13),
     miniUI (>= 0.1.1),

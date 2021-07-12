@@ -18,7 +18,6 @@ ________________________________________________________________________________
 library(igraph)
 library(netrankr)
 library(magrittr)
-library(ggplot2)
 ```
 
 ## Data
@@ -125,11 +124,10 @@ plot(d,vertex.label.color="black",
 The Castellan family neither dominates nor is dominated by any other family. This means, that we
 can find indices that potentially rank them on top or on the bottom, or anything in between.
 
-To better assess the potential ranks of nodes, we can plot the rank intervals with
-`plot_rank_intervals()`
+To better assess the potential ranks of nodes, we can plot the rank intervals
 
 ```{r rk_inter,fig.align='center',fig.width=5,fig.height=5}
-plot_rank_intervals(P)
+plot(rank_intervals(P))
 ```
 
 Observe how big the intervals are, indicating that there is ample scope to rank the
@@ -373,7 +371,7 @@ distances. In the following we will explore *how* far away.
 We start by calculating the rank intervals to illustrate the difference to 
 neighborhood-inclusion.
 ```{r rk_inter_dist,fig.align='center',fig.width=5,fig.height=5}
-plot_rank_intervals(D)
+plot(rank_intervals(D))
 ```
 All intervals shrunk significantly and even correspond to a single point for two
 families (Pazzi and Medici). This implies that no matter which distance based index we
@@ -411,24 +409,6 @@ dist_cor <- apply(all_ranks,2,
 c(max_cor = max(dist_cor),mean_cor = mean(dist_cor))
 ```
 The highest achievable correlation is `r round(max(dist_cor),4)`.
-
-The figure below shows all correlations as a boxplot.
-```{r vis_rank_cor,fig.align='center',fig.width=5,fig.height=5,echo=FALSE}
-dist_cor<-
-data.frame(cor = apply(all_ranks,2,
-           function(x)cor(V(florentine_m)$wealth,x,method="kendall")),
-           method = "distance")
-
-ggplot(dist_cor)+
-  geom_boxplot(aes(x=method,y=cor))+
-  theme(text = element_text(family="Times",size=14),
-        panel.border = element_blank(),
-        panel.background = element_blank(),
-        panel.grid = element_blank(),
-        axis.ticks = element_blank())+
-      labs(x="",y="Correlation with wealth")
-
-```
 
 We can conclude, that there can not be any distance based centrality index that can
 reasonably explain the wealth attribute. 

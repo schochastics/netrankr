@@ -85,10 +85,10 @@ cent_scores <- data.frame(
    eigenvector=round(eigen_centrality(g)$vector,4),
    subgraph=round(subgraph_centrality(g),4))
 
-plot_rank_intervals(P,cent.df = cent_scores)
+plot(rank_intervals(P),cent_scores = cent_scores)
 ```
 
-Notice how all five centrality rank a different vertex as the most central one.  
+Notice how all five indices rank a different vertex as the most central one.  
 \
 In the following subsections the output of the function `exact_rank_probabilities()` 
 are described which may help to circumvent the potential arbitrariness of index induced rankings.

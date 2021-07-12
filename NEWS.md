@@ -1,3 +1,10 @@
+# netrankr 1.0.0.9999
+
+* added S3 class `netrankr_full` (result of `exact_rank_prob()`) with print and plot functions
+* added S3 class `netrankr_interval` (result of `rank_intervals()`) with print and plot functions
+* added S3 class `netrankr_mcmc` (result of `mcmc_rank_prob()`) with print and plot functions
+* added `dbces11` graph (smalles graph with 5 different centers)
+
 # netrankr 0.3.0
 
 * extended `majorization_gap()` to unconnected graphs

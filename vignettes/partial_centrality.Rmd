@@ -61,13 +61,7 @@ Rank intervals are useful to assess the ambiguity of ranking nodes. The bigger
 the intervals are, the more freedom exists, e.g. for centrality indices, to rank 
 nodes differently.  
 \
-The intervals can be visualized with the function `plot_rank_intervals()`. Note
-that the package `ggplot2` is required to use the function properly. The function 
-takes a partial ranking as input and *not* already calculated rank intervals. 
-These are calculated internally.
-
-The function can take a data frame of centrality scores as an additional parameter 
-`cent.df`. The ranks of each node for each index are then plotted within each interval.
+The intervals can be visualized with its own `plot()` function. The function can take a data frame of centrality scores as an additional parameter `cent_scores`. The ranks of each node for each index are then plotted within each interval.
 Again, the higher the numerical rank the higher ranked the node is according to the index.
 
 ```{r vis_intervals_cent}
@@ -78,13 +72,13 @@ cent_scores <- data.frame(
    closeness=round(closeness(g),4),
    eigenvector=round(eigen_centrality(g)$vector,4))
 
-plot_rank_intervals(P,cent.df = cent_scores)
+rk_int <- rank_intervals(P)
+plot(rk_int,cent_scores = cent_scores)
 ```
 
 A small jitter effect is added to the points to reduce over-plotting.  
 \
-Observe the inconsistency
-of betweenness for node $C$. Betweenness centrality is, so far, the only index that does not
+Note that you may encounter situations, where ranks of centralities may fall outside of interval. This can happen in cases of ties in rankings, especially for betweenness centrality. Betweenness is, so far, the only index that does not
 *strictly* preserve neighborhood-inclusion. That is, while
 $$
 N(u)\subseteq N[v] \text{ and } N(v)\not\subseteq N[u] \implies c(u)<c(v)
@@ -102,13 +96,13 @@ P <- tg %>% neighborhood_inclusion()
 
 #without %>% operator:
 # P <- neighborhood_inclusion(tg)
-plot_rank_intervals(P)
+plot(rank_intervals(P))
 ```
 
 The described betweenness inconsistancy is most evident for threshold graphs as shown in
 the rank intervals below.
 
-```{r tg_ri_cent}
+```{r tg_ri_cent,out}
 cent_scores <- data.frame(
    degree=degree(tg),
    betweenness=round(betweenness(tg),4),
@@ -116,5 +110,5 @@ cent_scores <- data.frame(
    eigenvector=round(eigen_centrality(tg)$vector,4))
 
 
-plot_rank_intervals(P,cent.df=cent_scores)
+plot(rank_intervals(P),cent_scores = cent_scores)
 ```
