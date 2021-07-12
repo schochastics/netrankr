@@ -15,7 +15,7 @@ or \link{positional_dominance}.}
 \item{num.iter}{Number of iterations to be used. defaults to 10 (see Details).}
 }
 \value{
-a matrix containing approximation of mutual rank probabilities.
+a matrix containing approximation of relative rank probabilities.
 \code{relative.rank[i,j]} is the probability that i is ranked lower than j
 }
 \description{

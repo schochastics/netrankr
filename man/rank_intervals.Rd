@@ -11,8 +11,7 @@ rank_intervals(P)
 or \link{positional_dominance}.}
 }
 \value{
-A data frame with the minimal, maximal rank of each node together
-with the mid point of the two extrema.
+An object of type netrankr_interval
 }
 \description{
 Calculate the maximal and minimal rank possible for each node
@@ -29,7 +28,7 @@ P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
 rank_intervals(P)
 }
 \seealso{
-\link{plot_rank_intervals}, \link{exact_rank_prob}
+\link{exact_rank_prob}
 }
 \author{
 David Schoch
