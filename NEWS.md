@@ -4,6 +4,8 @@
 * added S3 class `netrankr_interval` (result of `rank_intervals()`) with print and plot functions
 * added S3 class `netrankr_mcmc` (result of `mcmc_rank_prob()`) with print and plot functions
 * added `dbces11` graph (smalles graph with 5 different centers)
+* `plot_rank_intervals()` is deprecated 
+
 
 # netrankr 0.3.0
 

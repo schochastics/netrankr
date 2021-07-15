@@ -88,21 +88,16 @@ plot(rank_intervals(P),cent_scores = cent_scores)
 
 Notice how all five indices rank a different vertex as the most central one.  
 \
-In the following subsections the output of the function `exact_rank_probabilities()` 
+In the following subsections the output of the function `exact_rank_prob()` 
 are described which may help to circumvent the potential arbitrariness of index induced rankings.
 But first, let us briefly look at all the return values.
 ```{r calc_probs}
 res <- exact_rank_prob(P)
-str(res)
+res
 ```
 
-The return value `lin.ext` gives the number of possible rankings that are in 
-accordance with the partial ranking `P`. The `names` vector returns the names of nodes if they were
-supplied with the `names` parameter. Otherwise, node ids are returned as a character vector.
-The vector `mse` returns the equivalence classes of `P`. Nodes $u$ and $v$ are equivalent
-if $N(u)\subseteq N[v]$ and $N(v)\subseteq N[u]$ holds. The remaining return values
-are discussed in the following.
-
+The function returns an object of type \emph{netrankr_full} which contains the result of a full probabilistic rank analysis.
+The specific list entries are discussed in the following subsections.
 
 ### Rank Probabilities
 

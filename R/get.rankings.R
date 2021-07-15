@@ -18,11 +18,12 @@
 #' @export
 
 get_rankings <- function(data, force = F) {
-    if (missing(data)){
-      stop("no data provided")
+    if(!"netrankr_full"%in%class(data)){
+      stop("data is not a netrankr_full object")
     }
-    if (!all(c("lattice", "ideals", "topo.order", "lin.ext", "mse")%in%names(data))){
-      stop("data is in wrong format. run exact_rank_prob with only.results = F")
+  
+    if (is.null(data$tree)){
+      stop("input does not include all necessary data structures. run exact_rank_prob() with 'only.results = FALSE'")
     }
     lattice <- data$lattice
     ideals <- data$ideals
@@ -31,7 +32,7 @@ get_rankings <- function(data, force = F) {
     mse <- data$mse
     
     if (linext > 50000 & !force) {
-      stop("number of possible rankings is very high. Use force = F 
+      stop("number of possible rankings is very high. Use 'force = FALSE' 
            if you know what you are doing.")
     }
     

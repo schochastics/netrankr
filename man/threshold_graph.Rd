@@ -22,11 +22,11 @@ Constructs a random threshold graph.
 A threshold graph is a graph where the neighborhood inclusion preorder is complete.
 }
 \details{
-Either \code{n} and \code{p} must be specified or \code{bseq}.
+Either \code{n} and \code{p}, or \code{bseq} must be specified.
 Threshold graphs can be constructed with a binary sequence. For each 0, an isolated
 vertex is inserted and for each 1, a vertex is inserted that connects to all previously inserted
 vertices. The probability of inserting a dominating vertices is controlled with parameter \code{p}.
-If \code{bseq} is gicen instead, a threshold graph is constructed from that sequence.
+If \code{bseq} is given instead, a threshold graph is constructed from that sequence.
 An important property of threshold graphs is, that all centrality indices induce the same ranking.
 }
 \examples{

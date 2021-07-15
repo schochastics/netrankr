@@ -81,7 +81,7 @@ Nv <- neighborhood(g,order=1,nodes=v,mindist = 0)[[1]] #N[v]
 Nu
 Nv
 ```
-Although it is obvious that `Nu` is a subset of `Nv`, we can verify it with `R`. 
+Although it is obvious that `Nu` is a subset of `Nv`, we can verify it as follows. 
 
 ```{r inclusion}
 all(Nu%in%Nv)

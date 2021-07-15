@@ -43,6 +43,15 @@
 #' is_preserved(P,betweenness(dbces11))
 #' @export
 neighborhood_inclusion <- function(g) {
+  
+    if(!igraph::is_igraph(g)){
+      stop("g must be an igraph object")
+    }
+  
+    if(igraph::is_directed(g)){
+      stop("g must be an undirected graph")
+    }
+  
     adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
     deg <- igraph::degree(g)
     dom <- nialgo(adj, deg)

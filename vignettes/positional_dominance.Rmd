@@ -62,22 +62,14 @@ set.seed(1886) #for reproducibility
 ```
 
 The function `positional_dominance` can be used to check both, dominance under homogeneity and heterogeneity.
-In accordance with the analytic pipeline of centrality (consult the tutorial REFREF)
-we use the `%>%` operator from the `magrittr` package.
+In accordance with the analytic pipeline of centrality we use the `%>%` operator.
 
 ```{r pos_dom}
 data("dbces11")
 g <- dbces11
 
 #neighborhood inclusion can be expressed with the analytic pipeline
-D <- g %>% indirect_relations(type="identity") %>% positional_dominance()
-
-#without %>% operator:
-# rel <- indirect_relations(g,type="identity")
-# D <- positional_dominance(rel)
-
-#check if identical to neighborhood-inclusion
-identical(D,neighborhood_inclusion(g))
+D <- g %>% indirect_relations(type="adjacency") %>% positional_dominance()
 ```
 
 More on the `indirect_relations()` function can be found in [this](indirect_relations.html) vignette.
@@ -90,7 +82,7 @@ Dominance under total homogeneity yields a ranking, if the relation is binary (e
 
 ```{r homo_and_hetero}
 D <- g %>% 
-  indirect_relations(type="identity") %>% 
+  indirect_relations(type="adjacency") %>% 
   positional_dominance(map=TRUE)
 
 comparable_pairs(D)

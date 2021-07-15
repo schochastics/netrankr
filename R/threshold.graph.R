@@ -5,11 +5,11 @@
 #' @param p The probability of inserting dominating vertices. Equates approximately 
 #'     to the density of the graph. See Details.
 #' @param bseq (0,1)-vector a binary sequence that produces a threshold grah. See details
-#' @details Either `n` and `p` must be specified or `bseq`.
+#' @details Either `n` and `p`, or `bseq` must be specified.
 #' Threshold graphs can be constructed with a binary sequence. For each 0, an isolated 
 #' vertex is inserted and for each 1, a vertex is inserted that connects to all previously inserted 
 #' vertices. The probability of inserting a dominating vertices is controlled with parameter `p`.
-#' If `bseq` is gicen instead, a threshold graph is constructed from that sequence.
+#' If `bseq` is given instead, a threshold graph is constructed from that sequence.
 #' An important property of threshold graphs is, that all centrality indices induce the same ranking.
 #' @return A threshold graph as igraph object
 #' @author David Schoch
