@@ -23,7 +23,7 @@ network:
 The only degree of freedom is the choice of index. The package comes
 with an Rstudio addin (`index_builder()`), which allows to build or
 choose from more than 20 different indices. Blindly (ab)using this
-function is highly discouraged\!
+function is highly discouraged!
 
 The `netrankr` package is based on the idea that centrality is more than
 a conglomeration of indices. Decomposing them in a series of microsteps
@@ -44,7 +44,7 @@ calculate probabilistic centrality rankings.
 For a more detailed theoretical background, consult the
 [Literature](#literature) at the end of this page.
 
------
+------------------------------------------------------------------------
 
 ## Installation
 
@@ -61,7 +61,7 @@ To install the developer version from github:
 devtools::install_github("schochastics/netrankr")
 ```
 
------
+------------------------------------------------------------------------
 
 ## Simple Example
 
@@ -127,8 +127,8 @@ P
 ```
 
 [Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401)
-showed that \(N(u) \subseteq N[v]\) (i.e. `P[u,v]=1`) implies
-\(c(u) \leq c(v)\) for centrality indices \(c\), which are defined via
+showed that *N*(*u*) ⊆ *N*\[*v*\] (i.e. `P[u,v]=1`) implies
+*c*(*u*) ≤ *c*(*v*) for centrality indices *c*, which are defined via
 specific path algebras. These include many of the well-known measures
 like closeness (and variants), betweenness (and variants) as well as
 many walk-based indices (eigenvector and subgraph centrality, total
@@ -144,7 +144,7 @@ rank of each node. The bigger the intervals are, the more freedom exists
 for indices to rank nodes differently.
 
 ``` r
-plot_rank_intervals(P,cent.df = cent_scores,ties.method="average")
+plot(rank_intervals(P),cent.df = cent_scores,ties.method="average")
 ```
 
 <img src="man/figures/README-partial-1.png" width="80%" style="display: block; margin: auto;" />
@@ -155,27 +155,78 @@ intervals. To get the exact probabilities, the function
 
 ``` r
 res <- exact_rank_prob(P)
-str(res)
-#> List of 6
-#>  $ lin.ext      : num 739200
-#>  $ mse          : int [1:11] 1 2 3 4 5 6 7 8 9 10 ...
-#>  $ rank.prob    : num [1:11, 1:11] 0.545 0.273 0 0 0 ...
-#>   ..- attr(*, "dimnames")=List of 2
-#>   .. ..$ : chr [1:11] "1" "2" "3" "4" ...
-#>   .. ..$ : chr [1:11] "1" "2" "3" "4" ...
-#>  $ relative.rank: num [1:11, 1:11] 0 0.3333 0 0.0476 0 ...
-#>   ..- attr(*, "dimnames")=List of 2
-#>   .. ..$ : chr [1:11] "1" "2" "3" "4" ...
-#>   .. ..$ : chr [1:11] "1" "2" "3" "4" ...
-#>  $ expected.rank: Named num [1:11] 1.71 3 4.29 7.5 8.14 ...
-#>   ..- attr(*, "names")= chr [1:11] "1" "2" "3" "4" ...
-#>  $ rank.spread  : Named num [1:11] 0.958 1.897 1.725 2.54 2.16 ...
-#>   ..- attr(*, "names")= chr [1:11] "1" "2" "3" "4" ...
+res
+#> Number of possible centrality rankings:  739200 
+#> Equivalence Classes (max. possible): 11 (11)
+#> - - - - - - - - - - 
+#> Rank Probabilities (rows:nodes/cols:ranks)
+#>             1          2          3          4          5           6
+#> 1  0.54545455 0.27272727 0.12121212 0.04545455 0.01298701 0.002164502
+#> 2  0.27272727 0.21818182 0.16969697 0.12727273 0.09090909 0.060606061
+#> 3  0.00000000 0.16363636 0.21818182 0.20909091 0.16883117 0.119047619
+#> 4  0.00000000 0.02727273 0.05151515 0.07272727 0.09090909 0.106060606
+#> 5  0.00000000 0.00000000 0.01818182 0.04545455 0.07532468 0.103463203
+#> 6  0.00000000 0.05454545 0.08484848 0.10000000 0.10649351 0.108658009
+#> 7  0.00000000 0.05454545 0.08484848 0.10000000 0.10649351 0.108658009
+#> 8  0.00000000 0.02727273 0.05151515 0.07272727 0.09090909 0.106060606
+#> 9  0.09090909 0.09090909 0.09090909 0.09090909 0.09090909 0.090909091
+#> 10 0.09090909 0.09090909 0.09090909 0.09090909 0.09090909 0.090909091
+#> 11 0.00000000 0.00000000 0.01818182 0.04545455 0.07532468 0.103463203
+#>             7          8           9         10         11
+#> 1  0.00000000 0.00000000 0.000000000 0.00000000 0.00000000
+#> 2  0.03636364 0.01818182 0.006060606 0.00000000 0.00000000
+#> 3  0.07272727 0.03636364 0.012121212 0.00000000 0.00000000
+#> 4  0.11818182 0.12727273 0.133333333 0.13636364 0.13636364
+#> 5  0.12727273 0.14545455 0.157575758 0.16363636 0.16363636
+#> 6  0.10909091 0.10909091 0.109090909 0.10909091 0.10909091
+#> 7  0.10909091 0.10909091 0.109090909 0.10909091 0.10909091
+#> 8  0.11818182 0.12727273 0.133333333 0.13636364 0.13636364
+#> 9  0.09090909 0.09090909 0.090909091 0.09090909 0.09090909
+#> 10 0.09090909 0.09090909 0.090909091 0.09090909 0.09090909
+#> 11 0.12727273 0.14545455 0.157575758 0.16363636 0.16363636
+#> - - - - - - - - - - 
+#> Relative Rank Probabilities (row ranked lower than col)
+#>             1          2         3         4         5         6         7
+#> 1  0.00000000 0.66666667 1.0000000 0.9523810 1.0000000 1.0000000 1.0000000
+#> 2  0.33333333 0.00000000 0.6666667 1.0000000 0.9166667 0.8333333 0.8333333
+#> 3  0.00000000 0.33333333 0.0000000 0.7976190 1.0000000 0.7500000 0.7500000
+#> 4  0.04761905 0.00000000 0.2023810 0.0000000 0.5595238 0.4404762 0.4404762
+#> 5  0.00000000 0.08333333 0.0000000 0.4404762 0.0000000 0.3750000 0.3750000
+#> 6  0.00000000 0.16666667 0.2500000 0.5595238 0.6250000 0.0000000 0.5000000
+#> 7  0.00000000 0.16666667 0.2500000 0.5595238 0.6250000 0.5000000 0.0000000
+#> 8  0.04761905 0.00000000 0.2023810 0.5000000 0.5595238 0.4404762 0.4404762
+#> 9  0.14285714 0.25000000 0.3571429 0.6250000 0.6785714 0.5714286 0.5714286
+#> 10 0.14285714 0.25000000 0.3571429 0.6250000 0.6785714 0.5714286 0.5714286
+#> 11 0.00000000 0.08333333 0.0000000 0.4404762 0.5000000 0.3750000 0.3750000
+#>            8         9        10        11
+#> 1  0.9523810 0.8571429 0.8571429 1.0000000
+#> 2  1.0000000 0.7500000 0.7500000 0.9166667
+#> 3  0.7976190 0.6428571 0.6428571 1.0000000
+#> 4  0.5000000 0.3750000 0.3750000 0.5595238
+#> 5  0.4404762 0.3214286 0.3214286 0.5000000
+#> 6  0.5595238 0.4285714 0.4285714 0.6250000
+#> 7  0.5595238 0.4285714 0.4285714 0.6250000
+#> 8  0.0000000 0.3750000 0.3750000 0.5595238
+#> 9  0.6250000 0.0000000 0.5000000 0.6785714
+#> 10 0.6250000 0.5000000 0.0000000 0.6785714
+#> 11 0.4404762 0.3214286 0.3214286 0.0000000
+#> - - - - - - - - - - 
+#> Expected Ranks (higher values are better)
+#>        1        2        3        4        5        6        7        8 
+#> 1.714286 3.000000 4.285714 7.500000 8.142857 6.857143 6.857143 7.500000 
+#>        9       10       11 
+#> 6.000000 6.000000 8.142857 
+#> - - - - - - - - - - 
+#> SD of Rank Probabilities
+#>         1         2         3         4         5         6         7         8 
+#> 0.9583148 1.8973666 1.7249667 2.5396850 2.1599320 2.7217941 2.7217941 2.5396850 
+#>         9        10        11 
+#> 3.1622777 3.1622777 2.1599320 
+#> - - - - - - - - - -
 ```
 
-`lin.ext` is the number of possible rankings. For the graph `g` we could
-therefore come up with 739,200 indices that would rank the nodes
-differently.
+For the graph `g` we can therefore come up with 739,200 indices that
+would rank the nodes differently.
 
 `rank.prob` contains the probabilities for each node to occupy a certain
 rank. For instance, the probability for each node to be the most central
@@ -213,7 +264,7 @@ and the exact calculation becomes infeasible quite quickly and
 approximations need to be used. Check the benchmark results for
 guidelines.
 
------
+------------------------------------------------------------------------
 
 ## Theoretical Background
 
