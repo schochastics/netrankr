@@ -1,11 +1,27 @@
-## Update from 0.2.1 to 0.3 (Resubmission)
+# Update from 0.3.0 to 1.0.0
+
+added classes with generic methods and removed some dependencies. 
+No API breaking changes.
+
+## Test environments
+* ubuntu 20.04, R 4.1.0
+* win-builder (devel and release)
+
+## R CMD check results
+There were no ERRORs or WARNINGs. 
+
+## Downstream dependencies
+I ran R CMD check on downstream dependencies.
+All packages that I could install passed.
+
+# Update from 0.2.1 to 0.3 (Resubmission)
 
 an existing function was extended and one new function added.  
 No API breaking changes
 
 Fixed issues with non existing urls and changed http to https. 
 
-## Update from 0.2.0 to 0.2.1 (Resubmission)
+# Update from 0.2.0 to 0.2.1 (Resubmission)
 
 This is an updated version of the package which contains bug fixes.
 
