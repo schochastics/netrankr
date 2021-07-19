@@ -1,3 +1,5 @@
+# netrankr (development version)
+
 # netrankr 1.0.0
 
 * added S3 class `netrankr_full` (result of `exact_rank_prob()`) with print and plot functions (#8)
