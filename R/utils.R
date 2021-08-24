@@ -43,7 +43,6 @@ print.netrankr_full <- function(x,...){
   #   stop("x is not a netrankr_full object")
   # }
   n <- length(x$mse)
-  cat("netra")
   cat("Number of possible centrality rankings: ",x$lin.ext,"\n")
   cat("Equivalence Classes (max. possible): ",length(unique(x$mse))," (",n,")\n",sep = "")
   cat(rep("-",10),"\n")
@@ -80,33 +79,33 @@ print.netrankr_full <- function(x,...){
 plot.netrankr_full <- function(x,icols = hcl.colors(12, "viridis"),bcol="grey66",ecol="black",...){
   op <- par(no.readonly = TRUE)
   
-  layout.matrix <- matrix(c(1, 2, 5, 5,3,4), nrow = 3, ncol = 2,byrow = TRUE)
+  layout.matrix <- matrix(c(1, 1, 2, 2,5,3,3,4,4,0), nrow = 2, ncol = 5,byrow = TRUE)
   
   layout(mat = layout.matrix,
-         heights = c(2, 1, 2), 
-         widths = c(2, 2)) 
+         heights = c(2, 2), 
+         widths = c(2, 2,2,2,1)) 
   
   rk_pr <- x$rank.prob
   rk_pr[rk_pr==0] <- NA
   rk_rl <- x$relative.rank
   rk_rl[rk_rl==0] <- NA
   
-  par(mar = c(1, 2, 2, 2))#bltr
+  par(mar = c(5, 4, 2, 2),las = 1)#bltr
   image(x=1:ncol(rk_pr),y=1:nrow(rk_pr),t(rk_pr),col=icols,xlab="ranks",
         ylab="nodes",tck=0,breaks = seq(0,1,length.out=length(icols)+1),main="rank probabilities")
   
-  par(mar = c(1, 2, 2, 1))#bltr
+  par(mar = c(5, 2, 2, 2),las = 1)#bltr
   image(x=1:ncol(rk_rl),y=1:nrow(rk_rl),t(rk_rl),col=icols,xlab="",
         ylab="",tck=0,breaks = seq(0,1,length.out=length(icols)+1),main="relative rank probabilities")
   
-  par(mar = c(2, 2, 2, 2))#bltr
-  mid <- barplot(x$expected.rank,main="expected ranks",col=bcol,ylim = c(0,ncol(rk_pr)))
+  par(mar = c(2, 2, 5, 2))#bltr
+  mid <- barplot(x$expected.rank,main="expected ranks",col=bcol,ylim = c(0,nrow(rk_pr)))
   sd_min <- pmax(x$expected.rank-x$rank.spread,0)
-  sd_max <- pmin(x$expected.rank+x$rank.spread,ncol(rk_pr))
+  sd_max <- pmin(x$expected.rank+x$rank.spread,nrow(rk_pr))
   idx <- !(sd_min==sd_max)
   
-  par(mar = c(2, 2, 2, 1))#bltr
-  barplot(x$expected.rank,main="expected ranks and spread",col=bcol,ylim = c(0,ncol(rk_pr)))
+  # par(mar = c(2, 2, 5, 1))#bltr
+  barplot(x$expected.rank,main="expected ranks and spread",col=bcol,ylim = c(0,nrow(rk_pr)))
   arrows(x0=mid[idx], y0=sd_min[idx], x1=mid[idx], y1=sd_max[idx], code=3, angle=90, length=0.1,col=ecol)
   
   
@@ -117,9 +116,11 @@ plot.netrankr_full <- function(x,icols = hcl.colors(12, "viridis"),bcol="grey66"
   midpoints <- (breaks[1:(nBreaks-1)] +  breaks[2:nBreaks] )/2
   iz <- matrix(midpoints, nrow = 1, ncol = length(midpoints)) 
   
-  par(mar = c(4, 1, 2, 1))#bltr
-  image(iy, ix, t(iz), yaxt = "n", xlab = "", 
-        ylab = "", col = c("white",icols), breaks=breaks,useRaster = TRUE)
+  par(mar = c(1, 2, 1, 3))#bltr
+  image(ix, iy, iz, axes = FALSE, xlab = "",
+        ylab = "", col = c("white",icols), breaks=breaks)
+  axis(4)
+  box()
   
   on.exit(par(op))
   invisible(NULL)
@@ -128,7 +129,7 @@ plot.netrankr_full <- function(x,icols = hcl.colors(12, "viridis"),bcol="grey66"
 #' @title Extract probabilities from netrankr_full object
 #' @description extract probabilities as matrices from the result of an object obtained from [exact_rank_prob]
 #' @param x A netrankr_full object
-#' @param type character. which probabilities to return "rank" for rank probabilities, "relative" for relative rank probabilities and "expected" for expected rank probabilities and their variants
+#' @param type which probabilities to return. "rank" for rank probabilities, "relative" for relative rank probabilities and "expected" for expected rank probabilities and their variants
 #' @param ... additional parameters for as.matrix
 #' @author David Schoch
 #' @export
@@ -254,7 +255,7 @@ plot.netrankr_mcmc <- function(x,icols = hcl.colors(12, "viridis"),bcol="grey66"
   
   rk_rl <- x$relative.rank
   rk_rl[rk_rl==0] <- NA
-  par(mar = c(1, 2, 2, 2))#bltr
+  par(mar = c(1, 2, 2, 2),las = 1)#bltr
   image(x=1:ncol(rk_rl),y=1:nrow(rk_rl),t(rk_rl),col=icols,xlab="",
         ylab="",tck=0,breaks = seq(0,1,length.out=length(icols)+1),
         main="MCMC approximated relative rank probabilities")
