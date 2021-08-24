@@ -1,9 +1,9 @@
 context("build centrality indices")
 library(igraph)
 library(magrittr)
+library(Matrix)
 test_that("betweenness correct",{
 
-  
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -14,9 +14,6 @@ test_that("betweenness correct",{
 })
 
 test_that("closeness correct",{
-  # library(igraph)
-  # library(magrittr)
-  
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -27,9 +24,6 @@ test_that("closeness correct",{
 })
 
 test_that("evcent correct",{
-  # library(igraph)
-  # library(magrittr)
-  
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -40,9 +34,6 @@ test_that("evcent correct",{
 })
 
 test_that("subgraph centrality correct",{
-  # library(igraph)
-  # library(magrittr)
-  
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -53,9 +44,6 @@ test_that("subgraph centrality correct",{
 })
 
 test_that("current flow betweenness correct",{
-  # library(igraph)
-  # library(magrittr)
-
   g <- graph.empty(n=11,directed=FALSE)
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5))
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5)+5)
@@ -69,8 +57,6 @@ test_that("current flow betweenness correct",{
 })
 
 test_that("flow betweenness correct",{
-  # library(igraph)
-  # library(magrittr)
   g <- graph.empty(n=11,directed=FALSE)
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5))
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5)+5)
@@ -84,8 +70,6 @@ test_that("flow betweenness correct",{
 })
 
 test_that("communicability betweenness correct",{
-  # library(igraph)
-  # library(magrittr)
   g <- graph.empty(n=11,directed=FALSE)
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5))
   g <- add_edges(g,c(1,2,1,3,1,4,1,5,2,3,2,4,2,5,3,4,3,5,4,5)+5)

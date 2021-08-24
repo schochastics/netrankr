@@ -37,9 +37,16 @@
 #' approx_rank_expected(P,method = 'glpom')
 #' @export
 approx_rank_expected <- function(P, method = "lpom") {
-
+    
+    if(!inherits(P, "Matrix") & !is.matrix(P)){
+        stop("P must be a dense or spare matrix")
+    }
+    if(!is.binary(P)){
+        stop("P is not a binary matrix")
+    }
+    
     # Equivalence classes ------------------------------------------------
-    MSE <- which((P + t(P)) == 2, arr.ind = T)
+    MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = T)
     if (length(MSE) >= 1) {
         MSE <- t(apply(MSE, 1, sort))
         MSE <- MSE[!duplicated(MSE), ]
@@ -53,9 +60,8 @@ approx_rank_expected <- function(P, method = "lpom") {
     } else {
         MSE <- 1:nrow(P)
     }
-    if (is.null(nrow(P))) {
-        warning("all elements are structurally equivalent and have the same rank")
-        return()
+    if (length(unique(MSE))==1) {
+        stop("all elements are structurally equivalent and have the same rank")
     }
     
     # number of Elements
@@ -121,39 +127,45 @@ approx_rank_expected <- function(P, method = "lpom") {
     ((sx + 1) * (ly + 1))/((sx + 1) * (ly + 1) + (sy + 1) * (lx + 1))
 }
 ############################# 
+#' @title Approximation of relative rank probabilities
+#' @description Approximate relative rank probabilities \eqn{P(rk(u)<rk(v))}. 
+#' In a network context, \eqn{P(rk(u)<rk(v))} is the probability that u is 
+#' less central than v, given the partial ranking P.
+#' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
+#'    or [positional_dominance].
+#' @param iterative Logical scalar if iterative approximation should be used.
+#' @param num.iter Number of iterations to be used. defaults to 10 (see Details).
+#' @details The iterative approach generally gives better approximations 
+#' than the non iterative, if only slightly. The default number of iterations 
+#' is based on the observation, that the approximation does not improve
+#' significantly beyond this value. This observation, however, is based on 
+#' very small networks such that increasing it for large network may yield 
+#' better results. See `vignette("benchmarks",package="netrankr")` for more details.
+#' @author David Schoch
+#' @references De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual
+#' rank probabilities in partially ordered sets. In *Multicriteria Ordering and
+#' Ranking: Partial Orders, Ambiguities and Applied Issues*, 145-165.
+#' 
+#' @return a matrix containing approximation of relative rank probabilities. 
+#' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
+#' @seealso [approx_rank_expected], [exact_rank_prob], [mcmc_rank_prob]
+#' @examples
+#' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+#' P
+#' approx_rank_relative(P,iterative = FALSE) 
+#' approx_rank_relative(P,iterative = TRUE)
+#' @export
 approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
-    #' @title Approximation of relative rank probabilities
-    #' @description Approximate relative rank probabilities \eqn{P(rk(u)<rk(v))}. 
-    #' In a network context, \eqn{P(rk(u)<rk(v))} is the probability that u is 
-    #' less central than v, given the partial ranking P.
-    #' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
-    #'    or [positional_dominance].
-    #' @param iterative Logical scalar if iterative approximation should be used.
-    #' @param num.iter Number of iterations to be used. defaults to 10 (see Details).
-    #' @details The iterative approach generally gives better approximations 
-    #' than the non iterative, if only slightly. The default number of iterations 
-    #' is based on the observation, that the approximation does not improve
-    #' significantly beyond this value. This observation, however, is based on 
-    #' very small networks such that increasing it for large network may yield 
-    #' better results. See `vignette("benchmarks",package="netrankr")` for more details.
-    #' @author David Schoch
-    #' @references De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual
-    #' rank probabilities in partially ordered sets. In *Multicriteria Ordering and
-    #' Ranking: Partial Orders, Ambiguities and Applied Issues*, 145-165.
-    #' 
-    #' @return a matrix containing approximation of relative rank probabilities. 
-    #' \code{relative.rank[i,j]} is the probability that i is ranked lower than j
-    #' @seealso [approx_rank_expected], [exact_rank_prob], [mcmc_rank_prob]
-    #' @examples
-    #' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
-    #' P
-    #' approx_rank_relative(P,iterative = FALSE) 
-    #' approx_rank_relative(P,iterative = TRUE)
-    #' @export
+    if(!inherits(P, "Matrix") & !is.matrix(P)){
+        stop("P must be a dense or spare matrix")
+    }
+    if(!is.binary(P)){
+        stop("P is not a binary matrix")
+    }
     
     # Equivalence classes ------------------------------------------------
-    MSE <- which((P + t(P)) == 2, arr.ind = T)
-
+    MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = T)
+    
     if (length(MSE) >= 1) {
         MSE <- t(apply(MSE, 1, sort))
         MSE <- MSE[!duplicated(MSE), ]
@@ -168,11 +180,10 @@ approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
         MSE <- 1:nrow(P)
     }
     
-    if (is.null(nrow(P))) {
-        warning("all elements are structurally equivalent and have the same rank")
-        return()
+    if (length(unique(MSE))==1) {
+        stop("all elements are structurally equivalent and have the same rank")
     }
-
+    
     relative.rank <- approx_relative(colSums(P), rowSums(P), P, iterative, num.iter)
     mrp.full <- matrix(0, length(MSE), length(MSE))
     for (i in sort(unique(MSE))) {
@@ -189,38 +200,3 @@ approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
     diag(mrp.full) <- 0
     return(mrp.full)
 }
-
-# buggy as hell so not included
-#' freeman_hierarchy <- function(P){
-#'   #' @title Freemans Hierarchy measure
-#'   #' @description Freeman's hierarchy is based on the singular value decomposition of the skew-symmetric matrix 
-#'   #' \deqn{Z=\frac{P^T-P}{2}}{(P^T-P)/2}.
-#'   #'
-#'   #' @param P a partial ranking as matrix object.
-#'   #' @details TODO
-#'   #' @author David Schoch
-#'   #' @references  Freeman, L.C., 1997. Uncovering Organizational Hierarchies. 
-#'   #' *Computational and Mathematical Organization Theory*, 3:5-18.
-#'   #' @return a matrix with four columns containing Freemans hierarchy.
-#'   #' @seealso [exact_rank_prob], [approx_rank_expected]
-#'   #' @examples
-#'   #' ###TODO
-#'   #' @export  
-#'   n <- nrow(P)
-#'   Z <- (t(P)-P)*0.5
-#'   svdZ <- svd(Z)
-#'   d <- svdZ$d[1]
-#'   r.all <- sqrt(2*d/n)
-#'   x <- round(sqrt(d)*svdZ$u[,1],4)
-#'   y <- round(sqrt(d)*svdZ$u[,2],4)
-#'   if(any(x<0 & y<0)){ #fixing order by rotating 90 degrees(?)
-#'     xy <- cbind(x,y)%*%matrix(c(0,1,-1,0),2,2,byrow=T)
-#'     x <- xy[,1]
-#'     y <- xy[,2]
-#'   }
-#'   r.indiv <- sqrt(x^2+y^2)
-#'   height <- atan2(y,x)
-#'   return(list(res=as.data.frame(cbind(x,y,r.indiv,height)),
-#'               r=sqrt(2*d/n),
-#'               var=sum(svdZ$d[1:2])/sum(svdZ$d)))
-#' }

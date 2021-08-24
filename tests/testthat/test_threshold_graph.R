@@ -1,5 +1,7 @@
 context("threshold graphs")
 library(igraph)
+library(magrittr)
+library(Matrix)
 
 test_that("complete and star graph correct",{
   comp <- threshold_graph(10,1)

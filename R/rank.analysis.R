@@ -52,6 +52,16 @@
 #' res <- exact_rank_prob(P)
 #' @export
 exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
+    if(!inherits(P, "Matrix") & !is.matrix(P)){
+        stop("P must be a dense or spare matrix")
+    }
+    if(!is.binary(P)){
+        stop("P is not a binary matrix")
+    }
+    # convert to dense matrix-----------------------------------------
+    # exact_rank_prob only works with small matrices. Hence, we can safely convert 
+    # to a dense matrix
+    P <- as.matrix(P)    
     # Check for names ------------------------------------------------
     if (is.null(rownames(P)) & is.null(colnames(P))) {
         rownames(P) <- colnames(P) <- paste0("V",1:nrow(P))
@@ -73,7 +83,7 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
     } else {
         MSE <- 1:nrow(P)
     }
-    if (is.null(nrow(P))) {
+    if (length(unique(MSE))==1) {
         stop("all elements are structurally equivalent and have the same rank")
     }
     # names <- rownames(P)

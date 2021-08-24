@@ -7,7 +7,7 @@
 \method{print}{netrankr_full}(x, ...)
 }
 \arguments{
-\item{x}{A netrank object}
+\item{x}{A netrankr_full object}
 
 \item{...}{additional arguments to print}
 }

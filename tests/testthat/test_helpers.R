@@ -1,9 +1,8 @@
 context("helper functions")
-
+library(igraph)
+library(magrittr)
+library(Matrix)
 test_that("majorization gap is correct",{
-  library(igraph)
-
-  
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -19,8 +18,6 @@ test_that("majorization gap is correct",{
 })
 
 test_that("spectral gap is correct",{
-  library(igraph)
-  
   g <- graph.star(10,"undirected")
   
   expect_equal(spectral_gap(g,method = "frac"),1)
@@ -29,8 +26,7 @@ test_that("spectral gap is correct",{
 })
 
 test_that("compare_ranks is correct",{
-  library(igraph)
-  
+
   tg <- threshold_graph(20,0.3)
   dc <- degree(tg)
   cc <- closeness(tg)
@@ -44,7 +40,7 @@ test_that("compare_ranks is correct",{
 })
 
 test_that("transitive_reduction is correct",{
-  library(igraph)
+
   P <- matrix(1,10,10)
   P[lower.tri(P,diag = TRUE)] <- 0
   T_red <- transitive_reduction(P)
@@ -57,7 +53,7 @@ test_that("is_preserved is correct",{
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
   
-  P <- neighborhood_inclusion(g)
+  P <- neighborhood_inclusion(g, sparse = FALSE)
   expect_equal(is_preserved(P,degree(g)),TRUE)
   expect_equal(is_preserved(P,closeness(g)),TRUE)
   expect_equal(is_preserved(P,betweenness(g)),TRUE)

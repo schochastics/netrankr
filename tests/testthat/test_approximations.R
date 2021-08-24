@@ -1,8 +1,9 @@
 context("approximate probabilistic centrality")
+library(igraph)
+library(magrittr)
+library(Matrix)
 
 test_that("approximate expected is correct",{
-  library(igraph)
-  library(magrittr)
   P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   methods_str <- c("lpom","glpom","loof1","loof2")
   res <- round(sapply(methods_str,function(x) approx_rank_expected(P,method = x)),3)
@@ -17,11 +18,12 @@ test_that("approximate expected is correct",{
   expect_equal(res[,3],loof1)
   expect_equal(res[,4],loof2)
   
+  expect_error(approx_rank_expected(1))
+  expect_error(approx_rank_expected(matrix(c(0,2,2,0),2,2)))
+  
 })
 
 test_that("approximate relative is correct",{
-  library(igraph)
-  library(magrittr)
   P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
   rel_noiter <- approx_rank_relative(P,iterative = FALSE)
   rel_iter1 <- approx_rank_relative(P,iterative = TRUE,num.iter = 1)
@@ -38,6 +40,6 @@ test_that("approximate relative is correct",{
   expect_equal(P,rel_mcmc)
   
   P <- matrix(1,5,5)-diag(1,5)
-  testthat::expect_warning(approx_rank_expected(P))
-  testthat::expect_warning(approx_rank_relative(P))
+  expect_error(approx_rank_expected(P))
+  expect_error(approx_rank_relative(P))
 })

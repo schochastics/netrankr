@@ -131,6 +131,14 @@ indirect_relations <- function(g,
                                netflowmode = "",
                                rspxparam = NULL,
                                FUN = identity, ...) {
+  if(!igraph::is_igraph(g)){
+    stop("g must be an igraph object")
+  }
+  
+  if(igraph::is_directed(g)){
+    stop("g must be an undirected graph")
+  }
+  
   if (type == "dependencies") {
     warning('type="dependencies" is deprecated. Using "depend_sp" instead.\n')
     type <- "depend_sp"

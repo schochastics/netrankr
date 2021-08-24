@@ -52,6 +52,10 @@ ________________________________________________________________________________
 
 ## Neighborhood-inclusion in the `netrankr` Package
 
+```{r setup-blind,include=FALSE}
+library(Matrix)
+```
+
 ```{r setup, warning=FALSE,message=FALSE}
 library(netrankr)
 library(igraph)
@@ -91,7 +95,7 @@ Checking all pairs of nodes can efficiently be done with the `neighborhood_inclu
 function from the `netrankr` package.  
 
 ```{r neighborhood_inclusion}
-P <- neighborhood_inclusion(g)
+P <- neighborhood_inclusion(g, sparse = FALSE)
 P
 ```
   

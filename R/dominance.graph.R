@@ -19,6 +19,12 @@
 #' \dontrun{plot(d)}
 #' @export
 dominance_graph <- function(P) {
-    d <- igraph::graph_from_adjacency_matrix(P, "directed")
-    return(d)
+  if(!inherits(P, "Matrix") & !is.matrix(P)){
+    stop("P must be a dense or spare matrix")
+  }
+  if(!is.binary(P)){
+    stop("P is not a binary matrix")
+  }
+  d <- igraph::graph_from_adjacency_matrix(P, "directed")
+  return(d)
 }

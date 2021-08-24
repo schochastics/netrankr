@@ -4,10 +4,12 @@
 \alias{neighborhood_inclusion}
 \title{Neighborhood-inclusion preorder}
 \usage{
-neighborhood_inclusion(g)
+neighborhood_inclusion(g, sparse = FALSE)
 }
 \arguments{
 \item{g}{An igraph object}
+
+\item{sparse}{Logical scalar, whether to create a sparse matrix}
 }
 \value{
 The neighborhood-inclusion preorder of \code{g} as matrix object. \code{P[u,v]=1} if \eqn{N(u)\subseteq N[v]}

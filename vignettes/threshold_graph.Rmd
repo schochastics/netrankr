@@ -28,6 +28,11 @@ ________________________________________________________________________________
 
 ## Uniquely Ranked Graphs in the `netrankr` Package
 
+
+```{r setup-blind,include=FALSE}
+library(Matrix)
+```
+
 ```{r setup, warning=FALSE,message=FALSE}
 library(netrankr)
 library(igraph)

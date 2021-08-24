@@ -39,6 +39,11 @@
 #'   
 #' @export
 aggregate_positions <- function(tau_x, type = "sum") {
+    
+    if(!inherits(tau_x, "Matrix") & !is.matrix(tau_x)){
+        stop("tau_x must be a matrix")
+    }
+    
     if (type == "sum") {
         return(rowSums(tau_x))
     } else if (type == "prod") {
@@ -54,6 +59,6 @@ aggregate_positions <- function(tau_x, type = "sum") {
     } else if (type == "self") {
         diag(tau_x)
     } else {
-        stop(paste(type, " not supported. See function details for options."))
+        stop(paste("type =",type, "is not supported. See function details for options."))
     }
 }

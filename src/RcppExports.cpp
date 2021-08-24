@@ -112,21 +112,34 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// mcmc_rank
-List mcmc_rank(IntegerMatrix P, IntegerVector init_rank, int rp);
-RcppExport SEXP _netrankr_mcmc_rank(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
+// mcmc_rank_dense
+List mcmc_rank_dense(IntegerMatrix P, IntegerVector init_rank, int rp);
+RcppExport SEXP _netrankr_mcmc_rank_dense(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type P(PSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type init_rank(init_rankSEXP);
     Rcpp::traits::input_parameter< int >::type rp(rpSEXP);
-    rcpp_result_gen = Rcpp::wrap(mcmc_rank(P, init_rank, rp));
+    rcpp_result_gen = Rcpp::wrap(mcmc_rank_dense(P, init_rank, rp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mcmc_rank_sparse
+List mcmc_rank_sparse(arma::sp_mat P, IntegerVector init_rank, int rp);
+RcppExport SEXP _netrankr_mcmc_rank_sparse(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::sp_mat >::type P(PSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type init_rank(init_rankSEXP);
+    Rcpp::traits::input_parameter< int >::type rp(rpSEXP);
+    rcpp_result_gen = Rcpp::wrap(mcmc_rank_sparse(P, init_rank, rp));
     return rcpp_result_gen;
 END_RCPP
 }
 // nialgo
-IntegerMatrix nialgo(List adjList, IntegerVector deg);
+arma::sp_mat nialgo(List adjList, IntegerVector deg);
 RcppExport SEXP _netrankr_nialgo(SEXP adjListSEXP, SEXP degSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -235,7 +248,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_netrankr_dependency", (DL_FUNC) &_netrankr_dependency, 1},
     {"_netrankr_LatticeOfIdeals", (DL_FUNC) &_netrankr_LatticeOfIdeals, 5},
     {"_netrankr_listingIdeals", (DL_FUNC) &_netrankr_listingIdeals, 3},
-    {"_netrankr_mcmc_rank", (DL_FUNC) &_netrankr_mcmc_rank, 3},
+    {"_netrankr_mcmc_rank_dense", (DL_FUNC) &_netrankr_mcmc_rank_dense, 3},
+    {"_netrankr_mcmc_rank_sparse", (DL_FUNC) &_netrankr_mcmc_rank_sparse, 3},
     {"_netrankr_nialgo", (DL_FUNC) &_netrankr_nialgo, 2},
     {"_netrankr_matdom", (DL_FUNC) &_netrankr_matdom, 3},
     {"_netrankr_preserve", (DL_FUNC) &_netrankr_preserve, 3},

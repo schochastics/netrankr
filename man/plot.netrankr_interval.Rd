@@ -4,12 +4,14 @@
 \alias{plot.netrankr_interval}
 \title{plot netrankr_interval objects}
 \usage{
-\method{plot}{netrankr_interval}(x, cent_scores = NULL, ties.method = "min", ...)
+\method{plot}{netrankr_interval}(x, cent_scores = NULL, cent_cols = NULL, ties.method = "min", ...)
 }
 \arguments{
 \item{x}{A netrank object}
 
 \item{cent_scores}{A data frame containing centrality scores of indices (optional)}
+
+\item{cent_cols}{colors for centrality indices. If NULL a default palette is used. Length must be equal to columns in cent_scores.}
 
 \item{ties.method}{how to treat ties in the rankings. see \link{rank} for details}
 

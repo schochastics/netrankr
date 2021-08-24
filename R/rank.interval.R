@@ -16,9 +16,16 @@
 #' rank_intervals(P)
 #' @export
 rank_intervals <- function(P) {
+    if(!inherits(P, "Matrix") & !is.matrix(P)){
+        stop("P must be a dense or spare matrix")
+    }
+    if(!is.binary(P)){
+        stop("P is not a binary matrix")
+    }
+    
     n <- nrow(P)
-    max_rank_all <- n - rowSums((P - t(P)) == 1) - rowSums(P == 1 & t(P) == 1)  #CAUTION!!!!
-    min_rank_all <- colSums((P - t(P)) == 1) + 1
+    max_rank_all <- n - Matrix::rowSums((P - Matrix::t(P)) == 1) - Matrix::rowSums(P == 1 & Matrix::t(P) == 1)  #CAUTION!!!!
+    min_rank_all <- Matrix::colSums((P - Matrix::t(P)) == 1) + 1
     mid_point_all <- (max_rank_all + min_rank_all)/2
     
     if (is.null(rownames(P))) {

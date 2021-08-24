@@ -1,11 +1,22 @@
-# netrankr (development version)
+# netrankr 1.0.0.9000
+
+* `neighborhood_inclusion()` can now return a sparse matrix (Matrix package now suggested)
+* all functions now support sparse matrices as inputs
+* added summary function for `netrankr_full` objects
+* added `as.matrix` method for `netrankr_full` objects to extract probability distributions
+* changed to on.exit(par(op)) in plot functions
+* all functions now through errors instead of warnings when the network is vertex transitive
+* better error handling if the input is not as expected
+* added legends to the default plot function for `netrankr_full` objects
+* added legend to the default plot function for `netrankr_mcmc` objects
+* changed default colors of the plot function for `netrankr_interval` objects to be more colorblind friendly
 
 # netrankr 1.0.0
 
 * added S3 class `netrankr_full` (result of `exact_rank_prob()`) with print and plot functions (#8)
 * added S3 class `netrankr_interval` (result of `rank_intervals()`) with print and plot functions (#8)
 * added S3 class `netrankr_mcmc` (result of `mcmc_rank_prob()`) with print and plot functions (#8)
-* added `dbces11` graph (smalles graph with 5 different centers)
+* added `dbces11` graph (smallest graph with 5 different centers)
 * `plot_rank_intervals()` is now deprecated 
 * ggplot2 no longer suggested
 

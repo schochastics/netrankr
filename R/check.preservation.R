@@ -21,7 +21,7 @@
 #' @export
 is_preserved <- function(P, scores) {
     n <- nrow(P)
-    preserved <- preserve(P, scores, n) == 0
+    preserved <- preserve(as.matrix(P), scores, n) == 0
     
     return(preserved)
 }

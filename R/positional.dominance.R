@@ -1,5 +1,5 @@
-#' @title Generalized Dominance in Graphs
-#' @description generalized dominance relations. 
+#' @title Generalized Dominance Relations
+#' @description generalized dominance relations that can be computed on one and two mode networks. 
 #'
 #' @param A Matrix containing attributes or relations, for instance calculated by [indirect_relations].
 #' @param type A string which is either 'one-mode' (Default) if \code{A} is a regular one-mode network

@@ -30,13 +30,20 @@
 #' }
 #' @export
 mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
+    if(!inherits(P, "Matrix") & !is.matrix(P)){
+        stop("P must be a dense or spare matrix")
+    }
+    if(!is.binary(P)){
+        stop("P is not a binary matrix")
+    }
+    
     if (is.null(rownames(P)) & is.null(colnames(P))) {
         name_vec <- rownames(P) <- colnames(P) <- paste0("V",1:nrow(P))
     } else{
         name_vec <- rownames(P)
     }
     n.full <- nrow(P)
-    MSE <- which((P + t(P)) == 2, arr.ind = T)
+    MSE <- Matrix::which(P==Matrix::t(P) & P==1,arr.ind = TRUE)
     if (length(MSE) >= 1) {
         MSE <- t(apply(MSE, 1, sort))
         MSE <- MSE[!duplicated(MSE), ]
@@ -50,9 +57,16 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     } else {
         MSE <- 1:nrow(P)
     }
-
+    if (length(unique(MSE))==1) {
+        stop("all elements are structurally equivalent and have the same rank")
+    }
+    
     init.rank <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P, "directed")))
-    res <- mcmc_rank(P, init.rank - 1, rp)
+    if(inherits(P, "Matrix")){
+        res <- mcmc_rank_sparse(P, init.rank - 1, rp)
+    } else{
+        res <- mcmc_rank_dense(P, init.rank - 1, rp)
+    }
     res$expected <- res$expected + 1
     expected.full <- c(0, n.full)
     rrp.full <- matrix(0, n.full, n.full)

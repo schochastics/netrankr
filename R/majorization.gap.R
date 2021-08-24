@@ -31,6 +31,14 @@
 #' majorization_gap(g,norm=FALSE) #number of reverse unit transformation
 #' @export
 majorization_gap <- function(g, norm = TRUE) {
+        if(!igraph::is_igraph(g)){
+        stop("g must be an igraph object")
+    }
+    
+    if(igraph::is_directed(g)){
+        stop("g must be an undirected graph")
+    }
+    
     if(!igraph::is_connected(g)){
         warning("graph is not connected. Computing for each component separately and returning sum.")
     }

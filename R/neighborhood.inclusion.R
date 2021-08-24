@@ -1,6 +1,8 @@
 #' @title Neighborhood-inclusion preorder
 #' @description Calculates the neighborhood-inclusion preorder of an undirected graph.
 #' @param g An igraph object
+#' @param sparse Logical scalar, whether to create a sparse matrix
+#' @importClassesFrom Matrix dgCMatrix
 #' @details Neighborhood-inclusion is defined as
 #' \deqn{N(u)\subseteq N[v]}
 #' where \eqn{N(u)} is the neighborhood of \eqn{u} and \eqn{N[v]=N(v)\cup \lbrace v\rbrace} is the closed neighborhood of \eqn{v}.
@@ -42,21 +44,24 @@
 #' is_preserved(P,closeness(dbces11))
 #' is_preserved(P,betweenness(dbces11))
 #' @export
-neighborhood_inclusion <- function(g) {
+neighborhood_inclusion <- function(g, sparse = FALSE) {
   
-    if(!igraph::is_igraph(g)){
-      stop("g must be an igraph object")
-    }
+  if(!igraph::is_igraph(g)){
+    stop("g must be an igraph object")
+  }
+
+  if(igraph::is_directed(g)){
+    stop("g must be an undirected graph")
+  }
   
-    if(igraph::is_directed(g)){
-      stop("g must be an undirected graph")
-    }
-  
-    adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
-    deg <- igraph::degree(g)
-    dom <- nialgo(adj, deg)
-    if(!is.null(igraph::V(g)$name) ){
-      rownames(dom) <- colnames(dom) <- igraph::V(g)$name
-    }
-    return(dom)
+  adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
+  deg <- igraph::degree(g)
+  dom <- nialgo(adj, deg)
+  if(!sparse){
+    dom <- as.matrix(dom)
+  }
+  if(!is.null(igraph::V(g)$name) ){
+    rownames(dom) <- colnames(dom) <- igraph::V(g)$name
+  }
+  return(dom)
 }

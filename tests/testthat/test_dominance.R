@@ -1,31 +1,30 @@
 context("dominance")
-
+library(igraph)
+library(magrittr)
+library(Matrix)
 test_that("neighborhood-inclusion is correct",{
-  library(igraph)
-  library(magrittr)
-  
-  g <- graph.empty(n=11,directed = FALSE)
-  g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
-                     6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+  data("dbces11")
   A <- matrix(0,11,11)
+  rownames(A) <- colnames(A) <- LETTERS[1:11]
   A[c(23, 35, 45, 47, 56, 67, 79, 111, 113)] <- 1
   
-  expect_equal(neighborhood_inclusion(g),A)
+  expect_equal(neighborhood_inclusion(dbces11, sparse = FALSE),A)
   
   #### 
   
   tg <- threshold_graph(10,0)
+  V(tg)$name <- LETTERS[1:10]
   A <- matrix(1,10,10)
+  rownames(A) <- colnames(A) <- LETTERS[1:10]
   diag(A) <- 0
   A[10,] <- 0
-  expect_equal(neighborhood_inclusion(tg),A)
+  
+  expect_equal(neighborhood_inclusion(tg, sparse = FALSE),A)
   
 })
 
 test_that("positional dominance is correct",{
-  library(igraph)
-  library(magrittr)
-  
+
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
@@ -61,7 +60,7 @@ test_that("dominance_graph is correct",{
   g <- graph.empty(n=11,directed = FALSE)
   g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
                      6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
-  P <- neighborhood_inclusion(g)
+  P <- neighborhood_inclusion(g, sparse = FALSE)
   g_dom <- dominance_graph(P)
   expect_equal(sum(P),ecount(g_dom))
   
