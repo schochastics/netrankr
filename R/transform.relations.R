@@ -1,5 +1,5 @@
-#' @title Transform indirect relations 
-#' @description Mostly wrapper functions that can be used in conjunction 
+#' @title Transform indirect relations
+#' @description Mostly wrapper functions that can be used in conjunction
 #' with [indirect_relations] to fine tune indirect relations.
 #' @param x Matrix of relations.
 #' @param alpha Potential weighting factor.
@@ -8,40 +8,40 @@
 #' Predefined functions `walks_*` are thus best used with type="walks" in
 #' [indirect_relations]. Theoretically, however, any transformation can be used with any relation.
 #' The results might, however, not be interpretable.
-#' 
-#' The following functions are implemented so far: 
-#' 
+#'
+#' The following functions are implemented so far:
+#'
 #' `dist_2pow` returns \eqn{2^{-x}}
-#' 
+#'
 #' `dist_inv` returns \eqn{1/x}
-#'  
+#'
 #' `dist_dpow` returns \eqn{x^{-\alpha}} where \eqn{\alpha} should be chosen greater than 0.
-#' 
+#'
 #' `dist_powd` returns \eqn{\alpha^x} where \eqn{\alpha} should be chosen between 0 and 1.
-#' 
-#' 
+#'
+#'
 #' `walks_limit_prop` returns the limit proportion of walks between pairs of nodes. Calculating
 #' rowSums of this relation will result in the principle eigenvector of the network.
-#' 
+#'
 #' `walks_exp` returns \eqn{\sum_{k=0}^\infty \frac{A^k}{k!}}
-#' 
+#'
 #' `walks_exp_even` returns \eqn{\sum_{k=0}^\infty \frac{A^{2k}}{(2k)!}}
-#' 
+#'
 #' `walks_exp_odd` returns \eqn{\sum_{k=0}^\infty \frac{A^{2k+1}}{(2k+1)!}}
-#' 
+#'
 #' `walks_attenuated` returns \eqn{\sum_{k=0}^\infty \alpha^k A^k}
-#' 
+#'
 #' `walks_uptok` returns \eqn{\sum_{j=0}^k \alpha^j A^j}
-#' 
-#' Walk based transformation are defined on the eigen decomposition of the 
+#'
+#' Walk based transformation are defined on the eigen decomposition of the
 #' adjacency matrix using the fact that
 #' \deqn{f(A)=Xf(\Lambda)X^T.}
-#' Care has to be taken when using user defined functions. 
-#' 
-#' 
+#' Care has to be taken when using user defined functions.
+#'
+#'
 #' @name transform_relations
 #' @return Transformed relations as matrix
-#' 
+#'
 #' @author David Schoch
 NULL
 
@@ -49,29 +49,29 @@ NULL
 #' @rdname transform_relations
 #' @export
 dist_2pow <- function(x) {
-    2^(-x)
+  2^(-x)
 }
 
 #' @rdname transform_relations
 #' @export
 dist_inv <- function(x) {
-    y <- x^(-1)
-    y[is.infinite(y)] <- 0
-    return(y)
+  y <- x^(-1)
+  y[is.infinite(y)] <- 0
+  return(y)
 }
 
 #' @rdname transform_relations
 #' @export
 dist_dpow <- function(x, alpha = 1) {
-    x <- x^(-alpha)
-    diag(x) <- 0
-    return(x)
+  x <- x^(-alpha)
+  diag(x) <- 0
+  return(x)
 }
 
 #' @rdname transform_relations
 #' @export
 dist_powd <- function(x, alpha = 0.5) {
-    alpha^(x)
+  alpha^(x)
 }
 
 # dist_triang <- function(x) {
@@ -92,42 +92,42 @@ dist_powd <- function(x, alpha = 0.5) {
 #' @rdname transform_relations
 #' @export
 walks_limit_prop <- function(x) {
-    c(1, rep(0, length(x) - 1))
+  c(1, rep(0, length(x) - 1))
 }
 
 #' @rdname transform_relations
 #' @export
 walks_exp <- function(x, alpha = 1) {
-    exp(alpha * x)
+  exp(alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
 walks_exp_even <- function(x, alpha = 1) {
-    cosh(alpha * x)
+  cosh(alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
 walks_exp_odd <- function(x, alpha = 1) {
-    sinh(alpha * x)
+  sinh(alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
-walks_attenuated <- function(x, alpha = 1/max(x) * 0.99) {
-    if (alpha > 1/max(x)) {
-        warning(paste0("alpha should be smaller than ", 1/max(x), ". Results are most likely wrong otherwise."))
-    }
-    1/(1 - alpha * x)
+walks_attenuated <- function(x, alpha = 1 / max(x) * 0.99) {
+  if (alpha > 1 / max(x)) {
+    warning(paste0("alpha should be smaller than ", 1 / max(x), ". Results are most likely wrong otherwise."))
+  }
+  1 / (1 - alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
 walks_uptok <- function(x, alpha = 1, k = 3) {
-    y <- 0
-    for (i in 1:k) {
-        y <- y + alpha^i * x^i
-    }
-    return(y)
+  y <- 0
+  for (i in 1:k) {
+    y <- y + alpha^i * x^i
+  }
+  return(y)
 }

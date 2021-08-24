@@ -14,7 +14,7 @@
 #' #' ###TODO
 #' #' @export
 #' bradley_terry <- function(P, sparse.correct = 0, max.iter = 100, tol = 10^-8, print.level = 0) {
-#'     
+#'
 #'     g <- igraph::graph_from_adjacency_matrix(t(P), "directed")
 #'     sparse.corrected <- TRUE
 #'     P <- t(P)
@@ -24,21 +24,21 @@
 #'     } else {
 #'         eps <- sparse.correct
 #'     }
-#'     
+#'
 #'     # sparse correction
 #'     if (!igraph::is.connected(g, mode = "strong")) {
 #'         P <- P + matrix(eps, n, n) - diag(eps, n)
 #'         sparse.corrected <- TRUE
 #'     }
-#'     
+#'
 #'     N <- P + t(P)
 #'     W <- rowSums(P)
-#'     
+#'
 #'     # initialisation
 #'     w_0 <- rep(1/n, n)
 #'     w_old <- rep(n, n)
 #'     iter <- 0
-#'     
+#'
 #'     while (iter <= max.iter & sqrt(sum((w_old - w_0)^2)) > tol) {
 #'         iter <- iter + 1
 #'         w_old <- w_0
@@ -48,10 +48,10 @@
 #'             print(sqrt(sum((w_old - w_0)^2)))
 #'         }
 #'     }
-#'     df.res <- data.frame(score = w_0, 
-#'                          dominating = unname(igraph::degree(g, mode = "out")), 
-#'                          dominated = unname(igraph::degree(g, mode = "in")), 
+#'     df.res <- data.frame(score = w_0,
+#'                          dominating = unname(igraph::degree(g, mode = "out")),
+#'                          dominated = unname(igraph::degree(g, mode = "in")),
 #'         comparable = unname(igraph::degree(g, mode = "all")))
 #'     return(list(res = df.res, iter = iter, sparse.corrected = sparse.corrected))
-#'     
+#'
 #' }

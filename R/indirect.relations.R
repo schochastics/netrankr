@@ -16,7 +16,7 @@
 #' @details The `type` parameter has the following options.
 #'
 #' \emph{'adjacency'} returns the adjacency matrix of the network.
-#' 
+#'
 #' \emph{'weights'} returns the weighted adjacency matrix of the network if an edge
 #' attribute 'weight' is present.
 #'
@@ -39,20 +39,20 @@
 #' and to the resistance distance as \eqn{\alpha -> \infty}. See (Chebotarev, 2011) for more details.
 #' The parameter `lfparam` can be used to tune \eqn{\alpha}.
 #'
-#'\emph{'dist_walk'} returns the walk distance \eqn{d_\alpha^W(s,t)} between nodes. The walk distances form a one-parametric
-#'family of distances, converging to shortest path distances as \eqn{\alpha -> 0} and to longest
-#'walk distances for \eqn{\alpha -> \infty}. Walk distances contain the logarithmic forest
-#'distances as a special case. See (Chebotarev, 2012) for more details.
+#' \emph{'dist_walk'} returns the walk distance \eqn{d_\alpha^W(s,t)} between nodes. The walk distances form a one-parametric
+#' family of distances, converging to shortest path distances as \eqn{\alpha -> 0} and to longest
+#' walk distances for \eqn{\alpha -> \infty}. Walk distances contain the logarithmic forest
+#' distances as a special case. See (Chebotarev, 2012) for more details.
 #'
 #' \emph{'dist_rwalk'} returns the expected length of a random walk between two nodes. For more
 #' details see (Noh and Rieger, 2004)
 #'
-#' \emph{'depend_netflow'} returns dependencies based on network flow (See Freeman et al.,1991). 
-#' If `netflowmode="raw"`, the function returns 
-#' \deqn{\delta(u,s) = \sum_{t \in V} f(s,t,G)-f(s,t,G-v)} 
+#' \emph{'depend_netflow'} returns dependencies based on network flow (See Freeman et al.,1991).
+#' If `netflowmode="raw"`, the function returns
+#' \deqn{\delta(u,s) = \sum_{t \in V} f(s,t,G)-f(s,t,G-v)}
 #' where f(s,t,G) is the maximum flow from s to t in G and f(s,t,G-v) in G without the node v.
 #' For `netflowmode="frac"` it returns dependencies in the form, similar to shortest path dependencies:
-#'\deqn{\delta(u,s) = \sum_{t \in V} \frac{f(s,t,G)-f(s,t,G-v)}{f(s,t,G)}} 
+#' \deqn{\delta(u,s) = \sum_{t \in V} \frac{f(s,t,G)-f(s,t,G-v)}{f(s,t,G)}}
 #'
 #' \emph{'depend_curflow'} returns pairwise dependencies based on current flow. The relation is
 #' based on the same idea as 'depend_sp' and 'depend_netflow'. However, instead of considering
@@ -61,22 +61,22 @@
 #'
 #' \emph{'depend_exp'} returns pairwise dependencies based on 'communicability':
 #' \deqn{\delta(u,s)=\sum_{t \in V} \frac{exp(A)_{st}-exp(A+E(u))_{st}}{exp(A)_{st}},}
-#' where E(u) has nonzeros only in row and column u, and 
+#' where E(u) has nonzeros only in row and column u, and
 #' in this row and column has -1 if A has +1. See (Estrada et al., 2009) for additional details.
 #'
-#' \emph{'depend_rsps'}. Simple randomized shortest path dependencies. 
-#' The simple RSP dependency of a node u with respect to absorbing paths from s to t, 
+#' \emph{'depend_rsps'}. Simple randomized shortest path dependencies.
+#' The simple RSP dependency of a node u with respect to absorbing paths from s to t,
 #' is defined as the expected number of visits through u over all s-t-walks. The
-#' parameter `rspxparam` is the "inverse temperature parameter". 
+#' parameter `rspxparam` is the "inverse temperature parameter".
 #' If it converges to infinity, only shortest paths are considered and the expected
 #' number of visits to a node on a shortest path approaches the probability of
-#' following that particular path. When the parameter converges to zero, then the 
+#' following that particular path. When the parameter converges to zero, then the
 #' dependencies converge to the expected number of visits to a node over all absorbing
 #' walks with respect to the unbiased random walk probabilities. This means for undirected networks,
 #' that the relations converge to adjacency. See (Kivimäki et al., 2016) for details.
 #'
-#' \emph{'depend_rspn'} Net randomized shortest path dependencies. 
-#' The parameter `rspxparam` is the "inverse temperature parameter". The asymptotic 
+#' \emph{'depend_rspn'} Net randomized shortest path dependencies.
+#' The parameter `rspxparam` is the "inverse temperature parameter". The asymptotic
 #' for the infinity case are the same as for 'depend_rsps'. If the parameter approaches zero, then
 #' it converges to 'depend_curflow'. The net randomized shortest path dependencies
 #' are closely related to the random walk interpretation of current flows.
@@ -89,8 +89,8 @@
 #' @return A matrix containing indirect relations in a network.
 #' @author David Schoch
 #' @seealso [aggregate_positions] to build centrality indices, [positional_dominance] to derive dominance relations
-#' @references Chebotarev, P., 2012. The walk distances in graphs. *Discrete Applied Mathematics*, 160(10), pp.1484-1500.  
-#' 
+#' @references Chebotarev, P., 2012. The walk distances in graphs. *Discrete Applied Mathematics*, 160(10), pp.1484-1500.
+#'
 #' Chebotarev, P., 2011. A class of graph-geodetic distances generalizing the shortest-path and
 #' the resistance distances. *Discrete Applied Mathematics* 159,295-302.
 #'
@@ -111,34 +111,33 @@
 #' library(igraph)
 #' data("dbces11")
 #'
-#' #shortest path distances
-#' D <- indirect_relations(dbces11,type = "dist_sp")
+#' # shortest path distances
+#' D <- indirect_relations(dbces11, type = "dist_sp")
 #'
-#' #inverted shortest path distances
-#' D <- indirect_relations(dbces11,type = "dist_sp", FUN = dist_inv)
-
-#' #shortes path dependencies (used for betweenness)
-#' D <- indirect_relations(dbces11,type = "depend_sp")
+#' # inverted shortest path distances
+#' D <- indirect_relations(dbces11, type = "dist_sp", FUN = dist_inv)
 #'
-#' #walks attenuated exponentially by their length
-#' W <- indirect_relations(dbces11,type = "walks",FUN = walks_exp)
+#' # shortes path dependencies (used for betweenness)
+#' D <- indirect_relations(dbces11, type = "depend_sp")
 #'
+#' # walks attenuated exponentially by their length
+#' W <- indirect_relations(dbces11, type = "walks", FUN = walks_exp)
 #' @export
-indirect_relations <- function(g, 
+indirect_relations <- function(g,
                                type = "dist_sp",
-                               lfparam = NULL, 
+                               lfparam = NULL,
                                dwparam = NULL,
                                netflowmode = "",
                                rspxparam = NULL,
                                FUN = identity, ...) {
-  if(!igraph::is_igraph(g)){
+  if (!igraph::is_igraph(g)) {
     stop("g must be an igraph object")
   }
-  
-  if(igraph::is_directed(g)){
+
+  if (igraph::is_directed(g)) {
     stop("g must be an undirected graph")
   }
-  
+
   if (type == "dependencies") {
     warning('type="dependencies" is deprecated. Using "depend_sp" instead.\n')
     type <- "depend_sp"
@@ -159,7 +158,7 @@ indirect_relations <- function(g,
     rel <- igraph::distances(g, mode = "all")
     rel <- FUN(rel, ...)
   } else if (type == "weights") {
-    if(is.null(igraph::get.edge.attribute(g,"weight"))){
+    if (is.null(igraph::get.edge.attribute(g, "weight"))) {
       warning('no weight attribute present. using "adjacency" instead.\n')
       rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
       rel <- FUN(rel, ...)
@@ -170,72 +169,72 @@ indirect_relations <- function(g,
       diag(rel) <- 0
     }
   } else if (type == "adjacency") {
-      rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
-      rel <- FUN(rel, ...)
-      diag(rel) <- 0
+    rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
+    rel <- FUN(rel, ...)
+    diag(rel) <- 0
   } else if (type == "depend_sp") {
-      adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
-      rel <- dependency(adj)
+    adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
+    rel <- dependency(adj)
   } else if (type == "walks") {
-      eigen.decomp <- eigen(igraph::get.adjacency(g, type = "both"))
-      lambda <- eigen.decomp$values
-      X <- eigen.decomp$vectors
-      rel <- X %*% diag(FUN(lambda, ...)) %*% t(X)
+    eigen.decomp <- eigen(igraph::get.adjacency(g, type = "both"))
+    lambda <- eigen.decomp$values
+    X <- eigen.decomp$vectors
+    rel <- X %*% diag(FUN(lambda, ...)) %*% t(X)
   } else if (type == "dist_resist") {
-      L <- igraph::graph.laplacian(g, sparse = FALSE)
-      n <- igraph::vcount(g)
-      A <- L + matrix(1 / n, n, n)
-      C <- solve(A)
-      rel <- resistanceDistance(C, n)
-      rel <- FUN(rel, ...)
+    L <- igraph::graph.laplacian(g, sparse = FALSE)
+    n <- igraph::vcount(g)
+    A <- L + matrix(1 / n, n, n)
+    C <- solve(A)
+    rel <- resistanceDistance(C, n)
+    rel <- FUN(rel, ...)
   } else if (type == "dist_lf") {
-      if (is.null(lfparam)) {
-        stop('argument "lfparam" is missing for "dist_lf", with no default')
-      }
-      rel <- log_forest_fct(g, lfparam)
-      rel <- FUN(rel, ...)
+    if (is.null(lfparam)) {
+      stop('argument "lfparam" is missing for "dist_lf", with no default')
+    }
+    rel <- log_forest_fct(g, lfparam)
+    rel <- FUN(rel, ...)
   } else if (type == "dist_walk") {
-      if (is.null(dwparam)) {
-        stop('argument "dwparam" is missing for "dist_walk", with no default')
-      }
-      rel <- dist_walk_fct(g, dwparam)
-      rel <- FUN(rel, ...)
+    if (is.null(dwparam)) {
+      stop('argument "dwparam" is missing for "dist_walk", with no default')
+    }
+    rel <- dist_walk_fct(g, dwparam)
+    rel <- FUN(rel, ...)
   } else if (type == "depend_netflow") {
-      if (netflowmode == "" | !netflowmode %in% c("raw", "frac", "norm")) {
-        stop('netflowmode must be one of"raw","frac","norm"\n')
-      }
-      # if (netflowmode == "norm") {
-      #   warning('"norm" not supported yet. Using "frac" instead.\n')
-      #   netflowmode <- "frac"
-      # }
-      rel <- depend_netflow_fct(g, netflowmode)
-      rel <- FUN(rel, ...)
+    if (netflowmode == "" | !netflowmode %in% c("raw", "frac", "norm")) {
+      stop('netflowmode must be one of"raw","frac","norm"\n')
+    }
+    # if (netflowmode == "norm") {
+    #   warning('"norm" not supported yet. Using "frac" instead.\n')
+    #   netflowmode <- "frac"
+    # }
+    rel <- depend_netflow_fct(g, netflowmode)
+    rel <- FUN(rel, ...)
   } else if (type == "depend_exp") {
-      rel <- depend_exp_fct(g)
-      rel <- FUN(rel, ...)
+    rel <- depend_exp_fct(g)
+    rel <- FUN(rel, ...)
   } else if (type == "depend_rsps") {
-      if (is.null(rspxparam)) {
-        stop('argument "rspxparam" is missing for "depend_rsps", with no default')
-      }
-      rel <- depend_rsps_fct(g, rspxparam)
-      rel <- FUN(rel, ...)
+    if (is.null(rspxparam)) {
+      stop('argument "rspxparam" is missing for "depend_rsps", with no default')
+    }
+    rel <- depend_rsps_fct(g, rspxparam)
+    rel <- FUN(rel, ...)
   } else if (type == "depend_rspn") {
-      if (is.null(rspxparam)) {
-        stop('argument "rspxparam" is missing for "depend_rspn", with no default')
-      }
-      rel <- depend_rspn_fct(g, rspxparam)
-      rel <- FUN(rel, ...)
+    if (is.null(rspxparam)) {
+      stop('argument "rspxparam" is missing for "depend_rspn", with no default')
+    }
+    rel <- depend_rspn_fct(g, rspxparam)
+    rel <- FUN(rel, ...)
   } else if (type == "depend_curflow") {
-      rel <- depend_curflow_fct(g)
-      rel <- FUN(rel, ...)
+    rel <- depend_curflow_fct(g)
+    rel <- FUN(rel, ...)
   } else if (type == "dist_rwalk") {
-      rel <- dist_rwalk_fct(g)
-      rel <- FUN(rel, ...)
+    rel <- dist_rwalk_fct(g)
+    rel <- FUN(rel, ...)
   } else {
     stop(paste(type, "is not defined as indirect relation."))
   }
-  #add names if present
-  if(is.null(rownames(rel)) & !is.null(igraph::V(g)$name) ){
+  # add names if present
+  if (is.null(rownames(rel)) & !is.null(igraph::V(g)$name)) {
     rownames(rel) <- colnames(rel) <- igraph::V(g)$name
   }
   return(rel)
@@ -245,7 +244,7 @@ indirect_relations <- function(g,
 
 log_forest_fct <- function(g, lfparam) {
   n <- igraph::vcount(g)
-  gamma <- log(exp(1) + lfparam ^ (2 / n))
+  gamma <- log(exp(1) + lfparam^(2 / n))
 
   L <- igraph::graph.laplacian(g, sparse = FALSE)
   I <- diag(1, n)
@@ -304,7 +303,7 @@ depend_exp_fct <- function(g) {
   eigen_A <- eigen(A)
   n <- nrow(A)
   expA <- eigen_A$vectors %*% diag(exp(eigen_A$values)) %*% t(eigen_A$vectors)
-  C <- (n - 1) ^ 2 - (n - 1)
+  C <- (n - 1)^2 - (n - 1)
   combet <- matrix(0, n, n)
   for (i in 1:n) {
     E <- matrix(0, n, n)
@@ -336,8 +335,9 @@ depend_rsps_fct <- function(g, rspxparam) {
 
   Z <- solve((I - W), I)
   Zdiv <- 1 / Z
-  bet.mat <- t(sapply(1:n, function(x)
-    (Z[x, ] * t(Zdiv)) %*% Z[, x] - sum(Z[x, ] * diag(Zdiv) * Z[, x])))
+  bet.mat <- t(sapply(1:n, function(x) {
+    (Z[x, ] * t(Zdiv)) %*% Z[, x] - sum(Z[x, ] * diag(Zdiv) * Z[, x])
+  }))
   diag(bet.mat) <- 0
 
   return(bet.mat)
@@ -393,23 +393,23 @@ dist_rwalk_fct <- function(g) {
   return(H)
 }
 
-dist_walk_fct <- function(g,dwparam) {
+dist_walk_fct <- function(g, dwparam) {
   n <- igraph::vcount(g)
   A <- igraph::get.adjacency(g, sparse = FALSE)
-  bigeig <- eigen(A,only.values = TRUE)$values[1]
-  t <- (1/dwparam+bigeig)^(-1)
+  bigeig <- eigen(A, only.values = TRUE)$values[1]
+  t <- (1 / dwparam + bigeig)^(-1)
   # if(dwparam > (1/bigeig)){
   #   stop(paste0("dwparam to large. To ensure convergence, use a value greater 0 and less than 1/",bigeig))
   # }
-  I <- diag(1,n)
-  Rt <- solve((I-t*A))
+  I <- diag(1, n)
+  Rt <- solve((I - t * A))
   Ht <- log(Rt)
   Dt <- 0.5 * (diag(Ht) %*% t(rep(1, n)) + rep(1, n) %*% t(diag(Ht))) - Ht
-  alpha <- dwparam#(1/dwparam - bigeig)^(-1)
-  if(alpha!=1){
-    gamma <- log(exp(1)+alpha^(2/n))*(alpha-1)/log(alpha)
+  alpha <- dwparam # (1/dwparam - bigeig)^(-1)
+  if (alpha != 1) {
+    gamma <- log(exp(1) + alpha^(2 / n)) * (alpha - 1) / log(alpha)
   } else {
-    gamma <- log(exp(1)+1)
+    gamma <- log(exp(1) + 1)
   }
   Dt <- gamma * Dt
   return(Dt)

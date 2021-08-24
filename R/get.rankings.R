@@ -10,41 +10,40 @@
 #' @return A matrix containing ranks of nodes in all possible rankings.
 #' @author David Schoch
 #' @examples
-#' P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+#' P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)
 #' P
-#' res <- exact_rank_prob(P,only.results = FALSE)
+#' res <- exact_rank_prob(P, only.results = FALSE)
 #' get_rankings(res)
-#' 
 #' @export
 
 get_rankings <- function(data, force = F) {
-    if(!"netrankr_full"%in%class(data)){
-      stop("data is not a netrankr_full object")
-    }
-  
-    if (is.null(data$tree)){
-      stop("input does not include all necessary data structures. run exact_rank_prob() with 'only.results = FALSE'")
-    }
-    lattice <- data$lattice
-    ideals <- data$ideals
-    topo.order <- data$topo.order
-    linext <- data$lin.ext
-    mse <- data$mse
-    
-    if (linext > 50000 & !force) {
-      stop("number of possible rankings is very high. Use 'force = FALSE' 
+  if (!"netrankr_full" %in% class(data)) {
+    stop("data is not a netrankr_full object")
+  }
+
+  if (is.null(data$tree)) {
+    stop("input does not include all necessary data structures. run exact_rank_prob() with 'only.results = FALSE'")
+  }
+  lattice <- data$lattice
+  ideals <- data$ideals
+  topo.order <- data$topo.order
+  linext <- data$lin.ext
+  mse <- data$mse
+
+  if (linext > 50000 & !force) {
+    stop("number of possible rankings is very high. Use 'force = FALSE'
            if you know what you are doing.")
-    }
-    
-    n <- length(unique(mse))
-    lattice <- lapply(lattice, function(x) x + 1)
-    g <- igraph::graph_from_adj_list(lattice, mode = "in")
-    paths <- igraph::all_shortest_paths(g, from = n + 1, to = 1)
-    
-    paths <- lapply(paths$res, function(x) as.vector(x) - 1)
-    rks <- rankings(paths, ideals, linext, n)
-    rks <- rks + 1
-    rks <- rks[order(topo.order), ]
-    rks <- rks[mse, ]
-    return(rks)
+  }
+
+  n <- length(unique(mse))
+  lattice <- lapply(lattice, function(x) x + 1)
+  g <- igraph::graph_from_adj_list(lattice, mode = "in")
+  paths <- igraph::all_shortest_paths(g, from = n + 1, to = 1)
+
+  paths <- lapply(paths$res, function(x) as.vector(x) - 1)
+  rks <- rankings(paths, ideals, linext, n)
+  rks <- rks + 1
+  rks <- rks[order(topo.order), ]
+  rks <- rks[mse, ]
+  return(rks)
 }
