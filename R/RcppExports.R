@@ -45,8 +45,8 @@ nialgo <- function(adjList, deg) {
     .Call('_netrankr_nialgo', PACKAGE = 'netrankr', adjList, deg)
 }
 
-matdom <- function(A, map, benefit) {
-    .Call('_netrankr_matdom', PACKAGE = 'netrankr', A, map, benefit)
+matdom <- function(B, map, benefit) {
+    .Call('_netrankr_matdom', PACKAGE = 'netrankr', B, map, benefit)
 }
 
 preserve <- function(P, s, n) {

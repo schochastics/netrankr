@@ -5,9 +5,8 @@ using namespace arma;
 
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
-
-arma::imat matdom(NumericMatrix A, bool map, bool benefit) {
-  arma::mat B=as<arma::mat>(A);
+arma::imat matdom(arma::mat B, bool map, bool benefit) {
+  // arma::mat B = as<arma::mat>(A);
   int n=B.n_rows;
   // int m=B.n_cols;
   bool status;

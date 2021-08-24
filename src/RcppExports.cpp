@@ -151,15 +151,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // matdom
-arma::imat matdom(NumericMatrix A, bool map, bool benefit);
-RcppExport SEXP _netrankr_matdom(SEXP ASEXP, SEXP mapSEXP, SEXP benefitSEXP) {
+arma::imat matdom(arma::mat B, bool map, bool benefit);
+RcppExport SEXP _netrankr_matdom(SEXP BSEXP, SEXP mapSEXP, SEXP benefitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type B(BSEXP);
     Rcpp::traits::input_parameter< bool >::type map(mapSEXP);
     Rcpp::traits::input_parameter< bool >::type benefit(benefitSEXP);
-    rcpp_result_gen = Rcpp::wrap(matdom(A, map, benefit));
+    rcpp_result_gen = Rcpp::wrap(matdom(B, map, benefit));
     return rcpp_result_gen;
 END_RCPP
 }

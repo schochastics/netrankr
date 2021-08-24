@@ -1,10 +1,10 @@
 # netrankr 1.0.0.9000
 
-* `neighborhood_inclusion()` can now return a sparse matrix (Matrix package now suggested)
-* all functions now support sparse matrices as inputs
-* added summary function for `netrankr_full` objects
+* `neighborhood_inclusion()` can return a sparse matrix (Matrix package now imported)
+* all functions support sparse matrices as inputs
+* added `summary` method for `netrankr_full` objects
 * added `as.matrix` method for `netrankr_full` objects to extract probability distributions
-* changed to on.exit(par(op)) in plot functions
+* changed to `on.exit(par(op))` in plot functions
 * all functions now through errors instead of warnings when the network is vertex transitive
 * better error handling if the input is not as expected
 * added legends to the default plot function for `netrankr_full` objects
