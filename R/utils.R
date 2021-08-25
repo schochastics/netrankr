@@ -66,7 +66,7 @@ print.netrankr_full <- function(x, ...) {
 
 #' @title Plot netrankr_full object
 #' @importFrom grDevices hcl.colors
-#' @importFrom graphics arrows barplot image legend par points layout
+#' @importFrom graphics arrows barplot image legend par points layout axis box
 #' @importFrom utils stack
 #' @description Plots the result of an object obtained from [exact_rank_prob]
 #' @param x A netrankr_full object
