@@ -1,4 +1,4 @@
-# netrankr 1.0.0.9000
+# netrankr 1.1.0
 
 * `neighborhood_inclusion()` can return a sparse matrix (Matrix package now imported)
 * all functions support sparse matrices as inputs

@@ -1,7 +1,7 @@
 Package: netrankr
 Type: Package
 Title: Analyzing Partial Rankings in Networks
-Version: 1.0.0.9000
+Version: 1.1.0
 Authors@R: c(
     person("David", "Schoch", email = "david.schoch@manchester.ac.uk", role = c("aut", "cre")),
     person("Julian","Müller", email = "julian.mueller@gess.ethz.ch", role = "ctb"))
