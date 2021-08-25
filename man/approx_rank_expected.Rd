@@ -31,12 +31,12 @@ Which of the above methods performs best depends on the structure and size of th
 ranking. See \code{vignette("benchmarks",package="netrankr")} for more details.
 }
 \examples{
-P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
-#Exact result
+P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)
+# Exact result
 exact_rank_prob(P)$expected.rank
 
-approx_rank_expected(P,method = 'lpom')
-approx_rank_expected(P,method = 'glpom')
+approx_rank_expected(P, method = "lpom")
+approx_rank_expected(P, method = "glpom")
 }
 \references{
 Brüggemann R., Simon, U., and Mey,S, 2005. Estimation of averaged

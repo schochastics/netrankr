@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A netrankr_full object}
 
-\item{type}{character. which probabilities to return "rank" for rank probabilities, "relative" for relative rank probabilities and "expected" for expected rank probabilities and their variants}
+\item{type}{which probabilities to return. "rank" for rank probabilities, "relative" for relative rank probabilities and "expected" for expected rank probabilities and their variants}
 
 \item{...}{additional parameters for as.matrix}
 }

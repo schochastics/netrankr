@@ -31,20 +31,20 @@ An important property of threshold graphs is, that all centrality indices induce
 }
 \examples{
 library(igraph)
-g <- threshold_graph(10,0.3)
+g <- threshold_graph(10, 0.3)
 \dontrun{
 plot(g)
 
 # star graphs and complete graphs are threshold graphs
-complete <- threshold_graph(10,1) #complete graph
+complete <- threshold_graph(10, 1) # complete graph
 plot(complete)
 
-star <- threshold_graph(10,0) #star graph
+star <- threshold_graph(10, 0) # star graph
 plot(star)
 }
 
 # centrality scores are perfectly rank correlated
-cor(degree(g),closeness(g),method = "kendall")
+cor(degree(g), closeness(g), method = "kendall")
 }
 \references{
 Mahadev, N. and Peled, U. N. , 1995. Threshold graphs and related topics.

@@ -24,11 +24,10 @@ that are in accordance with the partial ranking \code{P}. The lowest rank possib
 associated with \code{1}.
 }
 \examples{
-P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)
 P
-res <- exact_rank_prob(P,only.results = FALSE)
+res <- exact_rank_prob(P, only.results = FALSE)
 get_rankings(res)
-
 }
 \author{
 David Schoch

@@ -42,14 +42,13 @@ P <- neighborhood_inclusion(dbces11)
 comparable_pairs(P)
 
 # positional dominance under total heterogeneity
-dist <- indirect_relations(dbces11,type = "dist_sp")
-D <- positional_dominance(dist,map = FALSE,benefit = FALSE) 
-comparable_pairs(D) 
+dist <- indirect_relations(dbces11, type = "dist_sp")
+D <- positional_dominance(dist, map = FALSE, benefit = FALSE)
+comparable_pairs(D)
 
 # positional dominance under total homogeneity
-D_map <- positional_dominance(dist,map = TRUE,benefit = FALSE) 
+D_map <- positional_dominance(dist, map = TRUE, benefit = FALSE)
 comparable_pairs(D_map)
-
 }
 \references{
 Brandes, U., 2016. Network positions. \emph{Methodological Innovations} 9,

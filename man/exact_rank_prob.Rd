@@ -47,12 +47,12 @@ See \code{vignette("benchmarks")} for guidelines and \link{approx_rank_relative}
 \link{approx_rank_expected}, and \link{mcmc_rank_prob} for approximative methods.
 }
 \examples{
-P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)
 P
 res <- exact_rank_prob(P)
 
-#a warning is displayed if only one ranking is possible
-tg <- threshold_graph(20,0.2)
+# a warning is displayed if only one ranking is possible
+tg <- threshold_graph(20, 0.2)
 P <- neighborhood_inclusion(tg)
 res <- exact_rank_prob(P)
 }

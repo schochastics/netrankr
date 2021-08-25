@@ -24,7 +24,7 @@ It is simply the average of \code{min_rank} and \code{max_rank}. For exact rank 
 use \link{exact_rank_prob}.
 }
 \examples{
-P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)
 rank_intervals(P)
 }
 \seealso{

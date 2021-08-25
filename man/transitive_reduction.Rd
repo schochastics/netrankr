@@ -19,7 +19,7 @@ Calculates the transitive reduction of a partial ranking.
 \examples{
 library(igraph)
 
-g <- threshold_graph(100,0.1)
+g <- threshold_graph(100, 0.1)
 P <- neighborhood_inclusion(g)
 sum(P)
 

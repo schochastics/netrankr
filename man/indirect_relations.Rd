@@ -120,17 +120,17 @@ relation. See \link{transform_relations} for predefined functions and additional
 library(igraph)
 data("dbces11")
 
-#shortest path distances
-D <- indirect_relations(dbces11,type = "dist_sp")
+# shortest path distances
+D <- indirect_relations(dbces11, type = "dist_sp")
 
-#inverted shortest path distances
-D <- indirect_relations(dbces11,type = "dist_sp", FUN = dist_inv)
-#shortes path dependencies (used for betweenness)
-D <- indirect_relations(dbces11,type = "depend_sp")
+# inverted shortest path distances
+D <- indirect_relations(dbces11, type = "dist_sp", FUN = dist_inv)
 
-#walks attenuated exponentially by their length
-W <- indirect_relations(dbces11,type = "walks",FUN = walks_exp)
+# shortes path dependencies (used for betweenness)
+D <- indirect_relations(dbces11, type = "depend_sp")
 
+# walks attenuated exponentially by their length
+W <- indirect_relations(dbces11, type = "walks", FUN = walks_exp)
 }
 \references{
 Chebotarev, P., 2012. The walk distances in graphs. \emph{Discrete Applied Mathematics}, 160(10), pp.1484-1500.

@@ -18,11 +18,11 @@ Calculates the fraction of incomparable pairs in a partial order.
 }
 \examples{
 library(igraph)
-g <- sample_gnp(100,0.1)
+g <- sample_gnp(100, 0.1)
 P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 # All pairs of vertices are comparable in a threshold graph
-tg <- threshold_graph(100,0.3)
+tg <- threshold_graph(100, 0.3)
 P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 }

@@ -32,10 +32,10 @@ See \code{vignette("benchmarks",package="netrankr")} for guidelines and benchmar
 data("florentine_m")
 P <- neighborhood_inclusion(florentine_m)
 res <- exact_rank_prob(P)
-mcmc <- mcmc_rank_prob(P,rp = vcount(g)^3)
+mcmc <- mcmc_rank_prob(P, rp = vcount(g)^3)
 
 # mean absolute error (expected ranks)
-mean(abs(res$expected.rank-mcmc$expected.rank))
+mean(abs(res$expected.rank - mcmc$expected.rank))
 }
 }
 \references{

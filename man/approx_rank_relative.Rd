@@ -32,10 +32,10 @@ very small networks such that increasing it for large network may yield
 better results. See \code{vignette("benchmarks",package="netrankr")} for more details.
 }
 \examples{
-P <- matrix(c(0,0,1,1,1,0,0,0,1,0,0,0,0,0,1,rep(0,10)),5,5,byrow=TRUE)
+P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)
 P
-approx_rank_relative(P,iterative = FALSE) 
-approx_rank_relative(P,iterative = TRUE)
+approx_rank_relative(P, iterative = FALSE)
+approx_rank_relative(P, iterative = TRUE)
 }
 \references{
 De Loof, K. and De Baets, B and De Meyer, H., 2008. Properties of mutual

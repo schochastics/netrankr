@@ -29,8 +29,8 @@ trickery, any desired result can be obtained when centrality indices are used.
 library(igraph)
 
 data("dbces11")
-hyperbolic_index(dbces11,type = "odd")
-hyperbolic_index(dbces11,type = "even")
+hyperbolic_index(dbces11, type = "odd")
+hyperbolic_index(dbces11, type = "even")
 }
 \author{
 David Schoch

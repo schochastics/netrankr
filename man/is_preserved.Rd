@@ -30,9 +30,9 @@ library(igraph)
 data("dbces11")
 P <- neighborhood_inclusion(dbces11)
 
-is_preserved(P,degree(dbces11))
-is_preserved(P,betweenness(dbces11))
-is_preserved(P,closeness(dbces11))
+is_preserved(P, degree(dbces11))
+is_preserved(P, betweenness(dbces11))
+is_preserved(P, closeness(dbces11))
 }
 \author{
 David Schoch
