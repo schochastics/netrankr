@@ -1,11 +1,16 @@
-# Update from 0.3.0 to 1.0.0
+# Update from 1.0.0 to 1.1.0
 
-added classes with generic methods and removed some dependencies. 
-No API breaking changes.
+QoL update and some bugfixes
 
 ## Test environments
 * ubuntu 20.04, R 4.1.0
 * win-builder (devel and release)
+
+
+# Update from 0.3.0 to 1.0.0
+
+added classes with generic methods and removed some dependencies. 
+No API breaking changes.
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
