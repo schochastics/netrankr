@@ -1,6 +1,7 @@
 
 # netrankr <img src="man/figures/logo.png" align="right"/>
 
+[![R-CMD-check](https://github.com/schochastics/netrankr/workflows/R-CMD-check/badge.svg)](https://github.com/schochastics/netrankr/actions)
 [![CRAN Status
 Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
 [![CRAN
