@@ -8,3 +8,5 @@ src/*.so
 inst/doc
 logo.xcf
 vignettes/*.html
+CRAN-RELEASE
+pkgdown/

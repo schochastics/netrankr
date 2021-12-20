@@ -1,5 +1,6 @@
-# netrankr 1.1.0.9000
+# netrankr 1.1.1
 
+* removed `hcl.colors` due to backward compatibility for R <3.6 (#9)
 
 # netrankr 1.1.0
 
