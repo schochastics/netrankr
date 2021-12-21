@@ -6,7 +6,7 @@
 Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
 [![CRAN
 Downloads](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr)
-[![codecov](https://codecov.io/gh/schochastics/netrankr/branch/master/graph/badge.svg)](https://codecov.io/gh/schochastics/netrankr)
+[![codecov](https://codecov.io/gh/schochastics/netrankr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schochastics/netrankr)
 
 # Overview
 
