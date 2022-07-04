@@ -7,7 +7,6 @@ tags:
 - network centrality
 - partial orders
 date: "04 July 2022"
-output: pdf_document
 authors:
 - name: David Schoch
   orcid: 0000-0003-2952-4812
