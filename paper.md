@@ -1,6 +1,6 @@
 ---
-title: 'netrankr: An R package for total, partial, and probabilistic rankings for
-  network centrality'
+title: 'netrankr: An R package for total, partial, and probabilistic rankings in
+  networks'
 tags:
 - R
 - network analysis
@@ -65,6 +65,6 @@ $$N(u)\subseteq N[v] \implies c(u) \leq c(v)$$
 That is, neighborhood inclusion is preserved by centrality indices and the ranking induced by indices
 can be viewed as linear extensions of the partial ranking induced by neighborhood-inclusion. Analyzing this partial
 ranking thus means that all possible centrality rankings can be analyzed at once.
-More technical details can be found in the dedicated literature [@sb-sninc-15; @b-np-16;@b-np-16;@svb-ccicurg-17;@b-cpsn-20].
+More technical details can be found in the dedicated literature [@sb-sninc-15; @b-np-16;@svb-ccicurg-17;@b-cpsn-20].
 
 # References
