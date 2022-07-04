@@ -15,3 +15,7 @@ cran-comments.md
 ^pkgdown$
 ^CRAN-RELEASE$
 ^\.github$
+paper.Rmd
+paper.md
+paper.pdf
+paper.bib
