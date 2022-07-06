@@ -1,20 +1,20 @@
 ---
-title: 'netrankr: An R package for total, partial, and probabilistic rankings in
-  networks'
+title: 'netrankr: An R package for total, partial, and probabilistic rankings in networks'
 tags:
 - R
 - network analysis
 - network centrality
 - partial orders
-date: "04 July 2022"
-authors:
-- name: David Schoch
-  orcid: 0000-0003-2952-4812
-  affiliation: 1
+date: "06 July 2022"
+output: pdf_document
 bibliography: paper.bib
 affiliations:
 - name: GESIS - Leibniz Institute for the Social Sciences
   index: 1
+authors:
+- name: David Schoch
+  orcid: 0000-0003-2952-4812
+  affiliation: 1
 ---
 
 # Summary
@@ -30,17 +30,32 @@ the most popular user. In bioinformatics, centrality is used to detect essential
 protein-protein interaction networks [@jmbo-lcpn-01].
 Even in sports, centrality is applied to rank athletes or teams [@r-wbpecnahpt-11].
 A myriad of indices have been proposed, all with differing interpretations of what
-constitutes a central position within a network.
+constitutes a central position within a network. Although `netrankr` offers this
+traditional approach to network centrality, its main focus lies on alternative assessments
+of centrality based on partial and probabilistic rankings in networks. 
 
-`netrankr` is build around the idea that centrality is more than just the application of 
-indices to determine structurally important nodes. Recent results suggest, that there exist a 
+# Statement of need
+
+General purpose packages for network analysis such as `igraph` [@cn-ispcnr-06] or
+ `sna` [@b-snas-08], implement the most frequently used centrality indices.
+
+However, there also exist dedicated centrality packages, such as 
+`centiserve` [@jsaayga-ccrwarpca-15], `CINNA` [@amj-crpdcinna-19], and `influenceR` [@sa-istqsinn-15].
+The biggest in terms of implemented indices is `centiserve` which includes $33$ indices.
+The primary purpose of `CINNA` is to facilitate the choice of indices by visual 
+and statistical tools. `influenceR` is a comparably small packages which implements 
+only a few specialized measures.
+
+The `netrankr` package also offers 
+the opportunity to apply more than $30$ indices, but the main focus lies on alternative assessment methods.
+Recent results suggest, that there exist a 
 variety of partial rankings in networks which are preserved by many index based centrality rankings [@sb-sninc-15; @sb-rcsn-16; @svb-ccicurg-17]. 
 These partial rankings can be leveraged to assess centrality on a more general level, without necessarily resorting to indices. 
-Some of the key functionalities of the package are listed below.
+Some of these methods and key functionalities of the package are listed below.
 
 * Compute partial rankings based on neighborhood-inclusion and other dominance relations in networks [@sb-sninc-15; @b-np-16]
 * Analyze the partial rankings using rank intervals [@pt-miposlemrp-04] 
-* Calculate rank probabilities to assess the likelihood of certain rank (e.g. How likely is a certain node the most central one?) [@s-ciprrpn-18]
+* Calculate rank probabilities to assess the likelihood of certain ranks (e.g. How likely is a node the most central one?) [@s-ciprrpn-18]
 * Calculate mutual rank probabilities (e.g. how likely is a node more central than another one?)[@s-ciprrpn-18]
 * Compute expected ranks of nodes (How central do we expect a node to be?)[@s-ciprrpn-18]
 
