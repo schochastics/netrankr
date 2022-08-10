@@ -228,3 +228,7 @@ and a class of uniquely ranked graphs. *Social Networks*, **50**, 46-54.([link](
 > Brandes, Ulrik. (2016). Network Positions.
 *Methodological Innovations*, **9**, 2059799116630650.
 ([link](https://dx.doi.org/10.1177/2059799116630650))
+
+## Code of Conduct
+
+Please note that the netrankr project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

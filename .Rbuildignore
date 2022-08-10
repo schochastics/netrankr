@@ -19,3 +19,5 @@ paper.Rmd
 paper.md
 paper.pdf
 paper.bib
+^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$
