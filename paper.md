@@ -5,7 +5,7 @@ tags:
 - network analysis
 - network centrality
 - partial orders
-date: "06 July 2022"
+date: "10 August 2022"
 output: pdf_document
 bibliography: paper.bib
 affiliations:
@@ -43,7 +43,7 @@ However, there also exist dedicated centrality packages, such as
 `centiserve` [@jsaayga-ccrwarpca-15], `CINNA` [@amj-crpdcinna-19], and `influenceR` [@sa-istqsinn-15].
 The biggest in terms of implemented indices is `centiserve` which includes $33$ indices.
 The primary purpose of `CINNA` is to facilitate the choice of indices by visual 
-and statistical tools. `influenceR` is a comparably small packages which implements 
+and statistical tools. `influenceR` is a comparably small package which implements 
 only a few specialized measures.
 
 The `netrankr` package also offers 
@@ -76,9 +76,110 @@ partial ranking on the vertices of a network.
 
 @sb-rcsn-16 showed that if $c:V \to \mathbb{R}$ is a centrality index, then 
 $$N(u)\subseteq N[v] \implies c(u) \leq c(v)$$
-That is, neighborhood inclusion is preserved by centrality indices and the ranking induced by indices
-can be viewed as linear extensions of the partial ranking induced by neighborhood-inclusion. Analyzing this partial
-ranking thus means that all possible centrality rankings can be analyzed at once.
-More technical details can be found in the dedicated literature [@sb-sninc-15; @b-np-16;@svb-ccicurg-17;@b-cpsn-20].
+That is, neighborhood inclusion is preserved by indices and the ranking can be viewed as linear extensions of the partial ranking induced by neighborhood-inclusion. Analyzing this partial ranking thus means that all possible centrality rankings can be analyzed at once. More technical details can be found in the dedicated literature [@sb-sninc-15; @b-np-16;@svb-ccicurg-17;@b-cpsn-20].
+
+# Example usage
+
+This example briefly explains some of the functionality of the package and the 
+difference to an index driven approach. For more detailed applications see 
+the package vignettes. 
+
+We work with a small graph included in the package.
+``` r
+library(igraph)
+library(netrankr)
+
+data("dbces11")
+```
+
+![](figures/dbces.pdf)
+
+Say we are interested in the most central node of the graph and simply
+compute some standard centrality scores with the `igraph` package.
+``` r
+cent_scores <- data.frame(
+   degree = degree(g),
+   betweenness = round(betweenness(g),4),
+   closeness = round(closeness(g),4),
+   eigenvector = round(eigen_centrality(g)$vector,4),
+   subgraph = round(subgraph_centrality(g),4))
+
+# What are the most central nodes for each index?
+apply(cent_scores,2,which.max)
+#>      degree betweenness   closeness eigenvector    subgraph 
+#>          11           8           6           7          10
+```
+
+
+Each index assigns the highest value to a different
+vertex and it is not clear which may be the correct choice. 
+
+A more general assessment using `netrankr` starts by calculating the neighborhood inclusion preorder.
+
+``` r
+P <- neighborhood_inclusion(g)
+P
+#>    1 2 3 4 5 6 7 8 9 10 11
+#> 1  0 0 1 0 1 1 1 0 0  0  1
+#> 2  0 0 0 1 0 0 0 1 0  0  0
+#> 3  0 0 0 0 1 0 0 0 0  0  1
+#> 4  0 0 0 0 0 0 0 0 0  0  0
+#> 5  0 0 0 0 0 0 0 0 0  0  0
+#> 6  0 0 0 0 0 0 0 0 0  0  0
+#> 7  0 0 0 0 0 0 0 0 0  0  0
+#> 8  0 0 0 0 0 0 0 0 0  0  0
+#> 9  0 0 0 0 0 0 0 0 0  0  0
+#> 10 0 0 0 0 0 0 0 0 0  0  0
+#> 11 0 0 0 0 0 0 0 0 0  0  0
+```
+`P[u,v]=1` if $N(u)\subseteq N[v]$. Hence, $u$ is always ranked below $v$.
+If `P[u,v]=0`, then there may be indices that rank $u$ above $v$ and vice versa.
+We can examine the minimal and maximal possible
+rank of each node for rankings that extend the preorder to a total order using rank intervals. 
+The bigger the intervals are, the more freedom exists for indices to rank nodes differently.
+
+``` r
+plot(rank_intervals(P),cent_scores = cent_scores,ties.method = "average")
+```
+
+![](figures/rk_intervals.pdf)
+
+Note that the ranks of nodes are not uniformly distributed in the
+intervals. The exact probabilities, can be obtained with
+`exact_rank_prob()`.
+
+``` r
+res <- exact_rank_prob(P)
+```
+
+`res$rank.prob` contains the probabilities for each node to occupy a certain
+rank. For instance, the probability for each node to be the most central
+one is as follows.
+
+``` r
+round(res$rank.prob[ ,11],2)
+#>    1    2    3    4    5    6    7    8    9   10   11 
+#> 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16
+```
+
+The entry
+`res$relative.rank[u,v]` indicates how likely it is that `v` is more central
+than `u`.
+
+``` r
+# How likely is it, that 6 is more central than 3?
+round(res$relative.rank[3,6],2)
+#> [1] 0.75
+```
+
+`res$expected.ranks` contains the expected centrality ranks for all nodes.
+
+``` r
+round(res$expected.rank,2)
+#>    1    2    3    4    5    6    7    8    9   10   11 
+#> 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14
+```
+
+The higher the value, the more central a node is expected to be.
 
 # References
