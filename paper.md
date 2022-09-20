@@ -84,7 +84,9 @@ This example briefly explains some of the functionality of the package and the
 difference to an index driven approach. For more detailed applications see 
 the package vignettes. 
 
-We work with a small graph included in the package.
+We work with a small graph included in the package which was specifically crafted to highlight extreme
+differences in centrality rankings.
+
 ``` r
 library(igraph)
 library(netrankr)
