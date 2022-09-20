@@ -25,7 +25,7 @@ ________________________________________________________________________________
 ## Runtimes exact probabilities
 
 The below figure shows the runtime of `exact_rank_prob()` for a sample of
-13,000 partial rankings with 10 to 30 nodes and varying degree of completeness.
+3,000 partial rankings with 10 to 20 nodes and varying degree of completeness.
 
 ```{r runtime, echo=FALSE}
 knitr::include_graphics("runtimes_exact.png")
@@ -48,8 +48,8 @@ implemented in the former are only based on structural features of the partial r
 while the latter is based on sampling rankings (almost) uniformly at random from the 
 set of all rankings. Consult the help files for a more detailed description and references. 
 The below figure shows the (averaged) mean absolute error compared to the exact expected ranks
-of the five methods on the set of 13000 partial rankings from above. The number of 
-drawn samples for the mcmc function is set to $n^4$, where $n$ is the number of 
+of the five methods on the set of 3000 partial rankings from above. The number of 
+drawn samples for the mcmc function is set to $n^5$, where $n$ is the number of 
 elements in the partial ranking.
 
 ```{r qual_exp_mse, echo=FALSE}
@@ -81,8 +81,8 @@ knitr::include_graphics("quality_relative_mse.png")
 
 Clearly, the non-iterative approximation performs worse on all partial rankings.
 The more iterations the better the approximation quality seems to be, yet the gain
-in quality going from 10 to 15 iterations seems negligible. The function based
-on random samples again performs better except in the region of low comparability.
+in quality going from 10 to 15 iterations seems negligible. The mcmc based function
+again performs better except in the region of low comparability.
 
 ________________________________________________________________________________
 

@@ -1,3 +1,7 @@
+# netrankr 1.1.1.9999
+
+* benchmark vignette is now reproducible with code and data from `data-raw`
+
 # netrankr 1.1.1
 
 * removed `hcl.colors` due to backward compatibility for R <3.6 (#9)
