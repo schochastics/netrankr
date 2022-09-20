@@ -19,6 +19,8 @@ Additionally, the quality of the approximation functions `approx_*` and
 sampling rankings with `mcmc_rank_prob()` for **expected ranks**
 and **relative rank probabilities** are assessed.
 
+(*The data and code to replicate the benchmark results can be found in the `data-raw` folder on 
+[github](https://github.com/schochastics/netrankr/tree/master/data-raw)*)
 
 ________________________________________________________________________________
 
