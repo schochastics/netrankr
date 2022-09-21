@@ -16,7 +16,7 @@
 #' get_rankings(res)
 #' @export
 
-get_rankings <- function(data, force = F) {
+get_rankings <- function(data, force = FALSE) {
   if (!"netrankr_full" %in% class(data)) {
     stop("data is not a netrankr_full object")
   }

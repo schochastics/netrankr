@@ -7,7 +7,7 @@ library(igraph6)
 # load all benchmark posets in digraph6 format
 posets <- readLines("data-raw/posets.txt") 
 
-res_all <- data.frame(id = 1:length(posets),
+res_all <- data.frame(id = seq_len(length(posets)),
                   n = NA,
                   density = NA,
                   runtime_exact = 0,

@@ -38,7 +38,7 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
   }
 
   if (is.null(rownames(P)) & is.null(colnames(P))) {
-    name_vec <- rownames(P) <- colnames(P) <- paste0("V", 1:nrow(P))
+    name_vec <- rownames(P) <- colnames(P) <- paste0("V", seq_len(nrow(P)))
   } else {
     name_vec <- rownames(P)
   }
@@ -55,7 +55,7 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     equi <- which(duplicated(MSE))
     P <- P[-equi, -equi]
   } else {
-    MSE <- 1:nrow(P)
+    MSE <- seq_len(nrow(P))
   }
   if (length(unique(MSE)) == 1) {
     stop("all elements are structurally equivalent and have the same rank")
@@ -80,7 +80,7 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     }
   }
   expected.full <- res$expected[MSE]
-  for (val in sort(unique(expected.full), decreasing = T)) {
+  for (val in sort(unique(expected.full), decreasing = TRUE)) {
     idx <- which(expected.full == val)
     expected.full[idx] <- expected.full[idx] + sum(duplicated(MSE[expected.full <= val]))
   }

@@ -189,7 +189,7 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
     m <- ncol(cent_scores)
     op <- par(mar = c(4, 4, 6, 4), xpd = TRUE)
     cent_rk_wide <- as.data.frame(apply(cent_scores[ord, ], 2, rank, ties.method = ties.method))
-    cent_rk_long <- cbind(id = (1:nrow(x)), stack(cent_rk_wide))
+    cent_rk_long <- cbind(id = (seq_len(nrow(x))), stack(cent_rk_wide))
     if (is.null(cent_cols)) {
       if (m <= 8) {
         cent_cols <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")[1:m]
@@ -197,7 +197,7 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
         warning("plotting more than 8 rankings is not recommended")
         cent_cols <- c("#FFC5D0", "#FBC9BF", "#F1CEB0", "#E2D4A8", "#CFDAA8", "#BBDEB1", 
                        "#A8E1BF", "#9BE2D0", "#9AE1E1", "#A4DDEF", "#B8D8F8", "#CFD1FC", 
-                       "#E4CBF9", "#F4C6EF", "#FDC4E1")[1:ncol(cent_scores)]
+                       "#E4CBF9", "#F4C6EF", "#FDC4E1")[seq_len(ncol(cent_scores))]
       }
     } else if (length(cent_cols) != ncol(cent_scores)) {
       stop("the number of colors must equal the number of columns in cent_score.")
@@ -213,9 +213,9 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
   )
   idx <- !(x$min_rank[ord] == x$max_rank[ord])
   arrows(
-    x0 = (1:nrow(x))[idx],
+    x0 = (seq_len(nrow(x)))[idx],
     y0 = x$min_rank[ord[idx]],
-    x1 = (1:nrow(x))[idx],
+    x1 = (seq_len(nrow(x)))[idx],
     y1 = x$max_rank[ord[idx]], code = 3, angle = 90, length = 0.1, col = "black"
   )
   if (!is.null(cent_scores)) {
@@ -286,7 +286,7 @@ plot.netrankr_mcmc <- function(x, icols = NULL, bcol = "grey66", ...) {
   rk_rl[rk_rl == 0] <- NA
   par(mar = c(1, 2, 2, 2), las = 1) # bltr
   image(
-    x = 1:ncol(rk_rl), y = 1:nrow(rk_rl), t(rk_rl), col = icols, xlab = "",
+    x = seq_len(ncol(rk_rl)), y = seq_len(nrow(rk_rl)), t(rk_rl), col = icols, xlab = "",
     ylab = "", tck = 0, breaks = seq(0, 1, length.out = length(icols) + 1),
     main = "MCMC approximated relative rank probabilities"
   )

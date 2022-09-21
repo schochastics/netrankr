@@ -45,7 +45,7 @@ approx_rank_expected <- function(P, method = "lpom") {
   }
 
   # Equivalence classes ------------------------------------------------
-  MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = T)
+  MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = TRUE)
   if (length(MSE) >= 1) {
     MSE <- t(apply(MSE, 1, sort))
     MSE <- MSE[!duplicated(MSE), ]
@@ -57,7 +57,7 @@ approx_rank_expected <- function(P, method = "lpom") {
     equi <- which(duplicated(MSE))
     P <- P[-equi, -equi]
   } else {
-    MSE <- 1:nrow(P)
+    MSE <- seq_len(nrow(P))
   }
   if (length(unique(MSE)) == 1) {
     stop("all elements are structurally equivalent and have the same rank")

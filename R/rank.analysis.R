@@ -51,7 +51,7 @@
 #' P <- neighborhood_inclusion(tg)
 #' res <- exact_rank_prob(P)
 #' @export
-exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
+exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FALSE) {
   if (!inherits(P, "Matrix") & !is.matrix(P)) {
     stop("P must be a dense or spare matrix")
   }
@@ -64,12 +64,12 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
   P <- as.matrix(P)
   # Check for names ------------------------------------------------
   if (is.null(rownames(P)) & is.null(colnames(P))) {
-    rownames(P) <- colnames(P) <- paste0("V", 1:nrow(P))
+    rownames(P) <- colnames(P) <- paste0("V", seq_len(nrow(P)))
   }
   n_full <- nrow(P)
   P_full <- P
   # Equivalence classes ------------------------------------------------
-  MSE <- which((P + t(P)) == 2, arr.ind = T)
+  MSE <- which((P + t(P)) == 2, arr.ind = TRUE)
   if (length(MSE) >= 1) {
     MSE <- t(apply(MSE, 1, sort))
     MSE <- MSE[!duplicated(MSE), ]
@@ -81,7 +81,7 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
     equi <- which(duplicated(MSE))
     P <- P[-equi, -equi]
   } else {
-    MSE <- 1:nrow(P)
+    MSE <- seq_len(nrow(P))
   }
   if (length(unique(MSE)) == 1) {
     stop("all elements are structurally equivalent and have the same rank")
@@ -98,13 +98,13 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
     mrp_full <- P_full
     mrp_full[mrp_full == t(mrp_full)] <- 0
     rp_full <- matrix(0, nrow(P_full), nrow(P_full))
-    for (i in 1:nrow(P_full)) {
+    for (i in seq_len(nrow(P_full))) {
       rp_full[i, expected_full[i]] <- 1
     }
     # add names
     rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
     names(expected_full) <- names(rank.spread_full) <- rownames(P_full)
-    colnames(rp_full) <- 1:ncol(rp_full)
+    colnames(rp_full) <- seq_len(ncol(rp_full))
     res <- list(
       lin.ext = 1,
       mse = MSE,
@@ -175,8 +175,8 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
   res$mrp <- res$mrp[order(topo.order), order(topo.order)]
 
   ############################### END
-  expected <- res$rp %*% 1:nElem
-  rank.spread <- rowSums((matrix(rep(1:nElem, each = nElem), nElem, nElem) - c(expected))^2 * res$rp)
+  expected <- res$rp %*% seq_len(nElem)
+  rank.spread <- rowSums((matrix(rep(seq_len(nElem), each = nElem), nElem, nElem) - c(expected))^2 * res$rp)
   expected <- c(expected)
 
   ###############################
@@ -199,14 +199,14 @@ exact_rank_prob <- function(P, only.results = T, verbose = F, force = F) {
     }
   }
   expected_full <- expected[MSE]
-  for (val in sort(unique(expected_full), decreasing = T)) {
+  for (val in sort(unique(expected_full), decreasing = TRUE)) {
     idx <- which(expected_full == val)
     expected_full[idx] <- expected_full[idx] + sum(duplicated(MSE[expected_full <= val]))
   }
   # add names
   rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
   names(expected_full) <- names(rank.spread_full) <- rownames(P_full)
-  colnames(rp_full) <- 1:ncol(rp_full)
+  colnames(rp_full) <- seq_len(ncol(rp_full))
 
   ###############################
   if (only.results) {

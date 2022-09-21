@@ -299,7 +299,7 @@ depend_netflow_fct <- function(g, netflowmode) {
 }
 
 depend_exp_fct <- function(g) {
-  A <- igraph::get.adjacency(g, "both", sparse = F)
+  A <- igraph::get.adjacency(g, "both", sparse = FALSE)
   eigen_A <- eigen(A)
   n <- nrow(A)
   expA <- eigen_A$vectors %*% diag(exp(eigen_A$values)) %*% t(eigen_A$vectors)
@@ -326,7 +326,7 @@ depend_rsps_fct <- function(g, rspxparam) {
   n <- igraph::vcount(g)
   I <- diag(1, n)
 
-  A <- igraph::get.adjacency(g, sparse = F)
+  A <- igraph::get.adjacency(g, sparse = FALSE)
   D <- diag(1 / igraph::degree(g))
   P_ref <- D %*% A
   C <- 1 / A
@@ -347,7 +347,7 @@ depend_rspn_fct <- function(g, rspxparam) {
   n <- igraph::vcount(g)
   I <- diag(1, n)
 
-  A <- igraph::get.adjacency(g, sparse = F)
+  A <- igraph::get.adjacency(g, sparse = FALSE)
   D <- diag(1 / igraph::degree(g))
   P_ref <- D %*% A
   C <- 1 / A
@@ -365,7 +365,7 @@ depend_rspn_fct <- function(g, rspxparam) {
 depend_curflow_fct <- function(g) {
   n <- igraph::vcount(g)
   D <- diag(igraph::degree(g))
-  A <- igraph::get.adjacency(g, sparse = F)
+  A <- igraph::get.adjacency(g, sparse = FALSE)
   L <- D - A
 
   Tmat <- solve(L[1:(n - 1), 1:(n - 1)])
