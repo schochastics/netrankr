@@ -1,4 +1,4 @@
-# netrankr 1.1.1.9999
+# netrankr 1.2.0
 
 * benchmark vignette is now reproducible with code and data from `data-raw`
 
