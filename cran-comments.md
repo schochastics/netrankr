@@ -1,11 +1,10 @@
-# Update from 1.1.0 to 1.1.1
+# Update from 1.1.1 to 1.2.0
 
-- removed `hcl.colors` due to backward compatibility for R <3.6 (#9)
-- changed maintainer email address
+- some internal changes after review at Journal of Open Source Software
 
 
 ## Test environments
-* ubuntu 20.04, R 4.1.2
+* ubuntu 20.04, R 4.2.1
 * win-builder (devel and release)
 
 
