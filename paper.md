@@ -120,7 +120,7 @@ cent_scores <- data.frame(
    subgraph = round(subgraph_centrality(g), 4))
 
 # What are the most central nodes for each index?
-apply(cent_scores,2,which.max)
+apply(cent_scores, 2, which.max)
 #>      degree betweenness   closeness eigenvector    subgraph 
 #>          11           8           6           7          10
 ```
@@ -185,12 +185,12 @@ round(res$rank.prob[,11], 2)
 ```
 
 The entry
-`res$relative.rank[u,v]` indicates how likely it is that `v` is more central
+`res$relative.rank[u, v]` indicates how likely it is that `v` is more central
 than `u`.
 
 ```R
 # How likely is it, that 6 is more central than 3?
-round(res$relative.rank[3,6],2)
+round(res$relative.rank[3, 6], 2)
 #> [1] 0.75
 ```
 
