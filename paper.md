@@ -84,16 +84,29 @@ difference to an index driven approach. For more detailed applications see
 the package vignettes. 
 
 We work with a small graph included in the package which was specifically crafted to highlight extreme
-differences in centrality rankings.
+differences in centrality rankings (see Figure \ref{fig:dbces11}).
 
 ```R
 library(igraph)
 library(netrankr)
 
 data("dbces11")
+g <- dbces11
+
+# Code to reproduce Figure 1
+library(ggraph)
+ggraph(g, "stress") + 
+  geom_edge_link0(edge_color = "grey66") +
+  geom_node_point(shape = 21, fill = "grey25", size = 8) +
+  geom_node_text(label = 1:11, color = "white")
 ```
 
-![](figures/dbces.pdf)
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/dbces.pdf}
+  \caption{Toy graph included in netrankr used to illustrate the functionality of the package.}
+  \label{fig:dbces11}
+\end{figure}
 
 Say we are interested in the most central node of the graph and simply
 compute some standard centrality scores with the `igraph` package.
@@ -140,13 +153,18 @@ If `P[u,v]=0`, then there may be indices that rank $u$ above $v$ and vice versa.
 
 We can examine the minimal and maximal possible
 rank of each node for rankings that extend the preorder to a total order using rank intervals. 
-The bigger the intervals are, the more freedom exists for indices to rank nodes differently.
+The bigger the intervals are, the more freedom exists for indices to rank nodes differently (see Figure \ref{fig:rk_int}).
 
 ```R
 plot(rank_intervals(P), cent_scores = cent_scores,ties.method = "average")
 ```
 
-![](figures/rk_intervals.pdf)
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/rk_intervals.pdf}
+  \caption{Rank intervals for the toy graph showing the range of potential centrality ranks including the rankings of five indices.}
+  \label{fig:rk_int}
+\end{figure}
 
 Note that the ranks of nodes are not uniformly distributed in the
 intervals. The exact probabilities, can be obtained with
