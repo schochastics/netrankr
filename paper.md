@@ -190,7 +190,7 @@ than `u`.
 
 ```R
 # How likely is it, that 6 is more central than 3?
-round(res$relative.rank[3,6], 2)
+round(res$relative.rank[3, 6], 2)
 #> [1] 0.75
 ```
 
