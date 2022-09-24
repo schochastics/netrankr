@@ -4,7 +4,7 @@
 \alias{exact_rank_prob}
 \title{Probabilistic centrality rankings}
 \usage{
-exact_rank_prob(P, only.results = T, verbose = F, force = F)
+exact_rank_prob(P, only.results = TRUE, verbose = FALSE, force = FALSE)
 }
 \arguments{
 \item{P}{A partial ranking as matrix object calculated with \link{neighborhood_inclusion}

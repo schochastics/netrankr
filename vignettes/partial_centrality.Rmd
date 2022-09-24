@@ -17,7 +17,7 @@ Probabilities in networks. *Social Networks*, **54**, 50-60.([link](https://doi.
 
 > Patil, G.P. & Taillie, C. (2004). Multiple Indicators, partially ordered sets, 
 and linear extensions: Multi-criterion ranking and prioritization. 
-*Environmental and Ecological Statistics*, **11**, 199-228 ([link](https://link.springer.com/article/10.1023%2FB%3AEEST.0000027209.93218.d9))
+*Environmental and Ecological Statistics*, **11**, 199-228 ([link](https://link.springer.com/article/10.1023/B:EEST.0000027209.93218.d9))
 
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width=5,fig.align = 'center')

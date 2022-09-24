@@ -4,7 +4,7 @@
 \alias{get_rankings}
 \title{Rankings that extend a partial ranking}
 \usage{
-get_rankings(data, force = F)
+get_rankings(data, force = FALSE)
 }
 \arguments{
 \item{data}{List as returned by \link{exact_rank_prob} when run with \code{only.results = FALSE}}
