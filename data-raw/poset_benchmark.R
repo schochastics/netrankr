@@ -2,7 +2,7 @@ library(igraph)
 library(netrankr)
 library(progress)
 library(tidyverse)
-library(igraph6)
+library(rgraph6)
 
 # load all benchmark posets in digraph6 format
 posets <- readLines("data-raw/posets.txt") 
@@ -79,7 +79,7 @@ df <- read_csv("data-raw/poset_results.csv")
 
 # plot runtime of exact algorithm
 ggplot(df,aes(x=1-density,y=runtime_exact,col=as.factor(n)))+
-  geom_point()+
+  geom_point()+ 
   scale_color_manual(values = c("#1d3557", "#457b9d", "#432818"),name="no. of elements")+
   scale_y_log10()+theme(legend.position = "bottom")+
   theme_minimal()+
@@ -96,7 +96,7 @@ df %>%
   mutate(name=factor(name,levels=c("lpom","glpom","loof1","loof2","mcmc"))) %>% 
   mutate(n = paste0("n = ",n)) %>% 
   ggplot(aes(x=density,y=value,col=name))+
-  geom_point(alpha=0.1)+
+  # geom_point(alpha=0.1)+ otherwise too big file size
   geom_smooth(method="loess",se=FALSE)+
   scale_color_manual(values=c("#1d3557", "#457b9d", "#432818","#99582a", "#e63946"),name="")+
   facet_wrap(~n,ncol=3)+
@@ -119,7 +119,7 @@ df %>%
                         name=="mcmc" ~ "mcmc")) %>% 
   mutate(name=factor(name,levels = c("no iteration","5 iterations","10 iterations","15 iterations","mcmc"))) %>% 
   ggplot(aes(x=density,y=value,col=name))+
-  geom_point(alpha=0.1)+
+  # geom_point(alpha=0.1)+ otherwise too big file size
   geom_smooth(method="loess",se=FALSE)+
   scale_color_manual(values=c("#1d3557", "#457b9d", "#a8dadc", "#d8e1d6", "#e63946"),name="")+
   facet_wrap(~n,ncol=3)+
