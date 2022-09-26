@@ -1,11 +1,12 @@
 citHeader("To cite netrankr in publications use:")
 
-citEntry(entry = "Manual",
-  title        = "netrankr: An R package to analyze partial rankings in networks",
+citEntry(entry = "article",
+  title        = "netrankr: An R package for total, partial, and probabilistic rankings in networks",
   author       = personList(as.person("David Schoch")),
-  year         = "2017",
+  journal      = "Journal of Open Source Software",
+  number       = "77", 
+  pages        = "4563",
+  year         = "2022",
   
-  textVersion  =
-  paste("David Schoch (2017).",
-        "netrankr: An R package to analyze partial rankings in networks")
+  textVersion  = "Schoch, D., (2022). netrankr: An R package for total, partial, and probabilistic rankings in networks. Journal of Open Source Software, 7(77), 4563"
 )

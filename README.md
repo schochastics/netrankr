@@ -7,6 +7,7 @@ Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org
 [![CRAN
 Downloads](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr)
 [![codecov](https://codecov.io/gh/schochastics/netrankr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schochastics/netrankr)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.04563/status.svg)](https://doi.org/10.21105/joss.04563)
 
 # Overview
 
@@ -126,16 +127,12 @@ P
 ```
 
 [Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401)
-showed that
-![N(u) \subseteq N\[v\]](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;N%28u%29%20%5Csubseteq%20N%5Bv%5D "N(u) \subseteq N[v]")
-(i.e. `P[u,v]=1`) implies
-![c(u) \leq c(v)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;c%28u%29%20%5Cleq%20c%28v%29 "c(u) \leq c(v)")
-for centrality indices
-![c](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;c "c"),
-which are defined via specific path algebras. These include many of the
-well-known measures like closeness (and variants), betweenness (and
-variants) as well as many walk-based indices (eigenvector and subgraph
-centrality, total communicability,…).
+showed that $N(u) \subseteq N[v]$ (i.e. `P[u,v]=1`) implies
+$c(u) \leq c(v)$ for centrality indices $c$, which are defined via
+specific path algebras. These include many of the well-known measures
+like closeness (and variants), betweenness (and variants) as well as
+many walk-based indices (eigenvector and subgraph centrality, total
+communicability,…).
 
 Neighborhood-inclusion defines a partial ranking on the set of nodes.
 Each ranking that is in accordance with this partial ranking yields a
