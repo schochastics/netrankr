@@ -24,3 +24,4 @@ paper.bib
 figures/
 ^data-raw$
 ^CRAN-SUBMISSION$
+^codecov\.yml$

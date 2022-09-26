@@ -28,9 +28,13 @@ LinkingTo: Rcpp,RcppArmadillo
 SystemRequirements: C++11
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
-Suggests: knitr, rmarkdown, magrittr,
+Suggests: 
+    knitr,
+    rmarkdown,
+    magrittr,
     testthat,
     shiny (>= 0.13),
     miniUI (>= 0.1.1),
-    rstudioapi (>= 0.5)
+    rstudioapi (>= 0.5),
+    covr
 VignetteBuilder: knitr
