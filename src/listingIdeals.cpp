@@ -47,7 +47,7 @@ std::vector<std::vector<int> > listingIdeals(std::vector<std::vector<int> > P, i
       
       S2.clear();
       for(int k=nElem-1; k>=0; --k){
-        if((Ptmp[k].size()==0) & (Pwork[k].size()!=0)){
+        if((Ptmp[k].size()==0) && (Pwork[k].size()!=0)){
           S2.push_back(k);  
         }
       }
