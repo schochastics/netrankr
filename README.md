@@ -11,7 +11,7 @@ coverage](https://codecov.io/gh/schochastics/netrankr/branch/master/graph/badge.
 [![JOSS](https://joss.theoj.org/papers/10.21105/joss.04563/status.svg)](https://doi.org/10.21105/joss.04563)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7109041.svg)](https://doi.org/10.5281/zenodo.7109041)
 
-# Overview
+## Overview
 
 The literature is flooded with centrality indices and new ones are
 introduced on a regular basis. Although there exist several theoretical
