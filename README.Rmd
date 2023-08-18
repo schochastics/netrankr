@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Overview 
+## Overview 
 
 The literature is flooded with centrality indices and new ones are introduced 
 on a regular basis. Although there exist several theoretical and empirical guidelines 
