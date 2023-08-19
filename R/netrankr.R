@@ -34,6 +34,6 @@
 #' The package provides several additional vignettes that explain the functionality
 #' of netrankr and its conceptual ideas. See `browseVignettes(package = 'netrankr')`
 #'
-#' @docType package
-#' @name netrankr
-NULL
+#' @keywords internal
+#' @aliases netrankr-package
+"_PACKAGE"

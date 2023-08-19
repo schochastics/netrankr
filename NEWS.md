@@ -1,3 +1,7 @@
+# netrankr 1.2.1
+
+* fixed PKGNAME-package \alias as per "Documenting packages" in R-exts.
+
 # netrankr 1.2.0
 
 * benchmark vignette is now reproducible with code and data from `data-raw`
