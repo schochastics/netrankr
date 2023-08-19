@@ -1,8 +1,9 @@
 citHeader("To cite netrankr in publications use:")
 
-citEntry(entry = "article",
+bibentry(
+  bibtype      = "Article",
   title        = "netrankr: An R package for total, partial, and probabilistic rankings in networks",
-  author       = personList(as.person("David Schoch")),
+  author       = c(as.person("David Schoch")),
   journal      = "Journal of Open Source Software",
   number       = "77", 
   pages        = "4563",
