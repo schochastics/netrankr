@@ -2,6 +2,7 @@
 
 - fixed package doc issue
 - fixed bibentry issue
+- fixed #21
 
 ## Test environments
 * ubuntu 20.04, R 4.3.1

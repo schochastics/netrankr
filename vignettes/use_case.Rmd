@@ -21,21 +21,22 @@ library(magrittr)
 ```
 
 ## Data
-For this tutorial, we use the famous *florentine families* dataset ([Padget & Ansell, 1993](https://www.journals.uchicago.edu/doi/abs/10.1086/230190)). The marriage links
+For this tutorial, we use the famous *florentine families* dataset (Padget & Ansell, 1993). The marriage links
 of families together with the wealth attribute are included in the `netrankr` package.
 
 ```{r plot,fig.height=5,fig.width=5,fig.align='center'}
 data("florentine_m")
-#Delete Pucci family (isolated)
-florentine_m <- delete_vertices(florentine_m,which(degree(florentine_m)==0))
+# Delete Pucci family (isolated)
+florentine_m <- delete_vertices(florentine_m, which(degree(florentine_m) == 0))
 
-#plot the graph (label size proportional to wealth)
+# plot the graph (label size proportional to wealth)
 set.seed(111)
 plot(florentine_m,
-     vertex.label.cex=V(florentine_m)$wealth*0.01, 
-     vertex.label.color="black",
-     vertex.color="white",
-     vertex.frame.color="gray")
+  vertex.label.cex = V(florentine_m)$wealth * 0.01,
+  vertex.label.color = "black",
+  vertex.color = "white",
+  vertex.frame.color = "gray"
+)
 ```
 
 We use this dataset below to illustrate how a dominance based assessment of centrality
@@ -60,10 +61,11 @@ cent.df <- data.frame(
   betweenness = betweenness(florentine_m),
   closeness = closeness(florentine_m),
   eigenvector = eigen_centrality(florentine_m)$vector,
-  subgraph = subgraph_centrality(florentine_m))
+  subgraph = subgraph_centrality(florentine_m)
+)
 
 # most central family according to the 5 indices
-V(florentine_m)$name[apply(cent.df,2,which.max)]
+V(florentine_m)$name[apply(cent.df, 2, which.max)]
 ```
 
 In all cases, the Medici are considered to be the most central family. However,
@@ -71,12 +73,12 @@ it is possible to find indices that rank other families on top. An example is
 *odd subgraph centrality*, which can be assembled with the `netrankr` package.
 
 ```{r cent_new}
-#odd subgraph centrality
-sc_odd <- florentine_m %>% 
-  indirect_relations(type = "walks",FUN = walks_exp_odd) %>% 
+# odd subgraph centrality
+sc_odd <- florentine_m %>%
+  indirect_relations(type = "walks", FUN = walks_exp_odd) %>%
   aggregate_positions(type = "self")
 
-#family with highest score 
+# family with highest score
 V(florentine_m)$name[which.max(sc_odd)]
 ```
 
@@ -115,10 +117,12 @@ If we want to visually assess the dominance relations we can use the function `d
 d <- dominance_graph(P)
 V(d)$name <- V(florentine_m)$name
 set.seed(113)
-plot(d,vertex.label.color="black",
-     vertex.color="white",
-     vertex.frame.color="gray",
-     edge.arrow.size=0.5)
+plot(d,
+  vertex.label.color = "black",
+  vertex.color = "white",
+  vertex.frame.color = "gray",
+  edge.arrow.size = 0.5
+)
 ```
 
 The Castellan family neither dominates nor is dominated by any other family. This means, that we
@@ -137,7 +141,6 @@ we use the function `exact_rank_prob()`.
 
 ```{r probs}
 res <- exact_rank_prob(P)
-
 ```
 There are `r format(res$lin.ext,scientific = F,big.mark = ",")` different possibilities to rank
 the families! (*the value is stored in `res$lin.ext`. *). This means that theoretically, we
@@ -151,9 +154,9 @@ Below, we calculate these probability for all families and return the one's that
 a higher probability than $0.1$.
 
 ```{r likely_most_central}
-top_rank_prob <- res$rank.prob[,15]
+top_rank_prob <- res$rank.prob[, 15]
 names(top_rank_prob) <- V(florentine_m)$name
-round(top_rank_prob[top_rank_prob>0.1],3)
+round(top_rank_prob[top_rank_prob > 0.1], 3)
 ```
 
 The Strozzi family, with $0.13$, has the highest probability to be top ranked, followed
@@ -166,9 +169,9 @@ gives the probability that $u$ is ranked below $v$. Below we calculate this prob
 for the Strozzi and Medici.
 
 ```{r medici_strozzi,eval=TRUE}
-id_strozzi <- which(V(florentine_m)$name=="Strozzi") 
-id_medici  <- which(V(florentine_m)$name=="Medici")
-res$relative.rank[id_strozzi,id_medici]
+id_strozzi <- which(V(florentine_m)$name == "Strozzi")
+id_medici <- which(V(florentine_m)$name == "Medici")
+res$relative.rank[id_strozzi, id_medici]
 ```
 
 The probability that the Strozzi are less central than the Medici is 
@@ -179,9 +182,9 @@ The last result of interest returned by `exact_rank_prob()` are the *expected ra
 expect families to have in a centrality ranking.
 
 ```{r exp_rank,echo=FALSE}
-tab <- data.frame(Name=V(florentine_m)$name,Expected=round(res$expected.rank,2))
-tab <- tab[order(tab[,2],decreasing=TRUE),]
-knitr::kable(tab,row.names = F)
+tab <- data.frame(Name = V(florentine_m)$name, Expected = round(res$expected.rank, 2))
+tab <- tab[order(tab[, 2], decreasing = TRUE), ]
+knitr::kable(tab, row.names = F)
 ```
 
 Although the Strozzi have a higher probability to be the most central family, over all we still
@@ -207,13 +210,12 @@ use the pipeline approach of the `netrankr` package instead of the `closeness()`
 function of `igraph`. The reasons will become evident in the next section.
 
 ```{r closeness_vs_wealth}
+# Closeness
+c_C <- florentine_m %>%
+  indirect_relations(type = "dist_sp") %>%
+  aggregate_positions(type = "invsum")
 
-#Closeness
-c_C <- florentine_m %>% 
-  indirect_relations(type="dist_sp") %>% 
-  aggregate_positions(type="invsum")
-
-cor(c_C,V(florentine_m)$wealth,method="kendall")
+cor(c_C, V(florentine_m)$wealth, method = "kendall")
 ```
 
 The correlation between closeness and wealth (`r round(cor(c_C,V(florentine_m)$wealth,method="kendall"),4)`) is far to low to constitute that "proximity" is related to wealth. However, there 
@@ -221,26 +223,27 @@ exist various other indices, that are based on the shortest path distances in a 
 Refer to the literature for more details on these indices.
 
 ```{r harmclos_wealth}
-#harmonic closeness
-c_HC <- florentine_m %>% 
-  indirect_relations(type="dist_sp",FUN=dist_inv) %>% 
-  aggregate_positions(type="sum")
-#residual closeness (Dangalchev,2006)
-c_RC <- florentine_m %>% 
-  indirect_relations(type="dist_sp",FUN=dist_2pow) %>% 
-  aggregate_positions(type="sum")
+# harmonic closeness
+c_HC <- florentine_m %>%
+  indirect_relations(type = "dist_sp", FUN = dist_inv) %>%
+  aggregate_positions(type = "sum")
+# residual closeness (Dangalchev,2006)
+c_RC <- florentine_m %>%
+  indirect_relations(type = "dist_sp", FUN = dist_2pow) %>%
+  aggregate_positions(type = "sum")
 
-#integration centrality (Valente & Foreman, 1998)
-dist_integration <- function(x){
-  x <- 1 - (x - 1)/max(x)
+# integration centrality (Valente & Foreman, 1998)
+dist_integration <- function(x) {
+  x <- 1 - (x - 1) / max(x)
 }
-c_IN <- florentine_m %>% 
-  indirect_relations(type="dist_sp",FUN=dist_integration) %>% 
-  aggregate_positions(type="sum")
+c_IN <- florentine_m %>%
+  indirect_relations(type = "dist_sp", FUN = dist_integration) %>%
+  aggregate_positions(type = "sum")
 
-c(cor(c_HC,V(florentine_m)$wealth,method="kendall"),
-cor(c_RC,V(florentine_m)$wealth,method="kendall"),
-cor(c_IN,V(florentine_m)$wealth,method="kendall")
+c(
+  cor(c_HC, V(florentine_m)$wealth, method = "kendall"),
+  cor(c_RC, V(florentine_m)$wealth, method = "kendall"),
+  cor(c_IN, V(florentine_m)$wealth, method = "kendall")
 )
 ```
 
@@ -253,31 +256,35 @@ between the index and the attribute under consideration. Again, the mathematical
 details can be found in the respective literature.
 
 ```{r distalpha_wealth,warning=FALSE}
-#generalized closeness (Agneessens et al.,2017) (alpha>0) sum(dist^-alpha)
-alpha <- c(seq(0.01,0.99,0.01),seq(1,10,0.1))
-scores <- 
-sapply(alpha,function(x)
-    florentine_m %>% 
-      indirect_relations(type="dist_sp",FUN=dist_dpow,alpha=x) %>% 
-      aggregate_positions(type="sum")
+# generalized closeness (Agneessens et al.,2017) (alpha>0) sum(dist^-alpha)
+alpha <- c(seq(0.01, 0.99, 0.01), seq(1, 10, 0.1))
+scores <-
+  sapply(alpha, function(x) {
+    florentine_m %>%
+      indirect_relations(type = "dist_sp", FUN = dist_dpow, alpha = x) %>%
+      aggregate_positions(type = "sum")
+  })
+cors_gc <- apply(
+  scores, 2,
+  function(x) cor(x, V(florentine_m)$wealth, method = "kendall")
 )
-cors_gc <- apply(scores,2,
-              function(x)cor(x,V(florentine_m)$wealth,method="kendall"))
 
-res_gc <- c(max(cors_gc),alpha[which.max(cors_gc)])
+res_gc <- c(max(cors_gc), alpha[which.max(cors_gc)])
 
-#decay centrality (Jackson, 2010) (alpha in [0,1]) sum(alpha^dist)
-alpha <- seq(0.01,0.99,0.01)
-scores <- 
-sapply(alpha,function(x)
-  florentine_m %>% 
-    indirect_relations(type="dist_sp",FUN=dist_powd,alpha=x) %>% 
-    aggregate_positions(type="sum")
+# decay centrality (Jackson, 2010) (alpha in [0,1]) sum(alpha^dist)
+alpha <- seq(0.01, 0.99, 0.01)
+scores <-
+  sapply(alpha, function(x) {
+    florentine_m %>%
+      indirect_relations(type = "dist_sp", FUN = dist_powd, alpha = x) %>%
+      aggregate_positions(type = "sum")
+  })
+cors_dc <- apply(
+  scores, 2,
+  function(x) cor(x, V(florentine_m)$wealth, method = "kendall")
 )
-cors_dc <- apply(scores,2,
-              function(x)cor(x,V(florentine_m)$wealth,method="kendall"))
 
-res_dc <- c(max(cors_dc),alpha[which.max(cors_dc)])
+res_dc <- c(max(cors_dc), alpha[which.max(cors_dc)])
 ```
 
 The highest correlation for generalized closeness is `r res_gc[1]` achieved for 
@@ -302,9 +309,9 @@ the pairwise shortest path distances as our *indirect relation* of interest and 
 the positional dominance relations.
 
 ```{r pos_dom_hetero}
-D <- florentine_m %>% 
-  indirect_relations(type="dist_sp") %>% 
-  positional_dominance(benefit=F)
+D <- florentine_m %>%
+  indirect_relations(type = "dist_sp") %>%
+  positional_dominance(benefit = F)
 
 comparable_pairs(D)
 ```
@@ -321,9 +328,9 @@ by another under this premise, it will have a lower score in **any** distance ba
 centrality index.
 
 ```{r pos_dom_homo}
-D <- florentine_m %>% 
-  indirect_relations(type="dist_sp") %>% 
-  positional_dominance(benefit=F,map=T)
+D <- florentine_m %>%
+  indirect_relations(type = "dist_sp") %>%
+  positional_dominance(benefit = F, map = T)
 
 comparable_pairs(D)
 ```
@@ -346,22 +353,23 @@ one.
 d <- dominance_graph(D)
 V(d)$name <- V(florentine_m)$name
 x <- V(florentine_m)$wealth
-x[9] <- x[9]-50
-x[14] <- x[14]-50
+x[9] <- x[9] - 50
+x[14] <- x[14] - 50
 y <- colSums(D)
-el <- get.edgelist(d,names = F)
+el <- get.edgelist(d, names = F)
 E(d)$color <- "gray"
-col <- apply(el,1,function(x)V(florentine_m)$wealth[x[1]]>V(florentine_m)$wealth[x[2]])
-#wrong:41
+col <- apply(el, 1, function(x) V(florentine_m)$wealth[x[1]] > V(florentine_m)$wealth[x[2]])
+# wrong:41
 E(d)$color[col] <- "indianred"
 
-plot(d,layout=cbind(x,y),
-     vertex.label.cex=0.75,
-     vertex.label.color="black",
-     vertex.color="white",
-     vertex.frame.color="gray",
-     edge.arrow.size=0.4
-     )
+plot(d,
+  layout = cbind(x, y),
+  vertex.label.cex = 0.75,
+  vertex.label.color = "black",
+  vertex.color = "white",
+  vertex.frame.color = "gray",
+  edge.arrow.size = 0.4
+)
 ```
 
 In total, we find $41$ such pairs ($39$% of all pairs). This implies that we are
@@ -391,7 +399,7 @@ we first need to determine all `r format(res$lin.ext,scientific = F,big.mark = "
 rankings. For this purpose, we rerun the previous analysis with `only.results=FALSE` to obtain 
 the necessary data structure.
 ```{r dist_probs_lat}
-res <- exact_rank_prob(D,only.results = FALSE)
+res <- exact_rank_prob(D, only.results = FALSE)
 ```
 
 Now, we can use the function `get_rankings()` which returns all rankings as a matrix.
@@ -404,9 +412,11 @@ dim(all_ranks)
 No we can simply loop over all rankings and calculate the correlation between the 
 ranking and the wealth attribute.
 ```{r all_cors}
-dist_cor <- apply(all_ranks,2,
-              function(x)cor(V(florentine_m)$wealth,x,method="kendall"))
-c(max_cor = max(dist_cor),mean_cor = mean(dist_cor))
+dist_cor <- apply(
+  all_ranks, 2,
+  function(x) cor(V(florentine_m)$wealth, x, method = "kendall")
+)
+c(max_cor = max(dist_cor), mean_cor = mean(dist_cor))
 ```
 The highest achievable correlation is `r round(max(dist_cor),4)`.
 
@@ -415,7 +425,7 @@ reasonably explain the wealth attribute.
 
 We can additionally consider the correlation between degree and wealth, calculated below.
 ```{r cor_deg}
-cor(degree(florentine_m),V(florentine_m)$wealth,method="kendall")
+cor(degree(florentine_m), V(florentine_m)$wealth, method = "kendall")
 ```
 
 The correlation is higher than any distance based index can have. Thus, we can 
