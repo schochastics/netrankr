@@ -1,7 +1,7 @@
 
 # netrankr <img src="man/figures/logo.png" align="right"/>
 
-[![R-CMD-check](https://github.com/schochastics/netrankr/workflows/R-CMD-check/badge.svg)](https://github.com/schochastics/netrankr/actions)
+[![R-CMD-check](https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml)
 [![CRAN Status
 Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
 [![CRAN
@@ -20,7 +20,7 @@ exists plenty of ambiguity in the concept of network centrality. To
 date, network centrality is nothing more than applying indices to a
 network:
 
-<img src="man/figures/README-old-1.png" width="80%" style="display: block; margin: auto;" />
+![](man/figures/flow_old.png)
 
 The only degree of freedom is the choice of index. The package comes
 with an Rstudio addin (`index_builder()`), which allows to build or
@@ -34,7 +34,7 @@ succumbing to trial-and-error approaches. Further, it allows for
 alternative assessment methods which can be more general than the
 index-driven approach:
 
-<img src="man/figures/README-new-1.png" width="80%" style="display: block; margin: auto;" />
+![](man/figures/flow_new.png)
 
 The new approach is centered around the concept of *positions*, which
 are defined as the relations and potential attributes of a node in a
@@ -53,13 +53,13 @@ For a more detailed theoretical background, consult the
 To install from CRAN:
 
 ``` r
- install.packages("netrankr")
+install.packages("netrankr")
 ```
 
 To install the developer version from github:
 
 ``` r
-#install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("schochastics/netrankr")
 ```
 
@@ -77,9 +77,11 @@ We work with the following small graph.
 library(igraph)
 library(netrankr)
 
-g <- graph.empty(n = 11,directed = FALSE)
-g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
-                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+g <- graph.empty(n = 11, directed = FALSE)
+g <- add_edges(g, c(
+  1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
+  6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
+))
 ```
 
 <img src="man/figures/README-dbces_neutral-1.png" width="80%" style="display: block; margin: auto;" />
@@ -91,14 +93,15 @@ the centrality indices vignette.
 
 ``` r
 cent_scores <- data.frame(
-   degree = degree(g),
-   betweenness = round(betweenness(g),4),
-   closeness = round(closeness(g),4),
-   eigenvector = round(eigen_centrality(g)$vector,4),
-   subgraph = round(subgraph_centrality(g),4))
+  degree = degree(g),
+  betweenness = round(betweenness(g), 4),
+  closeness = round(closeness(g), 4),
+  eigenvector = round(eigen_centrality(g)$vector, 4),
+  subgraph = round(subgraph_centrality(g), 4)
+)
 
 # What are the most central nodes for each index?
-apply(cent_scores,2,which.max)
+apply(cent_scores, 2, which.max)
 #>      degree betweenness   closeness eigenvector    subgraph 
 #>          11           8           6           7          10
 ```
@@ -146,7 +149,7 @@ rank of each node. The bigger the intervals are, the more freedom exists
 for indices to rank nodes differently.
 
 ``` r
-plot(rank_intervals(P),cent_scores = cent_scores,ties.method="average")
+plot(rank_intervals(P), cent_scores = cent_scores, ties.method = "average")
 ```
 
 <img src="man/figures/README-partial-1.png" width="80%" style="display: block; margin: auto;" />
@@ -235,7 +238,7 @@ rank. For instance, the probability for each node to be the most central
 one is as follows.
 
 ``` r
-round(res$rank.prob[ ,11],2)
+round(res$rank.prob[, 11], 2)
 #>    1    2    3    4    5    6    7    8    9   10   11 
 #> 0.00 0.00 0.00 0.14 0.16 0.11 0.11 0.14 0.09 0.09 0.16
 ```
@@ -246,7 +249,7 @@ than `u`.
 
 ``` r
 # How likely is it, that 6 is more central than 3?
-round(res$relative.rank[3,6],2)
+round(res$relative.rank[3, 6], 2)
 #> [1] 0.75
 ```
 
@@ -254,7 +257,7 @@ round(res$relative.rank[3,6],2)
 They are derived on the basis of `rank.prob`.
 
 ``` r
-round(res$expected.rank,2)
+round(res$expected.rank, 2)
 #>    1    2    3    4    5    6    7    8    9   10   11 
 #> 1.71 3.00 4.29 7.50 8.14 6.86 6.86 7.50 6.00 6.00 8.14
 ```

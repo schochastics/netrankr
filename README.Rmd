@@ -3,7 +3,7 @@ output: github_document
 ---
 
 # netrankr <img src="man/figures/logo.png" align="right"/>
-[![R-CMD-check](https://github.com/schochastics/netrankr/workflows/R-CMD-check/badge.svg)](https://github.com/schochastics/netrankr/actions)
+[![R-CMD-check](https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr) 
 [![Codecov test coverage](https://codecov.io/gh/schochastics/netrankr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schochastics/netrankr?branch=master)
@@ -14,12 +14,12 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  fig.align = 'center',
-  out.width = '80%', 
+  fig.align = "center",
+  out.width = "80%",
   comment = "#>",
   fig.path = "man/figures/README-",
-  echo = TRUE, 
-  warning = FALSE, 
+  echo = TRUE,
+  warning = FALSE,
   message = FALSE
 )
 ```
@@ -32,14 +32,7 @@ on when to use certain indices, there still exists plenty of ambiguity in the co
 of network centrality. To date, network centrality is nothing more than applying indices
 to a network:
 
-```{r old,echo=FALSE}
-DiagrammeR::DiagrammeR('graph LR
-  A[network]==>B{centrality <br> indices}
- style A fill:#fff,stroke:#000, stroke-width:2px
- style B fill:#fff,stroke:#000, stroke-width:2px
- ', height = 200
-)
-```
+![](man/figures/flow_old.png)
 
 The only degree of freedom is the choice of index. The package comes with an Rstudio addin (`index_builder()`),
 which allows to build or choose from more than 20 different indices. Blindly (ab)using
@@ -51,26 +44,7 @@ the posibility to gradually add ideas about centrality, without succumbing to
 trial-and-error approaches. Further, it allows for alternative assessment methods
 which can be more general than the index-driven approach:
 
-```{r new,echo=FALSE}
-DiagrammeR::DiagrammeR('graph LR
-  A[network]==>B{indirect relation}
-  B ==>P[position]
-  P==>C[aggregate position]
-  C==>D[centrality index]
-  P==>E{positional <br> dominance}
-  E==>F[partial centrality]
-  E==>G[probabilistic centrality]
- style A fill:#fff,stroke:#000, stroke-width:2px
- style B fill:#fff,stroke:#000, stroke-width:2px
- style C fill:#fff,stroke:#000, stroke-width:2px
- style D fill:#fff,stroke:#000, stroke-width:2px
- style E fill:#fff,stroke:#000, stroke-width:2px
- style F fill:#fff,stroke:#000, stroke-width:2px
- style G fill:#fff,stroke:#000, stroke-width:2px
- style P fill:#EEC900,stroke:#000, stroke-width:3px
-', height = 300
-)
-```
+![](man/figures/flow_new.png)
 
 The new approach is centered around the concept of *positions*, which are defined as 
 the relations and potential attributes of a node in a network. The aggregation
@@ -87,12 +61,12 @@ ________________________________________________________________________________
 
 To install from CRAN: 
 ```{r install_cran, eval=FALSE}
- install.packages("netrankr")
+install.packages("netrankr")
 ```
 
 To install the developer version from github:
 ```{r install_git, eval=FALSE}
-#install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("schochastics/netrankr")
 ```
 
@@ -109,18 +83,20 @@ We work with the following small graph.
 library(igraph)
 library(netrankr)
 
-g <- graph.empty(n = 11,directed = FALSE)
-g <- add_edges(g,c(1,11,2,4,3,5,3,11,4,8,5,9,5,11,6,7,6,8,
-                    6,10,6,11,7,9,7,10,7,11,8,9,8,10,9,10))
+g <- graph.empty(n = 11, directed = FALSE)
+g <- add_edges(g, c(
+  1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
+  6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
+))
 ```
 
 ```{r dbces_neutral, echo=FALSE}
 library(ggraph)
 V(g)$name <- as.character(1:11)
-ggraph(g,"stress")+
-  geom_edge_link0(edge_colour="grey66")+
-  geom_node_point(shape=21,fill="grey25",size=8)+
-  geom_node_text(aes(label=name),col="white")+
+ggraph(g, "stress") +
+  geom_edge_link0(edge_colour = "grey66") +
+  geom_node_point(shape = 21, fill = "grey25", size = 8) +
+  geom_node_text(aes(label = name), col = "white") +
   theme_graph()
 ```
 
@@ -129,28 +105,29 @@ standard centrality scores with the `igraph` package. Defining centrality indice
 in the `netrankr` package is explained in the centrality indices vignette.
 ```{r cent,warning=FALSE}
 cent_scores <- data.frame(
-   degree = degree(g),
-   betweenness = round(betweenness(g),4),
-   closeness = round(closeness(g),4),
-   eigenvector = round(eigen_centrality(g)$vector,4),
-   subgraph = round(subgraph_centrality(g),4))
+  degree = degree(g),
+  betweenness = round(betweenness(g), 4),
+  closeness = round(closeness(g), 4),
+  eigenvector = round(eigen_centrality(g)$vector, 4),
+  subgraph = round(subgraph_centrality(g), 4)
+)
 
 # What are the most central nodes for each index?
-apply(cent_scores,2,which.max)
+apply(cent_scores, 2, which.max)
 ```
 
 ```{r dbces_color, echo=FALSE}
 V(g)$col <- "none"
-V(g)$col[apply(cent_scores,2,which.max)] <- names(apply(cent_scores,2,which.max))
+V(g)$col[apply(cent_scores, 2, which.max)] <- names(apply(cent_scores, 2, which.max))
 
 V(g)$lab <- ""
-V(g)$lab[apply(cent_scores,2,which.max)] <- stringr::str_to_upper(stringr::str_extract(names(apply(cent_scores,2,which.max)),"^[a-z]"))
-ggraph(g,"stress")+
-  geom_edge_link0(edge_colour="grey66")+
-  geom_node_point(aes(fill=col),shape=21,size=8)+
-  geom_node_text(aes(label=lab),col="white")+
-  scale_fill_manual(values=c("#1874CD", "#CD2626", "#EEB422", "#9A32CD", "#4D4D4D", "#EE30A7"))+
-  theme_graph()+
+V(g)$lab[apply(cent_scores, 2, which.max)] <- stringr::str_to_upper(stringr::str_extract(names(apply(cent_scores, 2, which.max)), "^[a-z]"))
+ggraph(g, "stress") +
+  geom_edge_link0(edge_colour = "grey66") +
+  geom_node_point(aes(fill = col), shape = 21, size = 8) +
+  geom_node_text(aes(label = lab), col = "white") +
+  scale_fill_manual(values = c("#1874CD", "#CD2626", "#EEB422", "#9A32CD", "#4D4D4D", "#EE30A7")) +
+  theme_graph() +
   theme(legend.position = "none")
 ```
 
@@ -174,7 +151,7 @@ Each of these ranking can thus potentially be the outcome of a centrality index.
 Using rank intervals, we can examine the minimal and maximal possible rank of each node.
 The bigger the intervals are, the more freedom exists for indices to rank nodes differently.
 ```{r partial}
-plot(rank_intervals(P),cent_scores = cent_scores,ties.method="average")
+plot(rank_intervals(P), cent_scores = cent_scores, ties.method = "average")
 ```
 
 The potential ranks of nodes are not uniformly distributed in the intervals. To get
@@ -189,20 +166,20 @@ For the graph `g` we can therefore come up with
 `rank.prob` contains the probabilities for each node to occupy a certain rank. 
 For instance, the probability for each node to be the most central one is as follows.
 ```{r most_central}
-round(res$rank.prob[ ,11],2)
+round(res$rank.prob[, 11], 2)
 ```
 
 `relative.rank` contains the relative rank probabilities. An entry `relative.rank[u,v]`
 indicates how likely it is that `v` is more central than `u`.
 ```{r rel_rank}
 # How likely is it, that 6 is more central than 3?
-round(res$relative.rank[3,6],2)
+round(res$relative.rank[3, 6], 2)
 ```
 
 `expected.ranks` contains the expected centrality ranks for all nodes. They are 
 derived on the basis of `rank.prob`.
 ```{r exp_rank}
-round(res$expected.rank,2)
+round(res$expected.rank, 2)
 ```
 The higher the value, the more central a node is expected to be.
 
