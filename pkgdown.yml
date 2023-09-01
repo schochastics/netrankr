@@ -1,0 +1,18 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  benchmarks: benchmarks.html
+  centrality_indices: centrality_indices.html
+  indirect_relations: indirect_relations.html
+  neighborhood_inclusion: neighborhood_inclusion.html
+  partial_centrality: partial_centrality.html
+  positional_dominance: positional_dominance.html
+  probabilistic_cent: probabilistic_cent.html
+  threshold_graph: threshold_graph.html
+  use_case: use_case.html
+last_built: 2023-09-01T11:29Z
+urls:
+  reference: https://schochastics.github.io/netrankr/reference
+  article: https://schochastics.github.io/netrankr/articles
+
