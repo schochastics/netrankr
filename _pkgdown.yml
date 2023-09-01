@@ -11,7 +11,8 @@ template:
     code_font: {google: "JetBrains Mono"}
 
 navbar:
-  bg: primary
+  bg: none
+  type: light
   left:
     - text: Tutorials
       menu: 
