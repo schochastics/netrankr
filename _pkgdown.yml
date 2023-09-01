@@ -11,9 +11,8 @@ template:
     code_font: {google: "JetBrains Mono"}
 
 navbar:
+  bg: primary
   left:
-    - icon: fa-home
-      href: index.html
     - text: Tutorials
       menu: 
       -  text: Neighborhood-Inclusion
