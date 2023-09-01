@@ -10,3 +10,4 @@ logo.xcf
 vignettes/*.html
 CRAN-RELEASE
 pkgdown/
+docs

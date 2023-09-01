@@ -1,0 +1,55 @@
+url: https://schochastics.github.io/netrankr/
+template:
+  bootstrap: 5
+  bslib:
+  bg: "#333333"
+  fg: "#51AA75"
+  primary: "#83c49e"
+  text-muted: "#FFFFFF"
+  base_font: {google: "Roboto"}
+  heading_font: {google: "Roboto Slab"}
+  code_font: {google: "JetBrains Mono"}
+
+navbar:
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: Tutorials
+      menu: 
+      -  text: Neighborhood-Inclusion
+         href: articles/neighborhood_inclusion.html
+      -  text: Uniquely Ranked Graphs
+         href: articles/threshold_graph.html
+      -  text: Positional Dominance
+         href: articles/positional_dominance.html
+      -  text: Indirect Relations in Networks
+         href: articles/indirect_relations.html
+      -  text: Centrality Indices
+         href: articles/centrality_indices.html
+      -  text: Partial Centrality
+         href: articles/partial_centrality.html
+      -  text: Probabilistic Centrality
+         href: articles/probabilistic_cent.html
+      -  text: '---'
+      -  text: Blog Post I
+         href: http://blog.schochastics.net/post/network-centrality-in-r-introduction/
+      -  text: Blog Post II
+         href: http://blog.schochastics.net/post/network-centrality-in-r-neighborhood-inclusion/
+      -  text: Blog Post III
+         href: http://blog.schochastics.net/post/network-centrality-in-r-new-ways-of-measuring-centrality/
+    - text: "Use Case"
+      href: articles/use_case.html
+    - text: "Benchmarks"
+      href: articles/benchmarks.html
+    - text: "Periodic Table"
+      href: http://schochastics.net/sna/periodic.html
+  right:
+      - icon: fa-newspaper-o
+        text: "News"
+        href: news/index.html
+      - icon: fa-file-code-o 
+        text: "Functions"
+        href: reference/index.html
+      - icon: fa-github fa-lg
+        text: "Github"
+        href: https://github.com/schochastics/netrankr
