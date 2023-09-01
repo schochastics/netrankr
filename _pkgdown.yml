@@ -2,9 +2,9 @@ url: https://schochastics.github.io/netrankr/
 template:
   bootstrap: 5
   bslib:
-    bg: "#333333"
-    fg: "#51AA75"
-    primary: "#83c49e"
+    bg: "#F9F7F7"
+    fg: "#112D4E"
+    primary: "#3F72AF"
     text-muted: "#FFFFFF"
     base_font: {google: "Roboto"}
     heading_font: {google: "Roboto Slab"}
