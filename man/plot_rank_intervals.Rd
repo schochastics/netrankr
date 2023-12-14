@@ -27,10 +27,10 @@ plot_rank_intervals(P)
 
 # adding index based rankings
 cent_scores <- data.frame(
-  degree = degree(dbces11),
-  betweenness = round(betweenness(dbces11), 4),
-  closeness = round(closeness(dbces11), 4),
-  eigenvector = round(eigen_centrality(dbces11)$vector, 4)
+    degree = degree(dbces11),
+    betweenness = round(betweenness(dbces11), 4),
+    closeness = round(closeness(dbces11), 4),
+    eigenvector = round(eigen_centrality(dbces11)$vector, 4)
 )
 \dontrun{
 plot_rank_intervals(P, cent.df = cent_scores)
