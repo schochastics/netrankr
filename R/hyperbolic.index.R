@@ -18,31 +18,31 @@
 #' hyperbolic_index(dbces11, type = "even")
 #' @export
 hyperbolic_index <- function(g, type = "odd") {
-  n <- igraph::vcount(g)
-  if (type == "even") {
-    ENW <- rep(0, n)
-    for (v in 1:n) {
-      Nv <- igraph::neighborhood(g, 1, v)[[1]]
-      g1 <- igraph::induced.subgraph(g, Nv)
-      C <- igraph::get.adjacency(g1, type = "both")
-      eig.decomp <- eigen(C, symmetric = TRUE)
-      V <- (eig.decomp$vectors)^2
-      lambda <- eig.decomp$values
-      ENW[v] <- sum(V %*% cosh(lambda)) * igraph::graph.density(g1) # cosh(x)
+    n <- igraph::vcount(g)
+    if (type == "even") {
+        ENW <- rep(0, n)
+        for (v in 1:n) {
+            Nv <- igraph::neighborhood(g, 1, v)[[1]]
+            g1 <- igraph::induced.subgraph(g, Nv)
+            C <- igraph::get.adjacency(g1, type = "both")
+            eig.decomp <- eigen(C, symmetric = TRUE)
+            V <- (eig.decomp$vectors)^2
+            lambda <- eig.decomp$values
+            ENW[v] <- sum(V %*% cosh(lambda)) * igraph::graph.density(g1) # cosh(x)
+        }
+    } else if (type == "odd") {
+        ENW <- rep(0, n)
+        for (v in 1:n) {
+            Nv <- igraph::neighborhood(g, 1, v)[[1]]
+            g1 <- igraph::induced.subgraph(g, Nv)
+            C <- igraph::get.adjacency(g1, type = "both")
+            eig.decomp <- eigen(C, symmetric = TRUE)
+            V <- (eig.decomp$vectors)^2
+            lambda <- eig.decomp$values
+            ENW[v] <- sum(V %*% sinh(lambda)) * igraph::graph.density(g1) # sinh(x)
+        }
+    } else {
+        stop("type must be even or odd")
     }
-  } else if (type == "odd") {
-    ENW <- rep(0, n)
-    for (v in 1:n) {
-      Nv <- igraph::neighborhood(g, 1, v)[[1]]
-      g1 <- igraph::induced.subgraph(g, Nv)
-      C <- igraph::get.adjacency(g1, type = "both")
-      eig.decomp <- eigen(C, symmetric = TRUE)
-      V <- (eig.decomp$vectors)^2
-      lambda <- eig.decomp$values
-      ENW[v] <- sum(V %*% sinh(lambda)) * igraph::graph.density(g1) # sinh(x)
-    }
-  } else {
-    stop("type must be even or odd")
-  }
-  return(ENW)
+    return(ENW)
 }

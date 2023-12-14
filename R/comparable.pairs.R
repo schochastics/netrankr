@@ -16,13 +16,13 @@
 #' comparable_pairs(P)
 #' @export
 comparable_pairs <- function(P) {
-  if (!inherits(P, "Matrix") & !is.matrix(P)) {
-    stop("P must be a dense or spare matrix")
-  }
-  if (!is.binary(P)) {
-    stop("P is not a binary matrix")
-  }
-  igraph::graph.density(igraph::graph_from_adjacency_matrix(P, "max"))
+    if (!inherits(P, "Matrix") && !is.matrix(P)) {
+        stop("P must be a dense or spare matrix")
+    }
+    if (!is.binary(P)) {
+        stop("P is not a binary matrix")
+    }
+    igraph::graph.density(igraph::graph_from_adjacency_matrix(P, "max"))
 }
 
 #' @title Incomparable pairs in a partial order
@@ -43,11 +43,11 @@ comparable_pairs <- function(P) {
 #' comparable_pairs(P)
 #' @export
 incomparable_pairs <- function(P) {
-  if (!inherits(P, "Matrix") & !is.matrix(P)) {
-    stop("P must be a dense or spare matrix")
-  }
-  if (!is.binary(P)) {
-    stop("P is not a binary matrix")
-  }
-  igraph::graph.density(igraph::graph.complementer(igraph::graph_from_adjacency_matrix(P, "max")))
+    if (!inherits(P, "Matrix") & !is.matrix(P)) {
+        stop("P must be a dense or spare matrix")
+    }
+    if (!is.binary(P)) {
+        stop("P is not a binary matrix")
+    }
+    igraph::graph.density(igraph::graph.complementer(igraph::graph_from_adjacency_matrix(P, "max")))
 }

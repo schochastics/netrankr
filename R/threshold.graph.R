@@ -37,36 +37,36 @@
 #' cor(degree(g), closeness(g), method = "kendall")
 #' @export
 threshold_graph <- function(n, p, bseq) {
-  if (missing(n) & missing(bseq)) {
-    stop("Either specify both n and p, or bseq ")
-  }
-  if (missing(p) & missing(bseq)) {
-    stop("Either specify both n and p, or bseq ")
-  }
-
-  if (!missing(n) & !missing(p)) {
-    vschedule <- rep(0, n)
-    pvals <- stats::runif(n)
-
-    vschedule[pvals <= p] <- 1
-    vschedule[n] <- 1
-    vschedule[1] <- 0
-  } else if (!missing(bseq)) {
-    n <- length(bseq)
-    if (bseq[n] == 0) {
-      warning("bseq[n]=0 produces unconnected graphs. using bseq[n]=1 instead")
-      bseq[n] <- 1
+    if (missing(n) && missing(bseq)) {
+        stop("Either specify both n and p, or bseq ")
     }
-    vschedule <- bseq
-    vschedule[1] <- 0
-  }
-  dom_vertices <- which(vschedule == 1)
-  if (length(dom_vertices) != 1) {
-    edgelist <- do.call(rbind, sapply(dom_vertices, function(v) cbind(rep(v, (v - 1)), seq(1, (v - 1)))))
-  } else {
-    edgelist <- cbind(rep(n, (n - 1)), seq(1, (n - 1)))
-  }
-  g <- igraph::graph_from_edgelist(edgelist, directed = FALSE)
-  g$sequence <- vschedule
-  return(g)
+    if (missing(p) && missing(bseq)) {
+        stop("Either specify both n and p, or bseq ")
+    }
+
+    if (!missing(n) && !missing(p)) {
+        vschedule <- rep(0, n)
+        pvals <- stats::runif(n)
+
+        vschedule[pvals <= p] <- 1
+        vschedule[n] <- 1
+        vschedule[1] <- 0
+    } else if (!missing(bseq)) {
+        n <- length(bseq)
+        if (bseq[n] == 0) {
+            warning("bseq[n]=0 produces unconnected graphs. using bseq[n]=1 instead")
+            bseq[n] <- 1
+        }
+        vschedule <- bseq
+        vschedule[1] <- 0
+    }
+    dom_vertices <- which(vschedule == 1)
+    if (length(dom_vertices) != 1) {
+        edgelist <- do.call(rbind, sapply(dom_vertices, function(v) cbind(rep(v, (v - 1)), seq(1, (v - 1)))))
+    } else {
+        edgelist <- cbind(rep(n, (n - 1)), seq(1, (n - 1)))
+    }
+    g <- igraph::graph_from_edgelist(edgelist, directed = FALSE)
+    g$sequence <- vschedule
+    return(g)
 }

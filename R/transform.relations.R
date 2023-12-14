@@ -49,29 +49,29 @@ NULL
 #' @rdname transform_relations
 #' @export
 dist_2pow <- function(x) {
-  2^(-x)
+    2^(-x)
 }
 
 #' @rdname transform_relations
 #' @export
 dist_inv <- function(x) {
-  y <- x^(-1)
-  y[is.infinite(y)] <- 0
-  return(y)
+    y <- x^(-1)
+    y[is.infinite(y)] <- 0
+    return(y)
 }
 
 #' @rdname transform_relations
 #' @export
 dist_dpow <- function(x, alpha = 1) {
-  x <- x^(-alpha)
-  diag(x) <- 0
-  return(x)
+    x <- x^(-alpha)
+    diag(x) <- 0
+    return(x)
 }
 
 #' @rdname transform_relations
 #' @export
 dist_powd <- function(x, alpha = 0.5) {
-  alpha^(x)
+    alpha^(x)
 }
 
 # dist_triang <- function(x) {
@@ -92,42 +92,42 @@ dist_powd <- function(x, alpha = 0.5) {
 #' @rdname transform_relations
 #' @export
 walks_limit_prop <- function(x) {
-  c(1, rep(0, length(x) - 1))
+    c(1, rep(0, length(x) - 1))
 }
 
 #' @rdname transform_relations
 #' @export
 walks_exp <- function(x, alpha = 1) {
-  exp(alpha * x)
+    exp(alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
 walks_exp_even <- function(x, alpha = 1) {
-  cosh(alpha * x)
+    cosh(alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
 walks_exp_odd <- function(x, alpha = 1) {
-  sinh(alpha * x)
+    sinh(alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
 walks_attenuated <- function(x, alpha = 1 / max(x) * 0.99) {
-  if (alpha > 1 / max(x)) {
-    warning(paste0("alpha should be smaller than ", 1 / max(x), ". Results are most likely wrong otherwise."))
-  }
-  1 / (1 - alpha * x)
+    if (alpha > 1 / max(x)) {
+        warning(paste0("alpha should be smaller than ", 1 / max(x), ". Results are most likely wrong otherwise."))
+    }
+    1 / (1 - alpha * x)
 }
 
 #' @rdname transform_relations
 #' @export
 walks_uptok <- function(x, alpha = 1, k = 3) {
-  y <- 0
-  for (i in 1:k) {
-    y <- y + alpha^i * x^i
-  }
-  return(y)
+    y <- 0
+    for (i in 1:k) {
+        y <- y + alpha^i * x^i
+    }
+    return(y)
 }

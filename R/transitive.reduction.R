@@ -16,6 +16,6 @@
 #' sum(R)
 #' @export
 transitive_reduction <- function(P) {
-  B <- transreduct(as.matrix(P))
-  return(B)
+    B <- transreduct(as.matrix(P))
+    return(B)
 }

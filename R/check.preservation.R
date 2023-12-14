@@ -20,8 +20,8 @@
 #' is_preserved(P, closeness(dbces11))
 #' @export
 is_preserved <- function(P, scores) {
-  n <- nrow(P)
-  preserved <- preserve(as.matrix(P), scores, n) == 0
+    n <- nrow(P)
+    preserved <- preserve(as.matrix(P), scores, n) == 0
 
-  return(preserved)
+    return(preserved)
 }
