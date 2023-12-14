@@ -114,7 +114,7 @@ approx_rank_expected <- function(P, method = "lpom") {
         }
     }
     expected.full <- unname(r.approx[MSE])
-    for (val in sort(unique(expected.full), decreasing = T)) {
+    for (val in sort(unique(expected.full), decreasing = TRUE)) {
         idx <- which(expected.full == val)
         expected.full[idx] <- expected.full[idx] +
             sum(duplicated(MSE[expected.full <= val]))
