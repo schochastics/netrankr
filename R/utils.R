@@ -183,6 +183,7 @@ print.netrankr_interval <- function(x, ...) {
 #' @author David Schoch
 #' @export
 plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties.method = "min", ...) {
+    x$mid_point <- (x$max_rank - x$min_rank) / 2
     ord <- order(x$mid_point)
     if (!is.null(cent_scores)) {
         m <- ncol(cent_scores)
