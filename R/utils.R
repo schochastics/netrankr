@@ -166,7 +166,7 @@ print.netrankr_interval <- function(x, ...) {
     #   stop("x is not a netrankr_interval object")
     # }
     prows <- min(c(nrow(x), getOption("max.print")))
-    int_string <- paste0("node:", x$node, " rank interval: [", x$min_rank, ", ", x$max_rank, "] mid point: ", x$mid_point, "\n", sep = "")
+    int_string <- paste0("node:", x$node, " rank interval: [", x$min_rank, ", ", x$max_rank, "]", "\n", sep = "")
     int_string <- int_string[1:prows]
     cat("", int_string)
 }
