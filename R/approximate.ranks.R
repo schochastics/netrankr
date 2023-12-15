@@ -37,93 +37,93 @@
 #' approx_rank_expected(P, method = "glpom")
 #' @export
 approx_rank_expected <- function(P, method = "lpom") {
-  if (!inherits(P, "Matrix") & !is.matrix(P)) {
-    stop("P must be a dense or spare matrix")
-  }
-  if (!is.binary(P)) {
-    stop("P is not a binary matrix")
-  }
-
-  # Equivalence classes ------------------------------------------------
-  MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = TRUE)
-  if (length(MSE) >= 1) {
-    MSE <- t(apply(MSE, 1, sort))
-    MSE <- MSE[!duplicated(MSE), ]
-    g <- igraph::graph.empty()
-    g <- igraph::add.vertices(g, nrow(P))
-    g <- igraph::add.edges(g, c(t(MSE)))
-    g <- igraph::as.undirected(g)
-    MSE <- igraph::clusters(g)$membership
-    equi <- which(duplicated(MSE))
-    P <- P[-equi, -equi]
-  } else {
-    MSE <- seq_len(nrow(P))
-  }
-  if (length(unique(MSE)) == 1) {
-    stop("all elements are structurally equivalent and have the same rank")
-  }
-
-  # number of Elements
-  n <- length(names)
-
-  g <- igraph::graph_from_adjacency_matrix(P, "directed")
-  n <- nrow(P)
-  if (method == "lpom") {
-    sx <- igraph::degree(g, mode = "in")
-    ix <- (n - 1) - igraph::degree(g, mode = "all")
-    r.approx <- (sx + 1) * (n + 1) / (n + 1 - ix)
-    r.approx <- unname(r.approx)
-  } else if (method == "glpom") {
-    r.approx <- approx_glpom(P)
-  } else if (method == "loof1") {
-    P <- P + diag(1, n)
-    s <- igraph::degree(g, mode = "in")
-    l <- igraph::degree(g, mode = "out")
-    r.approx <- s + 1
-    for (x in 1:n) {
-      Ix <- which(P[x, ] == 0 & P[, x] == 0)
-      for (y in Ix) {
-        approx.rank <- ((s[x] + 1) * (l[y] + 1))
-        approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
-        r.approx[x] <- r.approx[x] + approx.rank / approx.num.ranks
-      }
+    if (!inherits(P, "Matrix") && !is.matrix(P)) {
+        stop("P must be a dense or spare matrix")
     }
-  } else if (method == "loof2") {
-    P <- P + diag(1, n)
-    s <- igraph::degree(g, mode = "in")
-    l <- igraph::degree(g, mode = "out")
-    s.approx <- s
-    l.approx <- l
-    for (x in 1:n) {
-      Ix <- which(P[x, ] == 0 & P[, x] == 0)
-      for (y in Ix) {
-        s.approx[x] <- s.approx[x] + .sl.approx(s[x], s[y], l[x], l[y])
-        l.approx[x] <- l.approx[x] + .sl.approx(s[y], s[x], l[y], l[x])
-      }
+    if (!is.binary(P)) {
+        stop("P is not a binary matrix")
     }
-    r.approx <- s + 1
-    s <- s.approx
-    l <- l.approx
-    for (x in 1:n) {
-      Ix <- which(P[x, ] == 0 & P[, x] == 0)
-      for (y in Ix) {
-        approx.rank <- ((s[x] + 1) * (l[y] + 1))
-        approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
-        r.approx[x] <- r.approx[x] + approx.rank / approx.num.ranks
-      }
+
+    # Equivalence classes ------------------------------------------------
+    MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = TRUE)
+    if (length(MSE) >= 1) {
+        MSE <- t(apply(MSE, 1, sort))
+        MSE <- MSE[!duplicated(MSE), ]
+        g <- igraph::graph.empty()
+        g <- igraph::add.vertices(g, nrow(P))
+        g <- igraph::add.edges(g, c(t(MSE)))
+        g <- igraph::as.undirected(g)
+        MSE <- igraph::clusters(g)$membership
+        equi <- which(duplicated(MSE))
+        P <- P[-equi, -equi]
+    } else {
+        MSE <- seq_len(nrow(P))
     }
-  }
-  expected.full <- unname(r.approx[MSE])
-  for (val in sort(unique(expected.full), decreasing = T)) {
-    idx <- which(expected.full == val)
-    expected.full[idx] <- expected.full[idx] +
-      sum(duplicated(MSE[expected.full <= val]))
-  }
-  return(expected.full)
+    if (length(unique(MSE)) == 1) {
+        stop("all elements are structurally equivalent and have the same rank")
+    }
+
+    # number of Elements
+    n <- length(names)
+
+    g <- igraph::graph_from_adjacency_matrix(P, "directed")
+    n <- nrow(P)
+    if (method == "lpom") {
+        sx <- igraph::degree(g, mode = "in")
+        ix <- (n - 1) - igraph::degree(g, mode = "all")
+        r.approx <- (sx + 1) * (n + 1) / (n + 1 - ix)
+        r.approx <- unname(r.approx)
+    } else if (method == "glpom") {
+        r.approx <- approx_glpom(P)
+    } else if (method == "loof1") {
+        P <- P + diag(1, n)
+        s <- igraph::degree(g, mode = "in")
+        l <- igraph::degree(g, mode = "out")
+        r.approx <- s + 1
+        for (x in 1:n) {
+            Ix <- which(P[x, ] == 0 & P[, x] == 0)
+            for (y in Ix) {
+                approx.rank <- ((s[x] + 1) * (l[y] + 1))
+                approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+                r.approx[x] <- r.approx[x] + approx.rank / approx.num.ranks
+            }
+        }
+    } else if (method == "loof2") {
+        P <- P + diag(1, n)
+        s <- igraph::degree(g, mode = "in")
+        l <- igraph::degree(g, mode = "out")
+        s.approx <- s
+        l.approx <- l
+        for (x in 1:n) {
+            Ix <- which(P[x, ] == 0 & P[, x] == 0)
+            for (y in Ix) {
+                s.approx[x] <- s.approx[x] + .sl.approx(s[x], s[y], l[x], l[y])
+                l.approx[x] <- l.approx[x] + .sl.approx(s[y], s[x], l[y], l[x])
+            }
+        }
+        r.approx <- s + 1
+        s <- s.approx
+        l <- l.approx
+        for (x in 1:n) {
+            Ix <- which(P[x, ] == 0 & P[, x] == 0)
+            for (y in Ix) {
+                approx.rank <- ((s[x] + 1) * (l[y] + 1))
+                approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
+                r.approx[x] <- r.approx[x] + approx.rank / approx.num.ranks
+            }
+        }
+    }
+    expected.full <- unname(r.approx[MSE])
+    for (val in sort(unique(expected.full), decreasing = TRUE)) {
+        idx <- which(expected.full == val)
+        expected.full[idx] <- expected.full[idx] +
+            sum(duplicated(MSE[expected.full <= val]))
+    }
+    return(expected.full)
 }
 
 .sl.approx <- function(sx, sy, lx, ly) {
-  ((sx + 1) * (ly + 1)) / ((sx + 1) * (ly + 1) + (sy + 1) * (lx + 1))
+    ((sx + 1) * (ly + 1)) / ((sx + 1) * (ly + 1) + (sy + 1) * (lx + 1))
 }
 #############################
 #' @title Approximation of relative rank probabilities
@@ -155,47 +155,47 @@ approx_rank_expected <- function(P, method = "lpom") {
 #' approx_rank_relative(P, iterative = TRUE)
 #' @export
 approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
-  if (!inherits(P, "Matrix") & !is.matrix(P)) {
-    stop("P must be a dense or spare matrix")
-  }
-  if (!is.binary(P)) {
-    stop("P is not a binary matrix")
-  }
-
-  # Equivalence classes ------------------------------------------------
-  MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = T)
-
-  if (length(MSE) >= 1) {
-    MSE <- t(apply(MSE, 1, sort))
-    MSE <- MSE[!duplicated(MSE), ]
-    g <- igraph::graph.empty()
-    g <- igraph::add.vertices(g, nrow(P))
-    g <- igraph::add.edges(g, c(t(MSE)))
-    g <- igraph::as.undirected(g)
-    MSE <- igraph::clusters(g)$membership
-    equi <- which(duplicated(MSE))
-    P <- P[-equi, -equi]
-  } else {
-    MSE <- 1:nrow(P)
-  }
-
-  if (length(unique(MSE)) == 1) {
-    stop("all elements are structurally equivalent and have the same rank")
-  }
-
-  relative.rank <- approx_relative(colSums(P), rowSums(P), P, iterative, num.iter)
-  mrp.full <- matrix(0, length(MSE), length(MSE))
-  for (i in sort(unique(MSE))) {
-    idx <- which(MSE == i)
-    if (length(idx) > 1) {
-      group.head <- i
-      mrp.full[idx, ] <- do.call(rbind, replicate(length(idx), relative.rank[group.head, MSE], simplify = FALSE))
-    } else if (length(idx) == 1) {
-      group.head <- idx
-      mrp.full[group.head, ] <- relative.rank[i, MSE]
+    if (!inherits(P, "Matrix") && !is.matrix(P)) {
+        stop("P must be a dense or spare matrix")
     }
-  }
+    if (!is.binary(P)) {
+        stop("P is not a binary matrix")
+    }
 
-  diag(mrp.full) <- 0
-  return(mrp.full)
+    # Equivalence classes ------------------------------------------------
+    MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = T)
+
+    if (length(MSE) >= 1) {
+        MSE <- t(apply(MSE, 1, sort))
+        MSE <- MSE[!duplicated(MSE), ]
+        g <- igraph::graph.empty()
+        g <- igraph::add.vertices(g, nrow(P))
+        g <- igraph::add.edges(g, c(t(MSE)))
+        g <- igraph::as.undirected(g)
+        MSE <- igraph::clusters(g)$membership
+        equi <- which(duplicated(MSE))
+        P <- P[-equi, -equi]
+    } else {
+        MSE <- seq_len(nrow(P))
+    }
+
+    if (length(unique(MSE)) == 1) {
+        stop("all elements are structurally equivalent and have the same rank")
+    }
+
+    relative.rank <- approx_relative(colSums(P), rowSums(P), P, iterative, num.iter)
+    mrp.full <- matrix(0, length(MSE), length(MSE))
+    for (i in sort(unique(MSE))) {
+        idx <- which(MSE == i)
+        if (length(idx) > 1) {
+            group.head <- i
+            mrp.full[idx, ] <- do.call(rbind, replicate(length(idx), relative.rank[group.head, MSE], simplify = FALSE))
+        } else if (length(idx) == 1) {
+            group.head <- idx
+            mrp.full[group.head, ] <- relative.rank[i, MSE]
+        }
+    }
+
+    diag(mrp.full) <- 0
+    return(mrp.full)
 }

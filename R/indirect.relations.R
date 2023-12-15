@@ -130,287 +130,287 @@ indirect_relations <- function(g,
                                netflowmode = "",
                                rspxparam = NULL,
                                FUN = identity, ...) {
-  if (!igraph::is_igraph(g)) {
-    stop("g must be an igraph object")
-  }
+    if (!igraph::is_igraph(g)) {
+        stop("g must be an igraph object")
+    }
 
-  if (igraph::is_directed(g)) {
-    stop("g must be an undirected graph")
-  }
+    if (igraph::is_directed(g)) {
+        stop("g must be an undirected graph")
+    }
 
-  if (type == "dependencies") {
-    warning('type="dependencies" is deprecated. Using "depend_sp" instead.\n')
-    type <- "depend_sp"
-  }
-  if (type == "geodesic") {
-    warning('type="geodesic" is deprecated. Using "dist_sp" instead.\n')
-    type <- "dist_sp"
-  }
-  if (type == "resistance") {
-    warning('type="resistance" is deprecated. Using "dist_resist" instead.\n')
-    type <- "dist_resist"
-  }
-  if (type == "identity") {
-    warning('type="identity" is deprecated. Using "adjacency" instead.\n')
-    type <- "adjacency"
-  }
-  if (type == "dist_sp") {
-    rel <- igraph::distances(g, mode = "all")
-    rel <- FUN(rel, ...)
-  } else if (type == "weights") {
-    if (is.null(igraph::get.edge.attribute(g, "weight"))) {
-      warning('no weight attribute present. using "adjacency" instead.\n')
-      rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
-      rel <- FUN(rel, ...)
-      diag(rel) <- 0
+    if (type == "dependencies") {
+        warning('type="dependencies" is deprecated. Using "depend_sp" instead.\n')
+        type <- "depend_sp"
+    }
+    if (type == "geodesic") {
+        warning('type="geodesic" is deprecated. Using "dist_sp" instead.\n')
+        type <- "dist_sp"
+    }
+    if (type == "resistance") {
+        warning('type="resistance" is deprecated. Using "dist_resist" instead.\n')
+        type <- "dist_resist"
+    }
+    if (type == "identity") {
+        warning('type="identity" is deprecated. Using "adjacency" instead.\n')
+        type <- "adjacency"
+    }
+    if (type == "dist_sp") {
+        rel <- igraph::distances(g, mode = "all")
+        rel <- FUN(rel, ...)
+    } else if (type == "weights") {
+        if (is.null(igraph::get.edge.attribute(g, "weight"))) {
+            warning('no weight attribute present. using "adjacency" instead.\n')
+            rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
+            rel <- FUN(rel, ...)
+            diag(rel) <- 0
+        } else {
+            rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = "weight")
+            rel <- FUN(rel, ...)
+            diag(rel) <- 0
+        }
+    } else if (type == "adjacency") {
+        rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
+        rel <- FUN(rel, ...)
+        diag(rel) <- 0
+    } else if (type == "depend_sp") {
+        adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
+        rel <- dependency(adj)
+    } else if (type == "walks") {
+        eigen.decomp <- eigen(igraph::get.adjacency(g, type = "both"))
+        lambda <- eigen.decomp$values
+        X <- eigen.decomp$vectors
+        rel <- X %*% diag(FUN(lambda, ...)) %*% t(X)
+    } else if (type == "dist_resist") {
+        L <- igraph::graph.laplacian(g, sparse = FALSE)
+        n <- igraph::vcount(g)
+        A <- L + matrix(1 / n, n, n)
+        C <- solve(A)
+        rel <- resistanceDistance(C, n)
+        rel <- FUN(rel, ...)
+    } else if (type == "dist_lf") {
+        if (is.null(lfparam)) {
+            stop('argument "lfparam" is missing for "dist_lf", with no default')
+        }
+        rel <- log_forest_fct(g, lfparam)
+        rel <- FUN(rel, ...)
+    } else if (type == "dist_walk") {
+        if (is.null(dwparam)) {
+            stop('argument "dwparam" is missing for "dist_walk", with no default')
+        }
+        rel <- dist_walk_fct(g, dwparam)
+        rel <- FUN(rel, ...)
+    } else if (type == "depend_netflow") {
+        if (netflowmode == "" || !netflowmode %in% c("raw", "frac", "norm")) {
+            stop('netflowmode must be one of"raw","frac","norm"\n')
+        }
+        # if (netflowmode == "norm") {
+        #   warning('"norm" not supported yet. Using "frac" instead.\n')
+        #   netflowmode <- "frac"
+        # }
+        rel <- depend_netflow_fct(g, netflowmode)
+        rel <- FUN(rel, ...)
+    } else if (type == "depend_exp") {
+        rel <- depend_exp_fct(g)
+        rel <- FUN(rel, ...)
+    } else if (type == "depend_rsps") {
+        if (is.null(rspxparam)) {
+            stop('argument "rspxparam" is missing for "depend_rsps", with no default')
+        }
+        rel <- depend_rsps_fct(g, rspxparam)
+        rel <- FUN(rel, ...)
+    } else if (type == "depend_rspn") {
+        if (is.null(rspxparam)) {
+            stop('argument "rspxparam" is missing for "depend_rspn", with no default')
+        }
+        rel <- depend_rspn_fct(g, rspxparam)
+        rel <- FUN(rel, ...)
+    } else if (type == "depend_curflow") {
+        rel <- depend_curflow_fct(g)
+        rel <- FUN(rel, ...)
+    } else if (type == "dist_rwalk") {
+        rel <- dist_rwalk_fct(g)
+        rel <- FUN(rel, ...)
     } else {
-      rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = "weight")
-      rel <- FUN(rel, ...)
-      diag(rel) <- 0
+        stop(paste(type, "is not defined as indirect relation."))
     }
-  } else if (type == "adjacency") {
-    rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
-    rel <- FUN(rel, ...)
-    diag(rel) <- 0
-  } else if (type == "depend_sp") {
-    adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
-    rel <- dependency(adj)
-  } else if (type == "walks") {
-    eigen.decomp <- eigen(igraph::get.adjacency(g, type = "both"))
-    lambda <- eigen.decomp$values
-    X <- eigen.decomp$vectors
-    rel <- X %*% diag(FUN(lambda, ...)) %*% t(X)
-  } else if (type == "dist_resist") {
-    L <- igraph::graph.laplacian(g, sparse = FALSE)
-    n <- igraph::vcount(g)
-    A <- L + matrix(1 / n, n, n)
-    C <- solve(A)
-    rel <- resistanceDistance(C, n)
-    rel <- FUN(rel, ...)
-  } else if (type == "dist_lf") {
-    if (is.null(lfparam)) {
-      stop('argument "lfparam" is missing for "dist_lf", with no default')
+    # add names if present
+    if (is.null(rownames(rel)) & !is.null(igraph::V(g)$name)) {
+        rownames(rel) <- colnames(rel) <- igraph::V(g)$name
     }
-    rel <- log_forest_fct(g, lfparam)
-    rel <- FUN(rel, ...)
-  } else if (type == "dist_walk") {
-    if (is.null(dwparam)) {
-      stop('argument "dwparam" is missing for "dist_walk", with no default')
-    }
-    rel <- dist_walk_fct(g, dwparam)
-    rel <- FUN(rel, ...)
-  } else if (type == "depend_netflow") {
-    if (netflowmode == "" | !netflowmode %in% c("raw", "frac", "norm")) {
-      stop('netflowmode must be one of"raw","frac","norm"\n')
-    }
-    # if (netflowmode == "norm") {
-    #   warning('"norm" not supported yet. Using "frac" instead.\n')
-    #   netflowmode <- "frac"
-    # }
-    rel <- depend_netflow_fct(g, netflowmode)
-    rel <- FUN(rel, ...)
-  } else if (type == "depend_exp") {
-    rel <- depend_exp_fct(g)
-    rel <- FUN(rel, ...)
-  } else if (type == "depend_rsps") {
-    if (is.null(rspxparam)) {
-      stop('argument "rspxparam" is missing for "depend_rsps", with no default')
-    }
-    rel <- depend_rsps_fct(g, rspxparam)
-    rel <- FUN(rel, ...)
-  } else if (type == "depend_rspn") {
-    if (is.null(rspxparam)) {
-      stop('argument "rspxparam" is missing for "depend_rspn", with no default')
-    }
-    rel <- depend_rspn_fct(g, rspxparam)
-    rel <- FUN(rel, ...)
-  } else if (type == "depend_curflow") {
-    rel <- depend_curflow_fct(g)
-    rel <- FUN(rel, ...)
-  } else if (type == "dist_rwalk") {
-    rel <- dist_rwalk_fct(g)
-    rel <- FUN(rel, ...)
-  } else {
-    stop(paste(type, "is not defined as indirect relation."))
-  }
-  # add names if present
-  if (is.null(rownames(rel)) & !is.null(igraph::V(g)$name)) {
-    rownames(rel) <- colnames(rel) <- igraph::V(g)$name
-  }
-  return(rel)
+    return(rel)
 }
 
 # -------------------------------------------------------------------------------
 
 log_forest_fct <- function(g, lfparam) {
-  n <- igraph::vcount(g)
-  gamma <- log(exp(1) + lfparam^(2 / n))
+    n <- igraph::vcount(g)
+    gamma <- log(exp(1) + lfparam^(2 / n))
 
-  L <- igraph::graph.laplacian(g, sparse = FALSE)
-  I <- diag(1, n)
-  Q <- solve(I + lfparam * L)
+    L <- igraph::graph.laplacian(g, sparse = FALSE)
+    I <- diag(1, n)
+    Q <- solve(I + lfparam * L)
 
-  if (lfparam == 1) {
-    H <- gamma * log(Q)
-  } else {
-    H <- gamma * (lfparam - 1) * logb(Q, lfparam)
-  }
-  rel <- 0.5 * (diag(H) %*% t(rep(1, n)) + rep(1, n) %*% t(diag(H))) - H
-  return(rel)
+    if (lfparam == 1) {
+        H <- gamma * log(Q)
+    } else {
+        H <- gamma * (lfparam - 1) * logb(Q, lfparam)
+    }
+    rel <- 0.5 * (diag(H) %*% t(rep(1, n)) + rep(1, n) %*% t(diag(H))) - H
+    return(rel)
 }
 
 depend_netflow_fct <- function(g, netflowmode) {
-  n <- igraph::vcount(g)
-  mflow <- matrix(0, n, n)
-  # maxflow
-  for (s in 1:n) {
-    for (t in 1:n) {
-      if (s != t) {
-        mflow[s, t] <- igraph::graph.maxflow(g, s, t)$value
-      }
-    }
-  }
-  if (netflowmode == "norm") {
-    flo <- mflow
-    diag(flo) <- 0
-    maxoflo <- rep(0, n)
-    for (i in 1:n) maxoflo[i] <- sum(mflow[-i, -i])
-  }
-  flow_smat <- matrix(0, n, n)
-  for (i in 1:n) {
-    g_i <- igraph::delete.vertices(g, i)
+    n <- igraph::vcount(g)
+    mflow <- matrix(0, n, n)
+    # maxflow
     for (s in 1:n) {
-      for (t in 1:n) {
-        if (i != s & s != t & i != t) {
-          flow <- igraph::graph.maxflow(g_i, s - (s > i), t - (t > i))$value
-          flow_smat[i, s] <- switch(netflowmode,
-            raw = flow_smat[i, s] + mflow[s, t] - flow,
-            norm = flow_smat[i, s] + mflow[s, t] - flow,
-            frac = flow_smat[i, s] + (mflow[s, t] - flow) / mflow[s, t]
-          )
+        for (t in 1:n) {
+            if (s != t) {
+                mflow[s, t] <- igraph::graph.maxflow(g, s, t)$value
+            }
         }
-      }
     }
-  }
-  if (netflowmode == "norm") {
-    flow_smat <- flow_smat / maxoflo * 2
-  }
-  return(flow_smat)
+    if (netflowmode == "norm") {
+        flo <- mflow
+        diag(flo) <- 0
+        maxoflo <- rep(0, n)
+        for (i in 1:n) maxoflo[i] <- sum(mflow[-i, -i])
+    }
+    flow_smat <- matrix(0, n, n)
+    for (i in 1:n) {
+        g_i <- igraph::delete.vertices(g, i)
+        for (s in 1:n) {
+            for (t in 1:n) {
+                if (i != s & s != t & i != t) {
+                    flow <- igraph::graph.maxflow(g_i, s - (s > i), t - (t > i))$value
+                    flow_smat[i, s] <- switch(netflowmode,
+                        raw = flow_smat[i, s] + mflow[s, t] - flow,
+                        norm = flow_smat[i, s] + mflow[s, t] - flow,
+                        frac = flow_smat[i, s] + (mflow[s, t] - flow) / mflow[s, t]
+                    )
+                }
+            }
+        }
+    }
+    if (netflowmode == "norm") {
+        flow_smat <- flow_smat / maxoflo * 2
+    }
+    return(flow_smat)
 }
 
 depend_exp_fct <- function(g) {
-  A <- igraph::get.adjacency(g, "both", sparse = FALSE)
-  eigen_A <- eigen(A)
-  n <- nrow(A)
-  expA <- eigen_A$vectors %*% diag(exp(eigen_A$values)) %*% t(eigen_A$vectors)
-  C <- (n - 1)^2 - (n - 1)
-  combet <- matrix(0, n, n)
-  for (i in 1:n) {
-    E <- matrix(0, n, n)
-    E[which(A[, i] == 1), i] <- -1
-    E[i, which(A[i, ] == 1)] <- -1
-    E <- A + E
-    eigen_E <- eigen(E)
-    expE <- eigen_E$vectors %*% diag(exp(eigen_E$values)) %*% t(eigen_E$vectors)
-    expE <- (expA - expE) / expA
-    expE[i, ] <- 0
-    expE[, i] <- 0
-    diag(expE) <- 0
-    combet[i, ] <- 1 / C * rowSums(expE)
-  }
+    A <- igraph::get.adjacency(g, "both", sparse = FALSE)
+    eigen_A <- eigen(A)
+    n <- nrow(A)
+    expA <- eigen_A$vectors %*% diag(exp(eigen_A$values)) %*% t(eigen_A$vectors)
+    C <- (n - 1)^2 - (n - 1)
+    combet <- matrix(0, n, n)
+    for (i in 1:n) {
+        E <- matrix(0, n, n)
+        E[which(A[, i] == 1), i] <- -1
+        E[i, which(A[i, ] == 1)] <- -1
+        E <- A + E
+        eigen_E <- eigen(E)
+        expE <- eigen_E$vectors %*% diag(exp(eigen_E$values)) %*% t(eigen_E$vectors)
+        expE <- (expA - expE) / expA
+        expE[i, ] <- 0
+        expE[, i] <- 0
+        diag(expE) <- 0
+        combet[i, ] <- 1 / C * rowSums(expE)
+    }
 
-  return(combet)
+    return(combet)
 }
 
 depend_rsps_fct <- function(g, rspxparam) {
-  n <- igraph::vcount(g)
-  I <- diag(1, n)
+    n <- igraph::vcount(g)
+    I <- diag(1, n)
 
-  A <- igraph::get.adjacency(g, sparse = FALSE)
-  D <- diag(1 / igraph::degree(g))
-  P_ref <- D %*% A
-  C <- 1 / A
-  C[is.infinite(C)] <- 0
-  W <- P_ref * exp(-rspxparam * C)
+    A <- igraph::get.adjacency(g, sparse = FALSE)
+    D <- diag(1 / igraph::degree(g))
+    P_ref <- D %*% A
+    C <- 1 / A
+    C[is.infinite(C)] <- 0
+    W <- P_ref * exp(-rspxparam * C)
 
-  Z <- solve((I - W), I)
-  Zdiv <- 1 / Z
-  bet.mat <- t(sapply(1:n, function(x) {
-    (Z[x, ] * t(Zdiv)) %*% Z[, x] - sum(Z[x, ] * diag(Zdiv) * Z[, x])
-  }))
-  diag(bet.mat) <- 0
+    Z <- solve((I - W), I)
+    Zdiv <- 1 / Z
+    bet.mat <- t(sapply(1:n, function(x) {
+        (Z[x, ] * t(Zdiv)) %*% Z[, x] - sum(Z[x, ] * diag(Zdiv) * Z[, x])
+    }))
+    diag(bet.mat) <- 0
 
-  return(bet.mat)
+    return(bet.mat)
 }
 
 depend_rspn_fct <- function(g, rspxparam) {
-  n <- igraph::vcount(g)
-  I <- diag(1, n)
+    n <- igraph::vcount(g)
+    I <- diag(1, n)
 
-  A <- igraph::get.adjacency(g, sparse = FALSE)
-  D <- diag(1 / igraph::degree(g))
-  P_ref <- D %*% A
-  C <- 1 / A
-  C[is.infinite(C)] <- 0
-  W <- P_ref * exp(-rspxparam * C)
+    A <- igraph::get.adjacency(g, sparse = FALSE)
+    D <- diag(1 / igraph::degree(g))
+    P_ref <- D %*% A
+    C <- 1 / A
+    C[is.infinite(C)] <- 0
+    W <- P_ref * exp(-rspxparam * C)
 
-  Z <- solve((I - W), I)
-  Zdiv <- 1 / Z
-  adj <- igraph::get.adjlist(g, "all")
-  A <- lapply(adj, function(x) as.vector(x) - 1)
-  bet.mat <- dependRspn(A, Z, Zdiv, W, n)
-  return(bet.mat)
+    Z <- solve((I - W), I)
+    Zdiv <- 1 / Z
+    adj <- igraph::get.adjlist(g, "all")
+    A <- lapply(adj, function(x) as.vector(x) - 1)
+    bet.mat <- dependRspn(A, Z, Zdiv, W, n)
+    return(bet.mat)
 }
 
 depend_curflow_fct <- function(g) {
-  n <- igraph::vcount(g)
-  D <- diag(igraph::degree(g))
-  A <- igraph::get.adjacency(g, sparse = FALSE)
-  L <- D - A
+    n <- igraph::vcount(g)
+    D <- diag(igraph::degree(g))
+    A <- igraph::get.adjacency(g, sparse = FALSE)
+    L <- D - A
 
-  Tmat <- solve(L[1:(n - 1), 1:(n - 1)])
-  Tmat <- rbind(cbind(Tmat, 0), 0)
+    Tmat <- solve(L[1:(n - 1), 1:(n - 1)])
+    Tmat <- rbind(cbind(Tmat, 0), 0)
 
-  el <- igraph::get.edgelist(g, names = FALSE)
-  m <- igraph::ecount(g)
-  el <- el - 1L
+    el <- igraph::get.edgelist(g, names = FALSE)
+    m <- igraph::ecount(g)
+    el <- el - 1L
 
-  bet.mat <- dependCurFlow(Tmat, el, m, n)
-  return(bet.mat)
+    bet.mat <- dependCurFlow(Tmat, el, m, n)
+    return(bet.mat)
 }
 
 dist_rwalk_fct <- function(g) {
-  n <- igraph::vcount(g)
-  A <- igraph::get.adjacency(g, sparse = FALSE)
-  M <- A / rowSums(A)
-  e <- rep(1, n - 1)
-  H <- matrix(0, n, n)
-  for (j in 1:n) {
-    Mj <- M[-j, -j]
-    Hij <- solve(diag(e) - Mj) %*% e
-    H[j, -j] <- Hij # transposed to original (to fit framework with rowSums)
-  }
-  return(H)
+    n <- igraph::vcount(g)
+    A <- igraph::get.adjacency(g, sparse = FALSE)
+    M <- A / rowSums(A)
+    e <- rep(1, n - 1)
+    H <- matrix(0, n, n)
+    for (j in 1:n) {
+        Mj <- M[-j, -j]
+        Hij <- solve(diag(e) - Mj) %*% e
+        H[j, -j] <- Hij # transposed to original (to fit framework with rowSums)
+    }
+    return(H)
 }
 
 dist_walk_fct <- function(g, dwparam) {
-  n <- igraph::vcount(g)
-  A <- igraph::get.adjacency(g, sparse = FALSE)
-  bigeig <- eigen(A, only.values = TRUE)$values[1]
-  t <- (1 / dwparam + bigeig)^(-1)
-  # if(dwparam > (1/bigeig)){
-  #   stop(paste0("dwparam to large. To ensure convergence, use a value greater 0 and less than 1/",bigeig))
-  # }
-  I <- diag(1, n)
-  Rt <- solve((I - t * A))
-  Ht <- log(Rt)
-  Dt <- 0.5 * (diag(Ht) %*% t(rep(1, n)) + rep(1, n) %*% t(diag(Ht))) - Ht
-  alpha <- dwparam # (1/dwparam - bigeig)^(-1)
-  if (alpha != 1) {
-    gamma <- log(exp(1) + alpha^(2 / n)) * (alpha - 1) / log(alpha)
-  } else {
-    gamma <- log(exp(1) + 1)
-  }
-  Dt <- gamma * Dt
-  return(Dt)
+    n <- igraph::vcount(g)
+    A <- igraph::get.adjacency(g, sparse = FALSE)
+    bigeig <- eigen(A, only.values = TRUE)$values[1]
+    t <- (1 / dwparam + bigeig)^(-1)
+    # if(dwparam > (1/bigeig)){
+    #   stop(paste0("dwparam to large. To ensure convergence, use a value greater 0 and less than 1/",bigeig))
+    # }
+    I <- diag(1, n)
+    Rt <- solve((I - t * A))
+    Ht <- log(Rt)
+    Dt <- 0.5 * (diag(Ht) %*% t(rep(1, n)) + rep(1, n) %*% t(diag(Ht))) - Ht
+    alpha <- dwparam # (1/dwparam - bigeig)^(-1)
+    if (alpha != 1) {
+        gamma <- log(exp(1) + alpha^(2 / n)) * (alpha - 1) / log(alpha)
+    } else {
+        gamma <- log(exp(1) + 1)
+    }
+    Dt <- gamma * Dt
+    return(Dt)
 }

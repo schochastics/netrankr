@@ -16,12 +16,12 @@
 #' @export
 #'
 spectral_gap <- function(g, method = "frac") {
-  spec_decomp <- eigen(igraph::get.adjacency(g, "both"))$values[c(1, 2)]
-  if (method == "frac") {
-    return(1 - spec_decomp[2] / spec_decomp[1])
-  } else if (method == "abs") {
-    return(spec_decomp[1] - spec_decomp[2])
-  } else {
-    stop("method must be one of 'frac' or 'abs'")
-  }
+    spec_decomp <- eigen(igraph::get.adjacency(g, "both"))$values[c(1, 2)]
+    if (method == "frac") {
+        return(1 - spec_decomp[2] / spec_decomp[1])
+    } else if (method == "abs") {
+        return(spec_decomp[1] - spec_decomp[2])
+    } else {
+        stop("method must be one of 'frac' or 'abs'")
+    }
 }

@@ -45,6 +45,7 @@ of netrankr and its conceptual ideas. See \code{browseVignettes(package = 'netra
 Useful links:
 \itemize{
   \item \url{https://github.com/schochastics/netrankr/}
+  \item \url{https://schochastics.github.io/netrankr/}
   \item Report bugs at \url{https://github.com/schochastics/netrankr/issues}
 }
 

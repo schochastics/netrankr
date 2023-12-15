@@ -1,3 +1,12 @@
+# netrankr 1.2.2
+
+* fixed goodpractice warnings #17
+* added more tests
+* added more documentation for index_builder #15
+* **possibly breaking**: removed mid point calculation from rank_intervals #12
+* upgraded `igraph` graph versions #23
+* printed some matrices in vignette indirect_relations #11 
+
 # netrankr 1.2.1
 
 * fixed PKGNAME-package \alias as per "Documenting packages" in R-exts.

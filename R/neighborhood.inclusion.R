@@ -45,34 +45,34 @@
 #' is_preserved(P, betweenness(dbces11))
 #' @export
 neighborhood_inclusion <- function(g, sparse = FALSE) {
-  if (!igraph::is_igraph(g)) {
-    stop("g must be an igraph object")
-  }
+    if (!igraph::is_igraph(g)) {
+        stop("g must be an igraph object")
+    }
 
-  if (igraph::is_directed(g)) {
-    stop("g must be an undirected graph")
-  }
+    if (igraph::is_directed(g)) {
+        stop("g must be an undirected graph")
+    }
 
-  adj <- lapply(as_adj_list_fast(g), function(x) x - 1)
-  deg <- igraph::degree(g)
-  dom <- nialgo(adj, deg)
-  if (!sparse) {
-    dom <- as.matrix(dom)
-  }
-  if (!is.null(igraph::V(g)$name)) {
-    rownames(dom) <- colnames(dom) <- igraph::V(g)$name
-  }
-  return(dom)
+    adj <- lapply(as_adj_list_fast(g), function(x) x - 1)
+    deg <- igraph::degree(g)
+    dom <- nialgo(adj, deg)
+    if (!sparse) {
+        dom <- as.matrix(dom)
+    }
+    if (!is.null(igraph::V(g)$name)) {
+        rownames(dom) <- colnames(dom) <- igraph::V(g)$name
+    }
+    return(dom)
 }
 
 
-as_adj_list_fast <- function(g){
-  n <- igraph::vcount(g)
-  lapply(1:n,function(i){
-    x <- g[[i]][[1]]
-    attr(x,"env") <- NULL
-    attr(x,"graph") <- NULL
-    class(x) <- NULL
-    x
-  })
+as_adj_list_fast <- function(g) {
+    n <- igraph::vcount(g)
+    lapply(1:n, function(i) {
+        x <- g[[i]][[1]]
+        attr(x, "env") <- NULL
+        attr(x, "graph") <- NULL
+        class(x) <- NULL
+        x
+    })
 }

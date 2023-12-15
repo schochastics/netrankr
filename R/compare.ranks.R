@@ -23,9 +23,9 @@
 #' cor(degree(tg), betweenness(tg), method = "kendall") # not 1, although no discordant pairs
 #' @export
 compare_ranks <- function(x, y) {
-  if (length(x) != length(y)) {
-    stop("x and y must have the same length")
-  }
-  res <- checkPairs(x, y)
-  return(res)
+    if (length(x) != length(y)) {
+        stop("x and y must have the same length")
+    }
+    res <- checkPairs(x, y)
+    return(res)
 }

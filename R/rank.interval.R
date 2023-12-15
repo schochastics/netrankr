@@ -16,30 +16,28 @@
 #' rank_intervals(P)
 #' @export
 rank_intervals <- function(P) {
-  if (!inherits(P, "Matrix") & !is.matrix(P)) {
-    stop("P must be a dense or spare matrix")
-  }
-  if (!is.binary(P)) {
-    stop("P is not a binary matrix")
-  }
+    if (!inherits(P, "Matrix") && !is.matrix(P)) {
+        stop("P must be a dense or spare matrix")
+    }
+    if (!is.binary(P)) {
+        stop("P is not a binary matrix")
+    }
 
-  n <- nrow(P)
-  max_rank_all <- n - Matrix::rowSums((P - Matrix::t(P)) == 1) - Matrix::rowSums(P == 1 & Matrix::t(P) == 1) # CAUTION!!!!
-  min_rank_all <- Matrix::colSums((P - Matrix::t(P)) == 1) + 1
-  mid_point_all <- (max_rank_all + min_rank_all) / 2
+    n <- nrow(P)
+    max_rank_all <- n - Matrix::rowSums((P - Matrix::t(P)) == 1) - Matrix::rowSums(P == 1 & Matrix::t(P) == 1) # CAUTION!!!!
+    min_rank_all <- Matrix::colSums((P - Matrix::t(P)) == 1) + 1
 
-  if (is.null(rownames(P))) {
-    names <- paste0("V", 1:nrow(P))
-  } else {
-    names <- rownames(P)
-  }
+    if (is.null(rownames(P))) {
+        names <- paste0("V", seq_len(nrow(P)))
+    } else {
+        names <- rownames(P)
+    }
 
-  res <- data.frame(
-    node = names,
-    min_rank = min_rank_all,
-    max_rank = max_rank_all,
-    mid_point = mid_point_all
-  )
-  class(res) <- c("netrankr_interval", class(res))
-  return(res)
+    res <- data.frame(
+        node = names,
+        min_rank = min_rank_all,
+        max_rank = max_rank_all
+    )
+    class(res) <- c("netrankr_interval", class(res))
+    return(res)
 }

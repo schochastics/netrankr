@@ -33,28 +33,28 @@ library(magrittr)
 data("dbces11")
 # degree
 dbces11 \%>\%
-  indirect_relations(type = "adjacency") \%>\%
-  aggregate_positions(type = "sum")
+    indirect_relations(type = "adjacency") \%>\%
+    aggregate_positions(type = "sum")
 
 # closeness centrality
 dbces11 \%>\%
-  indirect_relations(type = "dist_sp") \%>\%
-  aggregate_positions(type = "invsum")
+    indirect_relations(type = "dist_sp") \%>\%
+    aggregate_positions(type = "invsum")
 
 # betweenness centrality
 dbces11 \%>\%
-  indirect_relations(type = "depend_sp") \%>\%
-  aggregate_positions(type = "sum")
+    indirect_relations(type = "depend_sp") \%>\%
+    aggregate_positions(type = "sum")
 
 # eigenvector centrality
 dbces11 \%>\%
-  indirect_relations(type = "walks", FUN = walks_limit_prop) \%>\%
-  aggregate_positions(type = "sum")
+    indirect_relations(type = "walks", FUN = walks_limit_prop) \%>\%
+    aggregate_positions(type = "sum")
 
 # subgraph centrality
 dbces11 \%>\%
-  indirect_relations(type = "walks", FUN = walks_exp) \%>\%
-  aggregate_positions(type = "self")
+    indirect_relations(type = "walks", FUN = walks_exp) \%>\%
+    aggregate_positions(type = "self")
 }
 \seealso{
 \link{indirect_relations}, \link{transform_relations}
