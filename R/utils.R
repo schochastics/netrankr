@@ -207,7 +207,7 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
     }
     plot(
         x = factor(x$node, levels = x$node[ord]),
-        y = x$mid_point, pch = 0,
+        y = x$mid_point, pch = 0, cex = 0,
         ylim = c(0, nrow(x)),
         ylab = "ranks",
         xlab = "",

@@ -77,11 +77,8 @@ We work with the following small graph.
 library(igraph)
 library(netrankr)
 
-g <- graph.empty(n = 11, directed = FALSE)
-g <- add_edges(g, c(
-  1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
-  6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
-))
+data("dbces11")
+g <- dbces11
 ```
 
 <img src="man/figures/README-dbces_neutral-1.png" width="80%" style="display: block; margin: auto;" />
@@ -93,11 +90,11 @@ the centrality indices vignette.
 
 ``` r
 cent_scores <- data.frame(
-  degree = degree(g),
-  betweenness = round(betweenness(g), 4),
-  closeness = round(closeness(g), 4),
-  eigenvector = round(eigen_centrality(g)$vector, 4),
-  subgraph = round(subgraph_centrality(g), 4)
+    degree = degree(g),
+    betweenness = round(betweenness(g), 4),
+    closeness = round(closeness(g), 4),
+    eigenvector = round(eigen_centrality(g)$vector, 4),
+    subgraph = round(subgraph_centrality(g), 4)
 )
 
 # What are the most central nodes for each index?

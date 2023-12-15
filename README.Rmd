@@ -13,14 +13,14 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  fig.align = "center",
-  out.width = "80%",
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  echo = TRUE,
-  warning = FALSE,
-  message = FALSE
+    collapse = TRUE,
+    fig.align = "center",
+    out.width = "80%",
+    comment = "#>",
+    fig.path = "man/figures/README-",
+    echo = TRUE,
+    warning = FALSE,
+    message = FALSE
 )
 ```
 
@@ -83,21 +83,18 @@ We work with the following small graph.
 library(igraph)
 library(netrankr)
 
-g <- graph.empty(n = 11, directed = FALSE)
-g <- add_edges(g, c(
-  1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
-  6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
-))
+data("dbces11")
+g <- dbces11
 ```
 
 ```{r dbces_neutral, echo=FALSE}
 library(ggraph)
 V(g)$name <- as.character(1:11)
 ggraph(g, "stress") +
-  geom_edge_link0(edge_colour = "grey66") +
-  geom_node_point(shape = 21, fill = "grey25", size = 8) +
-  geom_node_text(aes(label = name), col = "white") +
-  theme_graph()
+    geom_edge_link0(edge_colour = "grey66") +
+    geom_node_point(shape = 21, fill = "grey25", size = 8) +
+    geom_node_text(aes(label = name), col = "white") +
+    theme_graph()
 ```
 
 Say we are interested in the most central node of the graph and simply compute some 
@@ -105,11 +102,11 @@ standard centrality scores with the `igraph` package. Defining centrality indice
 in the `netrankr` package is explained in the centrality indices vignette.
 ```{r cent,warning=FALSE}
 cent_scores <- data.frame(
-  degree = degree(g),
-  betweenness = round(betweenness(g), 4),
-  closeness = round(closeness(g), 4),
-  eigenvector = round(eigen_centrality(g)$vector, 4),
-  subgraph = round(subgraph_centrality(g), 4)
+    degree = degree(g),
+    betweenness = round(betweenness(g), 4),
+    closeness = round(closeness(g), 4),
+    eigenvector = round(eigen_centrality(g)$vector, 4),
+    subgraph = round(subgraph_centrality(g), 4)
 )
 
 # What are the most central nodes for each index?
@@ -123,12 +120,12 @@ V(g)$col[apply(cent_scores, 2, which.max)] <- names(apply(cent_scores, 2, which.
 V(g)$lab <- ""
 V(g)$lab[apply(cent_scores, 2, which.max)] <- stringr::str_to_upper(stringr::str_extract(names(apply(cent_scores, 2, which.max)), "^[a-z]"))
 ggraph(g, "stress") +
-  geom_edge_link0(edge_colour = "grey66") +
-  geom_node_point(aes(fill = col), shape = 21, size = 8) +
-  geom_node_text(aes(label = lab), col = "white") +
-  scale_fill_manual(values = c("#1874CD", "#CD2626", "#EEB422", "#9A32CD", "#4D4D4D", "#EE30A7")) +
-  theme_graph() +
-  theme(legend.position = "none")
+    geom_edge_link0(edge_colour = "grey66") +
+    geom_node_point(aes(fill = col), shape = 21, size = 8) +
+    geom_node_text(aes(label = lab), col = "white") +
+    scale_fill_manual(values = c("#1874CD", "#CD2626", "#EEB422", "#9A32CD", "#4D4D4D", "#EE30A7")) +
+    theme_graph() +
+    theme(legend.position = "none")
 ```
 
 As you can see, each index assigns the highest value to a different vertex.
