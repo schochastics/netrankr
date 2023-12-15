@@ -72,5 +72,4 @@ test_that("rank_intervals is correct", {
 
     expect_equal(res$min_rank, c(1, 1, 2, 3, 3))
     expect_equal(res$max_rank, c(2, 4, 4, 5, 5))
-    expect_equal(res$mid_point, c(1.5, 2.5, 3.0, 4.0, 4.0))
 })

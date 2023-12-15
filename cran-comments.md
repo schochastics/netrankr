@@ -1,11 +1,9 @@
-# Update from 1.2.0 to 1.2.1
+# Update from 1.2.1 to 1.2.2
 
-- fixed package doc issue
-- fixed bibentry issue
-- fixed #21
+no user facing changes, only refactoring and cleaning
 
 ## Test environments
-* ubuntu 20.04, R 4.3.1
+* ubuntu 22.04, R 4.3.2
 * win-builder (devel and release)
 
 

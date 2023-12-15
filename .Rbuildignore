@@ -25,3 +25,4 @@ figures/
 ^data-raw$
 ^CRAN-SUBMISSION$
 ^codecov\.yml$
+.covignore
