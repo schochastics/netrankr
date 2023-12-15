@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Neighborhood-inclusion in networks">
@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">netrankr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,15 +178,12 @@ Mathematics</em>, <strong>27</strong>(6), 971–985. (<a href="https://doi.org/1
 <span>     vertex.color<span class="op">=</span><span class="st">"black"</span>,vertex.label.color<span class="op">=</span><span class="st">"white"</span>, vertex.size<span class="op">=</span><span class="fl">16</span>,vertex.label.cex<span class="op">=</span><span class="fl">0.75</span>,</span>
 <span>     edge.color<span class="op">=</span><span class="st">"black"</span>,</span>
 <span>     margin<span class="op">=</span><span class="fl">0</span>,asp<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## This graph was created by an old(er) igraph version.</span></span>
-<span><span class="co">##   Call upgrade_graph() on it to use with the current igraph version</span></span>
-<span><span class="co">##   For now we convert it on the fly...</span></span></code></pre>
 <p><img src="neighborhood_inclusion_files/figure-html/simple_graph-1.png" width="288" style="display: block; margin: auto;"></p>
 <p>We can compare neighborhoods manually with the
 <code>neighborhood</code> function of the <code>igraph</code> package.
 Note the <code>mindist</code> parameter to distinguish between open and
 closed neighborhood.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span><span class="va">Nu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/ego.html" class="external-link">neighborhood</a></span><span class="op">(</span><span class="va">g</span>,order<span class="op">=</span><span class="fl">1</span>,nodes<span class="op">=</span><span class="va">u</span>,mindist <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="co">#N(u) </span></span>
@@ -195,19 +192,19 @@ closed neighborhood.</p>
 <span><span class="va">Nu</span></span></code></pre></div>
 <pre><code><span><span class="co">## + 2/11 vertices, named, from 013399c:</span></span>
 <span><span class="co">## [1] E K</span></span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Nv</span></span></code></pre></div>
 <pre><code><span><span class="co">## + 4/11 vertices, named, from 013399c:</span></span>
 <span><span class="co">## [1] E C I K</span></span></code></pre>
 <p>Although it is obvious that <code>Nu</code> is a subset of
 <code>Nv</code>, we can verify it as follows.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">Nu</span><span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span><span class="va">Nv</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <p>Checking all pairs of nodes can efficiently be done with the
 <code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> function from the
 <code>netrankr</code> package.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">P</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span><span class="op">(</span><span class="va">g</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">P</span></span></code></pre></div>
 <pre><code><span><span class="co">##   A B C D E F G H I J K</span></span>
@@ -225,7 +222,7 @@ closed neighborhood.</p>
 <p>If an entry <code>P[u,v]</code> is equal to one, we have <span class="math inline">\(N(u)\subseteq N[v]\)</span>.</p>
 <p>The function <code><a href="../reference/dominance_graph.html">dominance_graph()</a></code> can alternatively be used
 to visualize the neighborhood inclusion as a directed graph.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g.dom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dominance_graph.html">dominance_graph</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g.dom</span>,</span>
@@ -239,7 +236,7 @@ to visualize the neighborhood inclusion as a directed graph.</p>
 the <code>ìgraph</code> package for our example network. Note that the
 <code>netrankr</code> package also implements a great variety of
 indices, but they need further specifications described in <a href="centrality_indices.html">this</a> vignette.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cent.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  vertex<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">11</span>,</span>
 <span>  degree<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>,</span>
@@ -273,7 +270,7 @@ reasonable index. As soon as a vertex is dominated by at least one
 other, it will always be ranked below the dominator. We can check for
 undominated vertices simply by forming the row Sums in
 <code>P</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  D  E  F  G  H  I  J  K </span></span>
 <span><span class="co">##  4  5  6  7  8  9 10 11</span></span></code></pre>
@@ -292,7 +289,7 @@ ranking, as induced by neighborhood inclusion, and a score vector of a
 centrality index and checks if
 <code>P[i,j]==1 &amp; scores[i]&gt;scores[j]</code> is
 <code>FALSE</code> for all pairs <code>i</code> and <code>j</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">cent.df</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/is_preserved.html">is_preserved</a></span><span class="op">(</span><span class="va">P</span>,<span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      degree betweenness   closeness eigenvector    subgraph </span></span>
 <span><span class="co">##        TRUE        TRUE        TRUE        TRUE        TRUE</span></span></code></pre>

@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Partial Centrality">
@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">netrankr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,26 +150,23 @@ in accordance with a given partial ranking.</p>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">dbces11</span></span>
 <span></span>
 <span><span class="co">#neighborhood inclusion </span></span>
-<span><span class="va">P</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span><span class="op">(</span>sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## This graph was created by an old(er) igraph version.</span></span>
-<span><span class="co">##   Call upgrade_graph() on it to use with the current igraph version</span></span>
-<span><span class="co">##   For now we convert it on the fly...</span></span></code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#without %&gt;% operator:</span></span>
+<span><span class="va">P</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion</a></span><span class="op">(</span>sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#without %&gt;% operator:</span></span>
 <span><span class="co"># P &lt;- neighborhood_inclusion(g, sparse = FALSE)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/rank_intervals.html">rank_intervals</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##  node:A rank interval: [1, 6] mid point: 3.5</span></span>
-<span><span class="co">##  node:B rank interval: [1, 9] mid point: 5</span></span>
-<span><span class="co">##  node:C rank interval: [2, 9] mid point: 5.5</span></span>
-<span><span class="co">##  node:D rank interval: [2, 11] mid point: 6.5</span></span>
-<span><span class="co">##  node:E rank interval: [3, 11] mid point: 7</span></span>
-<span><span class="co">##  node:F rank interval: [2, 11] mid point: 6.5</span></span>
-<span><span class="co">##  node:G rank interval: [2, 11] mid point: 6.5</span></span>
-<span><span class="co">##  node:H rank interval: [2, 11] mid point: 6.5</span></span>
-<span><span class="co">##  node:I rank interval: [1, 11] mid point: 6</span></span>
-<span><span class="co">##  node:J rank interval: [1, 11] mid point: 6</span></span>
-<span><span class="co">##  node:K rank interval: [3, 11] mid point: 7</span></span></code></pre>
+<pre><code><span><span class="co">##  node:A rank interval: [1, 6]</span></span>
+<span><span class="co">##  node:B rank interval: [1, 9]</span></span>
+<span><span class="co">##  node:C rank interval: [2, 9]</span></span>
+<span><span class="co">##  node:D rank interval: [2, 11]</span></span>
+<span><span class="co">##  node:E rank interval: [3, 11]</span></span>
+<span><span class="co">##  node:F rank interval: [2, 11]</span></span>
+<span><span class="co">##  node:G rank interval: [2, 11]</span></span>
+<span><span class="co">##  node:H rank interval: [2, 11]</span></span>
+<span><span class="co">##  node:I rank interval: [1, 11]</span></span>
+<span><span class="co">##  node:J rank interval: [1, 11]</span></span>
+<span><span class="co">##  node:K rank interval: [3, 11]</span></span></code></pre>
 <p>The package uses the convention, that higher numerical ranks
 correspond to top ranked position. The lowest possible rank is thus 1.
 The column <code>mid_point</code> should not be confused with the
@@ -184,7 +181,7 @@ additional parameter <code>cent_scores</code>. The ranks of each node
 for each index are then plotted within each interval. Again, the higher
 the numerical rank the higher ranked the node is according to the
 index.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cent_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>   degree<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>,</span>
 <span>   betweenness<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/betweenness.html" class="external-link">betweenness</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>,<span class="fl">4</span><span class="op">)</span>,</span>
@@ -207,7 +204,7 @@ c(u)&lt;c(v)
 property.<br><br>
 The intervals reduce to single points for <a href="threshold_graph.html">threshold graphs</a>, since all nodes are
 pairwise comparable by neighborhood-inclusion.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/threshold_graph.html">threshold_graph</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">0.2</span><span class="op">)</span></span>
 <span></span>
@@ -220,7 +217,7 @@ pairwise comparable by neighborhood-inclusion.</p>
 <p><img src="partial_centrality_files/figure-html/tg_ri-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>The described betweenness inconsistancy is most evident for threshold
 graphs as shown in the rank intervals below.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cent_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>   degree<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">tg</span><span class="op">)</span>,</span>
 <span>   betweenness<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/betweenness.html" class="external-link">betweenness</a></span><span class="op">(</span><span class="va">tg</span><span class="op">)</span>,<span class="fl">4</span><span class="op">)</span>,</span>
