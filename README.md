@@ -7,7 +7,7 @@ Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org
 [![CRAN
 Downloads](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr)
 [![Codecov test
-coverage](https://codecov.io/gh/schochastics/netrankr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schochastics/netrankr?branch=master)
+coverage](https://codecov.io/gh/schochastics/netrankr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schochastics/netrankr?branch=main)
 [![JOSS](https://joss.theoj.org/papers/10.21105/joss.04563/status.svg)](https://doi.org/10.21105/joss.04563)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7109041.svg)](https://doi.org/10.5281/zenodo.7109041)
 
