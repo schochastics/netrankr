@@ -1,3 +1,7 @@
+# netrankr 1.2.3
+
+* removed test causing issues on some platforms
+
 # netrankr 1.2.2
 
 * fixed goodpractice warnings #17
