@@ -5,40 +5,27 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="netrankr">
 <title>Neighborhood-inclusion in networks • netrankr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.8/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.8/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.8/font.css" rel="stylesheet">
-<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Neighborhood-inclusion in networks">
-<meta property="og:description" content="netrankr">
-<meta property="og:image" content="https://schochastics.github.io/netrankr/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Neighborhood-inclusion in networks">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-none"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-none" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">netrankr</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.3</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -46,61 +33,33 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-tutorials">Tutorials</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-tutorials">
-    <a class="dropdown-item" href="../articles/neighborhood_inclusion.html">Neighborhood-Inclusion</a>
-    <a class="dropdown-item" href="../articles/threshold_graph.html">Uniquely Ranked Graphs</a>
-    <a class="dropdown-item" href="../articles/positional_dominance.html">Positional Dominance</a>
-    <a class="dropdown-item" href="../articles/indirect_relations.html">Indirect Relations in Networks</a>
-    <a class="dropdown-item" href="../articles/centrality_indices.html">Centrality Indices</a>
-    <a class="dropdown-item" href="../articles/partial_centrality.html">Partial Centrality</a>
-    <a class="dropdown-item" href="../articles/probabilistic_cent.html">Probabilistic Centrality</a>
-    <div class="dropdown-divider"></div>
-    <a class="external-link dropdown-item" href="http://blog.schochastics.net/post/network-centrality-in-r-introduction/">Blog Post I</a>
-    <a class="external-link dropdown-item" href="http://blog.schochastics.net/post/network-centrality-in-r-neighborhood-inclusion/">Blog Post II</a>
-    <a class="external-link dropdown-item" href="http://blog.schochastics.net/post/network-centrality-in-r-new-ways-of-measuring-centrality/">Blog Post III</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials">
+<li><a class="dropdown-item" href="../articles/neighborhood_inclusion.html">Neighborhood-Inclusion</a></li>
+    <li><a class="dropdown-item" href="../articles/threshold_graph.html">Uniquely Ranked Graphs</a></li>
+    <li><a class="dropdown-item" href="../articles/positional_dominance.html">Positional Dominance</a></li>
+    <li><a class="dropdown-item" href="../articles/indirect_relations.html">Indirect Relations in Networks</a></li>
+    <li><a class="dropdown-item" href="../articles/centrality_indices.html">Centrality Indices</a></li>
+    <li><a class="dropdown-item" href="../articles/partial_centrality.html">Partial Centrality</a></li>
+    <li><a class="dropdown-item" href="../articles/probabilistic_cent.html">Probabilistic Centrality</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="external-link dropdown-item" href="http://blog.schochastics.net/post/network-centrality-in-r-introduction/">Blog Post I</a></li>
+    <li><a class="external-link dropdown-item" href="http://blog.schochastics.net/post/network-centrality-in-r-neighborhood-inclusion/">Blog Post II</a></li>
+    <li><a class="external-link dropdown-item" href="http://blog.schochastics.net/post/network-centrality-in-r-new-ways-of-measuring-centrality/">Blog Post III</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/use_case.html">Use Case</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/benchmarks.html">Benchmarks</a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="http://schochastics.net/sna/periodic.html">Periodic Table</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../articles/use_case.html">Use Case</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/benchmarks.html">Benchmarks</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="http://schochastics.net/sna/periodic.html">Periodic Table</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    News
-  </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">
-    <span class="fa fa-file-code-o"></span>
-     
-    Functions
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/schochastics/netrankr">
-    <span class="fa fa-github fa-lg"></span>
-     
-    Github
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa fa-newspaper-o"></span> News</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-file-code-o"></span> Functions</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/schochastics/netrankr"><span class="fa fa-github fa-lg"></span> Github</a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -112,7 +71,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Neighborhood-inclusion in networks</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/schochastics/netrankr/blob/HEAD/vignettes/neighborhood_inclusion.Rmd" class="external-link"><code>vignettes/neighborhood_inclusion.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/schochastics/netrankr/blob/main/vignettes/neighborhood_inclusion.Rmd" class="external-link"><code>vignettes/neighborhood_inclusion.Rmd</code></a></small>
       <div class="d-none name"><code>neighborhood_inclusion.Rmd</code></div>
     </div>
 
@@ -126,35 +85,54 @@ neighborhood-inclusion can be used to assess <a href="partial_centrality.html">p
 <div class="section level2">
 <h2 id="theoretical-background">Theoretical Background<a class="anchor" aria-label="anchor" href="#theoretical-background"></a>
 </h2>
-<p>In an undirected graph <span class="math inline">\(G=(V,E)\)</span>,
-the <em>neighborhood</em> of a node <span class="math inline">\(u \in
-V\)</span> is defined as <span class="math display">\[N(u)=\lbrace w :
-\lbrace u,w \rbrace \in E \rbrace\]</span> and its <em>closed
-neighborhood</em> as <span class="math inline">\(N[v]=N(v) \cup \lbrace
-v \rbrace\)</span>. If the neighborhood of a node <span class="math inline">\(u\)</span> is a subset of the closed neighborhood
-of a node <span class="math inline">\(v\)</span>, <span class="math inline">\(N(u)\subseteq N[v]\)</span>, we speak of
-<em>neighborhood inclusion</em>. This concept defines a dominance
-relation among nodes in a network. We say that <span class="math inline">\(u\)</span> is <em>dominated</em> by <span class="math inline">\(v\)</span> if <span class="math inline">\(N(u)\subseteq N[v]\)</span>.
+<p>In an undirected graph
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>V</mi><mo>,</mo><mi>E</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">G=(V,E)</annotation></semantics></math>,
+the <em>neighborhood</em> of a node
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>∈</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">u \in V</annotation></semantics></math>
+is defined as
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>w</mi><mo>:</mo><mo stretchy="false" form="prefix">{</mo><mi>u</mi><mo>,</mo><mi>w</mi><mo stretchy="false" form="postfix">}</mo><mo>∈</mo><mi>E</mi><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">N(u)=\lbrace w : \lbrace u,w \rbrace \in E \rbrace</annotation></semantics></math>
+and its <em>closed neighborhood</em> as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∪</mo><mo stretchy="false" form="prefix">{</mo><mi>v</mi><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">N[v]=N(v) \cup \lbrace v \rbrace</annotation></semantics></math>.
+If the neighborhood of a node
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>
+is a subset of the closed neighborhood of a node
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(u)\subseteq N[v]</annotation></semantics></math>,
+we speak of <em>neighborhood inclusion</em>. This concept defines a
+dominance relation among nodes in a network. We say that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>
+is <em>dominated</em> by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>
+if
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(u)\subseteq N[v]</annotation></semantics></math>.
 Neighborhood-inclusion induces a partial ranking on the vertices of a
 network. That is, (usually) some (if not most!) pairs of vertices are
-incomparable, such that neither <span class="math inline">\(N(u)\subseteq N[v]\)</span> nor <span class="math inline">\(N(v)\subseteq N[u]\)</span> holds. There is,
-however, a special graph class where all pairs are comparable (found in
-<a href="threshold_graph.html">this</a> vignette).</p>
+incomparable, such that neither
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(u)\subseteq N[v]</annotation></semantics></math>
+nor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>u</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(v)\subseteq N[u]</annotation></semantics></math>
+holds. There is, however, a special graph class where all pairs are
+comparable (found in <a href="threshold_graph.html">this</a>
+vignette).</p>
 <p>The importance of neighborhood-inclusion is given by the following
 result:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow><mo>⟹</mo><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
 N(u)\subseteq N[v] \implies c(u)\leq c(v),
-\]</span> where <span class="math inline">\(c\)</span> is a centrality
-index defined on special path algebras. These include many of the well
-known measures like closeness (and variants), betweenness (and variants)
-as well as many walk-based indices (eigenvector and subgraph centrality,
-total communicability,…).</p>
-<p>Very informally, if <span class="math inline">\(u\)</span> is
-dominated by <span class="math inline">\(v\)</span>, then u is less
-central than <span class="math inline">\(v\)</span> no matter which
-centrality index is used, that fulfill the requirement. While this is
-the key result, this short description leaves out many theoretical
-considerations. These and more can be found in</p>
+</annotation></semantics></math> where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+is a centrality index defined on special path algebras. These include
+many of the well known measures like closeness (and variants),
+betweenness (and variants) as well as many walk-based indices
+(eigenvector and subgraph centrality, total communicability,…).</p>
+<p>Very informally, if
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>
+is dominated by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>,
+then u is less central than
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>
+no matter which centrality index is used, that fulfill the requirement.
+While this is the key result, this short description leaves out many
+theoretical considerations. These and more can be found in</p>
 <blockquote>
 <p>Schoch, David &amp; Brandes, Ulrik. (2016). Re-conceptualizing
 centrality in social networks. <em>European Journal of Appplied
@@ -219,7 +197,8 @@ closed neighborhood.</p>
 <span><span class="co">## I 0 0 0 0 0 0 0 0 0 0 0</span></span>
 <span><span class="co">## J 0 0 0 0 0 0 0 0 0 0 0</span></span>
 <span><span class="co">## K 0 0 0 0 0 0 0 0 0 0 0</span></span></code></pre>
-<p>If an entry <code>P[u,v]</code> is equal to one, we have <span class="math inline">\(N(u)\subseteq N[v]\)</span>.</p>
+<p>If an entry <code>P[u,v]</code> is equal to one, we have
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(u)\subseteq N[v]</annotation></semantics></math>.</p>
 <p>The function <code><a href="../reference/dominance_graph.html">dominance_graph()</a></code> can alternatively be used
 to visualize the neighborhood inclusion as a directed graph.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -263,28 +242,57 @@ indices, but they need further specifications described in <a href="centrality_i
 <span><span class="co">## K     11      5     14.6667    0.0556      0.8450   7.3896</span></span></code></pre>
 <p>Notice how for each centrality index, different vertices are
 considered to be the most central node. The most central from degree to
-subgraph centrality are <span class="math inline">\(11\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(7\)</span>
-and <span class="math inline">\(10\)</span>. Note that only
-<em>undominated</em> vertices can achieve the highest score for any
-reasonable index. As soon as a vertex is dominated by at least one
-other, it will always be ranked below the dominator. We can check for
-undominated vertices simply by forming the row Sums in
+subgraph centrality are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>11</mn><annotation encoding="application/x-tex">11</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>8</mn><annotation encoding="application/x-tex">8</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>6</mn><annotation encoding="application/x-tex">6</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>10</mn><annotation encoding="application/x-tex">10</annotation></semantics></math>.
+Note that only <em>undominated</em> vertices can achieve the highest
+score for any reasonable index. As soon as a vertex is dominated by at
+least one other, it will always be ranked below the dominator. We can
+check for undominated vertices simply by forming the row Sums in
 <code>P</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  D  E  F  G  H  I  J  K </span></span>
 <span><span class="co">##  4  5  6  7  8  9 10 11</span></span></code></pre>
 <p>8 nodes are undominated in the graph. It is thus entirely possible to
-find indices that would also rank <span class="math inline">\(4,
-5\)</span> and <span class="math inline">\(9\)</span> on top.</p>
+find indices that would also rank
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>,</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">4, 5</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>9</mn><annotation encoding="application/x-tex">9</annotation></semantics></math>
+on top.</p>
 <p>Besides the top ranked nodes, we can check if the entire partial
 ranking <code>P</code> is preserved in each centrality ranking. If there
-exists a pair <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> and index <span class="math inline">\(c()\)</span> such that <span class="math inline">\(N(u)\subseteq N[v]\)</span> but <span class="math inline">\(c(v)&gt;c(u)\)</span>, we do not consider <span class="math inline">\(c\)</span> to be a valid index.</p>
-<p>In our example, we considered vertex <span class="math inline">\(3\)</span> and <span class="math inline">\(5\)</span>, where <span class="math inline">\(3\)</span> was dominated by <span class="math inline">\(5\)</span>. It is easy to verify that all
-centrality scores of <span class="math inline">\(5\)</span> are in fact
-greater than the ones of <span class="math inline">\(3\)</span> by
-inspecting the respective rows in the table. To check all pairs, we use
-the function <code>is_preserved</code>. The function takes a partial
+exists a pair
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>
+and index
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c()</annotation></semantics></math>
+such that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(u)\subseteq N[v]</annotation></semantics></math>
+but
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>&gt;</mo><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c(v)&gt;c(u)</annotation></semantics></math>,
+we do not consider
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+to be a valid index.</p>
+<p>In our example, we considered vertex
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>5</mn><annotation encoding="application/x-tex">5</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>
+was dominated by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>5</mn><annotation encoding="application/x-tex">5</annotation></semantics></math>.
+It is easy to verify that all centrality scores of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>5</mn><annotation encoding="application/x-tex">5</annotation></semantics></math>
+are in fact greater than the ones of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>
+by inspecting the respective rows in the table. To check all pairs, we
+use the function <code>is_preserved</code>. The function takes a partial
 ranking, as induced by neighborhood inclusion, and a score vector of a
 centrality index and checks if
 <code>P[i,j]==1 &amp; scores[i]&gt;scores[j]</code> is
@@ -301,28 +309,26 @@ it on <strong>all</strong> networks. For more details refer to the paper
 cited in the first section.</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by David Schoch.</p>
+  <p>Developed by David Schoch.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

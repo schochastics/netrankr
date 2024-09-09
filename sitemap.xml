@@ -1,162 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://schochastics.github.io/netrankr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/benchmarks.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/centrality_indices.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/indirect_relations.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/neighborhood_inclusion.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/partial_centrality.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/positional_dominance.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/probabilistic_cent.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/threshold_graph.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/articles/use_case.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/aggregate_positions.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/approx_rank_expected.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/approx_rank_relative.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/as.matrix.netrankr_full.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/comparable_pairs.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/compare_ranks.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/dbces11.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/dominance_graph.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/exact_rank_prob.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/florentine_m.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/get_rankings.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/hyperbolic_index.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/incomparable_pairs.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/index_builder.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/indirect_relations.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/is_preserved.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/majorization_gap.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/mcmc_rank_prob.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/neighborhood_inclusion.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/netrankr-package.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/plot.netrankr_full.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/plot.netrankr_interval.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/plot.netrankr_mcmc.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/plot_rank_intervals.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/positional_dominance.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/print.netrankr_full.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/print.netrankr_interval.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/print.netrankr_mcmc.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/rank_intervals.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/spectral_gap.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/summary.netrankr_full.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/threshold_graph.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/transform_relations.html</loc>
-  </url>
-  <url>
-    <loc>https://schochastics.github.io/netrankr/reference/transitive_reduction.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://schochastics.github.io/netrankr/404.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/CONTRIBUTING.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/LICENSE-text.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/LICENSE.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/benchmarks.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/centrality_indices.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/index.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/indirect_relations.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/neighborhood_inclusion.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/partial_centrality.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/positional_dominance.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/probabilistic_cent.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/threshold_graph.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/articles/use_case.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/authors.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/index.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/news/index.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/aggregate_positions.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/approx_rank_expected.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/approx_rank_relative.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/as.matrix.netrankr_full.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/comparable_pairs.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/compare_ranks.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/dbces11.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/dominance_graph.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/exact_rank_prob.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/florentine_m.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/get_rankings.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/hyperbolic_index.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/incomparable_pairs.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/index.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/index_builder.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/indirect_relations.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/is_preserved.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/majorization_gap.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/mcmc_rank_prob.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/neighborhood_inclusion.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/netrankr-package.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/plot.netrankr_full.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/plot.netrankr_interval.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/plot.netrankr_mcmc.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/plot_rank_intervals.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/positional_dominance.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/print.netrankr_full.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/print.netrankr_interval.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/print.netrankr_mcmc.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/rank_intervals.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/spectral_gap.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/summary.netrankr_full.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/threshold_graph.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/transform_relations.html</loc></url>
+<url><loc>https://schochastics.github.io/netrankr/reference/transitive_reduction.html</loc></url>
 </urlset>
+

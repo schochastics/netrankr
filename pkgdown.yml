@@ -1,5 +1,5 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   benchmarks: benchmarks.html
@@ -11,8 +11,7 @@ articles:
   probabilistic_cent: probabilistic_cent.html
   threshold_graph: threshold_graph.html
   use_case: use_case.html
-last_built: 2023-12-20T18:20Z
+last_built: 2024-09-09T20:00Z
 urls:
   reference: https://schochastics.github.io/netrankr/reference
   article: https://schochastics.github.io/netrankr/articles
-
