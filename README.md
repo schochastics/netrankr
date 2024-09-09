@@ -59,8 +59,8 @@ install.packages("netrankr")
 To install the developer version from github:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("schochastics/netrankr")
+# install.packages("remotes")
+remotes::install_github("schochastics/netrankr")
 ```
 
 ------------------------------------------------------------------------
