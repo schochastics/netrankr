@@ -3,9 +3,9 @@
 
 [![R-CMD-check](https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml)
 [![CRAN Status
-Badge](http://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
+Badge](https://www.r-pkg.org/badges/version/netrankr)](https://cran.r-project.org/package=netrankr)
 [![CRAN
-Downloads](http://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr)
+Downloads](https://cranlogs.r-pkg.org/badges/netrankr)](https://CRAN.R-project.org/package=netrankr)
 [![Codecov test
 coverage](https://codecov.io/gh/schochastics/netrankr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schochastics/netrankr?branch=main)
 [![JOSS](https://joss.theoj.org/papers/10.21105/joss.04563/status.svg)](https://doi.org/10.21105/joss.04563)
@@ -129,12 +129,11 @@ P
 ```
 
 [Schoch & Brandes (2016)](https://doi.org/10.1017/S0956792516000401)
-showed that $N(u) \subseteq N[v]$ (i.e. `P[u,v]=1`) implies
-$c(u) \leq c(v)$ for centrality indices $c$, which are defined via
-specific path algebras. These include many of the well-known measures
-like closeness (and variants), betweenness (and variants) as well as
-many walk-based indices (eigenvector and subgraph centrality, total
-communicability,…).
+showed that `P[u,v]=1` implies that u is less central than v for
+centrality indices which are defined via specific path algebras. These
+include many of the well-known measures like closeness (and variants),
+betweenness (and variants) as well as many walk-based indices
+(eigenvector and subgraph centrality, total communicability,…).
 
 Neighborhood-inclusion defines a partial ranking on the set of nodes.
 Each ranking that is in accordance with this partial ranking yields a
