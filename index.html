@@ -71,7 +71,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="netrankr-">netrankr <a class="anchor" aria-label="anchor" href="#netrankr-"></a>
 </h1>
 </div>
-<p><a href="https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://cran.r-project.org/package=netrankr" class="external-link"><img src="http://www.r-pkg.org/badges/version/netrankr" alt="CRAN Status Badge"></a> <a href="https://CRAN.R-project.org/package=netrankr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/netrankr" alt="CRAN Downloads"></a> <a href="https://app.codecov.io/gh/schochastics/netrankr?branch=main" class="external-link"><img src="https://codecov.io/gh/schochastics/netrankr/branch/main/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://doi.org/10.21105/joss.04563" class="external-link"><img src="https://joss.theoj.org/papers/10.21105/joss.04563/status.svg" alt="JOSS"></a> <a href="https://doi.org/10.5281/zenodo.7109041" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7109041.svg" alt="DOI"></a></p>
+<p><a href="https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/schochastics/netrankr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://cran.r-project.org/package=netrankr" class="external-link"><img src="https://www.r-pkg.org/badges/version/netrankr" alt="CRAN Status Badge"></a> <a href="https://CRAN.R-project.org/package=netrankr" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/netrankr" alt="CRAN Downloads"></a> <a href="https://app.codecov.io/gh/schochastics/netrankr?branch=main" class="external-link"><img src="https://codecov.io/gh/schochastics/netrankr/branch/main/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://doi.org/10.21105/joss.04563" class="external-link"><img src="https://joss.theoj.org/papers/10.21105/joss.04563/status.svg" alt="JOSS"></a> <a href="https://doi.org/10.5281/zenodo.7109041" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7109041.svg" alt="DOI"></a></p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
@@ -140,7 +140,7 @@
 <span><span class="co">#&gt; 9  0 0 0 0 0 0 0 0 0  0  0</span></span>
 <span><span class="co">#&gt; 10 0 0 0 0 0 0 0 0 0  0  0</span></span>
 <span><span class="co">#&gt; 11 0 0 0 0 0 0 0 0 0  0  0</span></span></code></pre></div>
-<p><a href="https://doi.org/10.1017/S0956792516000401" class="external-link">Schoch &amp; Brandes (2016)</a> showed that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(u) \subseteq N[v]</annotation></semantics></math> (i.e. <code>P[u,v]=1</code>) implies <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c(u) \leq c(v)</annotation></semantics></math> for centrality indices <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>, which are defined via specific path algebras. These include many of the well-known measures like closeness (and variants), betweenness (and variants) as well as many walk-based indices (eigenvector and subgraph centrality, total communicability,…).</p>
+<p><a href="https://doi.org/10.1017/S0956792516000401" class="external-link">Schoch &amp; Brandes (2016)</a> showed that <code>P[u,v]=1</code> implies that u is less central than v for centrality indices which are defined via specific path algebras. These include many of the well-known measures like closeness (and variants), betweenness (and variants) as well as many walk-based indices (eigenvector and subgraph centrality, total communicability,…).</p>
 <p>Neighborhood-inclusion defines a partial ranking on the set of nodes. Each ranking that is in accordance with this partial ranking yields a proper centrality ranking. Each of these ranking can thus potentially be the outcome of a centrality index.</p>
 <p>Using rank intervals, we can examine the minimal and maximal possible rank of each node. The bigger the intervals are, the more freedom exists for indices to rank nodes differently.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -311,7 +311,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
