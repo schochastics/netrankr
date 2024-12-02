@@ -1,0 +1,5 @@
+project:
+  title: netrankr
+  type: default
+  render:
+    - methodshub.qmd
