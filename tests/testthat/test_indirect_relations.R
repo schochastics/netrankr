@@ -4,17 +4,17 @@ library(magrittr)
 library(Matrix)
 
 test_that("adjacency is correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(
     1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
     6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
   ))
   A <- indirect_relations(g, type = "adjacency")
-  expect_equal(A, get.adjacency(g, sparse = FALSE))
+  expect_equal(A, as_adjacency_matrix(g, sparse = FALSE))
 })
 
 test_that("shortest path distances are correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(
     1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
     6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
@@ -39,13 +39,13 @@ test_that("shortest path distances are correct", {
 
 
 test_that("walk counts are correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(
     1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
     6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
   ))
 
-  spec_decomp <- eigen(get.adjacency(g, sparse = F))
+  spec_decomp <- eigen(as_adjacency_matrix(g, sparse = F))
 
   W_spec <- spec_decomp$vectors %*% diag(exp(spec_decomp$values)) %*%
     t(spec_decomp$vectors)
@@ -55,7 +55,7 @@ test_that("walk counts are correct", {
 })
 
 test_that("walk distances are correct", {
-  g <- graph.star(4, mode = "undirected")
+  g <- make_star(4, mode = "undirected")
   expect_equal(indirect_relations(g, type = "dist_walk", dwparam = 1e-08), distances(g),
     tolerance = 1e-04
   )
@@ -63,14 +63,14 @@ test_that("walk distances are correct", {
 })
 
 test_that("resistance distance is correct", {
-  g <- graph.star(5, mode = "undirected")
+  g <- make_star(5, mode = "undirected")
   R <- indirect_relations(g, type = "dist_resist")
   D <- distances(g)
   expect_equal(R, D)
 })
 
 test_that("log forest distance is correct", {
-  g <- graph.full(5)
+  g <- make_full_graph(5)
   expect_equal(indirect_relations(g, type = "dist_lf", lfparam = 1e-10), distances(g),
     tolerance = 1e-03
   )
@@ -78,14 +78,14 @@ test_that("log forest distance is correct", {
 })
 
 test_that("random walk distance is correct", {
-  g <- graph.full(5)
+  g <- make_full_graph(5)
   D <- indirect_relations(g, type = "dist_rwalk")
   exact <- matrix(4, 5, 5) - diag(4, 5)
   expect_equal(D, exact)
 })
 
 test_that("rspx is correct", {
-  g <- graph.star(5, "undirected")
+  g <- make_star(5, "undirected")
   R <- round(indirect_relations(g, type = "depend_rsps", rspxparam = 50), 8)
   expect_equal(rowSums(R), c(12, 0, 0, 0, 0))
   set.seed(127)
@@ -98,7 +98,7 @@ test_that("rspx is correct", {
 })
 
 test_that("walk transform is correct", {
-  g <- graph.full(5, directed = FALSE)
+  g <- make_full_graph(5, directed = FALSE)
   A <- indirect_relations(g, type = "walks", FUN = walks_uptok, alpha = 1, k = 2)
   expect_equal(A, matrix(4, 5, 5))
 

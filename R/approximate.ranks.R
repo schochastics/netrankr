@@ -49,11 +49,11 @@ approx_rank_expected <- function(P, method = "lpom") {
     if (length(MSE) >= 1) {
         MSE <- t(apply(MSE, 1, sort))
         MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::graph.empty()
-        g <- igraph::add.vertices(g, nrow(P))
-        g <- igraph::add.edges(g, c(t(MSE)))
-        g <- igraph::as.undirected(g)
-        MSE <- igraph::clusters(g)$membership
+        g <- igraph::make_empty_graph()
+        g <- igraph::add_vertices(g, nrow(P))
+        g <- igraph::add_edges(g, c(t(MSE)))
+        g <- igraph::as_undirected(g)
+        MSE <- igraph::components(g)$membership
         equi <- which(duplicated(MSE))
         P <- P[-equi, -equi]
     } else {
@@ -168,11 +168,11 @@ approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
     if (length(MSE) >= 1) {
         MSE <- t(apply(MSE, 1, sort))
         MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::graph.empty()
-        g <- igraph::add.vertices(g, nrow(P))
-        g <- igraph::add.edges(g, c(t(MSE)))
-        g <- igraph::as.undirected(g)
-        MSE <- igraph::clusters(g)$membership
+        g <- igraph::make_empty_graph()
+        g <- igraph::add_vertices(g, nrow(P))
+        g <- igraph::add_edges(g, c(t(MSE)))
+        g <- igraph::as_undirected(g)
+        MSE <- igraph::components(g)$membership
         equi <- which(duplicated(MSE))
         P <- P[-equi, -equi]
     } else {

@@ -47,11 +47,11 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     if (length(MSE) >= 1) {
         MSE <- t(apply(MSE, 1, sort))
         MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::graph.empty()
-        g <- igraph::add.vertices(g, nrow(P))
-        g <- igraph::add.edges(g, c(t(MSE)))
-        g <- igraph::as.undirected(g)
-        MSE <- igraph::clusters(g)$membership
+        g <- igraph::make_empty_graph()
+        g <- igraph::add_vertices(g, nrow(P))
+        g <- igraph::add_edges(g, c(t(MSE)))
+        g <- igraph::as_undirected(g)
+        MSE <- igraph::components(g)$membership
         equi <- which(duplicated(MSE))
         P <- P[-equi, -equi]
     } else {
@@ -61,7 +61,7 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
         stop("all elements are structurally equivalent and have the same rank")
     }
 
-    init.rank <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P, "directed")))
+    init.rank <- as.vector(igraph::topo_sort(igraph::graph_from_adjacency_matrix(P, "directed")))
     if (inherits(P, "Matrix")) {
         res <- mcmc_rank_sparse(P, init.rank - 1, rp)
     } else {

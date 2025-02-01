@@ -6,11 +6,11 @@ library(Matrix)
 test_that("complete and star graph correct", {
   comp <- threshold_graph(10, 1)
   star <- threshold_graph(10, 0)
-  star_igraph <- graph.star(10, "undirected")
+  star_igraph <- make_star(10, "undirected")
 
-  expect_equal(graph.density(comp), 1)
+  expect_equal(edge_density(comp), 1)
   expect_equal(max(degree(star)), 9)
-  expect_equal(graph.density(star), graph.density(star_igraph))
+  expect_equal(edge_density(star), edge_density(star_igraph))
 })
 
 test_that("all pairs are comparable by ni", {

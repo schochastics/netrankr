@@ -23,23 +23,23 @@ hyperbolic_index <- function(g, type = "odd") {
         ENW <- rep(0, n)
         for (v in 1:n) {
             Nv <- igraph::neighborhood(g, 1, v)[[1]]
-            g1 <- igraph::induced.subgraph(g, Nv)
-            C <- igraph::get.adjacency(g1, type = "both")
+            g1 <- igraph::induced_subgraph(g, Nv)
+            C <- igraph::as_adjacency_matrix(g1, type = "both")
             eig.decomp <- eigen(C, symmetric = TRUE)
             V <- (eig.decomp$vectors)^2
             lambda <- eig.decomp$values
-            ENW[v] <- sum(V %*% cosh(lambda)) * igraph::graph.density(g1) # cosh(x)
+            ENW[v] <- sum(V %*% cosh(lambda)) * igraph::edge_density(g1) # cosh(x)
         }
     } else if (type == "odd") {
         ENW <- rep(0, n)
         for (v in 1:n) {
             Nv <- igraph::neighborhood(g, 1, v)[[1]]
-            g1 <- igraph::induced.subgraph(g, Nv)
-            C <- igraph::get.adjacency(g1, type = "both")
+            g1 <- igraph::induced_subgraph(g, Nv)
+            C <- igraph::as_adjacency_matrix(g1, type = "both")
             eig.decomp <- eigen(C, symmetric = TRUE)
             V <- (eig.decomp$vectors)^2
             lambda <- eig.decomp$values
-            ENW[v] <- sum(V %*% sinh(lambda)) * igraph::graph.density(g1) # sinh(x)
+            ENW[v] <- sum(V %*% sinh(lambda)) * igraph::edge_density(g1) # sinh(x)
         }
     } else {
         stop("type must be even or odd")

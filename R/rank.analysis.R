@@ -73,11 +73,11 @@ exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FAL
     if (length(MSE) >= 1) {
         MSE <- t(apply(MSE, 1, sort))
         MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::graph.empty()
-        g <- igraph::add.vertices(g, nrow(P))
-        g <- igraph::add.edges(g, c(t(MSE)))
-        g <- igraph::as.undirected(g)
-        MSE <- igraph::clusters(g)$membership
+        g <- igraph::make_empty_graph()
+        g <- igraph::add_vertices(g, nrow(P))
+        g <- igraph::add_edges(g, c(t(MSE)))
+        g <- igraph::as_undirected(g)
+        MSE <- igraph::components(g)$membership
         equi <- which(duplicated(MSE))
         P <- P[-equi, -equi]
     } else {
@@ -126,13 +126,13 @@ exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FAL
         stop("Input data too big. Use approximations or set `force=TRUE` if you know what you are doing")
     }
     # Prepare Data structures---------------------
-    topo.order <- as.vector(igraph::topological.sort(igraph::graph_from_adjacency_matrix(P, "directed")))
+    topo.order <- as.vector(igraph::topo_sort(igraph::graph_from_adjacency_matrix(P, "directed")))
 
     P <- P[topo.order, topo.order]
-    ImPred <- igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P, "directed"), "in")
+    ImPred <- igraph::as_adj_list(igraph::graph_from_adjacency_matrix(P, "directed"), "in")
     ImPred <- lapply(ImPred, function(x) as.vector(x) - 1)
 
-    ImSucc <- igraph::get.adjlist(igraph::graph_from_adjacency_matrix(P, "directed"), "out")
+    ImSucc <- igraph::as_adj_list(igraph::graph_from_adjacency_matrix(P, "directed"), "out")
     ImSucc <- lapply(ImSucc, function(x) as.vector(x) - 1)
     # TREEOFIDEALS ----------------------------------------------------
     if (verbose == TRUE) {
