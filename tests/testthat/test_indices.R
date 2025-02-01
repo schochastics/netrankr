@@ -3,7 +3,7 @@ library(igraph)
 library(magrittr)
 library(Matrix)
 test_that("betweenness correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(
     1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
     6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
@@ -15,7 +15,7 @@ test_that("betweenness correct", {
 })
 
 test_that("closeness correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(
     1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
     6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
@@ -26,8 +26,8 @@ test_that("closeness correct", {
   expect_equal(round(cc, 4), round(closeness(g), 4))
 })
 
-test_that("evcent correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+test_that("eigen_centrality correct", {
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(
     1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
     6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
@@ -35,11 +35,11 @@ test_that("evcent correct", {
   ec <- g %>%
     indirect_relations("walks", FUN = walks_limit_prop) %>%
     aggregate_positions(type = "sum")
-  expect_equal(round(ec / max(ec), 4), round(evcent(g)$vector, 4))
+  expect_equal(round(ec / max(ec), 4), round(eigen_centrality(g)$vector, 4))
 })
 
 test_that("subgraph centrality correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(
     1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
     6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
@@ -52,7 +52,7 @@ test_that("subgraph centrality correct", {
 })
 
 test_that("current flow betweenness correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(1, 2, 1, 3, 1, 4, 1, 5, 2, 3, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5))
   g <- add_edges(g, c(1, 2, 1, 3, 1, 4, 1, 5, 2, 3, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5) + 5)
   g <- add_edges(g, c(5, 11, 6, 11, 5, 6))
@@ -65,7 +65,7 @@ test_that("current flow betweenness correct", {
 })
 
 test_that("flow betweenness correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(1, 2, 1, 3, 1, 4, 1, 5, 2, 3, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5))
   g <- add_edges(g, c(1, 2, 1, 3, 1, 4, 1, 5, 2, 3, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5) + 5)
   g <- add_edges(g, c(5, 11, 6, 11, 5, 6))
@@ -78,7 +78,7 @@ test_that("flow betweenness correct", {
 })
 
 test_that("communicability betweenness correct", {
-  g <- graph.empty(n = 11, directed = FALSE)
+  g <- make_empty_graph(n = 11, directed = FALSE)
   g <- add_edges(g, c(1, 2, 1, 3, 1, 4, 1, 5, 2, 3, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5))
   g <- add_edges(g, c(1, 2, 1, 3, 1, 4, 1, 5, 2, 3, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5) + 5)
   g <- add_edges(g, c(5, 11, 6, 11, 5, 6))

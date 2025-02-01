@@ -3,7 +3,7 @@ library(igraph)
 library(magrittr)
 library(Matrix)
 test_that("majorization gap is correct", {
-    g <- graph.empty(n = 11, directed = FALSE)
+    g <- make_empty_graph(n = 11, directed = FALSE)
     g <- add_edges(g, c(
         1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
         6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10
@@ -16,12 +16,12 @@ test_that("majorization gap is correct", {
     expect_equal(round(majorization_gap(tg), 7), 0)
     expect_equal(majorization_gap(tg, norm = FALSE), 0)
     expect_error(majorization_gap("a"))
-    expect_error(majorization_gap(igraph::graph.full(2, directed = TRUE)))
-    expect_warning(majorization_gap(igraph::graph.full(3) + igraph::graph.full(3)))
+    expect_error(majorization_gap(igraph::make_full_graph(2, directed = TRUE)))
+    expect_warning(majorization_gap(igraph::make_full_graph(3) + igraph::make_full_graph(3)))
 })
 
 test_that("spectral gap is correct", {
-    g <- graph.star(10, "undirected")
+    g <- make_star(10, "undirected")
 
     expect_equal(spectral_gap(g, method = "frac"), 1)
     expect_equal(spectral_gap(g, method = "abs"), 3)
@@ -50,7 +50,7 @@ test_that("transitive_reduction is correct", {
 
 test_that("is_preserved is correct", {
     library(igraph)
-    g <- graph.empty(n = 11, directed = FALSE)
+    g <- make_empty_graph(n = 11, directed = FALSE)
     g <- add_edges(g, c(
         1, 11, 2, 4, 3, 5, 3, 11, 4, 8, 5, 9, 5, 11, 6, 7, 6, 8,
         6, 10, 6, 11, 7, 9, 7, 10, 7, 11, 8, 9, 8, 10, 9, 10

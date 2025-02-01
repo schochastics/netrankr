@@ -160,28 +160,28 @@ indirect_relations <- function(g,
     } else if (type == "weights") {
         if (is.null(igraph::get.edge.attribute(g, "weight"))) {
             warning('no weight attribute present. using "adjacency" instead.\n')
-            rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
+            rel <- igraph::as_adjacency_matrix(g, type = "both", sparse = FALSE, attr = NULL)
             rel <- FUN(rel, ...)
             diag(rel) <- 0
         } else {
-            rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = "weight")
+            rel <- igraph::as_adjacency_matrix(g, type = "both", sparse = FALSE, attr = "weight")
             rel <- FUN(rel, ...)
             diag(rel) <- 0
         }
     } else if (type == "adjacency") {
-        rel <- igraph::get.adjacency(g, type = "both", sparse = FALSE, attr = NULL)
+        rel <- igraph::as_adjacency_matrix(g, type = "both", sparse = FALSE, attr = NULL)
         rel <- FUN(rel, ...)
         diag(rel) <- 0
     } else if (type == "depend_sp") {
-        adj <- lapply(igraph::get.adjlist(g), function(x) x - 1)
+        adj <- lapply(igraph::as_adj_list(g), function(x) x - 1)
         rel <- dependency(adj)
     } else if (type == "walks") {
-        eigen.decomp <- eigen(igraph::get.adjacency(g, type = "both"))
+        eigen.decomp <- eigen(igraph::as_adjacency_matrix(g, type = "both"))
         lambda <- eigen.decomp$values
         X <- eigen.decomp$vectors
         rel <- X %*% diag(FUN(lambda, ...)) %*% t(X)
     } else if (type == "dist_resist") {
-        L <- igraph::graph.laplacian(g, sparse = FALSE)
+        L <- igraph::laplacian_matrix(g, sparse = FALSE)
         n <- igraph::vcount(g)
         A <- L + matrix(1 / n, n, n)
         C <- solve(A)
@@ -246,7 +246,7 @@ log_forest_fct <- function(g, lfparam) {
     n <- igraph::vcount(g)
     gamma <- log(exp(1) + lfparam^(2 / n))
 
-    L <- igraph::graph.laplacian(g, sparse = FALSE)
+    L <- igraph::laplacian_matrix(g, sparse = FALSE)
     I <- diag(1, n)
     Q <- solve(I + lfparam * L)
 
@@ -266,7 +266,7 @@ depend_netflow_fct <- function(g, netflowmode) {
     for (s in 1:n) {
         for (t in 1:n) {
             if (s != t) {
-                mflow[s, t] <- igraph::graph.maxflow(g, s, t)$value
+                mflow[s, t] <- igraph::max_flow(g, s, t)$value
             }
         }
     }
@@ -278,11 +278,11 @@ depend_netflow_fct <- function(g, netflowmode) {
     }
     flow_smat <- matrix(0, n, n)
     for (i in 1:n) {
-        g_i <- igraph::delete.vertices(g, i)
+        g_i <- igraph::delete_vertices(g, i)
         for (s in 1:n) {
             for (t in 1:n) {
                 if (i != s & s != t & i != t) {
-                    flow <- igraph::graph.maxflow(g_i, s - (s > i), t - (t > i))$value
+                    flow <- igraph::max_flow(g_i, s - (s > i), t - (t > i))$value
                     flow_smat[i, s] <- switch(netflowmode,
                         raw = flow_smat[i, s] + mflow[s, t] - flow,
                         norm = flow_smat[i, s] + mflow[s, t] - flow,
@@ -299,7 +299,7 @@ depend_netflow_fct <- function(g, netflowmode) {
 }
 
 depend_exp_fct <- function(g) {
-    A <- igraph::get.adjacency(g, "both", sparse = FALSE)
+    A <- igraph::as_adjacency_matrix(g, "both", sparse = FALSE)
     eigen_A <- eigen(A)
     n <- nrow(A)
     expA <- eigen_A$vectors %*% diag(exp(eigen_A$values)) %*% t(eigen_A$vectors)
@@ -326,7 +326,7 @@ depend_rsps_fct <- function(g, rspxparam) {
     n <- igraph::vcount(g)
     I <- diag(1, n)
 
-    A <- igraph::get.adjacency(g, sparse = FALSE)
+    A <- igraph::as_adjacency_matrix(g, sparse = FALSE)
     D <- diag(1 / igraph::degree(g))
     P_ref <- D %*% A
     C <- 1 / A
@@ -347,7 +347,7 @@ depend_rspn_fct <- function(g, rspxparam) {
     n <- igraph::vcount(g)
     I <- diag(1, n)
 
-    A <- igraph::get.adjacency(g, sparse = FALSE)
+    A <- igraph::as_adjacency_matrix(g, sparse = FALSE)
     D <- diag(1 / igraph::degree(g))
     P_ref <- D %*% A
     C <- 1 / A
@@ -356,7 +356,7 @@ depend_rspn_fct <- function(g, rspxparam) {
 
     Z <- solve((I - W), I)
     Zdiv <- 1 / Z
-    adj <- igraph::get.adjlist(g, "all")
+    adj <- igraph::as_adj_list(g, "all")
     A <- lapply(adj, function(x) as.vector(x) - 1)
     bet.mat <- dependRspn(A, Z, Zdiv, W, n)
     return(bet.mat)
@@ -365,13 +365,13 @@ depend_rspn_fct <- function(g, rspxparam) {
 depend_curflow_fct <- function(g) {
     n <- igraph::vcount(g)
     D <- diag(igraph::degree(g))
-    A <- igraph::get.adjacency(g, sparse = FALSE)
+    A <- igraph::as_adjacency_matrix(g, sparse = FALSE)
     L <- D - A
 
     Tmat <- solve(L[1:(n - 1), 1:(n - 1)])
     Tmat <- rbind(cbind(Tmat, 0), 0)
 
-    el <- igraph::get.edgelist(g, names = FALSE)
+    el <- igraph::as_edgelist(g, names = FALSE)
     m <- igraph::ecount(g)
     el <- el - 1L
 
@@ -381,7 +381,7 @@ depend_curflow_fct <- function(g) {
 
 dist_rwalk_fct <- function(g) {
     n <- igraph::vcount(g)
-    A <- igraph::get.adjacency(g, sparse = FALSE)
+    A <- igraph::as_adjacency_matrix(g, sparse = FALSE)
     M <- A / rowSums(A)
     e <- rep(1, n - 1)
     H <- matrix(0, n, n)
@@ -395,7 +395,7 @@ dist_rwalk_fct <- function(g) {
 
 dist_walk_fct <- function(g, dwparam) {
     n <- igraph::vcount(g)
-    A <- igraph::get.adjacency(g, sparse = FALSE)
+    A <- igraph::as_adjacency_matrix(g, sparse = FALSE)
     bigeig <- eigen(A, only.values = TRUE)$values[1]
     t <- (1 / dwparam + bigeig)^(-1)
     # if(dwparam > (1/bigeig)){

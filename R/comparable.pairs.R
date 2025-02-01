@@ -22,7 +22,7 @@ comparable_pairs <- function(P) {
     if (!is.binary(P)) {
         stop("P is not a binary matrix")
     }
-    igraph::graph.density(igraph::graph_from_adjacency_matrix(P, "max"))
+    igraph::edge_density(igraph::graph_from_adjacency_matrix(P, "max"))
 }
 
 #' @title Incomparable pairs in a partial order
@@ -49,5 +49,5 @@ incomparable_pairs <- function(P) {
     if (!is.binary(P)) {
         stop("P is not a binary matrix")
     }
-    igraph::graph.density(igraph::graph.complementer(igraph::graph_from_adjacency_matrix(P, "max")))
+    igraph::edge_density(igraph::complementer(igraph::graph_from_adjacency_matrix(P, "max")))
 }
