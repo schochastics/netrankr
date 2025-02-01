@@ -1,3 +1,7 @@
+# netrankr 1.2.4
+
+* added functions from archived NetSwan package
+
 # netrankr 1.2.3
 
 * removed test causing issues on some platforms

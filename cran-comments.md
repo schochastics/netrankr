@@ -1,7 +1,6 @@
-# Update from 1.2.2 to 1.2.3
+# Update from 1.2.3 to 1.2.4
 
-quick bugfix release to prevent package from being deleted from CRAN due to
-failing test
+added functions from an archived CRAN package
 
 ## Test environments
 * ubuntu 22.04, R 4.3.2
