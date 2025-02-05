@@ -2,8 +2,8 @@
 % Please edit documentation in R/netrankr.R
 \docType{package}
 \name{netrankr-package}
+\alias{netrankr}
 \alias{netrankr-package}
-\alias{_PACKAGE}
 \title{netrankr: An R package for centrality and partial rankings in networks}
 \description{
 netrankr provides several functions to analyze partial rankings for network
