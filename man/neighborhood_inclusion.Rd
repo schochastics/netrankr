@@ -30,7 +30,7 @@ centrality, total communicability,...).
 \examples{
 library(igraph)
 # the neighborhood inclusion preorder of a star graph is complete
-g <- graph.star(5, "undirected")
+g <- make_star(5, "undirected")
 P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 
