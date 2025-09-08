@@ -81,14 +81,6 @@ Network centrality allows to pinpoint influential or strategically positioned in
 The package comes with sample data that can be used to test all methods.
 An example use case can be found [here](https://schochastics.github.io/netrankr/articles/use_case.html).
 
-## Hardware Requirements
-<!--
-1. The hardware requirements section should list all requirements (storage, memory, compute, GPUs, cluster software, ...) that exceed the capabilities of a cheap virtual machine provided by cloud computing company (2 x86 CPU core, 4 GB RAM, 40GB HDD).
-2. If the method requires a GPU, the hardware requirements section must list the minimal GPU requirements (especially VRAM).
--->
-
-NetrankR runs on any hardware that can run R.
-
 ## Environment Setup
 <!--
 1. The environment setup section should list all requirements and provide all further steps to prepare an environment for running the method (installing requirements, downloading files, creating directoriees, etc.).
