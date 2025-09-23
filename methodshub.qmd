@@ -77,9 +77,10 @@ Network centrality allows to pinpoint influential or strategically positioned in
 1. The output data section should illustrate the output data format by showing a (possibly abbreviated) example item and explaining (or linking to an explanation of) the data fields.
 2. The output data section should link to a small example output file in the same repository that can be re-created (as far as the method is non-random) from the input data (as described in the section "How to Use").
 -->
+The functions within this R package produce different types of outputs.  
+To obtain help on the output formats for a function `foo()`, check the return value under `?foo`.
 
-The package comes with sample data that can be used to test all methods.
-An example use case can be found [here](https://schochastics.github.io/netrankr/articles/use_case.html).
+Sample data for all methods is available for testing. An example use case can be found [here](https://schochastics.github.io/netrankr/articles/use_case.html).
 
 ## Environment Setup
 <!--
