@@ -52,6 +52,20 @@
 <li>tests use testthat 3rd edition</li>
 <li>replaced remaining deprecated igraph calls (<code><a href="https://r.igraph.org/reference/get.edge.attribute.html" class="external-link">get.edge.attribute()</a></code>, <code><a href="https://r.igraph.org/reference/graph.density.html" class="external-link">graph.density()</a></code>, <code><a href="https://r.igraph.org/reference/get.edgelist.html" class="external-link">get.edgelist()</a></code>)</li>
 <li>removed unused OpenMP flags from Makevars</li>
+<li>
+<strong>bug fix</strong>: <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> was biased because rejected moves of the Markov chain were not counted as samples. It now also runs in O(1) per step (was O(n^2)), accepts <code>rp</code> beyond the integer range and evaluates the default <code>rp</code> before structurally equivalent nodes are collapsed</li>
+<li>
+<strong>bug fix</strong>: <code>indirect_relations(type = "depend_sp")</code> overflowed on graphs with many shortest paths. It is now also orders of magnitude faster (2000 nodes: 128s -&gt; 0.8s)</li>
+<li>
+<strong>possibly breaking</strong>: <code>indirect_relations(type = "depend_rspn")</code> counted every edge twice and omitted the 1/2 net flow factor. Values are now 1/4 of the previous ones and, as documented, converge to <code>"depend_curflow"</code>. Rankings are unaffected</li>
+<li>
+<code>depend_rspn</code> is about 3x faster and uses much less memory</li>
+<li>
+<code><a href="../reference/transitive_reduction.html">transitive_reduction()</a></code> no longer returns an empty matrix for reflexive input</li>
+<li>
+<code><a href="../reference/positional_dominance.html">positional_dominance()</a></code> errors on non-square input if <code>map = FALSE</code> instead of reading out of bounds</li>
+<li>
+<code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> no longer overflows for more than 65536 elements</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.4" id="netrankr-124">netrankr 1.2.4<a class="anchor" aria-label="anchor" href="#netrankr-124"></a></h2><p class="text-muted">CRAN release: 2025-02-05</p>

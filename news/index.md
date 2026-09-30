@@ -9,6 +9,27 @@
   [`graph.density()`](https://r.igraph.org/reference/graph.density.html),
   [`get.edgelist()`](https://r.igraph.org/reference/get.edgelist.html))
 - removed unused OpenMP flags from Makevars
+- **bug fix**:
+  [`mcmc_rank_prob()`](https://schochastics.github.io/netrankr/reference/mcmc_rank_prob.md)
+  was biased because rejected moves of the Markov chain were not counted
+  as samples. It now also runs in O(1) per step (was O(n^2)), accepts
+  `rp` beyond the integer range and evaluates the default `rp` before
+  structurally equivalent nodes are collapsed
+- **bug fix**: `indirect_relations(type = "depend_sp")` overflowed on
+  graphs with many shortest paths. It is now also orders of magnitude
+  faster (2000 nodes: 128s -\> 0.8s)
+- **possibly breaking**: `indirect_relations(type = "depend_rspn")`
+  counted every edge twice and omitted the 1/2 net flow factor. Values
+  are now 1/4 of the previous ones and, as documented, converge to
+  `"depend_curflow"`. Rankings are unaffected
+- `depend_rspn` is about 3x faster and uses much less memory
+- [`transitive_reduction()`](https://schochastics.github.io/netrankr/reference/transitive_reduction.md)
+  no longer returns an empty matrix for reflexive input
+- [`positional_dominance()`](https://schochastics.github.io/netrankr/reference/positional_dominance.md)
+  errors on non-square input if `map = FALSE` instead of reading out of
+  bounds
+- [`compare_ranks()`](https://schochastics.github.io/netrankr/reference/compare_ranks.md)
+  no longer overflows for more than 65536 elements
 
 ## netrankr 1.2.4
 
