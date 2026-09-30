@@ -5,28 +5,9 @@
 #' @author David Schoch
 #' @export
 summary.netrankr_full <- function(object, ...) {
-    # if(!"netrankr_full"%in% class(x)){
-    #   stop("x is not a netrankr_full object")
-    # }
     n <- length(object$mse)
     cat("Number of possible centrality rankings: ", object$lin.ext, "\n")
     cat("Equivalence Classes (max. possible): ", length(unique(object$mse)), " (", n, ")\n", sep = "")
-    # cat(rep("-",pmin(n,10)),"\n",sep = "")
-    # cat("Rank Probabilities (rows:nodes/cols:ranks)\n")
-    # cat(apply(object$rank.prob,1,print_bars),sep="\n")
-    # cat(rep("-",pmin(n,10)),"\n",sep = "")
-    # cat("Relative Rank Probabilities (row ranked lower than col)\n")
-    # cat(apply(object$relative.rank,1,print_bars),sep="\n")
-    # cat(rep("-",pmin(n,10)),"\n",sep = "")
-    # cat("Expected Ranks (higher values are better)\n")
-    # cat(print_bars(object$expected.rank,min = 1,max = length(unique(object$mse))),sep="\n")
-    # cat(rep("-",pmin(n,10)),"\n",sep = "")
-    # cat("SD of Rank Probabilities\n")
-    # cat(print_bars(object$rank.spread,min = 0,max = max(object$rank.spread)),sep="\n")
-    # cat(rep("-",pmin(n,10)),"\n",sep = "")
-    # if(!is.null(object$topo.order)){
-    #   cat("(no summary method available for intermediate data structures)")
-    # }
     invisible(object)
 }
 
@@ -37,9 +18,6 @@ summary.netrankr_full <- function(object, ...) {
 #' @author David Schoch
 #' @export
 print.netrankr_full <- function(x, ...) {
-    # if(!"netrankr_full"%in% class(x)){
-    #   stop("x is not a netrankr_full object")
-    # }
     n <- length(x$mse)
     cat("Number of possible centrality rankings: ", x$lin.ext, "\n")
     cat("Equivalence Classes (max. possible): ", length(unique(x$mse)), " (", n, ")\n", sep = "")
@@ -82,6 +60,7 @@ plot.netrankr_full <- function(x, icols = NULL,
         )
     }
     op <- par(no.readonly = TRUE)
+    on.exit(par(op))
 
     layout.matrix <- matrix(c(1, 1, 2, 2, 5, 3, 3, 4, 4, 0), nrow = 2, ncol = 5, byrow = TRUE)
 
@@ -134,7 +113,6 @@ plot.netrankr_full <- function(x, icols = NULL,
     axis(4)
     box()
 
-    on.exit(par(op))
     invisible(NULL)
 }
 
@@ -162,13 +140,10 @@ as.matrix.netrankr_full <- function(x, type = "rank", ...) {
 #' @author David Schoch
 #' @export
 print.netrankr_interval <- function(x, ...) {
-    # if(!"netrankr_interval"%in% class(x)){
-    #   stop("x is not a netrankr_interval object")
-    # }
     prows <- min(c(nrow(x), getOption("max.print")))
-    int_string <- paste0("node:", x$node, " rank interval: [", x$min_rank, ", ", x$max_rank, "]", "\n", sep = "")
-    int_string <- int_string[1:prows]
-    cat("", int_string)
+    int_string <- paste0("node:", x$node, " rank interval: [", x$min_rank, ", ", x$max_rank, "]\n")
+    cat(int_string[seq_len(prows)], sep = "")
+    invisible(x)
 }
 
 #' @title plot netrankr_interval objects
@@ -188,7 +163,8 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
     if (!is.null(cent_scores)) {
         m <- ncol(cent_scores)
         op <- par(mar = c(4, 4, 6, 4), xpd = TRUE)
-        cent_rk_wide <- as.data.frame(apply(cent_scores[ord, ], 2, rank, ties.method = ties.method))
+        on.exit(par(op))
+        cent_rk_wide <- as.data.frame(apply(as.matrix(cent_scores)[ord, , drop = FALSE], 2, rank, ties.method = ties.method))
         cent_rk_long <- cbind(id = (seq_len(nrow(x))), stack(cent_rk_wide))
         if (is.null(cent_cols)) {
             if (m <= 8) {
@@ -199,7 +175,11 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
                     "#FFC5D0", "#FBC9BF", "#F1CEB0", "#E2D4A8", "#CFDAA8", "#BBDEB1",
                     "#A8E1BF", "#9BE2D0", "#9AE1E1", "#A4DDEF", "#B8D8F8", "#CFD1FC",
                     "#E4CBF9", "#F4C6EF", "#FDC4E1"
-                )[seq_len(ncol(cent_scores))]
+                )
+                if (m > length(cent_cols)) {
+                    cent_cols <- grDevices::rainbow(m)
+                }
+                cent_cols <- cent_cols[seq_len(m)]
             }
         } else if (length(cent_cols) != ncol(cent_scores)) {
             stop("the number of colors must equal the number of columns in cent_score.")
@@ -231,7 +211,6 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
             legend = names(cent_rk_wide),
             col = cent_cols, pch = 20
         )
-        on.exit(par(op))
     }
     invisible(NULL)
 }
@@ -244,10 +223,6 @@ plot.netrankr_interval <- function(x, cent_scores = NULL, cent_cols = NULL, ties
 #' @author David Schoch
 #' @export
 print.netrankr_mcmc <- function(x, ...) {
-    # if(!"netrankr_mcmc"%in% class(x)){
-    #   stop("x is not a netrankr_mcmc object")
-    # }
-    # maxpr  <- getOption("width")
     cat("MCMC approximated Relative Rank Probabilities (row ranked lower than col)\n")
     print(x$relative.rank)
     cat(rep("-", 10), "\n")
@@ -268,6 +243,7 @@ print.netrankr_mcmc <- function(x, ...) {
 #' @export
 plot.netrankr_mcmc <- function(x, icols = NULL, bcol = "grey66", ...) {
     op <- par(no.readonly = TRUE)
+    on.exit(par(op))
 
     if (is.null(icols)) {
         icols <- c(
@@ -310,14 +286,6 @@ plot.netrankr_mcmc <- function(x, icols = NULL, bcol = "grey66", ...) {
         ylab = "", col = c("white", icols), breaks = breaks, useRaster = TRUE
     )
 
-    on.exit(par(op))
     invisible(NULL)
 }
 
-is.binary <- function(x) {
-    if (inherits(x, "Matrix")) {
-        all(x@x == 1)
-    } else {
-        all(x %in% c(0, 1))
-    }
-}

@@ -52,46 +52,26 @@
 #' res <- exact_rank_prob(P)
 #' @export
 exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FALSE) {
-    if (!inherits(P, "Matrix") && !is.matrix(P)) {
-        stop("P must be a dense or spare matrix")
-    }
-    if (!is.binary(P)) {
-        stop("P is not a binary matrix")
-    }
+    P <- check_partial_order(P)
     # convert to dense matrix-----------------------------------------
     # exact_rank_prob only works with small matrices. Hence, we can safely convert
     # to a dense matrix
     P <- as.matrix(P)
     # Check for names ------------------------------------------------
-    if (is.null(rownames(P)) & is.null(colnames(P))) {
+    if (is.null(rownames(P)) && is.null(colnames(P))) {
         rownames(P) <- colnames(P) <- paste0("V", seq_len(nrow(P)))
     }
-    n_full <- nrow(P)
     P_full <- P
     # Equivalence classes ------------------------------------------------
-    MSE <- which((P + t(P)) == 2, arr.ind = TRUE)
-    if (length(MSE) >= 1) {
-        MSE <- t(apply(MSE, 1, sort))
-        MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::make_empty_graph()
-        g <- igraph::add_vertices(g, nrow(P))
-        g <- igraph::add_edges(g, c(t(MSE)))
-        g <- igraph::as_undirected(g)
-        MSE <- igraph::components(g)$membership
-        equi <- which(duplicated(MSE))
-        P <- P[-equi, -equi]
-    } else {
-        MSE <- seq_len(nrow(P))
-    }
-    if (length(unique(MSE)) == 1) {
-        stop("all elements are structurally equivalent and have the same rank")
-    }
-    # names <- rownames(P)
+    reduced <- collapse_mse(P)
+    P <- reduced$P
+    MSE <- reduced$mse
     # number of Elements
     nElem <- nrow(P)
 
     # check for linear order ---------------------------------------------
-    if (comparable_pairs(P) == 1) {
+    comp_pairs <- comparable_pairs(P)
+    if (comp_pairs == 1) {
         warning("P is already a ranking.\nExpected Ranks correspond to the only possible ranking.")
         expected_full <- rank(colSums(P_full), ties.method = "max")
         rank.spread_full <- rep(0, nrow(P_full))
@@ -122,7 +102,7 @@ exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FAL
     }
 
     # sanity check if applicable ------------------------------------------------
-    if (nrow(P) > 40 & comparable_pairs(P) < 0.4 & force == F) {
+    if (nrow(P) > 40 && comp_pairs < 0.4 && !force) {
         stop("Input data too big. Use approximations or set `force=TRUE` if you know what you are doing")
     }
     # Prepare Data structures---------------------
@@ -143,10 +123,9 @@ exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FAL
     if (verbose == TRUE) {
         print("tree of ideals built")
     }
-    Ek <- sapply(0:(nElem - 1), function(x) {
+    Ek <- lapply(0:(nElem - 1), function(x) {
         which(tree$label == x) - 1
     })
-    # tree$child=lapply(tree$child,function(x) {idx=order(tree$label[x+1],decreasing=T);x[idx]})
     if (verbose == TRUE) {
         print("building lattice of Ideals")
     }
@@ -156,7 +135,6 @@ exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FAL
         print("lattice of ideals built")
     }
     ideallist <- listingIdeals(ImSucc, nElem, nIdeals)
-    # ideallist=lapply(ideallist,sort)
 
     if (verbose == TRUE) {
         print("ideals listed")
@@ -181,63 +159,34 @@ exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FAL
 
     ###############################
     # Insert equivalent nodes again ----
-    rp_full <- matrix(0, n_full, ncol(res$rp))
-    mrp_full <- matrix(0, n_full, n_full)
-    expected_full <- c(0, n_full)
-    rank.spread_full <- rep(0, n_full)
-    for (i in sort(unique(MSE))) {
-        idx <- which(MSE == i)
-        if (length(idx) > 1) {
-            group.head <- i
-            rp_full[idx, ] <- do.call(rbind, replicate(length(idx), res$rp[group.head, ], simplify = FALSE))
-            mrp_full[idx, ] <- do.call(rbind, replicate(length(idx), res$mrp[group.head, MSE], simplify = FALSE))
-            rank.spread_full[idx] <- rank.spread[group.head]
-        } else if (length(idx) == 1) {
-            rp_full[idx, ] <- res$rp[i, ]
-            mrp_full[idx, ] <- res$mrp[i, MSE]
-            rank.spread_full[idx] <- rank.spread[i]
-        }
-    }
-    expected_full <- expected[MSE]
-    for (val in sort(unique(expected_full), decreasing = TRUE)) {
-        idx <- which(expected_full == val)
-        expected_full[idx] <- expected_full[idx] + sum(duplicated(MSE[expected_full <= val]))
-    }
+    rp_full <- res$rp[MSE, , drop = FALSE]
+    mrp_full <- res$mrp[MSE, MSE, drop = FALSE]
+    rank.spread_full <- rank.spread[MSE]
+    expected_full <- expand_expected(expected, MSE)
     # add names
     rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
     names(expected_full) <- names(rank.spread_full) <- rownames(P_full)
     colnames(rp_full) <- seq_len(ncol(rp_full))
 
     ###############################
-    if (only.results) {
-        res <- list(
-            lin.ext = res$linext,
-            mse = MSE,
-            rank.prob = rp_full,
-            relative.rank = t(mrp_full),
-            expected.rank = expected_full,
-            rank.spread = sqrt(rank.spread_full),
-            topo.order = NULL,
-            tree = NULL,
-            lattice = NULL,
-            ideals = NULL
-        )
-        class(res) <- "netrankr_full"
-        return(res)
-    } else {
-        res <- list(
-            lin.ext = res$linext,
-            mse = MSE,
-            rank.prob = rp_full,
-            relative.rank = t(mrp_full),
-            expected.rank = expected_full,
-            rank.spread = sqrt(rank.spread_full),
-            topo.order = topo.order,
-            tree = tree,
-            lattice = latofI,
-            ideals = ideallist
-        )
-        class(res) <- "netrankr_full"
-        return(res)
+    res <- list(
+        lin.ext = res$linext,
+        mse = MSE,
+        rank.prob = rp_full,
+        relative.rank = t(mrp_full),
+        expected.rank = expected_full,
+        rank.spread = sqrt(rank.spread_full),
+        topo.order = NULL,
+        tree = NULL,
+        lattice = NULL,
+        ideals = NULL
+    )
+    if (!only.results) {
+        res$topo.order <- topo.order
+        res$tree <- tree
+        res$lattice <- latofI
+        res$ideals <- ideallist
     }
+    class(res) <- "netrankr_full"
+    res
 }

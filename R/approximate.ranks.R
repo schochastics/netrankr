@@ -37,34 +37,16 @@
 #' approx_rank_expected(P, method = "glpom")
 #' @export
 approx_rank_expected <- function(P, method = "lpom") {
-    if (!inherits(P, "Matrix") && !is.matrix(P)) {
-        stop("P must be a dense or spare matrix")
-    }
-    if (!is.binary(P)) {
-        stop("P is not a binary matrix")
-    }
+    method <- match.arg(method, c("lpom", "glpom", "loof1", "loof2"))
+    P <- check_partial_order(P)
 
     # Equivalence classes ------------------------------------------------
-    MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = TRUE)
-    if (length(MSE) >= 1) {
-        MSE <- t(apply(MSE, 1, sort))
-        MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::make_empty_graph()
-        g <- igraph::add_vertices(g, nrow(P))
-        g <- igraph::add_edges(g, c(t(MSE)))
-        g <- igraph::as_undirected(g)
-        MSE <- igraph::components(g)$membership
-        equi <- which(duplicated(MSE))
-        P <- P[-equi, -equi]
-    } else {
-        MSE <- seq_len(nrow(P))
+    reduced <- collapse_mse(P)
+    P <- reduced$P
+    MSE <- reduced$mse
+    if (method != "lpom") {
+        P <- as.matrix(P)
     }
-    if (length(unique(MSE)) == 1) {
-        stop("all elements are structurally equivalent and have the same rank")
-    }
-
-    # number of Elements
-    n <- length(names)
 
     g <- igraph::graph_from_adjacency_matrix(P, "directed")
     n <- nrow(P)
@@ -74,56 +56,36 @@ approx_rank_expected <- function(P, method = "lpom") {
         r.approx <- (sx + 1) * (n + 1) / (n + 1 - ix)
         r.approx <- unname(r.approx)
     } else if (method == "glpom") {
+        storage.mode(P) <- "double"
         r.approx <- approx_glpom(P)
     } else if (method == "loof1") {
-        P <- P + diag(1, n)
         s <- igraph::degree(g, mode = "in")
         l <- igraph::degree(g, mode = "out")
-        r.approx <- s + 1
-        for (x in 1:n) {
-            Ix <- which(P[x, ] == 0 & P[, x] == 0)
-            for (y in Ix) {
-                approx.rank <- ((s[x] + 1) * (l[y] + 1))
-                approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
-                r.approx[x] <- r.approx[x] + approx.rank / approx.num.ranks
-            }
-        }
+        incomp <- incomparable_matrix(P)
+        r.approx <- s + 1 + rowSums(loof_term(s, l, incomp))
     } else if (method == "loof2") {
-        P <- P + diag(1, n)
         s <- igraph::degree(g, mode = "in")
         l <- igraph::degree(g, mode = "out")
-        s.approx <- s
-        l.approx <- l
-        for (x in 1:n) {
-            Ix <- which(P[x, ] == 0 & P[, x] == 0)
-            for (y in Ix) {
-                s.approx[x] <- s.approx[x] + .sl.approx(s[x], s[y], l[x], l[y])
-                l.approx[x] <- l.approx[x] + .sl.approx(s[y], s[x], l[y], l[x])
-            }
-        }
-        r.approx <- s + 1
-        s <- s.approx
-        l <- l.approx
-        for (x in 1:n) {
-            Ix <- which(P[x, ] == 0 & P[, x] == 0)
-            for (y in Ix) {
-                approx.rank <- ((s[x] + 1) * (l[y] + 1))
-                approx.num.ranks <- ((s[x] + 1) * (l[y] + 1) + (s[y] + 1) * (l[x] + 1))
-                r.approx[x] <- r.approx[x] + approx.rank / approx.num.ranks
-            }
-        }
+        incomp <- incomparable_matrix(P)
+        term <- loof_term(s, l, incomp)
+        s.approx <- s + rowSums(term)
+        l.approx <- l + rowSums(incomp) - rowSums(term)
+        r.approx <- s + 1 + rowSums(loof_term(s.approx, l.approx, incomp))
     }
-    expected.full <- unname(r.approx[MSE])
-    for (val in sort(unique(expected.full), decreasing = TRUE)) {
-        idx <- which(expected.full == val)
-        expected.full[idx] <- expected.full[idx] +
-            sum(duplicated(MSE[expected.full <= val]))
-    }
-    return(expected.full)
+    expand_expected(r.approx, MSE)
 }
 
-.sl.approx <- function(sx, sy, lx, ly) {
-    ((sx + 1) * (ly + 1)) / ((sx + 1) * (ly + 1) + (sy + 1) * (lx + 1))
+# incomp[x, y] = 1 if x and y are distinct and incomparable
+incomparable_matrix <- function(P) {
+    incomp <- (P == 0 & t(P) == 0) + 0
+    diag(incomp) <- 0
+    incomp
+}
+
+# term[x, y] = (s_x + 1)(l_y + 1) / ((s_x + 1)(l_y + 1) + (s_y + 1)(l_x + 1)) for incomparable x, y
+loof_term <- function(s, l, incomp) {
+    num <- outer(s + 1, l + 1)
+    incomp * num / (num + outer(l + 1, s + 1))
 }
 #############################
 #' @title Approximation of relative rank probabilities
@@ -155,47 +117,16 @@ approx_rank_expected <- function(P, method = "lpom") {
 #' approx_rank_relative(P, iterative = TRUE)
 #' @export
 approx_rank_relative <- function(P, iterative = TRUE, num.iter = 10) {
-    if (!inherits(P, "Matrix") && !is.matrix(P)) {
-        stop("P must be a dense or spare matrix")
-    }
-    if (!is.binary(P)) {
-        stop("P is not a binary matrix")
-    }
+    P <- check_partial_order(P)
 
     # Equivalence classes ------------------------------------------------
-    MSE <- Matrix::which((P + Matrix::t(P)) == 2, arr.ind = T)
-
-    if (length(MSE) >= 1) {
-        MSE <- t(apply(MSE, 1, sort))
-        MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::make_empty_graph()
-        g <- igraph::add_vertices(g, nrow(P))
-        g <- igraph::add_edges(g, c(t(MSE)))
-        g <- igraph::as_undirected(g)
-        MSE <- igraph::components(g)$membership
-        equi <- which(duplicated(MSE))
-        P <- P[-equi, -equi]
-    } else {
-        MSE <- seq_len(nrow(P))
-    }
-
-    if (length(unique(MSE)) == 1) {
-        stop("all elements are structurally equivalent and have the same rank")
-    }
+    reduced <- collapse_mse(P)
+    P <- as.matrix(reduced$P)
+    storage.mode(P) <- "integer"
+    MSE <- reduced$mse
 
     relative.rank <- approx_relative(colSums(P), rowSums(P), P, iterative, num.iter)
-    mrp.full <- matrix(0, length(MSE), length(MSE))
-    for (i in sort(unique(MSE))) {
-        idx <- which(MSE == i)
-        if (length(idx) > 1) {
-            group.head <- i
-            mrp.full[idx, ] <- do.call(rbind, replicate(length(idx), relative.rank[group.head, MSE], simplify = FALSE))
-        } else if (length(idx) == 1) {
-            group.head <- idx
-            mrp.full[group.head, ] <- relative.rank[i, MSE]
-        }
-    }
-
+    mrp.full <- relative.rank[MSE, MSE, drop = FALSE]
     diag(mrp.full) <- 0
     return(mrp.full)
 }

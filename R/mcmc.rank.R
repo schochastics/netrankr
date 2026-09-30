@@ -30,15 +30,11 @@
 #' }
 #' @export
 mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
+    # evaluate the default before P is reduced to its equivalence classes
     force(rp)
+    P <- check_partial_order(P)
     if (!is.numeric(rp) || length(rp) != 1 || is.na(rp) || rp < 1) {
         stop("rp must be a positive number")
-    }
-    if (!inherits(P, "Matrix") && !is.matrix(P)) {
-        stop("P must be a dense or spare matrix")
-    }
-    if (!is.binary(P)) {
-        stop("P is not a binary matrix")
     }
 
     if (is.null(rownames(P)) && is.null(colnames(P))) {
@@ -46,45 +42,16 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     } else {
         name_vec <- rownames(P)
     }
-    n.full <- nrow(P)
-    MSE <- Matrix::which(P == Matrix::t(P) & P == 1, arr.ind = TRUE)
-    if (length(MSE) >= 1) {
-        MSE <- t(apply(MSE, 1, sort))
-        MSE <- MSE[!duplicated(MSE), ]
-        g <- igraph::make_empty_graph()
-        g <- igraph::add_vertices(g, nrow(P))
-        g <- igraph::add_edges(g, c(t(MSE)))
-        g <- igraph::as_undirected(g)
-        MSE <- igraph::components(g)$membership
-        equi <- which(duplicated(MSE))
-        P <- P[-equi, -equi]
-    } else {
-        MSE <- seq_len(nrow(P))
-    }
-    if (length(unique(MSE)) == 1) {
-        stop("all elements are structurally equivalent and have the same rank")
-    }
+    reduced <- collapse_mse(P)
+    P <- as.matrix(reduced$P)
+    storage.mode(P) <- "integer"
+    MSE <- reduced$mse
 
     init.rank <- as.vector(igraph::topo_sort(igraph::graph_from_adjacency_matrix(P, "directed")))
-    P <- as.matrix(P)
-    storage.mode(P) <- "integer"
     res <- mcmc_rank_dense(P, init.rank - 1, floor(rp))
     res$expected <- res$expected + 1
-    rrp.full <- matrix(0, n.full, n.full)
-    for (i in sort(unique(MSE))) {
-        idx <- which(MSE == i)
-        if (length(idx) > 1) {
-            group.head <- i
-            rrp.full[idx, ] <- do.call(rbind, replicate(length(idx), res$rrp[group.head, MSE], simplify = FALSE))
-        } else if (length(idx) == 1) {
-            rrp.full[idx, ] <- res$rrp[i, MSE]
-        }
-    }
-    expected.full <- res$expected[MSE]
-    for (val in sort(unique(expected.full), decreasing = TRUE)) {
-        idx <- which(expected.full == val)
-        expected.full[idx] <- expected.full[idx] + sum(duplicated(MSE[expected.full <= val]))
-    }
+    rrp.full <- res$rrp[MSE, MSE, drop = FALSE]
+    expected.full <- expand_expected(res$expected, MSE)
     rownames(rrp.full) <- colnames(rrp.full) <- names(expected.full) <- name_vec
     res <- list(relative.rank = rrp.full, expected.rank = expected.full)
     class(res) <- "netrankr_mcmc"

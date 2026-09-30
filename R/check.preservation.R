@@ -20,8 +20,16 @@
 #' is_preserved(P, closeness(dbces11))
 #' @export
 is_preserved <- function(P, scores) {
-    n <- nrow(P)
-    preserved <- preserve(as.matrix(P), scores, n) == 0
+    P <- check_partial_order(P)
+    if (!is.numeric(scores) || length(scores) != nrow(P)) {
+        stop("scores must be a numeric vector with one entry per row of P")
+    }
+    if (anyNA(scores)) {
+        stop("scores must not contain NA")
+    }
+    P <- as.matrix(P)
+    storage.mode(P) <- "integer"
+    preserved <- preserve(P, as.numeric(scores), nrow(P)) == 0
 
     return(preserved)
 }

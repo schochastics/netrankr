@@ -11,17 +11,15 @@ rank_intervals(P)
 or \link{positional_dominance}.}
 }
 \value{
-An object of type netrankr_interval
+An object of type netrankr_interval, a data frame with columns
+\code{node}, \code{min_rank} and \code{max_rank}.
 }
 \description{
 Calculate the maximal and minimal rank possible for each node
 in any ranking that is in accordance with the partial ranking \code{P}.
 }
 \details{
-Note that the returned \code{mid_point} is not the same as the expected
-rank, for instance computed with \link{exact_rank_prob}.
-It is simply the average of \code{min_rank} and \code{max_rank}. For exact rank probabilities
-use \link{exact_rank_prob}.
+For exact rank probabilities use \link{exact_rank_prob}.
 }
 \examples{
 P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)

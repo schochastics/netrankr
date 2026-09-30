@@ -37,7 +37,7 @@ test_that("transitive_reduction ignores a reflexive diagonal", {
     R <- matrix(0, 3, 3)
     R[1, 2] <- R[2, 3] <- 1
     expect_equal(transitive_reduction(P), R)
-    expect_equal(transitive_reduction(P + diag(3)), R)
+    expect_warning(expect_equal(transitive_reduction(P + diag(3)), R), "diagonal")
 })
 
 test_that("positional_dominance rejects non-square one-mode input", {

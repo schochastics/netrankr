@@ -17,8 +17,12 @@
 #' @export
 
 get_rankings <- function(data, force = FALSE) {
-    if (!"netrankr_full" %in% class(data)) {
+    if (!inherits(data, "netrankr_full")) {
         stop("data is not a netrankr_full object")
+    }
+    if (data$lin.ext == 1) {
+        # P is already a ranking
+        return(matrix(unname(data$expected.rank), ncol = 1))
     }
 
     if (is.null(data$tree)) {
@@ -31,8 +35,7 @@ get_rankings <- function(data, force = FALSE) {
     mse <- data$mse
 
     if (linext > 50000 && !force) {
-        stop("number of possible rankings is very high. Use 'force = FALSE'
-           if you know what you are doing.")
+        stop("number of possible rankings is very high. Use 'force = TRUE' if you know what you are doing.")
     }
 
     n <- length(unique(mse))
@@ -40,7 +43,7 @@ get_rankings <- function(data, force = FALSE) {
     g <- igraph::graph_from_adj_list(lattice, mode = "in")
     paths <- igraph::all_shortest_paths(g, from = n + 1, to = 1)
 
-    paths <- lapply(paths$res, function(x) as.vector(x) - 1)
+    paths <- lapply(paths$vpaths, function(x) as.vector(x) - 1)
     rks <- rankings(paths, ideals, linext, n)
     rks <- rks + 1
     rks <- rks[order(topo.order), ]

@@ -16,6 +16,7 @@
 #' sum(R)
 #' @export
 transitive_reduction <- function(P) {
+    P <- check_partial_order(P)
     B <- transreduct(as.matrix(P))
     return(B)
 }

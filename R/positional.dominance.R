@@ -46,24 +46,37 @@
 
 positional_dominance <- function(A, type = "one-mode", map = FALSE, benefit = TRUE) {
     if (!inherits(A, "Matrix") && !is.matrix(A)) {
-        stop("A must be a dense or spare matrix")
+        stop("A must be a dense or sparse matrix")
     }
+    type <- match.arg(type, c("one-mode", "two-mode"))
+    A <- as.matrix(A)
+    if (anyNA(A)) {
+        stop("A must not contain NA")
+    }
+    storage.mode(A) <- "double"
 
-    if (grepl("one", type)) {
+    if (type == "one-mode") {
+        if (!map && nrow(A) != ncol(A)) {
+            stop("A must be a square matrix for one-mode data if map = FALSE")
+        }
         D <- matdom(A, map, benefit)
-    } else if (grepl("two", type)) {
-        # should be implemented in C++
-        fct <- function(x, y) all(x <= y) + 0
-        vecfct <- Vectorize(fct)
-        r.rows <- split(A, row(A))
-        D <- outer(r.rows, r.rows, vecfct)
-        diag(D) <- 0
+    } else if (map) {
+        # sorting rows makes the comparison independent of the columns
+        D <- matdom(A, TRUE, benefit)
+    } else {
+        X <- if (benefit) A else -A
+        tX <- t(X)
+        D <- t(vapply(seq_len(nrow(X)), function(u) {
+            as.integer(colSums(tX >= X[u, ]) == ncol(X))
+        }, integer(nrow(X))))
+        diag(D) <- 0L
     }
-    if (!is.null(rownames(A))) {
-        rownames(D) <- rownames(A)
+    node_names <- rownames(A)
+    if (is.null(node_names) && type == "one-mode" && nrow(A) == ncol(A)) {
+        node_names <- colnames(A)
     }
-    if (!is.null(colnames(A))) {
-        colnames(D) <- colnames(A)
+    if (!is.null(node_names)) {
+        dimnames(D) <- list(node_names, node_names)
     }
     return(D)
 }

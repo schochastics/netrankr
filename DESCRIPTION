@@ -25,7 +25,6 @@ Imports: igraph (>= 2.1.0),
     Rcpp (>= 0.12.8),
     Matrix
 LinkingTo: Rcpp,RcppArmadillo
-RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
@@ -38,3 +37,4 @@ Suggests:
     covr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.0
