@@ -33,9 +33,9 @@ library(igraph)
 g <- threshold_graph(100, 0.1)
 P <- neighborhood_inclusion(g)
 sum(P)
-#> [1] 5379
+#> [1] 5417
 
 R <- transitive_reduction(P)
 sum(R)
-#> [1] 175
+#> [1] 179
 ```

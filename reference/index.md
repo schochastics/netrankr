@@ -46,8 +46,6 @@
   : plot netrankr_interval objects
 - [`plot(`*`<netrankr_mcmc>`*`)`](https://schochastics.github.io/netrankr/reference/plot.netrankr_mcmc.md)
   : Plot netrankr_mcmc object
-- [`plot_rank_intervals()`](https://schochastics.github.io/netrankr/reference/plot_rank_intervals.md)
-  : Plot rank intervals
 - [`positional_dominance()`](https://schochastics.github.io/netrankr/reference/positional_dominance.md)
   : Generalized Dominance Relations
 - [`print(`*`<netrankr_full>`*`)`](https://schochastics.github.io/netrankr/reference/print.netrankr_full.md)

@@ -48,17 +48,17 @@ P <- g %>% neighborhood_inclusion(sparse = FALSE)
 rank_intervals(P)
 ```
 
-    ##  node:A rank interval: [1, 6]
-    ##  node:B rank interval: [1, 9]
-    ##  node:C rank interval: [2, 9]
-    ##  node:D rank interval: [2, 11]
-    ##  node:E rank interval: [3, 11]
-    ##  node:F rank interval: [2, 11]
-    ##  node:G rank interval: [2, 11]
-    ##  node:H rank interval: [2, 11]
-    ##  node:I rank interval: [1, 11]
-    ##  node:J rank interval: [1, 11]
-    ##  node:K rank interval: [3, 11]
+    ## node:A rank interval: [1, 6]
+    ## node:B rank interval: [1, 9]
+    ## node:C rank interval: [2, 9]
+    ## node:D rank interval: [2, 11]
+    ## node:E rank interval: [3, 11]
+    ## node:F rank interval: [2, 11]
+    ## node:G rank interval: [2, 11]
+    ## node:H rank interval: [2, 11]
+    ## node:I rank interval: [1, 11]
+    ## node:J rank interval: [1, 11]
+    ## node:K rank interval: [3, 11]
 
 The package uses the convention, that higher numerical ranks correspond
 to top ranked position. The lowest possible rank is thus 1. The column

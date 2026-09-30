@@ -30,6 +30,35 @@
   bounds
 - [`compare_ranks()`](https://schochastics.github.io/netrankr/reference/compare_ranks.md)
   no longer overflows for more than 65536 elements
+- all functions taking a partial ranking `P` share one input validation:
+  non-square input and `NA` are errors, and a non-zero diagonal is set
+  to 0 with a warning (previously it caused crashes, `NA`s or silently
+  wrong results)
+- sparse (including pattern) and dense `Matrix` input now works in
+  [`approx_rank_expected()`](https://schochastics.github.io/netrankr/reference/approx_rank_expected.md),
+  [`approx_rank_relative()`](https://schochastics.github.io/netrankr/reference/approx_rank_relative.md),
+  [`mcmc_rank_prob()`](https://schochastics.github.io/netrankr/reference/mcmc_rank_prob.md)
+  and
+  [`positional_dominance()`](https://schochastics.github.io/netrankr/reference/positional_dominance.md)
+- **bug fix**: `positional_dominance(type = "two-mode")` failed for
+  matrices with column names and ignored `benefit` and `map`
+- [`neighborhood_inclusion()`](https://schochastics.github.io/netrankr/reference/neighborhood_inclusion.md)
+  simplifies graphs with loops or multiple edges (with a warning); these
+  previously gave a wrong preorder
+- [`compare_ranks()`](https://schochastics.github.io/netrankr/reference/compare_ranks.md)
+  and
+  [`is_preserved()`](https://schochastics.github.io/netrankr/reference/is_preserved.md)
+  error on `NA` and on invalid input instead of returning wrong counts
+  or reading out of bounds
+- [`approx_rank_expected()`](https://schochastics.github.io/netrankr/reference/approx_rank_expected.md)
+  validates `method`; the “loof1” and “loof2” methods are vectorised
+- [`get_rankings()`](https://schochastics.github.io/netrankr/reference/get_rankings.md)
+  returns the single ranking for linear orders
+- plot methods restore [`par()`](https://rdrr.io/r/graphics/par.html)
+  also on error and handle a single index and more than 15 indices
+- [`print.netrankr_interval()`](https://schochastics.github.io/netrankr/reference/print.netrankr_interval.md)
+  returns its input invisibly
+- removed the unexported, deprecated `plot_rank_intervals()`
 
 ## netrankr 1.2.4
 
@@ -120,8 +149,7 @@ CRAN release: 2021-07-16
   with print and plot functions
   ([\#8](https://github.com/schochastics/netrankr/issues/8))
 - added `dbces11` graph (smallest graph with 5 different centers)
-- [`plot_rank_intervals()`](https://schochastics.github.io/netrankr/reference/plot_rank_intervals.md)
-  is now deprecated
+- `plot_rank_intervals()` is now deprecated
 - ggplot2 no longer suggested
 
 ## netrankr 0.3.0
@@ -189,8 +217,7 @@ CRAN release: 2018-01-08
 
 - most function reimplemented in C++ for efficiency.
 - vignettes added: `browseVignettes("netrankr")`
-- added visualization function
-  [`plot_rank_intervals()`](https://schochastics.github.io/netrankr/reference/plot_rank_intervals.md)
+- added visualization function `plot_rank_intervals()`
 - spell checked and extended help
 
 ## netrankr 0.0.1-0.0.4

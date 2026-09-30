@@ -66,6 +66,25 @@
 <code><a href="../reference/positional_dominance.html">positional_dominance()</a></code> errors on non-square input if <code>map = FALSE</code> instead of reading out of bounds</li>
 <li>
 <code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> no longer overflows for more than 65536 elements</li>
+<li>all functions taking a partial ranking <code>P</code> share one input validation: non-square input and <code>NA</code> are errors, and a non-zero diagonal is set to 0 with a warning (previously it caused crashes, <code>NA</code>s or silently wrong results)</li>
+<li>sparse (including pattern) and dense <code>Matrix</code> input now works in <code><a href="../reference/approx_rank_expected.html">approx_rank_expected()</a></code>, <code><a href="../reference/approx_rank_relative.html">approx_rank_relative()</a></code>, <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> and <code><a href="../reference/positional_dominance.html">positional_dominance()</a></code>
+</li>
+<li>
+<strong>bug fix</strong>: <code>positional_dominance(type = "two-mode")</code> failed for matrices with column names and ignored <code>benefit</code> and <code>map</code>
+</li>
+<li>
+<code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> simplifies graphs with loops or multiple edges (with a warning); these previously gave a wrong preorder</li>
+<li>
+<code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> and <code><a href="../reference/is_preserved.html">is_preserved()</a></code> error on <code>NA</code> and on invalid input instead of returning wrong counts or reading out of bounds</li>
+<li>
+<code><a href="../reference/approx_rank_expected.html">approx_rank_expected()</a></code> validates <code>method</code>; the “loof1” and “loof2” methods are vectorised</li>
+<li>
+<code><a href="../reference/get_rankings.html">get_rankings()</a></code> returns the single ranking for linear orders</li>
+<li>plot methods restore <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> also on error and handle a single index and more than 15 indices</li>
+<li>
+<code><a href="../reference/print.netrankr_interval.html">print.netrankr_interval()</a></code> returns its input invisibly</li>
+<li>removed the unexported, deprecated <code>plot_rank_intervals()</code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.4" id="netrankr-124">netrankr 1.2.4<a class="anchor" aria-label="anchor" href="#netrankr-124"></a></h2><p class="text-muted">CRAN release: 2025-02-05</p>
@@ -123,7 +142,7 @@
 <li>added S3 class <code>netrankr_mcmc</code> (result of <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code>) with print and plot functions (<a href="https://github.com/schochastics/netrankr/issues/8" class="external-link">#8</a>)</li>
 <li>added <code>dbces11</code> graph (smallest graph with 5 different centers)</li>
 <li>
-<code><a href="../reference/plot_rank_intervals.html">plot_rank_intervals()</a></code> is now deprecated</li>
+<code>plot_rank_intervals()</code> is now deprecated</li>
 <li>ggplot2 no longer suggested</li>
 </ul></div>
     <div class="section level2">
@@ -175,7 +194,7 @@
 <ul><li>most function reimplemented in C++ for efficiency.</li>
 <li>vignettes added: <code>browseVignettes("netrankr")</code>
 </li>
-<li>added visualization function <code><a href="../reference/plot_rank_intervals.html">plot_rank_intervals()</a></code>
+<li>added visualization function <code>plot_rank_intervals()</code>
 </li>
 <li>spell checked and extended help</li>
 </ul></div>

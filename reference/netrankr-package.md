@@ -60,6 +60,11 @@ Useful links:
 **Maintainer**: David Schoch <david@schochastics.net>
 ([ORCID](https://orcid.org/0000-0003-2952-4812))
 
+Authors:
+
+- David Schoch <david@schochastics.net>
+  ([ORCID](https://orcid.org/0000-0003-2952-4812))
+
 Other contributors:
 
 - Julian Müller <julian.mueller@gess.ethz.ch> \[contributor\]

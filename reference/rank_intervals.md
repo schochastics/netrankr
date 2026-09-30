@@ -20,15 +20,12 @@ rank_intervals(P)
 
 ## Value
 
-An object of type netrankr_interval
+An object of type netrankr_interval, a data frame with columns `node`,
+`min_rank` and `max_rank`.
 
 ## Details
 
-Note that the returned `mid_point` is not the same as the expected rank,
-for instance computed with
-[exact_rank_prob](https://schochastics.github.io/netrankr/reference/exact_rank_prob.md).
-It is simply the average of `min_rank` and `max_rank`. For exact rank
-probabilities use
+For exact rank probabilities use
 [exact_rank_prob](https://schochastics.github.io/netrankr/reference/exact_rank_prob.md).
 
 ## See also
@@ -44,9 +41,9 @@ David Schoch
 ``` r
 P <- matrix(c(0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, 10)), 5, 5, byrow = TRUE)
 rank_intervals(P)
-#>  node:V1 rank interval: [1, 2]
-#>  node:V2 rank interval: [1, 4]
-#>  node:V3 rank interval: [2, 4]
-#>  node:V4 rank interval: [3, 5]
-#>  node:V5 rank interval: [3, 5]
+#> node:V1 rank interval: [1, 2]
+#> node:V2 rank interval: [1, 4]
+#> node:V3 rank interval: [2, 4]
+#> node:V4 rank interval: [3, 5]
+#> node:V5 rank interval: [3, 5]
 ```

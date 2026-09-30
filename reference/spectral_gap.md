@@ -40,5 +40,5 @@ David Schoch
 # The fractional spectral gap of a threshold graph is usually close to 1
 g <- threshold_graph(50, 0.3)
 spectral_gap(g, method = "frac")
-#> [1] 0.7009321
+#> [1] 0.7305571
 ```
