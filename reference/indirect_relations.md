@@ -122,10 +122,11 @@ network flow, the current flow (or equivalent: random walks) between
 nodes are of interest. See (Newman, 2005) for details.
 
 *'depend_exp'* returns pairwise dependencies based on 'communicability':
-\$\$\delta(u,s)=\sum\_{t \in V}
-\frac{exp(A)\_{st}-exp(A+E(u))\_{st}}{exp(A)\_{st}},\$\$ where E(u) has
-nonzeros only in row and column u, and in this row and column has -1 if
-A has +1. See (Estrada et al., 2009) for additional details.
+\$\$\delta(u,s)=\frac{1}{(n-1)^2-(n-1)}\sum\_{t \in V}
+\frac{exp(A)\_{st}-exp(A+E(u))\_{st}}{exp(A)\_{st}},\$\$ where E(u)
+removes all edges incident to u, i.e. \\A+E(u)\\ is A with zeros in row
+and column u. The normalisation by \\(n-1)^2-(n-1)\\ follows (Estrada et
+al., 2009), see there for additional details.
 
 *'depend_rsps'*. Simple randomized shortest path dependencies. The
 simple RSP dependency of a node u with respect to absorbing paths from s
@@ -147,6 +148,12 @@ approaches zero, then it converges to 'depend_curflow'. The net
 randomized shortest path dependencies are closely related to the random
 walk interpretation of current flows. See (Kivimäki et al., 2016) for
 technical details.
+
+All relations except 'weights' are computed on the unweighted graph: an
+edge attribute 'weight' is ignored. 'dist_resist', 'depend_curflow',
+'dist_rwalk', 'depend_exp', 'depend_rsps', 'depend_rspn' and
+'depend_netflow' with `netflowmode = "frac"` are only defined for
+connected graphs and raise an error otherwise.
 
 The function `FUN` is used to transform the indirect relation. See
 [transform_relations](https://schochastics.github.io/netrankr/reference/transform_relations.md)

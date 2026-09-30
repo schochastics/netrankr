@@ -85,6 +85,23 @@
 <code><a href="../reference/print.netrankr_interval.html">print.netrankr_interval()</a></code> returns its input invisibly</li>
 <li>removed the unexported, deprecated <code>plot_rank_intervals()</code>
 </li>
+<li>
+<strong>possibly breaking</strong>: <code><a href="../reference/indirect_relations.html">indirect_relations()</a></code> ignores an edge attribute <code>weight</code> for all types except <code>"weights"</code>. Previously <code>"dist_sp"</code>, <code>"dist_resist"</code> and <code>"dist_lf"</code> used weights silently, and with igraph &gt;= 3.0 adjacency-based types would have too (giving meaningless values for <code>"depend_curflow"</code>)</li>
+<li>
+<strong>bug fix</strong>: the entries of <code>indirect_relations(type = "depend_rsps")</code> did not match the documented definition (their row sums, the RSP betweenness, were correct)</li>
+<li>
+<code><a href="../reference/indirect_relations.html">indirect_relations()</a></code> errors with an informative message for relations that are only defined on connected graphs instead of failing in LAPACK or returning <code>NaN</code>s</li>
+<li>
+<code>indirect_relations(type = "dist_rwalk")</code> uses the pseudo-inverse of the Laplacian (300 nodes: 3.2s -&gt; 0.01s)</li>
+<li>
+<code>indirect_relations(type = "depend_exp")</code> handles multiple edges and documents its normalisation</li>
+<li>
+<strong>possibly breaking</strong>: <code><a href="../reference/transform_relations.html">walks_uptok()</a></code> now includes the <code>j = 0</code> term as documented and works for <code>k = 0</code>
+</li>
+<li>
+<code><a href="../reference/hyperbolic_index.html">hyperbolic_index()</a></code> validates its input, rejects directed graphs and returns 0 for isolated nodes</li>
+<li>
+<code>aggregate_positions(type = "self")</code> works on <code>Matrix</code> objects</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.4" id="netrankr-124">netrankr 1.2.4<a class="anchor" aria-label="anchor" href="#netrankr-124"></a></h2><p class="text-muted">CRAN release: 2025-02-05</p>

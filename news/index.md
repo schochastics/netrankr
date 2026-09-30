@@ -59,6 +59,29 @@
 - [`print.netrankr_interval()`](https://schochastics.github.io/netrankr/reference/print.netrankr_interval.md)
   returns its input invisibly
 - removed the unexported, deprecated `plot_rank_intervals()`
+- **possibly breaking**:
+  [`indirect_relations()`](https://schochastics.github.io/netrankr/reference/indirect_relations.md)
+  ignores an edge attribute `weight` for all types except `"weights"`.
+  Previously `"dist_sp"`, `"dist_resist"` and `"dist_lf"` used weights
+  silently, and with igraph \>= 3.0 adjacency-based types would have too
+  (giving meaningless values for `"depend_curflow"`)
+- **bug fix**: the entries of `indirect_relations(type = "depend_rsps")`
+  did not match the documented definition (their row sums, the RSP
+  betweenness, were correct)
+- [`indirect_relations()`](https://schochastics.github.io/netrankr/reference/indirect_relations.md)
+  errors with an informative message for relations that are only defined
+  on connected graphs instead of failing in LAPACK or returning `NaN`s
+- `indirect_relations(type = "dist_rwalk")` uses the pseudo-inverse of
+  the Laplacian (300 nodes: 3.2s -\> 0.01s)
+- `indirect_relations(type = "depend_exp")` handles multiple edges and
+  documents its normalisation
+- **possibly breaking**:
+  [`walks_uptok()`](https://schochastics.github.io/netrankr/reference/transform_relations.md)
+  now includes the `j = 0` term as documented and works for `k = 0`
+- [`hyperbolic_index()`](https://schochastics.github.io/netrankr/reference/hyperbolic_index.md)
+  validates its input, rejects directed graphs and returns 0 for
+  isolated nodes
+- `aggregate_positions(type = "self")` works on `Matrix` objects
 
 ## netrankr 1.2.4
 
