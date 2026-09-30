@@ -74,21 +74,6 @@ dist_powd <- function(x, alpha = 0.5) {
     alpha^(x)
 }
 
-# dist_triang <- function(x) {
-#     n <- nrow(x)
-#     y <- matrix(0, n, n)
-#     for (s in 1:n) {
-#         for (t in 1:n) {
-#             for (u in 1:n) {
-#                 if (s != t & u != s & u != t) {
-#                   y[u, s] <- y[u, s] + (x[s, t])/(x[s, u] + x[u, t])
-#                 }
-#             }
-#         }
-#     }
-#     return(y)
-# }
-
 #' @rdname transform_relations
 #' @export
 walks_limit_prop <- function(x) {
@@ -125,8 +110,8 @@ walks_attenuated <- function(x, alpha = 1 / max(x) * 0.99) {
 #' @rdname transform_relations
 #' @export
 walks_uptok <- function(x, alpha = 1, k = 3) {
-    y <- 0
-    for (i in 1:k) {
+    y <- 1
+    for (i in seq_len(k)) {
         y <- y + alpha^i * x^i
     }
     return(y)

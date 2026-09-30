@@ -91,9 +91,10 @@ shortest paths or network flow, the current flow (or equivalent: random walks) b
 are of interest. See (Newman, 2005) for details.
 
 \emph{'depend_exp'} returns pairwise dependencies based on 'communicability':
-\deqn{\delta(u,s)=\sum_{t \in V} \frac{exp(A)_{st}-exp(A+E(u))_{st}}{exp(A)_{st}},}
-where E(u) has nonzeros only in row and column u, and
-in this row and column has -1 if A has +1. See (Estrada et al., 2009) for additional details.
+\deqn{\delta(u,s)=\frac{1}{(n-1)^2-(n-1)}\sum_{t \in V} \frac{exp(A)_{st}-exp(A+E(u))_{st}}{exp(A)_{st}},}
+where E(u) removes all edges incident to u, i.e. \eqn{A+E(u)} is A with zeros
+in row and column u. The normalisation by \eqn{(n-1)^2-(n-1)}
+follows (Estrada et al., 2009), see there for additional details.
 
 \emph{'depend_rsps'}. Simple randomized shortest path dependencies.
 The simple RSP dependency of a node u with respect to absorbing paths from s to t,
@@ -112,6 +113,11 @@ for the infinity case are the same as for 'depend_rsps'. If the parameter approa
 it converges to 'depend_curflow'. The net randomized shortest path dependencies
 are closely related to the random walk interpretation of current flows.
 See (Kivimäki et al., 2016) for technical details.
+
+All relations except 'weights' are computed on the unweighted graph: an edge attribute
+'weight' is ignored. 'dist_resist', 'depend_curflow', 'dist_rwalk', 'depend_exp',
+'depend_rsps', 'depend_rspn' and 'depend_netflow' with \code{netflowmode = "frac"} are only
+defined for connected graphs and raise an error otherwise.
 
 The function \code{FUN} is used to transform the indirect
 relation. See \link{transform_relations} for predefined functions and additional help.
