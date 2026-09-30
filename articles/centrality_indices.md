@@ -1,0 +1,202 @@
+# Centrality indices
+
+This vignette describes how to build different centrality indices on the
+basis of indirect relations as described in
+[this](https://schochastics.github.io/netrankr/articles/indirect_relations.md)
+vignette. Note, however, that the primary purpose of the netrankr
+package is **not** to provide a great variety of indices, but to offer
+alternative methods for centrality assessment. Nevertheless, the package
+also provides an Rstudio addin ‘index_builder()’, which allows to create
+and customize more than 20 different indices.
+
+------------------------------------------------------------------------
+
+## Theoretical Background
+
+A one-mode network can be described as a *dyadic variable*
+$`x\in \mathcal{W}^\mathcal{D}`$, where $`\mathcal{W}`$ is the value
+range of the network (in the simple case of unweighted networks
+$`\mathcal{W}=\{0,1\}`$) and
+$`\mathcal{D}=\mathcal{N}\times\mathcal{N}`$ describes the dyadic domain
+of actors $`\mathcal{N}`$.  
+  
+Observed presence or absence of ties (the value range is binary) is
+usually not the relation of interest for network analytic tasks.
+Instead, mostly implicitly, relations are *transformed* into a new set
+of *indirect* relations on the basis of the *observed* relations. As an
+example, consider (shortest path) distances in the underlying graph.
+While they are fairly easy to derive from an observed network of
+contacts, it is impossible for actors in a network to answer the
+question “How far away are you from others you are not connected with?”.
+We denote generic transformed networks from an observed network $`x`$ as
+$`\tau(x)`$.  
+  
+
+With this notion of indirect relations, we can express all centrality
+indices in a common framework as
+``` math
+c_\tau(i)=\sum\limits_{t \in \mathcal{N}} \tau(x)_{it}
+```
+Degree and closeness centrality, for instance, can be obtained by
+setting $`\tau=id`$ and $`\tau=dist`$, respectively. Others need several
+additional specifications which can be found in [Brandes
+(2016)](https://dx.doi.org/10.1177/2059799116630650) or [Schoch &
+Brandes (2016)](https://doi.org/10.1017/S0956792516000401).  
+With this framework, all centrality indices can be characterized as
+degree-like measures in a suitably transformed network $`\tau(x)`$. To
+build specific indices, we follow the *analytic pipeline* for centrality
+assessment:
+``` math
+\text{Observed network}\;(x) \longrightarrow 
+\text{transformation}\;(\tau(x)) \longrightarrow 
+\text{aggregation}\;(e.g. \sum_j \tau(x)_{ij})
+```
+
+------------------------------------------------------------------------
+
+## Building indices with the `netrankr` package
+
+``` r
+
+library(netrankr)
+library(igraph)
+library(magrittr)
+```
+
+The `netrankr` does, by design, not explicitly implement any centrality
+index. It does, however, provide a large set of components to create
+indices. Building an index based on an indirect relation, computed with
+[`indirect_relations()`](https://schochastics.github.io/netrankr/reference/indirect_relations.md),
+is done with the function
+[`aggregate_positions()`](https://schochastics.github.io/netrankr/reference/aggregate_positions.md).  
+  
+The usual workflow is as follows:  
+`g %>% indirect_relations() %>% aggregate_positions()`  
+which is equivalent to `aggregate_positions(indirect_relations(g))`.  
+The former, however, comes with enhanced readability and is in
+accordance with the proposed analytic pipeline (see above).  
+  
+`aggregate_position()` has a parameter `type` which is used to choose an
+appropriate aggregation method. Commonly, this is simply the sum
+operation.
+
+``` r
+
+data("dbces11")
+g <- dbces11
+
+V(g)$name <- 1:11
+
+#Degree
+g %>% 
+  indirect_relations(type="adjacency") %>% 
+  aggregate_positions(type="sum")
+#Closeness
+g %>% 
+  indirect_relations(type="dist_sp") %>% 
+  aggregate_positions(type="invsum")
+#Betweenness Centrality
+g %>% 
+  indirect_relations(type="depend_sp") %>% 
+  aggregate_positions(type="sum")
+#Eigenvector Centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_limit_prop) %>% 
+  aggregate_positions(type="sum")
+```
+
+For closeness `type="invsum"` is used since traditional closeness is
+defined as
+``` math
+c_c(i)=\frac{1}{\sum_t dist(i,t)}.
+```
+To obtain a slight variant of closeness, i.e.
+``` math
+c_c(i)=\sum_t \frac{1}{dist(i,t)},
+```
+the following code can be used:
+
+``` r
+
+#harmonic closeness
+g %>% 
+  indirect_relations(type="dist_sp",FUN=dist_inv) %>% 
+  aggregate_positions(type="sum")
+```
+
+Indices based on shortest path distances constitute the biggest group of
+indices in the `netrankr` package.
+
+``` r
+
+#residual closeness (Dangalchev,2006)
+g %>% 
+  indirect_relations(type="dist_sp",FUN=dist_2pow) %>% 
+  aggregate_positions(type="sum")
+
+#generalized closeness (Agneessens et al.,2017) (alpha>0)
+g %>% 
+  indirect_relations(type="dist_sp",FUN=dist_dpow,alpha=2) %>% 
+  aggregate_positions(type="sum")
+
+#decay centrality (Jackson, 2010) (alpha in [0,1])
+g %>% 
+  indirect_relations(type="dist_sp",FUN=dist_powd,alpha=0.7) %>% 
+  aggregate_positions(type="sum")
+
+#integration centrality (Valente & Foreman, 1998)
+dist_integration <- function(x){
+  x <- 1 - (x - 1)/max(x)
+}
+g %>% 
+  indirect_relations(type="dist_sp",FUN=dist_integration) %>% 
+  aggregate_positions(type="sum")
+```
+
+The package implements several additional distance measures for
+networks, for which no index exists so far. Consult the help of
+[`indirect_relations()`](https://schochastics.github.io/netrankr/reference/indirect_relations.md)
+for possibilities.
+
+Another large group of indices is based on walk counts.
+
+``` r
+
+#subgraph centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp) %>% 
+  aggregate_positions(type="self")
+#communicability centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp) %>% 
+  aggregate_positions(type="sum")
+#odd subgraph centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp_odd) %>% 
+  aggregate_positions(type="self")
+#even subgraph centrality
+g %>% 
+  indirect_relations(type="walks",FUN=walks_exp_even) %>% 
+  aggregate_positions(type="self")
+#katz status
+g %>% 
+  indirect_relations(type="walks",FUN=walks_attenuated) %>% 
+  aggregate_positions(type="sum")
+```
+
+**Note**: The analytic pipeline can of course be wrapped into a
+function.
+
+``` r
+
+degree_centrality <- function(g){
+  DC <- g %>% 
+    indirect_relations(type="adjacency") %>% 
+    aggregate_positions(type="sum")
+  return(DC)
+}
+```
+
+Additionally, the Rstudio addin
+[`index_builder()`](https://schochastics.github.io/netrankr/reference/index_builder.md)
+provides a convenient way to produce the code for any desired index.

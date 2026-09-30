@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Use Case: Florentine Families • netrankr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">netrankr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.4.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,7 @@ together with the wealth attribute are included in the
 <span>  vertex.color <span class="op">=</span> <span class="st">"white"</span>,</span>
 <span>  vertex.frame.color <span class="op">=</span> <span class="st">"gray"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="use_case_files/figure-html/plot-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="use_case_files/figure-html/plot-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <p>We use this dataset below to illustrate how a dominance based
 assessment of centrality offers an alternative approach to centrality in
 two ways:</p>
@@ -187,7 +187,7 @@ function <code><a href="../reference/dominance_graph.html">dominance_graph()</a>
 <span>  vertex.frame.color <span class="op">=</span> <span class="st">"gray"</span>,</span>
 <span>  edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="use_case_files/figure-html/dom_graph-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="use_case_files/figure-html/dom_graph-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <p>The Castellan family neither dominates nor is dominated by any other
 family. This means, that we can find indices that potentially rank them
 on top or on the bottom, or anything in between.</p>
@@ -195,7 +195,7 @@ on top or on the bottom, or anything in between.</p>
 intervals</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/rank_intervals.html">rank_intervals</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="use_case_files/figure-html/rk_inter-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="use_case_files/figure-html/rk_inter-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <p>Observe how big the intervals are, indicating that there is ample
 scope to rank the families differently. These intervals, however, only
 give us a rough estimate of this arbitrariness and not any rank
@@ -489,12 +489,7 @@ where the x coordinate of nodes is proportional to the wealth attribute
 and the y coordinate to the number of dominated families. Any edge
 pointing to the left (shown in red) denotes a pair of “wrongly” ordered
 families, i.e. a wealthy family is dominated by a less wealthy one.</p>
-<pre><code><span><span class="co">## Warning: `get.edgelist()` was deprecated in igraph 2.0.0.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use `as_edgelist()` instead.</span></span>
-<span><span class="co">## <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
-<p><img src="use_case_files/figure-html/plot%20dist_dom-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="use_case_files/figure-html/plot%20dist_dom-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <p>In total, we find
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>41</mn><annotation encoding="application/x-tex">41</annotation></semantics></math>
 such pairs
@@ -504,16 +499,16 @@ being able to explain wealth perfectly with shortest path distances. In
 the following we will explore <em>how</em> far away.</p>
 <p>We start by calculating the rank intervals to illustrate the
 difference to neighborhood-inclusion.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/rank_intervals.html">rank_intervals</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="use_case_files/figure-html/rk_inter_dist-1.png" width="480" style="display: block; margin: auto;">
+<p><img src="use_case_files/figure-html/rk_inter_dist-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;">
 All intervals shrunk significantly and even correspond to a single point
 for two families (Pazzi and Medici). This implies that no matter which
 distance based index we use, the Pazzi family will always be ranked last
 and the Medici always on top.</p>
 <p>For a more exact assessment we again use the function
 <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code>.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span></span></code></pre></div>
 <p>In total, there are 654 distance based rankings possible. This is a
 huge reduction from the general case where almost
@@ -524,17 +519,17 @@ distance based ranking, we first need to determine all 654 rankings. For
 this purpose, we rerun the previous analysis with
 <code>only.results=FALSE</code> to obtain the necessary data
 structure.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exact_rank_prob.html">exact_rank_prob</a></span><span class="op">(</span><span class="va">D</span>, only.results <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Now, we can use the function <code><a href="../reference/get_rankings.html">get_rankings()</a></code> which
 returns all rankings as a matrix.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_rankings.html">get_rankings</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">all_ranks</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1]  15 654</span></span></code></pre>
 <p>No we can simply loop over all rankings and calculate the correlation
 between the ranking and the wealth attribute.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dist_cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span></span>
 <span>  <span class="va">all_ranks</span>, <span class="fl">2</span>,</span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">florentine_m</span><span class="op">)</span><span class="op">$</span><span class="va">wealth</span>, <span class="va">x</span>, method <span class="op">=</span> <span class="st">"kendall"</span><span class="op">)</span></span>
@@ -547,7 +542,7 @@ between the ranking and the wealth attribute.</p>
 index that can reasonably explain the wealth attribute.</p>
 <p>We can additionally consider the correlation between degree and
 wealth, calculated below.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">florentine_m</span><span class="op">)</span>, <span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">florentine_m</span><span class="op">)</span><span class="op">$</span><span class="va">wealth</span>, method <span class="op">=</span> <span class="st">"kendall"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.1958605</span></span></code></pre>
 <p>The correlation is higher than any distance based index can have.
@@ -565,7 +560,7 @@ indicative for wealth than proximity in the marriage network.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

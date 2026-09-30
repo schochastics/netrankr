@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Probabilistic Centrality • netrankr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">netrankr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.4.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,15 +91,15 @@ tutorial.</p>
 </h2>
 <p>Neighborhood-inclusion or induces a partial ranking on the vertices
 of a graph
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>V</mi><mo>,</mo><mi>E</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">G=(V,E)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mi>V</mi><mo>,</mo><mi>E</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">G=(V,E)</annotation></semantics></math>.
 We write
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>≤</mo><mi>v</mi></mrow><annotation encoding="application/x-tex">u\leq v</annotation></semantics></math>
 if
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⊆</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>v</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">N(u)\subseteq N[v]</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>⊆</mo><mi>N</mi><mo stretchy="false" form="prefix">[</mo><mi>v</mi><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">N(u)\subseteq N[v]</annotation></semantics></math>
 holds for two vertices
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>,</mo><mi>v</mi><mo>∈</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">u,v \in V</annotation></semantics></math>.
 From the fact that
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>≤</mo><mi>v</mi><mo>⟹</mo><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>≤</mo><mi>v</mi><mo>⟹</mo><mi>c</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>≤</mo><mi>c</mi><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 u\leq v \implies c(u) \leq c(v)
 </annotation></semantics></math> holds for any centrality index
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>:</mo><mi>V</mi><mo>→</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">c:V\to \mathbb{R}</annotation></semantics></math>,
@@ -113,16 +113,16 @@ A node ranking can be defined as a mapping
 where we use the convention that
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>
 is the top ranked node if
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">rk(u)=n</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">rk(u)=n</annotation></semantics></math>
 and the bottom ranked one if
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">rk(u)=1</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">rk(u)=1</annotation></semantics></math>.
 The set of all possible rankings can then be characterized as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℛ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>≤</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>r</mi><mi>k</mi><mo>:</mo><mi>V</mi><mo>→</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi><mo stretchy="false" form="postfix">}</mo><mspace width="0.278em"></mspace><mo>:</mo><mspace width="0.278em"></mspace><mi>u</mi><mo>≤</mo><mi>v</mi><mo>⟹</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℛ</mi><mo stretchy="false" form="prefix">(</mo><mo>≤</mo><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>r</mi><mi>k</mi><mo>:</mo><mi>V</mi><mo>→</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi><mo stretchy="false" form="postfix">}</mo><mspace width="0.278em"></mspace><mo>:</mo><mspace width="0.278em"></mspace><mi>u</mi><mo>≤</mo><mi>v</mi><mo>⟹</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>≤</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \mathcal{R}(\leq)=\{rk:V \to \{1,\ldots,n\}\; : \; u\leq v \implies rk(u)\leq rk(v)\}.
 </annotation></semantics></math> This set contains <strong>all</strong>
 rankings that could be obtained with a centrality index.<br><br>
 Once
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℛ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>≤</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{R}(\leq)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℛ</mi><mo stretchy="false" form="prefix">(</mo><mo>≤</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{R}(\leq)</annotation></semantics></math>
 is calculated, it can be used for a probabilistic assessment of
 centrality, analyzing all possible rankings at once. Examples include
 <em>relative rank probabilities</em> (How likely is it, that a node
@@ -133,7 +133,7 @@ or <em>expected ranks</em> (How central do we expect a node
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>
 to be).<br><br>
 It most be noted though, that deriving the set
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℛ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>≤</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{R}(\leq)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℛ</mi><mo stretchy="false" form="prefix">(</mo><mo>≤</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{R}(\leq)</annotation></semantics></math>
 quickly becomes infeasible for larger networks, and one has to resort to
 approximation methods. These and more theoretical details can be found
 in</p>
@@ -173,7 +173,7 @@ vignette for details).</p>
 <span>   subgraph<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/subgraph_centrality.html" class="external-link">subgraph_centrality</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/rank_intervals.html">rank_intervals</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span>,cent_scores <span class="op">=</span> <span class="va">cent_scores</span><span class="op">)</span></span></code></pre></div>
-<p><img src="probabilistic_cent_files/figure-html/pos_dom-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="probabilistic_cent_files/figure-html/pos_dom-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <p>Notice how all five indices rank a different vertex as the most
 central one.<br><br>
 In the following subsections the output of the function
@@ -259,7 +259,7 @@ discussed in the following subsections.</p>
 <p>Instead of insisting on fixed ranks of nodes as given by indices, we
 can use <em>rank probabilities</em> to assess the likelihood of certain
 rank. Formally, rank probabilities are simply defined as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">{</mo><mi>r</mi><mi>k</mi><mo>∈</mo><mi>ℛ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>≤</mo><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.278em"></mspace><mo>:</mo><mspace width="0.278em"></mspace><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>k</mi><mo stretchy="false" form="postfix">}</mo><mo stretchy="false" form="postfix">|</mo></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mi>ℛ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>≤</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">|</mo></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">{</mo><mi>r</mi><mi>k</mi><mo>∈</mo><mi>ℛ</mi><mo stretchy="false" form="prefix">(</mo><mo>≤</mo><mo stretchy="false" form="postfix">)</mo><mspace width="0.278em"></mspace><mo>:</mo><mspace width="0.278em"></mspace><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>k</mi><mo stretchy="false" form="postfix">}</mo><mo stretchy="false" form="postfix">|</mo></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mi>ℛ</mi><mo stretchy="false" form="prefix">(</mo><mo>≤</mo><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">|</mo></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 P(rk(u)=k)=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)=k\} \rvert}{\lvert \mathcal{R}(\leq) \rvert}.
 </annotation></semantics></math> Rank probabilities are given by the
 return value <code>rank.prob</code> of the
@@ -280,9 +280,9 @@ return value <code>rank.prob</code> of the
 <span><span class="co">## J 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09 0.09</span></span>
 <span><span class="co">## K 0.00 0.00 0.02 0.05 0.08 0.10 0.13 0.15 0.16 0.16 0.16</span></span></code></pre>
 <p>Entries <code>rp[u,k]</code> correspond to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(rk(u)=k)</annotation></semantics></math>.<br><br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(rk(u)=k)</annotation></semantics></math>.<br><br>
 The most interesting probabilities are certainly
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>n</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(rk(u)=n)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(rk(u)=n)</annotation></semantics></math>,
 that is how likely is it for a node to be the most central.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rp</span><span class="op">[</span>,<span class="fl">11</span><span class="op">]</span></span></code></pre></div>
@@ -305,7 +305,7 @@ has the highest probability to be the most central node.</p>
 ranking of nodes, but only in the relative position of a subset of
 nodes. This idea leads to <em>relative rank probabilities</em>, that is
 formally defined as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">{</mo><mi>r</mi><mi>k</mi><mo>∈</mo><mi>ℛ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>≤</mo><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.278em"></mspace><mo>:</mo><mspace width="0.278em"></mspace><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">}</mo><mo stretchy="false" form="postfix">|</mo></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mi>ℛ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>≤</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">|</mo></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>≤</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">{</mo><mi>r</mi><mi>k</mi><mo>∈</mo><mi>ℛ</mi><mo stretchy="false" form="prefix">(</mo><mo>≤</mo><mo stretchy="false" form="postfix">)</mo><mspace width="0.278em"></mspace><mo>:</mo><mspace width="0.278em"></mspace><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>≤</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">}</mo><mo stretchy="false" form="postfix">|</mo></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mi>ℛ</mi><mo stretchy="false" form="prefix">(</mo><mo>≤</mo><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">|</mo></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 P(rk(u)\leq rk(v))=\frac{\lvert \{rk \in  \mathcal{R}(\leq) \; : \; rk(u)\leq rk(v)\} \rvert}{\lvert \mathcal{R}(\leq) \rvert}.
 </annotation></semantics></math> Relative rank probabilities are given
 by the return value <code>relative.rank</code> of the
@@ -326,7 +326,7 @@ by the return value <code>relative.rank</code> of the
 <span><span class="co">## J 0.14 0.25 0.36 0.62 0.68 0.57 0.57 0.62 0.50 0.00 0.68</span></span>
 <span><span class="co">## K 0.00 0.08 0.00 0.44 0.50 0.37 0.37 0.44 0.32 0.32 0.00</span></span></code></pre>
 <p>Entries <code>rrp[u,v]</code> correspond to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(rk(u)\leq rk(v))</annotation></semantics></math>.<br><br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>≤</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(rk(u)\leq rk(v))</annotation></semantics></math>.<br><br>
 The more a value <code>rrp[u,v]</code> deviates from
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.5</mn><annotation encoding="application/x-tex">0.5</annotation></semantics></math>
 towards
@@ -338,7 +338,7 @@ is more central than a node
 <p>###Expected Ranks The <em>expected rank</em> of a node in centrality
 rankings is defined as the expected value of the rank probability
 distribution. That is,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>k</mi><mo>⋅</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>r</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>k</mi><mo>⋅</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>u</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \rho(u)=\sum_{k=1}^n k\cdot P(rk(u)=k).
 </annotation></semantics></math> Expected ranks are given by the return
 value <code>expected.rank</code> of the <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code>
@@ -365,7 +365,7 @@ has the highest expected rank in any centrality ranking.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
