@@ -28,6 +28,9 @@ First, the \emph{corrected conjugated degree sequence} d' is calculated from the
 the majorization gap is then defined as
 \deqn{1/2 \sum_{k=1}^n \max\{d'_k - d_k,0\}}
 The higher the value, the further away is a graph to be a threshold graph.
+If \code{norm = TRUE}, the gap is divided by the number of edges.
+For disconnected graphs, the gaps of all components are added up
+(and then normalised by the total number of edges).
 }
 \examples{
 library(igraph)

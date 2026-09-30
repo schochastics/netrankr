@@ -43,6 +43,15 @@
 * **possibly breaking**: `walks_uptok()` now includes the `j = 0` term as documented and works for `k = 0`
 * `hyperbolic_index()` validates its input, rejects directed graphs and returns 0 for isolated nodes
 * `aggregate_positions(type = "self")` works on `Matrix` objects
+* **bug fix**: the random failure scenario of `swan_combinatory()` only removed `k` nodes (the number of
+  repetitions) instead of all nodes, and failed for `k > n`
+* `swan_combinatory()` and `swan_connectivity()` count connected pairs via components instead of all
+  shortest paths; all `swan_*()` functions validate their input and document their behaviour on
+  disconnected graphs
+* **bug fix**: `majorization_gap()` recycled vectors for disconnected graphs, and with `norm = TRUE`
+  could exceed 1. The gap is now normalised by the total number of edges
+* `threshold_graph()` and `spectral_gap()` validate their input; `spectral_gap()` rejects directed graphs
+  (it returned complex numbers) and returns 0 for empty graphs
 
 # netrankr 1.2.4
 

@@ -13,6 +13,9 @@
 #' the majorization gap is then defined as
 #' \deqn{1/2 \sum_{k=1}^n \max\{d'_k - d_k,0\}}
 #' The higher the value, the further away is a graph to be a threshold graph.
+#' If `norm = TRUE`, the gap is divided by the number of edges.
+#' For disconnected graphs, the gaps of all components are added up
+#' (and then normalised by the total number of edges).
 #' @return Majorization gap of an undirected graph.
 #' @author David Schoch
 #' @references Schoch, D., Valente, T. W. and Brandes, U., 2017. Correlations among centrality
@@ -40,40 +43,28 @@ majorization_gap <- function(g, norm = TRUE) {
     }
 
     if (!igraph::is_connected(g)) {
-        warning("graph is not connected. Computing for each component separately and returning sum.")
+        warning("graph is not connected. Computing the gap for each component separately and returning the sum.")
     }
     comps <- igraph::components(g)
-    if (comps$no > 1) {
-        gap <- 0
-        for (i in seq_len(comps$no)) {
-            g1 <- igraph::induced_subgraph(g, which(comps$membership == i))
-            if (igraph::ecount(g1) != 0) {
-                n <- igraph::vcount(g)
-                deg.sorted <- sort(igraph::degree(g1), decreasing = TRUE)
-                deg.cor <- sapply(1:n, function(k) {
-                    length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
-                })
-                gap1 <- deg.cor - deg.sorted
-                if (!norm) {
-                    gap1 <- 0.5 * sum(gap1[gap1 >= 0])
-                } else {
-                    gap1 <- 0.5 * sum(gap1[gap1 >= 0]) / igraph::ecount(g1)
-                }
-                gap <- gap + gap1
-            }
-        }
-    } else {
-        n <- igraph::vcount(g)
-        deg.sorted <- sort(igraph::degree(g), decreasing = TRUE)
-        deg.cor <- sapply(1:n, function(k) {
-            length(which(deg.sorted[which((1:n) < k)] >= (k - 1))) + length(which(deg.sorted[which((1:n) > k)] >= k))
-        })
-        gap <- deg.cor - deg.sorted
-        if (!norm) {
-            gap <- 0.5 * sum(gap[gap >= 0])
-        } else {
-            gap <- 0.5 * sum(gap[gap >= 0]) / igraph::ecount(g)
-        }
+    gap <- 0
+    for (i in seq_len(comps$no)) {
+        g1 <- igraph::induced_subgraph(g, which(comps$membership == i))
+        gap <- gap + unit_transformations(igraph::degree(g1))
+    }
+    if (norm) {
+        m <- igraph::ecount(g)
+        gap <- if (m == 0) 0 else gap / m
     }
     return(gap)
+}
+
+# number of reverse unit transformations turning the degree sequence into a threshold sequence
+unit_transformations <- function(deg) {
+    n <- length(deg)
+    deg.sorted <- sort(deg, decreasing = TRUE)
+    deg.cor <- vapply(seq_len(n), function(k) {
+        sum(deg.sorted[seq_len(k - 1)] >= (k - 1)) + sum(deg.sorted[seq_len(n) > k] >= k)
+    }, numeric(1))
+    gap <- deg.cor - deg.sorted
+    0.5 * sum(gap[gap >= 0])
 }

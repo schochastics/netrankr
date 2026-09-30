@@ -12,7 +12,7 @@ threshold_graph(n, p, bseq)
 \item{p}{The probability of inserting dominating vertices. Equates approximately
 to the density of the graph. See Details.}
 
-\item{bseq}{(0,1)-vector a binary sequence that produces a threshold grah. See details}
+\item{bseq}{(0,1)-vector a binary sequence that produces a threshold graph. See details}
 }
 \value{
 A threshold graph as igraph object

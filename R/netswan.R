@@ -3,7 +3,8 @@
 #'
 #' @description
 #' `swan_closeness` measures the change in the sum of the inverse of distances between all node pairs
-#' when excluding that node.#'
+#' when excluding that node.
+#'
 #' @param g An `igraph` object representing the graph to analyze.
 #'
 #' @details
@@ -36,19 +37,13 @@
 #' summary(reg)
 #' @export
 swan_closeness <- function(g) {
+  check_swan_graph(g)
   n <- igraph::vcount(g)
   swancc <- rep(0, n)
-  cc <- igraph::distances(g)
-  ccb <- 1 / cc
-  ccb[is.infinite(ccb)] <- 0
+  ccb <- inverse_distances(g)
   tot <- sum(ccb)
   for (i in seq_len(n)) {
-    g2 <- g
-    g2 <- igraph::delete_vertices(g2, i)
-    cc_no_i <- igraph::distances(g2)
-    cc_no_ib <- 1 / cc_no_i
-    cc_no_ib[is.infinite(cc_no_ib)] <- 0
-    tot2 <- sum(cc_no_ib)
+    tot2 <- sum(inverse_distances(igraph::delete_vertices(g, i)))
     swancc[i] <- tot2 - (tot - sum(ccb[i, ]) - sum(ccb[, i]))
   }
   return(swancc)
@@ -106,77 +101,40 @@ swan_closeness <- function(g) {
 #' f4 <- swan_combinatory(gra, 10)
 #' @export
 swan_combinatory <- function(g, k) {
+  check_swan_graph(g)
+  if (!is.numeric(k) || length(k) != 1 || is.na(k) || k < 1) {
+    stop("k must be a positive number")
+  }
   n <- igraph::vcount(g)
-  dist <- igraph::distances(g)
-  dist[is.infinite(dist)] <- 0
-  dist[dist > 0] <- 1
-  tot <- sum(dist)
+  if (n < 2) {
+    stop("g must have at least two vertices")
+  }
+  tot <- connected_pairs(g)
   fin <- matrix(ncol = 5, nrow = n, 0)
-  mat <- matrix(ncol = 2, nrow = n, 0)
-  mat[, 1] <- 1:n
-  bet <- igraph::betweenness(g)
-  mat[, 2] <- bet
-  matri <- mat[order(mat[, 2]), ]
-  g2 <- g
-  for (i in seq_len(n)) {
-    v = n + 1 - i
-    g2 <- igraph::delete_vertices(g2, matri[v, 1])
-    dist2 <- igraph::distances(g2)
-    dist2[is.infinite(dist2)] <- 0
-    dist2[dist2 > 0] <- 1
-    tot2 <- sum(dist2)
-    fin[i, 1] <- i / n
-    fin[i, 2] <- tot - tot2
-    matri[matri[, 1] > matri[v, 1], 1] <- matri[matri[, 1] > matri[v, 1], 1] - 1
+  fin[, 1] <- seq_len(n) / n
+
+  # connectivity loss when removing the vertices in `ord` one after another
+  loss_sequence <- function(ord) {
+    vapply(seq_len(n), function(i) {
+      tot - connected_pairs(igraph::delete_vertices(g, ord[seq_len(i)]))
+    }, numeric(1))
   }
-  mat <- matrix(ncol = 2, nrow = n, 0) #degree attack
-  mat[, 1] <- 1:n
-  deg <- igraph::degree(g)
-  mat[, 2] <- deg
-  matri <- mat[order(mat[, 2]), ]
+  # static attacks: highest betweenness/degree first (ties: highest index first)
+  fin[, 2] <- loss_sequence(rev(order(igraph::betweenness(g))))
+  fin[, 3] <- loss_sequence(rev(order(igraph::degree(g))))
+
+  # cascading: recompute betweenness after each removal
   g2 <- g
-  for (i in seq_len(n)) {
-    v = n + 1 - i
-    g2 <- igraph::delete_vertices(g2, matri[v, 1])
-    dist2 <- igraph::distances(g2)
-    dist2[is.infinite(dist2)] <- 0
-    dist2[dist2 > 0] <- 1
-    tot2 <- sum(dist2)
-    fin[i, 3] <- tot - tot2
-    matri[matri[, 1] > matri[v, 1], 1] <- matri[matri[, 1] > matri[v, 1], 1] -
-      1 #bluff
-  }
-  g2 <- g #cascading
-  npro <- n
-  lim <- n - 1
-  for (i in 1:lim) {
-    mat <- matrix(ncol = 2, nrow = npro, 0)
-    mat[, 1] <- 1:npro
+  for (i in seq_len(n - 1)) {
     bet <- igraph::betweenness(g2)
-    mat[, 2] <- bet
-    matri <- mat[order(mat[, 2]), ]
-    g2 <- igraph::delete_vertices(g2, matri[npro, 1])
-    dist2 <- igraph::distances(g2)
-    dist2[is.infinite(dist2)] <- 0
-    dist2[dist2 > 0] <- 1
-    tot2 <- sum(dist2)
-    fin[i, 4] <- tot - tot2
-    npro <- npro - 1
+    g2 <- igraph::delete_vertices(g2, order(bet)[length(bet)])
+    fin[i, 4] <- tot - connected_pairs(g2)
   }
   fin[n, 4] <- tot
-  #random
+
+  # random failures
   for (l in seq_len(k)) {
-    al <- sample(1:n, n)
-    g2 <- g
-    for (i in seq_len(k)) {
-      g2 <- igraph::delete_vertices(g2, al[i])
-      dist2 <- igraph::distances(g2)
-      dist2[is.infinite(dist2)] <- 0
-      dist2[dist2 > 0] <- 1
-      tot2 <- sum(dist2)
-      fin[i, 5] <- fin[i, 5] + (tot - tot2)
-      al[al > al[i]] <- al[al > al[i]] - 1 #bluff
-    }
+    fin[, 5] <- fin[, 5] + loss_sequence(sample(seq_len(n), n))
   }
   fin[, 2:4] <- fin[, 2:4] / tot
   fin[, 5] <- fin[, 5] / tot / k
@@ -188,9 +146,6 @@ swan_combinatory <- function(g, k) {
 #'
 #' @description
 #' `swan_connectivity` measures the loss of connectivity when a node is removed from the network.
-#'
-#' @usage
-#' swan_connectivity(g)
 #'
 #' @param g An `igraph` object representing the graph to analyze.
 #'
@@ -220,22 +175,17 @@ swan_combinatory <- function(g, k) {
 #' f3 <- swan_connectivity(gra)
 #' @export
 swan_connectivity <- function(g) {
+  check_swan_graph(g)
   n <- igraph::vcount(g)
-  fin <- rep(0, n)
-  dist <- igraph::distances(g)
-  dist[!is.infinite(dist)] <- 0
-  dist[is.infinite(dist)] <- 1
-  con <- sum(dist)
-  for (i in seq_len(n)) {
-    g2 <- g
-    g2 <- igraph::delete_vertices(g2, i)
-    dist2 <- igraph::distances(g2)
-    dist2[!is.infinite(dist2)] <- 0
-    dist2[is.infinite(dist2)] <- 1
-    con2 <- sum(dist2)
-    fin[i] <- con2 - con
+  # number of ordered pairs that cannot reach each other
+  disconnected_pairs <- function(g) {
+    m <- igraph::vcount(g)
+    m * (m - 1) - connected_pairs(g)
   }
-  return(fin)
+  con <- disconnected_pairs(g)
+  vapply(seq_len(n), function(i) {
+    disconnected_pairs(igraph::delete_vertices(g, i)) - con
+  }, numeric(1))
 }
 
 #' @name swan_efficiency
@@ -246,10 +196,16 @@ swan_connectivity <- function(g) {
 #' when excluding a node from the network.
 #'
 #' @param g An `igraph` object representing the graph to analyze.
+#'
+#' @details
 #' `swan_efficiency` is based on geographic accessibility, similar to indices used for
 #' assessing transportation network performance, such as closeness accessibility.
 #' It quantifies the impact of node removal by calculating the change in the sum of
 #' distances between all node pairs.
+#'
+#' As in NetSwan, the sum of distances is infinite if the graph is disconnected.
+#' The value of a node is therefore `Inf` if its removal disconnects the graph and
+#' `NaN` for all nodes if the graph is already disconnected.
 #'
 #' The code is an adaptation from the NetSwan package that was archived on CRAN.
 #'
@@ -278,16 +234,35 @@ swan_connectivity <- function(g) {
 #' summary(reg)
 #' @export
 swan_efficiency <- function(g) {
+  check_swan_graph(g)
   n <- igraph::vcount(g)
   fin <- rep(0, n)
-  dt = igraph::distances(g)
-  tot = sum(dt)
-  for (i in 1:n) {
-    g2 <- g
-    g2 <- igraph::delete_vertices(g2, i)
-    dt2 <- igraph::distances(g2)
-    tot2 <- sum(dt2)
+  dt <- igraph::distances(g)
+  tot <- sum(dt)
+  for (i in seq_len(n)) {
+    tot2 <- sum(igraph::distances(igraph::delete_vertices(g, i)))
     fin[i] <- tot2 - (tot - sum(dt[i, ]) - sum(dt[, i]))
   }
   return(fin)
+}
+
+# helpers ----------------------------------------------------------------------
+
+check_swan_graph <- function(g) {
+  if (!igraph::is_igraph(g)) {
+    stop("g must be an igraph object", call. = FALSE)
+  }
+}
+
+# number of ordered pairs of distinct vertices that are connected by a path
+connected_pairs <- function(g) {
+  cs <- igraph::components(g, mode = "weak")$csize
+  sum(cs * (cs - 1))
+}
+
+# inverse shortest path distances with 0 for unreachable pairs and the diagonal
+inverse_distances <- function(g) {
+  d <- 1 / igraph::distances(g)
+  d[is.infinite(d)] <- 0
+  d
 }
