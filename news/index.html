@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">netrankr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,80 +47,81 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="netrankr-development-version">netrankr (development version)<a class="anchor" aria-label="anchor" href="#netrankr-development-version"></a></h2>
-<ul><li>require R &gt;= 3.5.0 and igraph &gt;= 2.1.0</li>
-<li>tests use testthat 3rd edition</li>
-<li>replaced remaining deprecated igraph calls (<code><a href="https://r.igraph.org/reference/get.edge.attribute.html" class="external-link">get.edge.attribute()</a></code>, <code><a href="https://r.igraph.org/reference/graph.density.html" class="external-link">graph.density()</a></code>, <code><a href="https://r.igraph.org/reference/get.edgelist.html" class="external-link">get.edgelist()</a></code>)</li>
-<li>removed unused OpenMP flags from Makevars</li>
+<h2 class="pkg-version" data-toc-text="2.0.0" id="netrankr-200">netrankr 2.0.0<a class="anchor" aria-label="anchor" href="#netrankr-200"></a></h2>
+<p>This release fixes a large number of bugs found in a full code review. Several of them change numerical results for code that ran without errors before, hence the major version.</p>
+<div class="section level3">
+<h3 id="breaking-changes-2-0-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-0-0"></a></h3>
+<p>These change results <strong>without an error</strong>. Please re-check analyses that use them.</p>
+<ul><li>
+<code><a href="../reference/indirect_relations.html">indirect_relations()</a></code> ignores an edge attribute <code>weight</code> for all types except <code>"weights"</code> and warns when it does so. Previously <code>"dist_sp"</code>, <code>"dist_resist"</code> and <code>"dist_lf"</code> used weights silently, while all other types ignored them (and with igraph &gt;= 3.0 the adjacency-based types would have picked them up too, giving meaningless values for <code>"depend_curflow"</code>). For weighted shortest path distances use <code>igraph::distances(g)</code> directly, for the weighted adjacency matrix <code>type = "weights"</code>.</li>
 <li>
-<strong>bug fix</strong>: <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> was biased because rejected moves of the Markov chain were not counted as samples. It now also runs in O(1) per step (was O(n^2)), accepts <code>rp</code> beyond the integer range and evaluates the default <code>rp</code> before structurally equivalent nodes are collapsed</li>
+<code>indirect_relations(type = "depend_rspn")</code> counted every edge twice and omitted the 1/2 net flow factor. Values are now 1/4 of the previous ones and, as documented, converge to <code>"depend_curflow"</code> for <code>rspxparam -&gt; 0</code>. Rankings are unaffected. Multiply by 4 to obtain the old values.</li>
+<li>The entries of <code>indirect_relations(type = "depend_rsps")</code> now match the documented definition (expected number of visits on absorbing randomized shortest paths). Their row sums, the RSP betweenness, and hence rankings are unchanged. The old entries were wrong and cannot be restored.</li>
 <li>
-<strong>bug fix</strong>: <code>indirect_relations(type = "depend_sp")</code> overflowed on graphs with many shortest paths. It is now also orders of magnitude faster (2000 nodes: 128s -&gt; 0.8s)</li>
+<code><a href="../reference/transform_relations.html">walks_uptok()</a></code> includes the <code>j = 0</code> (identity) term, as documented. Use <code>FUN = function(x, ...) walks_uptok(x, ...) - 1</code> for the old behaviour.</li>
 <li>
-<strong>possibly breaking</strong>: <code>indirect_relations(type = "depend_rspn")</code> counted every edge twice and omitted the 1/2 net flow factor. Values are now 1/4 of the previous ones and, as documented, converge to <code>"depend_curflow"</code>. Rankings are unaffected</li>
+<code>majorization_gap(norm = TRUE)</code> on disconnected graphs divides the sum of the gaps of all components by the total number of edges, so the value stays in [0, 1]. Previously the normalised gaps of the components were added up.</li>
+<li>For partial rankings with structurally equivalent nodes, <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> and <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> compute the expected ranks exactly (equivalent nodes are tied at the highest rank of their class, as for linear orders). Previously a heuristic was used.</li>
 <li>
-<code>depend_rspn</code> is about 3x faster and uses much less memory</li>
+<code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> was biased (rejected moves were not counted as samples), so its estimates change.</li>
+</ul><p>Other changes that may require changes to code:</p>
+<ul><li>All functions taking a partial ranking <code>P</code> share one input validation: non-square input and <code>NA</code> are errors, and a non-zero diagonal is set to 0 with a warning (previously crashes, <code>NA</code>s or silently wrong results).</li>
 <li>
-<code><a href="../reference/transitive_reduction.html">transitive_reduction()</a></code> no longer returns an empty matrix for reflexive input</li>
+<code><a href="../reference/indirect_relations.html">indirect_relations()</a></code> errors for relations that are only defined on connected graphs (<code>"dist_resist"</code>, <code>"depend_curflow"</code>, <code>"dist_rwalk"</code>, <code>"depend_exp"</code>, <code>"depend_rsps"</code>, <code>"depend_rspn"</code>, and <code>"depend_netflow"</code> with <code>netflowmode = "frac"</code>) instead of failing in LAPACK or returning <code>NaN</code>s.</li>
 <li>
-<code><a href="../reference/positional_dominance.html">positional_dominance()</a></code> errors on non-square input if <code>map = FALSE</code> instead of reading out of bounds</li>
+<code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> and <code><a href="../reference/is_preserved.html">is_preserved()</a></code> error on <code>NA</code> (<code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> counted such pairs as ties).</li>
 <li>
-<code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> no longer overflows for more than 65536 elements</li>
-<li>all functions taking a partial ranking <code>P</code> share one input validation: non-square input and <code>NA</code> are errors, and a non-zero diagonal is set to 0 with a warning (previously it caused crashes, <code>NA</code>s or silently wrong results)</li>
-<li>sparse (including pattern) and dense <code>Matrix</code> input now works in <code><a href="../reference/approx_rank_expected.html">approx_rank_expected()</a></code>, <code><a href="../reference/approx_rank_relative.html">approx_rank_relative()</a></code>, <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> and <code><a href="../reference/positional_dominance.html">positional_dominance()</a></code>
-</li>
+<code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> simplifies graphs with loops or multiple edges with a warning (these gave a wrong preorder).</li>
 <li>
-<strong>bug fix</strong>: <code>positional_dominance(type = "two-mode")</code> failed for matrices with column names and ignored <code>benefit</code> and <code>map</code>
-</li>
-<li>
-<code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> simplifies graphs with loops or multiple edges (with a warning); these previously gave a wrong preorder</li>
-<li>
-<code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> and <code><a href="../reference/is_preserved.html">is_preserved()</a></code> error on <code>NA</code> and on invalid input instead of returning wrong counts or reading out of bounds</li>
-<li>
-<code><a href="../reference/approx_rank_expected.html">approx_rank_expected()</a></code> validates <code>method</code>; the “loof1” and “loof2” methods are vectorised</li>
-<li>
-<code><a href="../reference/get_rankings.html">get_rankings()</a></code> returns the single ranking for linear orders</li>
-<li>plot methods restore <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> also on error and handle a single index and more than 15 indices</li>
-<li>
-<code><a href="../reference/print.netrankr_interval.html">print.netrankr_interval()</a></code> returns its input invisibly</li>
-<li>removed the unexported, deprecated <code>plot_rank_intervals()</code>
-</li>
-<li>
-<strong>possibly breaking</strong>: <code><a href="../reference/indirect_relations.html">indirect_relations()</a></code> ignores an edge attribute <code>weight</code> for all types except <code>"weights"</code>. Previously <code>"dist_sp"</code>, <code>"dist_resist"</code> and <code>"dist_lf"</code> used weights silently, and with igraph &gt;= 3.0 adjacency-based types would have too (giving meaningless values for <code>"depend_curflow"</code>)</li>
-<li>
-<strong>bug fix</strong>: the entries of <code>indirect_relations(type = "depend_rsps")</code> did not match the documented definition (their row sums, the RSP betweenness, were correct)</li>
-<li>
-<code><a href="../reference/indirect_relations.html">indirect_relations()</a></code> errors with an informative message for relations that are only defined on connected graphs instead of failing in LAPACK or returning <code>NaN</code>s</li>
-<li>
-<code>indirect_relations(type = "dist_rwalk")</code> uses the pseudo-inverse of the Laplacian (300 nodes: 3.2s -&gt; 0.01s)</li>
-<li>
-<code>indirect_relations(type = "depend_exp")</code> handles multiple edges and documents its normalisation</li>
-<li>
-<strong>possibly breaking</strong>: <code><a href="../reference/transform_relations.html">walks_uptok()</a></code> now includes the <code>j = 0</code> term as documented and works for <code>k = 0</code>
-</li>
-<li>
-<code><a href="../reference/hyperbolic_index.html">hyperbolic_index()</a></code> validates its input, rejects directed graphs and returns 0 for isolated nodes</li>
-<li>
-<code>aggregate_positions(type = "self")</code> works on <code>Matrix</code> objects</li>
-<li>
-<strong>bug fix</strong>: the random failure scenario of <code><a href="../reference/swan_combinatory.html">swan_combinatory()</a></code> only removed <code>k</code> nodes (the number of repetitions) instead of all nodes, and failed for <code>k &gt; n</code>
-</li>
-<li>
-<code><a href="../reference/swan_combinatory.html">swan_combinatory()</a></code> and <code><a href="../reference/swan_connectivity.html">swan_connectivity()</a></code> count connected pairs via components instead of all shortest paths; all <code>swan_*()</code> functions validate their input and document their behaviour on disconnected graphs</li>
-<li>
-<strong>bug fix</strong>: <code><a href="../reference/majorization_gap.html">majorization_gap()</a></code> recycled vectors for disconnected graphs, and with <code>norm = TRUE</code> could exceed 1. The gap is now normalised by the total number of edges</li>
-<li>
-<code><a href="../reference/index_builder.html">index_builder()</a></code>: fixed the generated code for <code>"dist_walk"</code> (used the log forest parameter) and without pipes (ignored the network name), the alpha sliders (duplicated input ids) and presets resetting the transformation. It checks for all required packages</li>
-<li>
-<strong>bug fix</strong>: for partial rankings with structurally equivalent nodes, <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> and <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> mapped expected ranks back to all nodes with a heuristic. They are now exact: equivalent nodes are tied at the highest rank of their class, as for linear orders</li>
-<li>
-<code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> builds its sparse result in one go (2-4x faster)</li>
-<li>
-<code>indirect_relations(type = "depend_netflow")</code> computes each maximum flow once instead of twice</li>
-<li>native routines are registered (<code>useDynLib(netrankr, .registration = TRUE)</code>)</li>
-<li>
-<code><a href="../reference/threshold_graph.html">threshold_graph()</a></code> and <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> validate their input; <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> rejects directed graphs (it returned complex numbers) and returns 0 for empty graphs</li>
+<code><a href="../reference/hyperbolic_index.html">hyperbolic_index()</a></code> and <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> reject directed graphs.</li>
+<li>Removed the unexported, deprecated <code>plot_rank_intervals()</code>. Use <code>plot(rank_intervals(P))</code>.</li>
+<li>Requires R &gt;= 3.5.0 and igraph &gt;= 2.1.0.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-2-0-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-0-0"></a></h3>
+<ul><li>
+<code>indirect_relations(type = "depend_sp")</code> overflowed on graphs with many shortest paths.</li>
+<li>
+<code>positional_dominance(type = "two-mode")</code> failed for matrices with column names and ignored <code>benefit</code> and <code>map</code>; with <code>map = FALSE</code> non-square one-mode input read out of bounds.</li>
+<li>The random failure scenario of <code><a href="../reference/swan_combinatory.html">swan_combinatory()</a></code> only removed <code>k</code> nodes (the number of repetitions) instead of all nodes, and failed for <code>k &gt; n</code>.</li>
+<li>
+<code><a href="../reference/majorization_gap.html">majorization_gap()</a></code> recycled vectors for disconnected graphs.</li>
+<li>
+<code><a href="../reference/transitive_reduction.html">transitive_reduction()</a></code> returned an empty matrix for reflexive input.</li>
+<li>
+<code><a href="../reference/compare_ranks.html">compare_ranks()</a></code> overflowed for more than 65536 elements.</li>
+<li>
+<code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> evaluated the default <code>rp</code> after collapsing structurally equivalent nodes and silently did nothing for <code>rp</code> beyond the integer range.</li>
+<li>
+<code>indirect_relations(type = "depend_exp")</code> ignored edges with multiplicity &gt; 1.</li>
+<li>
+<code><a href="../reference/hyperbolic_index.html">hyperbolic_index()</a></code> returned <code>NaN</code> for isolated nodes, <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> complex numbers for directed graphs.</li>
+<li>
+<code><a href="../reference/index_builder.html">index_builder()</a></code>: fixed the generated code for <code>"dist_walk"</code> (used the log forest parameter) and without pipes (ignored the network name), the alpha sliders (duplicated input ids) and presets resetting the transformation.</li>
+<li>
+<code>aggregate_positions(type = "self")</code> failed on <code>Matrix</code> objects.</li>
+<li>Sparse (including pattern) and dense <code>Matrix</code> input failed in <code><a href="../reference/approx_rank_expected.html">approx_rank_expected()</a></code>, <code><a href="../reference/approx_rank_relative.html">approx_rank_relative()</a></code>, <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> and <code><a href="../reference/positional_dominance.html">positional_dominance()</a></code>.</li>
+<li>Plot methods did not restore <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> on error and failed for a single index or more than 15 indices.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-2-0-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-2-0-0"></a></h3>
+<ul><li>Much faster: <code>"depend_sp"</code> (2000 nodes: 128s -&gt; 0.8s), <code>"dist_rwalk"</code> (300 nodes: 3.2s -&gt; 0.01s), <code>"depend_rspn"</code> (~3x, far less memory), <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> (O(1) instead of O(n^2) per step), <code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> (2-4x), <code>"depend_netflow"</code> (half the maximum flows), <code><a href="../reference/swan_combinatory.html">swan_combinatory()</a></code> and <code><a href="../reference/swan_connectivity.html">swan_connectivity()</a></code> (components instead of all shortest paths), vectorised <code>"loof1"</code>/<code>"loof2"</code>.</li>
+<li>Informative errors for invalid <code>type</code>/<code>method</code> arguments and input of <code><a href="../reference/threshold_graph.html">threshold_graph()</a></code>, <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code>, <code>swan_*()</code>.</li>
+<li>
+<code><a href="../reference/get_rankings.html">get_rankings()</a></code> returns the single ranking for linear orders.</li>
+<li>
+<code><a href="../reference/print.netrankr_interval.html">print.netrankr_interval()</a></code> returns its input invisibly.</li>
+<li>
+<code><a href="../reference/index_builder.html">index_builder()</a></code> checks for all required packages.</li>
+<li>Documented the normalisation of <code>"depend_exp"</code>, the behaviour of <code><a href="../reference/swan_efficiency.html">swan_efficiency()</a></code> on disconnected graphs and the handling of edge weights.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="housekeeping-2-0-0">Housekeeping<a class="anchor" aria-label="anchor" href="#housekeeping-2-0-0"></a></h3>
+<ul><li>Tests use testthat 3rd edition; many new regression tests.</li>
+<li>Replaced deprecated igraph calls; no use of the <code>attr</code> argument deprecated in igraph 3.0.</li>
+<li>Native routines are registered; removed unused OpenMP flags.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.4" id="netrankr-124">netrankr 1.2.4<a class="anchor" aria-label="anchor" href="#netrankr-124"></a></h2><p class="text-muted">CRAN release: 2025-02-05</p>
 <ul><li>added functions from archived NetSwan package</li>

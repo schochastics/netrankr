@@ -150,10 +150,14 @@ walk interpretation of current flows. See (Kivimäki et al., 2016) for
 technical details.
 
 All relations except 'weights' are computed on the unweighted graph: an
-edge attribute 'weight' is ignored. 'dist_resist', 'depend_curflow',
-'dist_rwalk', 'depend_exp', 'depend_rsps', 'depend_rspn' and
-'depend_netflow' with `netflowmode = "frac"` are only defined for
-connected graphs and raise an error otherwise.
+edge attribute 'weight' is ignored with a warning. Before version 2.0.0,
+'dist_sp', 'dist_resist' and 'dist_lf' used it. For weighted shortest
+path distances use
+[`igraph::distances()`](https://r.igraph.org/reference/distances.html)
+directly. 'dist_resist', 'depend_curflow', 'dist_rwalk', 'depend_exp',
+'depend_rsps', 'depend_rspn' and 'depend_netflow' with
+`netflowmode = "frac"` are only defined for connected graphs and raise
+an error otherwise.
 
 The function `FUN` is used to transform the indirect relation. See
 [transform_relations](https://schochastics.github.io/netrankr/reference/transform_relations.md)
