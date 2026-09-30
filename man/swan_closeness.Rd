@@ -14,7 +14,7 @@ A numeric vector containing the \code{swan_closeness} values for all vertices.
 }
 \description{
 \code{swan_closeness} measures the change in the sum of the inverse of distances between all node pairs
-when excluding that node.#'
+when excluding that node.
 }
 \details{
 \code{swan_closeness} measures the impact of a node's removal by computing the change in

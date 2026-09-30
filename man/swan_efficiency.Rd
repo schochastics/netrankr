@@ -7,13 +7,7 @@
 swan_efficiency(g)
 }
 \arguments{
-\item{g}{An \code{igraph} object representing the graph to analyze.
-\code{swan_efficiency} is based on geographic accessibility, similar to indices used for
-assessing transportation network performance, such as closeness accessibility.
-It quantifies the impact of node removal by calculating the change in the sum of
-distances between all node pairs.
-
-The code is an adaptation from the NetSwan package that was archived on CRAN.}
+\item{g}{An \code{igraph} object representing the graph to analyze.}
 }
 \value{
 A numeric vector where each entry represents the \code{swan_efficiency} value for the
@@ -22,6 +16,18 @@ corresponding node.
 \description{
 \code{swan_efficiency} measures the change in the sum of distances between all node pairs
 when excluding a node from the network.
+}
+\details{
+\code{swan_efficiency} is based on geographic accessibility, similar to indices used for
+assessing transportation network performance, such as closeness accessibility.
+It quantifies the impact of node removal by calculating the change in the sum of
+distances between all node pairs.
+
+As in NetSwan, the sum of distances is infinite if the graph is disconnected.
+The value of a node is therefore \code{Inf} if its removal disconnects the graph and
+\code{NaN} for all nodes if the graph is already disconnected.
+
+The code is an adaptation from the NetSwan package that was archived on CRAN.
 }
 \examples{
 library(igraph)
