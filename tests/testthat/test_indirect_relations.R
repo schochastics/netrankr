@@ -99,7 +99,7 @@ test_that("rspx is correct", {
 test_that("walk transform is correct", {
   g <- make_full_graph(5, directed = FALSE)
   A <- indirect_relations(g, type = "walks", FUN = walks_uptok, alpha = 1, k = 2)
-  expect_equal(A, matrix(4, 5, 5))
+  expect_equal(A, matrix(4, 5, 5) + diag(5))
 
   katz <- rowSums(indirect_relations(g, type = "walks", FUN = walks_attenuated, alpha = 0.1))
   expect_equal(katz, rep(5 / 3, 5))

@@ -47,20 +47,23 @@ aggregate_positions <- function(tau_x, type = "sum") {
         stop("tau_x must be a matrix")
     }
 
+    if (!is.character(type) || length(type) != 1) {
+        stop("type must be a single string")
+    }
     if (type == "sum") {
-        return(rowSums(tau_x))
+        return(Matrix::rowSums(tau_x))
     } else if (type == "prod") {
         return(apply(tau_x, 1, prod))
     } else if (type == "mean") {
-        return(rowMeans(tau_x))
+        return(Matrix::rowMeans(tau_x))
     } else if (type == "max") {
         return(apply(tau_x, 1, max))
     } else if (type == "min") {
         return(apply(tau_x, 1, min))
     } else if (type == "invsum") {
-        return(rowSums(tau_x)^-1)
+        return(Matrix::rowSums(tau_x)^-1)
     } else if (type == "self") {
-        diag(tau_x)
+        return(Matrix::diag(tau_x))
     } else {
         stop(paste("type =", type, "is not supported. See function details for options."))
     }
