@@ -123,11 +123,11 @@ BEGIN_RCPP
 END_RCPP
 }
 // nialgo
-arma::sp_mat nialgo(List adjList, IntegerVector deg);
+arma::sp_mat nialgo(const std::vector<std::vector<int> >& adjList, IntegerVector deg);
 RcppExport SEXP _netrankr_nialgo(SEXP adjListSEXP, SEXP degSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< List >::type adjList(adjListSEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::vector<int> >& >::type adjList(adjListSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type deg(degSEXP);
     rcpp_result_gen = Rcpp::wrap(nialgo(adjList, deg));
     return rcpp_result_gen;
@@ -171,26 +171,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // rankings
-IntegerMatrix rankings(std::vector<std::vector<int> > paths, std::vector<std::vector<int> > ideals, int nRank, int nElem);
+IntegerMatrix rankings(const std::vector<std::vector<int> >& paths, const std::vector<std::vector<int> >& ideals, int nRank, int nElem);
 RcppExport SEXP _netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type paths(pathsSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type ideals(idealsSEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::vector<int> >& >::type paths(pathsSEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::vector<int> >& >::type ideals(idealsSEXP);
     Rcpp::traits::input_parameter< int >::type nRank(nRankSEXP);
     Rcpp::traits::input_parameter< int >::type nElem(nElemSEXP);
     rcpp_result_gen = Rcpp::wrap(rankings(paths, ideals, nRank, nElem));
-    return rcpp_result_gen;
-END_RCPP
-}
-// resistanceDistance
-NumericMatrix resistanceDistance(NumericMatrix C, int n);
-RcppExport SEXP _netrankr_resistanceDistance(SEXP CSEXP, SEXP nSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type C(CSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(resistanceDistance(C, n));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -230,7 +219,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_netrankr_preserve", (DL_FUNC) &_netrankr_preserve, 3},
     {"_netrankr_rankprobs", (DL_FUNC) &_netrankr_rankprobs, 4},
     {"_netrankr_rankings", (DL_FUNC) &_netrankr_rankings, 4},
-    {"_netrankr_resistanceDistance", (DL_FUNC) &_netrankr_resistanceDistance, 2},
     {"_netrankr_transreduct", (DL_FUNC) &_netrankr_transreduct, 1},
     {"_netrankr_treeOfIdeals", (DL_FUNC) &_netrankr_treeOfIdeals, 1},
     {NULL, NULL, 0}

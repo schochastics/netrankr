@@ -80,3 +80,14 @@ expand_expected <- function(expected, mse) {
     }
     expected_full
 }
+
+# Exact expected ranks of all elements from the relative rank probabilities of the
+# reduced partial order (`relative[d, c]` = P(d ranked lower than c)). Equivalent
+# elements are tied at the highest rank of their class, i.e.
+# E[rank(c)] = |c| + sum_d |d| P(d < c)
+expand_expected_relative <- function(relative, mse) {
+    sizes <- tabulate(mse)
+    diag(relative) <- 0
+    expected <- sizes + colSums(relative * sizes)
+    unname(expected[mse])
+}

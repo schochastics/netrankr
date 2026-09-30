@@ -3,7 +3,7 @@
 #' This includes rank probabilities, relative rank probabilities and expected ranks.
 #'
 #' @importFrom Rcpp evalCpp
-#' @useDynLib netrankr
+#' @useDynLib netrankr, .registration = TRUE
 #'
 #' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
 #'    or [positional_dominance].
@@ -162,7 +162,7 @@ exact_rank_prob <- function(P, only.results = TRUE, verbose = FALSE, force = FAL
     rp_full <- res$rp[MSE, , drop = FALSE]
     mrp_full <- res$mrp[MSE, MSE, drop = FALSE]
     rank.spread_full <- rank.spread[MSE]
-    expected_full <- expand_expected(expected, MSE)
+    expected_full <- expand_expected_relative(t(res$mrp), MSE)
     # add names
     rownames(rp_full) <- rownames(mrp_full) <- colnames(mrp_full) <- rownames(P_full)
     names(expected_full) <- names(rank.spread_full) <- rownames(P_full)

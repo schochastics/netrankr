@@ -57,4 +57,4 @@ importFrom(graphics,
   points
 )
 importFrom(utils,stack)
-useDynLib(netrankr)
+useDynLib(netrankr, .registration = TRUE)
