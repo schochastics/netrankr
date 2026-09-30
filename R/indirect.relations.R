@@ -203,7 +203,7 @@ indirect_relations <- function(g,
         n <- igraph::vcount(g)
         A <- L + matrix(1 / n, n, n)
         C <- solve(A)
-        rel <- resistanceDistance(C, n)
+        rel <- outer(diag(C), diag(C), "+") - 2 * C
         rel <- FUN(rel, ...)
     } else if (type == "dist_lf") {
         if (is.null(lfparam)) {
@@ -306,34 +306,32 @@ log_forest_fct <- function(g, lfparam) {
 
 depend_netflow_fct <- function(g, netflowmode) {
     n <- igraph::vcount(g)
-    mflow <- matrix(0, n, n)
-    # maxflow
-    for (s in 1:n) {
-        for (t in 1:n) {
-            if (s != t) {
-                mflow[s, t] <- igraph::max_flow(g, s, t)$value
+    # maximum flows are symmetric in undirected graphs, so each pair is computed once
+    pair_flows <- function(g) {
+        m <- igraph::vcount(g)
+        flow <- matrix(0, m, m)
+        for (s in seq_len(m - 1)) {
+            for (t in (s + 1):m) {
+                flow[s, t] <- flow[t, s] <- igraph::max_flow(g, s, t)$value
             }
         }
+        flow
     }
+    mflow <- if (n > 1) pair_flows(g) else matrix(0, n, n)
     if (netflowmode == "norm") {
-        maxoflo <- rep(0, n)
-        for (i in 1:n) maxoflo[i] <- sum(mflow[-i, -i])
+        maxoflo <- vapply(seq_len(n), function(i) sum(mflow[-i, -i]), numeric(1))
     }
     flow_smat <- matrix(0, n, n)
-    for (i in 1:n) {
-        g_i <- igraph::delete_vertices(g, i)
-        for (s in 1:n) {
-            for (t in 1:n) {
-                if (i != s && s != t && i != t) {
-                    flow <- igraph::max_flow(g_i, s - (s > i), t - (t > i))$value
-                    flow_smat[i, s] <- switch(netflowmode,
-                        raw = flow_smat[i, s] + mflow[s, t] - flow,
-                        norm = flow_smat[i, s] + mflow[s, t] - flow,
-                        frac = flow_smat[i, s] + (mflow[s, t] - flow) / mflow[s, t]
-                    )
-                }
-            }
+    for (i in seq_len(n)) {
+        others <- seq_len(n)[-i]
+        mflow_i <- mflow[others, others, drop = FALSE]
+        flow_i <- if (n > 2) pair_flows(igraph::delete_vertices(g, i)) else matrix(0, n - 1, n - 1)
+        loss <- mflow_i - flow_i
+        if (netflowmode == "frac") {
+            loss <- loss / mflow_i
         }
+        diag(loss) <- 0
+        flow_smat[i, others] <- rowSums(loss)
     }
     if (netflowmode == "norm") {
         flow_smat <- flow_smat / maxoflo * 2

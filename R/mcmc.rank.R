@@ -51,7 +51,7 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     res <- mcmc_rank_dense(P, init.rank - 1, floor(rp))
     res$expected <- res$expected + 1
     rrp.full <- res$rrp[MSE, MSE, drop = FALSE]
-    expected.full <- expand_expected(res$expected, MSE)
+    expected.full <- expand_expected_relative(res$rrp, MSE)
     rownames(rrp.full) <- colnames(rrp.full) <- names(expected.full) <- name_vec
     res <- list(relative.rank = rrp.full, expected.rank = expected.full)
     class(res) <- "netrankr_mcmc"
