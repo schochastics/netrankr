@@ -45,10 +45,9 @@ void AssignBottomUp(int nElem,
     Q.push_back(vPrime);
     lei[vPrime]=1;
   }
-  while(Q.size()!=0){
-    Rcpp::checkUserInterrupt();
-    int v=Q[0];
-    Q.erase(Q.begin());
+  std::vector<int>::size_type head = 0;
+  while(head < Q.size()){
+    int v=Q[head++];
 
     for(std::vector<int>::size_type j = 0; j!=ImSucc[v].size();++j){
     // for(int j=0;j<ImSucc[v].size();++j){
@@ -78,7 +77,7 @@ void ComputeRankProb(int v,int h, NumericMatrix &rp,
     std::set_difference(ideals[vPrime].begin(), ideals[vPrime].end(),
                         ideals[v].begin(), ideals[v].end(), &x);
     rp(x,h)=rp(x,h)+double(lei[v])*double(lef[vPrime])/double(e);
-    if((vPrime!=0) & (visited[vPrime]==0)){
+    if((vPrime!=0) && (visited[vPrime]==0)){
       ComputeRankProb(vPrime,h+1,rp,ImSucc,ideals,visited,lei,lef,e);
     }
   }
@@ -96,31 +95,26 @@ void ComputeMutualRankProb(int v,int h, int &nElem,
                            double &e){
   visited[v]=1;
   for(std::vector<int>::size_type j = 0;j!=ImSucc[v].size();++j){
-  // for(int j=0;j<ImSucc[v].size();++j){
     int vPrime=ImSucc[v][j];
+    // consecutive ideals differ by exactly one element x
+    int x;
+    std::set_difference(ideals[vPrime].begin(), ideals[vPrime].end(),
+                        ideals[v].begin(), ideals[v].end(), &x);
+    double w = double(lei[v])*double(lef[vPrime])/double(e);
     for(int y=0;y<nElem; ++y){
       if(visitedElem[y]==1){
-        int x;
-        std::set_difference(ideals[vPrime].begin(), ideals[vPrime].end(),
-                            ideals[v].begin(), ideals[v].end(), &x);
-        mrp(x,y)=mrp(x,y)+double(lei[v])*double(lef[vPrime])/double(e);
+        mrp(x,y)+=w;
       }
-      if((vPrime!=0) & (visited[vPrime]==0)){
-        int x;
-        std::set_difference(ideals[vPrime].begin(), ideals[vPrime].end(),
-                            ideals[v].begin(), ideals[v].end(), &x);
-        visitedElem[x]=1;
-        ComputeMutualRankProb(vPrime,h+1,nElem,mrp,ImSucc,ideals,visited,visitedElem,lei,lef,e);
-        visitedElem[x]=0;
-      }
-        
+    }
+    if((vPrime!=0) && (visited[vPrime]==0)){
+      visitedElem[x]=1;
+      ComputeMutualRankProb(vPrime,h+1,nElem,mrp,ImSucc,ideals,visited,visitedElem,lei,lef,e);
+      visitedElem[x]=0;
     }
   }
-  
-  
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred,
                      std::vector<std::vector<int> > ideals,
                      int nElem,

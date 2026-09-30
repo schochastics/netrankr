@@ -30,6 +30,10 @@
 #' }
 #' @export
 mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
+    force(rp)
+    if (!is.numeric(rp) || length(rp) != 1 || is.na(rp) || rp < 1) {
+        stop("rp must be a positive number")
+    }
     if (!inherits(P, "Matrix") && !is.matrix(P)) {
         stop("P must be a dense or spare matrix")
     }
@@ -62,13 +66,10 @@ mcmc_rank_prob <- function(P, rp = nrow(P)^3) {
     }
 
     init.rank <- as.vector(igraph::topo_sort(igraph::graph_from_adjacency_matrix(P, "directed")))
-    if (inherits(P, "Matrix")) {
-        res <- mcmc_rank_sparse(P, init.rank - 1, rp)
-    } else {
-        res <- mcmc_rank_dense(P, init.rank - 1, rp)
-    }
+    P <- as.matrix(P)
+    storage.mode(P) <- "integer"
+    res <- mcmc_rank_dense(P, init.rank - 1, floor(rp))
     res$expected <- res$expected + 1
-    expected.full <- c(0, n.full)
     rrp.full <- matrix(0, n.full, n.full)
     for (i in sort(unique(MSE))) {
         idx <- which(MSE == i)

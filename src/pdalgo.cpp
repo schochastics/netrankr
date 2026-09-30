@@ -4,10 +4,13 @@ using namespace Rcpp;
 using namespace arma;
 
 // [[Rcpp::depends(RcppArmadillo)]]
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 arma::imat matdom(arma::mat B, bool map, bool benefit) {
   // arma::mat B = as<arma::mat>(A);
   int n=B.n_rows;
+  if(!map && B.n_cols != B.n_rows){
+    Rcpp::stop("A must be a square matrix if map = FALSE");
+  }
   // int m=B.n_cols;
   bool status;
   arma::mat Asort(n,n,fill::zeros);

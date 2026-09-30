@@ -1,16 +1,18 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 Rcpp::List checkPairs(NumericVector x,NumericVector y) {
-  int Con=0;
-  int Dis=0;
-  int Tie=0;
-  int Left=0;
-  int Right=0;
+  // doubles: the number of pairs exceeds the int range for n > 65536
+  double Con=0;
+  double Dis=0;
+  double Tie=0;
+  double Left=0;
+  double Right=0;
   
   int n=x.size();
   for(int i=0; i<n-1; ++i){
+    Rcpp::checkUserInterrupt();
     for(int j=i+1; j<n; ++j){
       if(((x[i]>x[j]) && (y[i]>y[j])) || ((x[i]<x[j]) && (y[i]<y[j]))){
         Con+=+1;

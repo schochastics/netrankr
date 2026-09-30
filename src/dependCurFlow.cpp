@@ -2,7 +2,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 NumericMatrix dependCurFlow(NumericMatrix Tmat,IntegerMatrix el, int m, int n) {
   NumericMatrix betmat(n,n);
   for(int e=0; e<m; ++e){

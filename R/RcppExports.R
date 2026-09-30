@@ -5,8 +5,8 @@ approx_glpom <- function(P) {
     .Call('_netrankr_approx_glpom', PACKAGE = 'netrankr', P)
 }
 
-approx_relative <- function(Nu, Nd, P, iterative, max_iter) {
-    .Call('_netrankr_approx_relative', PACKAGE = 'netrankr', Nu, Nd, P, iterative, max_iter)
+approx_relative <- function(Nu_in, Nd_in, P, iterative, max_iter) {
+    .Call('_netrankr_approx_relative', PACKAGE = 'netrankr', Nu_in, Nd_in, P, iterative, max_iter)
 }
 
 checkPairs <- function(x, y) {
@@ -35,10 +35,6 @@ listingIdeals <- function(P, nElem, nIdeals) {
 
 mcmc_rank_dense <- function(P, init_rank, rp) {
     .Call('_netrankr_mcmc_rank_dense', PACKAGE = 'netrankr', P, init_rank, rp)
-}
-
-mcmc_rank_sparse <- function(P, init_rank, rp) {
-    .Call('_netrankr_mcmc_rank_sparse', PACKAGE = 'netrankr', P, init_rank, rp)
 }
 
 nialgo <- function(adjList, deg) {

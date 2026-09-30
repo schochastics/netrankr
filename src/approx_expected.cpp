@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 NumericVector approx_glpom(NumericMatrix P) {
   int n=P.ncol();
   NumericVector rapprox(n);
@@ -9,8 +9,6 @@ NumericVector approx_glpom(NumericMatrix P) {
   IntegerVector Lxvec(n);
   IntegerVector Lyvec(n);
   IntegerVector Sxvec(n);
-  std::vector<int> intersec;
-  std::vector<int> diff;
   List Ix(n);
   List Sx(n); 
   for(int i=0;i<n;++i){

@@ -10,16 +10,27 @@ namespace
 		std::vector<int> parent;
 		std::vector<int> label;
 		std::vector<std::vector<int> > children;
-		const Rcpp::List &impred;
+		// is_impred[i][val]: val is an immediate predecessor of element i (0-based)
+		std::vector<std::vector<char> > is_impred;
 
-
-		toi_data(const Rcpp::List &impred) : impred(impred) {}
+		toi_data(const Rcpp::List &impred) : is_impred(impred.size())
+		{
+			int n = impred.size();
+			for (int i = 0; i < n; ++i)
+			{
+				is_impred[i].assign(n + 1, 0);
+				Rcpp::IntegerVector impredi = Rcpp::as<Rcpp::IntegerVector>(impred[i]);
+				for (int k = 0; k < impredi.size(); ++k)
+				{
+					is_impred[i][impredi[k]] = 1;
+				}
+			}
+		}
 	};
 
 	bool is_immediate_predecessor(int i, int val, const toi_data &d)
 	{
-		Rcpp::IntegerVector impredi = Rcpp::as<Rcpp::IntegerVector>(d.impred[i-1]);
-		return std::find(impredi.begin(), impredi.end(), val) != impredi.end();
+		return d.is_impred[i-1][val];
 	}
 
 	void add_child(int parent, int child, toi_data &d)
@@ -29,21 +40,22 @@ namespace
 
 	void right(int i, int r, int root, toi_data &d)
 	{
-		const auto &range = d.children[r];
-		std::for_each(range.begin(), range.end(), [=,&d](const int child) {
-
-		  int l = d.label[child];
+		// copy: d.children grows (and may reallocate) during the recursion
+		const std::vector<int> range = d.children[r];
+		for (const int child : range)
+		{
+			int l = d.label[child];
 
 			if (!is_immediate_predecessor(i, l, d))
 			{
 				int t = d.parent.size();
 				d.parent.push_back(root);
-				d.label.push_back(d.label[child]);
+				d.label.push_back(l);
 				d.children.push_back({});
 				add_child(root, t, d);
 				right(i, child, t, d);
 			}
-		});
+		}
 	}
 
 	int left(int i, toi_data &d)
@@ -74,7 +86,7 @@ namespace
 * Computes the tree of ideals. Return values needs P to be sorted according to a topological sort!
 **/
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 
 Rcpp::List treeOfIdeals(Rcpp::List imPred)
 {

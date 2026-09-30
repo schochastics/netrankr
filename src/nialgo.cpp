@@ -5,7 +5,7 @@ using namespace arma;
 
 // [[Rcpp::depends(RcppArmadillo)]]
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 arma::sp_mat nialgo(List adjList, IntegerVector deg) {
   int n=deg.size();
   IntegerVector marked(n);
