@@ -96,6 +96,11 @@
   [`majorization_gap()`](https://schochastics.github.io/netrankr/reference/majorization_gap.md)
   recycled vectors for disconnected graphs, and with `norm = TRUE` could
   exceed 1. The gap is now normalised by the total number of edges
+- [`index_builder()`](https://schochastics.github.io/netrankr/reference/index_builder.md):
+  fixed the generated code for `"dist_walk"` (used the log forest
+  parameter) and without pipes (ignored the network name), the alpha
+  sliders (duplicated input ids) and presets resetting the
+  transformation. It checks for all required packages
 - [`threshold_graph()`](https://schochastics.github.io/netrankr/reference/threshold_graph.md)
   and
   [`spectral_gap()`](https://schochastics.github.io/netrankr/reference/spectral_gap.md)

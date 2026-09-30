@@ -110,6 +110,8 @@
 <li>
 <strong>bug fix</strong>: <code><a href="../reference/majorization_gap.html">majorization_gap()</a></code> recycled vectors for disconnected graphs, and with <code>norm = TRUE</code> could exceed 1. The gap is now normalised by the total number of edges</li>
 <li>
+<code><a href="../reference/index_builder.html">index_builder()</a></code>: fixed the generated code for <code>"dist_walk"</code> (used the log forest parameter) and without pipes (ignored the network name), the alpha sliders (duplicated input ids) and presets resetting the transformation. It checks for all required packages</li>
+<li>
 <code><a href="../reference/threshold_graph.html">threshold_graph()</a></code> and <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> validate their input; <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> rejects directed graphs (it returned complex numbers) and returns 0 for empty graphs</li>
 </ul></div>
     <div class="section level2">
