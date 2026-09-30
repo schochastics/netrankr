@@ -45,14 +45,16 @@ export(walks_limit_prop)
 export(walks_uptok)
 importClassesFrom(Matrix,dgCMatrix)
 importFrom(Rcpp,evalCpp)
-importFrom(graphics,arrows)
-importFrom(graphics,axis)
-importFrom(graphics,barplot)
-importFrom(graphics,box)
-importFrom(graphics,image)
-importFrom(graphics,layout)
-importFrom(graphics,legend)
-importFrom(graphics,par)
-importFrom(graphics,points)
+importFrom(graphics,
+  arrows,
+  axis,
+  barplot,
+  box,
+  image,
+  layout,
+  legend,
+  par,
+  points
+)
 importFrom(utils,stack)
 useDynLib(netrankr)

@@ -3,11 +3,9 @@
 #'    in any ranking that is in accordance with the partial ranking `P`.
 #' @param P A partial ranking as matrix object calculated with [neighborhood_inclusion]
 #'    or [positional_dominance].
-#' @details Note that the returned `mid_point` is not the same as the expected
-#' rank, for instance computed with [exact_rank_prob].
-#' It is simply the average of `min_rank` and `max_rank`. For exact rank probabilities
-#' use [exact_rank_prob].
-#' @return An object of type netrankr_interval
+#' @details For exact rank probabilities use [exact_rank_prob].
+#' @return An object of type netrankr_interval, a data frame with columns
+#' `node`, `min_rank` and `max_rank`.
 #' @author David Schoch
 #' @seealso [exact_rank_prob]
 #'
@@ -16,12 +14,7 @@
 #' rank_intervals(P)
 #' @export
 rank_intervals <- function(P) {
-    if (!inherits(P, "Matrix") && !is.matrix(P)) {
-        stop("P must be a dense or spare matrix")
-    }
-    if (!is.binary(P)) {
-        stop("P is not a binary matrix")
-    }
+    P <- check_partial_order(P)
 
     n <- nrow(P)
     max_rank_all <- n - Matrix::rowSums((P - Matrix::t(P)) == 1) - Matrix::rowSums(P == 1 & Matrix::t(P) == 1) # CAUTION!!!!

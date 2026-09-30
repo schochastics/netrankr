@@ -23,8 +23,14 @@
 #' cor(degree(tg), betweenness(tg), method = "kendall") # not 1, although no discordant pairs
 #' @export
 compare_ranks <- function(x, y) {
+    if (!is.numeric(x) || !is.numeric(y)) {
+        stop("x and y must be numeric vectors")
+    }
     if (length(x) != length(y)) {
         stop("x and y must have the same length")
+    }
+    if (anyNA(x) || anyNA(y)) {
+        stop("x and y must not contain NA")
     }
     res <- checkPairs(x, y)
     return(res)

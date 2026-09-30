@@ -16,12 +16,7 @@
 #' comparable_pairs(P)
 #' @export
 comparable_pairs <- function(P) {
-    if (!inherits(P, "Matrix") && !is.matrix(P)) {
-        stop("P must be a dense or spare matrix")
-    }
-    if (!is.binary(P)) {
-        stop("P is not a binary matrix")
-    }
+    P <- check_partial_order(P)
     igraph::edge_density(igraph::graph_from_adjacency_matrix(P, "max"))
 }
 
@@ -39,15 +34,10 @@ comparable_pairs <- function(P) {
 #' comparable_pairs(P)
 #' # All pairs of vertices are comparable in a threshold graph
 #' tg <- threshold_graph(100, 0.3)
-#' P <- neighborhood_inclusion(g)
-#' comparable_pairs(P)
+#' P <- neighborhood_inclusion(tg)
+#' incomparable_pairs(P)
 #' @export
 incomparable_pairs <- function(P) {
-    if (!inherits(P, "Matrix") & !is.matrix(P)) {
-        stop("P must be a dense or spare matrix")
-    }
-    if (!is.binary(P)) {
-        stop("P is not a binary matrix")
-    }
+    P <- check_partial_order(P)
     igraph::edge_density(igraph::complementer(igraph::graph_from_adjacency_matrix(P, "max")))
 }

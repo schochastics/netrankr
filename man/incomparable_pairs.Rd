@@ -23,8 +23,8 @@ P <- neighborhood_inclusion(g)
 comparable_pairs(P)
 # All pairs of vertices are comparable in a threshold graph
 tg <- threshold_graph(100, 0.3)
-P <- neighborhood_inclusion(g)
-comparable_pairs(P)
+P <- neighborhood_inclusion(tg)
+incomparable_pairs(P)
 }
 \seealso{
 \link{comparable_pairs}

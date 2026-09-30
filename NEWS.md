@@ -15,6 +15,22 @@
 * `transitive_reduction()` no longer returns an empty matrix for reflexive input
 * `positional_dominance()` errors on non-square input if `map = FALSE` instead of reading out of bounds
 * `compare_ranks()` no longer overflows for more than 65536 elements
+* all functions taking a partial ranking `P` share one input validation:
+  non-square input and `NA` are errors, and a non-zero diagonal is set to 0 with a warning
+  (previously it caused crashes, `NA`s or silently wrong results)
+* sparse (including pattern) and dense `Matrix` input now works in `approx_rank_expected()`,
+  `approx_rank_relative()`, `mcmc_rank_prob()` and `positional_dominance()`
+* **bug fix**: `positional_dominance(type = "two-mode")` failed for matrices with column names and
+  ignored `benefit` and `map`
+* `neighborhood_inclusion()` simplifies graphs with loops or multiple edges (with a warning); these
+  previously gave a wrong preorder
+* `compare_ranks()` and `is_preserved()` error on `NA` and on invalid input instead of returning
+  wrong counts or reading out of bounds
+* `approx_rank_expected()` validates `method`; the "loof1" and "loof2" methods are vectorised
+* `get_rankings()` returns the single ranking for linear orders
+* plot methods restore `par()` also on error and handle a single index and more than 15 indices
+* `print.netrankr_interval()` returns its input invisibly
+* removed the unexported, deprecated `plot_rank_intervals()`
 
 # netrankr 1.2.4
 
