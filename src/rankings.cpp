@@ -2,7 +2,7 @@
 using namespace Rcpp;
 
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 IntegerMatrix rankings(std::vector<std::vector<int> > paths,
                        std::vector<std::vector<int> > ideals,
                        int nRank,

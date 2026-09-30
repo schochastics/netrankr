@@ -2,7 +2,7 @@
 #include <algorithm>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > child,
                                                std::vector<int> parent,
                                                std::vector<std::vector<int> > Ek,

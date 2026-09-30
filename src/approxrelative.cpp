@@ -1,12 +1,15 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
-NumericMatrix approx_relative(NumericVector Nu, 
-                              NumericVector Nd, 
+// [[Rcpp::export(rng = false)]]
+NumericMatrix approx_relative(NumericVector Nu_in,
+                              NumericVector Nd_in,
                               IntegerMatrix P,
                               bool iterative,
                               int max_iter) {
+  // the iteration updates Nu and Nd, so work on copies of the inputs
+  NumericVector Nu = clone(Nu_in);
+  NumericVector Nd = clone(Nd_in);
   int n=Nu.size();
   NumericMatrix rrp(n,n);
   for(int x=0;x<(n-1);++x){

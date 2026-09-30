@@ -16,24 +16,22 @@ NumericVector approx_glpom(NumericMatrix P);
 RcppExport SEXP _netrankr_approx_glpom(SEXP PSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type P(PSEXP);
     rcpp_result_gen = Rcpp::wrap(approx_glpom(P));
     return rcpp_result_gen;
 END_RCPP
 }
 // approx_relative
-NumericMatrix approx_relative(NumericVector Nu, NumericVector Nd, IntegerMatrix P, bool iterative, int max_iter);
-RcppExport SEXP _netrankr_approx_relative(SEXP NuSEXP, SEXP NdSEXP, SEXP PSEXP, SEXP iterativeSEXP, SEXP max_iterSEXP) {
+NumericMatrix approx_relative(NumericVector Nu_in, NumericVector Nd_in, IntegerMatrix P, bool iterative, int max_iter);
+RcppExport SEXP _netrankr_approx_relative(SEXP Nu_inSEXP, SEXP Nd_inSEXP, SEXP PSEXP, SEXP iterativeSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type Nu(NuSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Nd(NdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Nu_in(Nu_inSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Nd_in(Nd_inSEXP);
     Rcpp::traits::input_parameter< IntegerMatrix >::type P(PSEXP);
     Rcpp::traits::input_parameter< bool >::type iterative(iterativeSEXP);
     Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
-    rcpp_result_gen = Rcpp::wrap(approx_relative(Nu, Nd, P, iterative, max_iter));
+    rcpp_result_gen = Rcpp::wrap(approx_relative(Nu_in, Nd_in, P, iterative, max_iter));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -42,7 +40,6 @@ Rcpp::List checkPairs(NumericVector x, NumericVector y);
 RcppExport SEXP _netrankr_checkPairs(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
     rcpp_result_gen = Rcpp::wrap(checkPairs(x, y));
@@ -54,7 +51,6 @@ NumericMatrix dependCurFlow(NumericMatrix Tmat, IntegerMatrix el, int m, int n);
 RcppExport SEXP _netrankr_dependCurFlow(SEXP TmatSEXP, SEXP elSEXP, SEXP mSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type Tmat(TmatSEXP);
     Rcpp::traits::input_parameter< IntegerMatrix >::type el(elSEXP);
     Rcpp::traits::input_parameter< int >::type m(mSEXP);
@@ -64,27 +60,25 @@ BEGIN_RCPP
 END_RCPP
 }
 // dependRspn
-arma::mat dependRspn(std::vector<std::vector<int> > A, arma::mat Z, arma::mat Zdiv, arma::mat W, int n);
+arma::mat dependRspn(const std::vector<std::vector<int> >& A, const arma::mat& Z, const arma::mat& Zdiv, const arma::mat& W, int n);
 RcppExport SEXP _netrankr_dependRspn(SEXP ASEXP, SEXP ZSEXP, SEXP ZdivSEXP, SEXP WSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type A(ASEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type Z(ZSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type Zdiv(ZdivSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type W(WSEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::vector<int> >& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Zdiv(ZdivSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type W(WSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     rcpp_result_gen = Rcpp::wrap(dependRspn(A, Z, Zdiv, W, n));
     return rcpp_result_gen;
 END_RCPP
 }
 // dependency
-NumericMatrix dependency(std::vector<std::vector<int> > adj);
+NumericMatrix dependency(const std::vector<std::vector<int> >& adj);
 RcppExport SEXP _netrankr_dependency(SEXP adjSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type adj(adjSEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::vector<int> >& >::type adj(adjSEXP);
     rcpp_result_gen = Rcpp::wrap(dependency(adj));
     return rcpp_result_gen;
 END_RCPP
@@ -94,7 +88,6 @@ std::vector<std::vector<int> > LatticeOfIdeals(std::vector<std::vector<int> > ch
 RcppExport SEXP _netrankr_LatticeOfIdeals(SEXP childSEXP, SEXP parentSEXP, SEXP EkSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type child(childSEXP);
     Rcpp::traits::input_parameter< std::vector<int> >::type parent(parentSEXP);
     Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type Ek(EkSEXP);
@@ -105,12 +98,11 @@ BEGIN_RCPP
 END_RCPP
 }
 // listingIdeals
-std::vector<std::vector<int> > listingIdeals(std::vector<std::vector<int> > P, int nElem, int nIdeals);
+std::vector<std::vector<int> > listingIdeals(const std::vector<std::vector<int> >& P, int nElem, int nIdeals);
 RcppExport SEXP _netrankr_listingIdeals(SEXP PSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type P(PSEXP);
+    Rcpp::traits::input_parameter< const std::vector<std::vector<int> >& >::type P(PSEXP);
     Rcpp::traits::input_parameter< int >::type nElem(nElemSEXP);
     Rcpp::traits::input_parameter< int >::type nIdeals(nIdealsSEXP);
     rcpp_result_gen = Rcpp::wrap(listingIdeals(P, nElem, nIdeals));
@@ -118,28 +110,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // mcmc_rank_dense
-List mcmc_rank_dense(IntegerMatrix P, IntegerVector init_rank, int rp);
+List mcmc_rank_dense(IntegerMatrix P, IntegerVector init_rank, double rp);
 RcppExport SEXP _netrankr_mcmc_rank_dense(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type P(PSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type init_rank(init_rankSEXP);
-    Rcpp::traits::input_parameter< int >::type rp(rpSEXP);
+    Rcpp::traits::input_parameter< double >::type rp(rpSEXP);
     rcpp_result_gen = Rcpp::wrap(mcmc_rank_dense(P, init_rank, rp));
-    return rcpp_result_gen;
-END_RCPP
-}
-// mcmc_rank_sparse
-List mcmc_rank_sparse(arma::sp_mat P, IntegerVector init_rank, int rp);
-RcppExport SEXP _netrankr_mcmc_rank_sparse(SEXP PSEXP, SEXP init_rankSEXP, SEXP rpSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::sp_mat >::type P(PSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type init_rank(init_rankSEXP);
-    Rcpp::traits::input_parameter< int >::type rp(rpSEXP);
-    rcpp_result_gen = Rcpp::wrap(mcmc_rank_sparse(P, init_rank, rp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -148,7 +127,6 @@ arma::sp_mat nialgo(List adjList, IntegerVector deg);
 RcppExport SEXP _netrankr_nialgo(SEXP adjListSEXP, SEXP degSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type adjList(adjListSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type deg(degSEXP);
     rcpp_result_gen = Rcpp::wrap(nialgo(adjList, deg));
@@ -160,7 +138,6 @@ arma::imat matdom(arma::mat B, bool map, bool benefit);
 RcppExport SEXP _netrankr_matdom(SEXP BSEXP, SEXP mapSEXP, SEXP benefitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type B(BSEXP);
     Rcpp::traits::input_parameter< bool >::type map(mapSEXP);
     Rcpp::traits::input_parameter< bool >::type benefit(benefitSEXP);
@@ -173,7 +150,6 @@ int preserve(IntegerMatrix P, NumericVector s, int n);
 RcppExport SEXP _netrankr_preserve(SEXP PSEXP, SEXP sSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type P(PSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type s(sSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
@@ -186,7 +162,6 @@ Rcpp::List rankprobs(std::vector<std::vector<int> > ImPred, std::vector<std::vec
 RcppExport SEXP _netrankr_rankprobs(SEXP ImPredSEXP, SEXP idealsSEXP, SEXP nElemSEXP, SEXP nIdealsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type ImPred(ImPredSEXP);
     Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type ideals(idealsSEXP);
     Rcpp::traits::input_parameter< int >::type nElem(nElemSEXP);
@@ -200,7 +175,6 @@ IntegerMatrix rankings(std::vector<std::vector<int> > paths, std::vector<std::ve
 RcppExport SEXP _netrankr_rankings(SEXP pathsSEXP, SEXP idealsSEXP, SEXP nRankSEXP, SEXP nElemSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type paths(pathsSEXP);
     Rcpp::traits::input_parameter< std::vector<std::vector<int> > >::type ideals(idealsSEXP);
     Rcpp::traits::input_parameter< int >::type nRank(nRankSEXP);
@@ -214,7 +188,6 @@ NumericMatrix resistanceDistance(NumericMatrix C, int n);
 RcppExport SEXP _netrankr_resistanceDistance(SEXP CSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type C(CSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     rcpp_result_gen = Rcpp::wrap(resistanceDistance(C, n));
@@ -226,7 +199,6 @@ NumericMatrix transreduct(NumericMatrix M);
 RcppExport SEXP _netrankr_transreduct(SEXP MSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type M(MSEXP);
     rcpp_result_gen = Rcpp::wrap(transreduct(M));
     return rcpp_result_gen;
@@ -237,7 +209,6 @@ Rcpp::List treeOfIdeals(Rcpp::List imPred);
 RcppExport SEXP _netrankr_treeOfIdeals(SEXP imPredSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type imPred(imPredSEXP);
     rcpp_result_gen = Rcpp::wrap(treeOfIdeals(imPred));
     return rcpp_result_gen;
@@ -254,7 +225,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_netrankr_LatticeOfIdeals", (DL_FUNC) &_netrankr_LatticeOfIdeals, 5},
     {"_netrankr_listingIdeals", (DL_FUNC) &_netrankr_listingIdeals, 3},
     {"_netrankr_mcmc_rank_dense", (DL_FUNC) &_netrankr_mcmc_rank_dense, 3},
-    {"_netrankr_mcmc_rank_sparse", (DL_FUNC) &_netrankr_mcmc_rank_sparse, 3},
     {"_netrankr_nialgo", (DL_FUNC) &_netrankr_nialgo, 2},
     {"_netrankr_matdom", (DL_FUNC) &_netrankr_matdom, 3},
     {"_netrankr_preserve", (DL_FUNC) &_netrankr_preserve, 3},

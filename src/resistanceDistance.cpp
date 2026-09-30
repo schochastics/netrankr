@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 NumericMatrix resistanceDistance(NumericMatrix C, int n) {
   NumericMatrix R(n,n);
   for(int i=0; i<n; ++i){

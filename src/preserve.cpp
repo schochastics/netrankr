@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 int preserve(IntegerMatrix P, NumericVector s,int n) {
   int test=0;
   for(int i=0;i<n;++i){

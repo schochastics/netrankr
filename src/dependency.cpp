@@ -1,71 +1,64 @@
 #include <Rcpp.h>
 
 using namespace Rcpp;
-using namespace std;
-// [[Rcpp::export]]
-NumericMatrix dependency(std::vector<std::vector<int> > adj) {
-  int n=adj.size();
+
+// Brandes' algorithm, returning the pairwise dependencies instead of their sum.
+// rel(w, s) is the dependency of s on w.
+// [[Rcpp::export(rng = false)]]
+NumericMatrix dependency(const std::vector<std::vector<int> >& adj) {
+  int n = adj.size();
   std::vector<std::vector<int> > Pred(n);
-  std::vector<int> dist(n,-1);
-  std::vector<int> sigma(n);
+  std::vector<int> dist(n, -1);
+  std::vector<double> sigma(n);
   std::vector<double> delta(n);
-  NumericMatrix rel(n,n);
-  std::vector<int> Q;
-  List S;
-  
-  NumericVector bc(n);
-  
-  for(int s=0;s<n; ++s){
+  std::vector<int> Q(n);
+  std::vector<int> S;
+  S.reserve(n);
+  NumericMatrix rel(n, n);
+
+  for (int s = 0; s < n; ++s) {
+    Rcpp::checkUserInterrupt();
     /* SSP */
-    for(int w=0;w<n; ++w){
+    for (int w = 0; w < n; ++w) {
       Pred[w].clear();
-      dist[w]=-1;
-      sigma[w]=0;
+      dist[w] = -1;
+      sigma[w] = 0;
+      delta[w] = 0;
     }
-    dist[s]=0;
-    sigma[s]=1;
-    Q.push_back(s);
-    while(!Q.empty()){
-      Rcpp::checkUserInterrupt();
-      int v=Q[0];
-      Q.erase(Q.begin());
-      S.push_front(v);
-      std::vector<int> Nv=adj[v];
-      int m = Nv.size();
-      for(int i=0; i<m; ++i){
-        int w=Nv[i];
+    dist[s] = 0;
+    sigma[s] = 1;
+    int head = 0, tail = 0;
+    Q[tail++] = s;
+    while (head < tail) {
+      int v = Q[head++];
+      S.push_back(v);
+      const std::vector<int>& Nv = adj[v];
+      for (size_t i = 0; i < Nv.size(); ++i) {
+        int w = Nv[i];
         /* path discovery */
-        if(dist[w]<0){
-          dist[w]=dist[v]+1;
-          Q.push_back(w);
+        if (dist[w] < 0) {
+          dist[w] = dist[v] + 1;
+          Q[tail++] = w;
         }
         /* path counting */
-        if(dist[w]==dist[v]+1){
-          sigma[w]=sigma[w]+sigma[v];
+        if (dist[w] == dist[v] + 1) {
+          sigma[w] += sigma[v];
           Pred[w].push_back(v);
         }
       }
     }
     /* accumulation */
-    for(int v=0; v<n;++v){
-      delta[v]=0;
-    }
-    while(S.size()>0){
-      Rcpp::checkUserInterrupt();
-      int w=S[0];
-      S.erase(S.begin());
-      int m = Pred[w].size();
-      for(int i=0;i<m; ++i){
-        int v=Pred[w][i];
-        delta[v]+=double(sigma[v])/double(sigma[w])*(1+delta[w]);
+    while (!S.empty()) {
+      int w = S.back();
+      S.pop_back();
+      for (size_t i = 0; i < Pred[w].size(); ++i) {
+        int v = Pred[w][i];
+        delta[v] += sigma[v] / sigma[w] * (1 + delta[w]);
       }
-      if(w!=s){
-        rel(w,s)+=delta[w];
+      if (w != s) {
+        rel(w, s) += delta[w];
       }
-      
     }
   }
   return rel;
 }
-
-
