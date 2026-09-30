@@ -1,14 +1,14 @@
-# --------------------------------------------
-# CITATION file created with {cffr} R package
+# ------------------------------------------------
+# CITATION.cff file created with {cffr} R package
 # See also: https://docs.ropensci.org/cffr/
-# --------------------------------------------
+# ------------------------------------------------
  
 cff-version: 1.2.0
 message: 'To cite package "netrankr" in publications use:'
 type: software
 license: MIT
 title: 'netrankr: Analyzing Partial Rankings in Networks'
-version: 1.2.3
+version: 2.0.0
 identifiers:
 - type: doi
   value: 10.32614/CRAN.package.netrankr
@@ -61,8 +61,8 @@ references:
   institution:
     name: R Foundation for Statistical Computing
     address: Vienna, Austria
-  year: '2024'
-  version: '>= 3.0.1'
+  year: '2026'
+  version: '>= 3.5.0'
 - type: software
   title: igraph
   abstract: 'igraph: Network Analysis and Visualization'
@@ -95,9 +95,17 @@ references:
     given-names: Kirill
     email: kirill@cynkra.com
     orcid: https://orcid.org/0000-0002-1416-3412
-  year: '2024'
+  - family-names: Schoch
+    given-names: David
+    email: david.schoch@cynkra.com
+    orcid: https://orcid.org/0000-0003-2952-4812
+  - family-names: Salmon
+    given-names: Maëlle
+    email: maelle@cynkra.com
+    orcid: https://orcid.org/0000-0002-2815-0399
+  year: '2026'
   doi: 10.32614/CRAN.package.igraph
-  version: '>= 1.0.1'
+  version: '>= 2.1.0'
 - type: software
   title: Rcpp
   abstract: 'Rcpp: Seamless R and C++ Integration'
@@ -131,14 +139,14 @@ references:
     orcid: https://orcid.org/0000-0001-8316-9503
   - family-names: Chambers
     given-names: John
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.Rcpp
   version: '>= 0.12.8'
 - type: software
   title: Matrix
   abstract: 'Matrix: Sparse and Dense Matrix Classes and Methods'
   notes: Imports
-  url: https://R-forge.R-project.org/tracker/?atid=294&group_id=61
+  url: https://Matrix.R-forge.R-project.org
   repository: https://CRAN.R-project.org/package=Matrix
   authors:
   - family-names: Bates
@@ -151,7 +159,7 @@ references:
   - family-names: Jagan
     given-names: Mikael
     orcid: https://orcid.org/0000-0002-3542-2938
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.Matrix
 - type: software
   title: Rcpp
@@ -186,7 +194,7 @@ references:
     orcid: https://orcid.org/0000-0001-8316-9503
   - family-names: Chambers
     given-names: John
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.Rcpp
 - type: software
   title: RcppArmadillo
@@ -211,7 +219,7 @@ references:
   - family-names: Sanderson
     given-names: Conrad
     orcid: https://orcid.org/0000-0002-0049-4501
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.RcppArmadillo
 - type: software
   title: knitr
@@ -224,7 +232,7 @@ references:
     given-names: Yihui
     email: xie@yihui.name
     orcid: https://orcid.org/0000-0003-0645-5666
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.knitr
 - type: software
   title: rmarkdown
@@ -268,7 +276,7 @@ references:
     given-names: Richard
     email: rich@posit.co
     orcid: https://orcid.org/0000-0003-3925-190X
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.rmarkdown
 - type: software
   title: magrittr
@@ -282,8 +290,8 @@ references:
     email: stefan@stefanbache.dk
   - family-names: Wickham
     given-names: Hadley
-    email: hadley@rstudio.com
-  year: '2024'
+    email: hadley@posit.co
+  year: '2026'
   doi: 10.32614/CRAN.package.magrittr
 - type: software
   title: testthat
@@ -295,7 +303,7 @@ references:
   - family-names: Wickham
     given-names: Hadley
     email: hadley@posit.co
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.testthat
 - type: software
   title: shiny
@@ -322,6 +330,10 @@ references:
     given-names: Barret
     email: barret@posit.co
     orcid: https://orcid.org/0000-0001-9986-114X
+  - family-names: Aden-Buie
+    given-names: Garrick
+    email: garrick@adenbuie.com
+    orcid: https://orcid.org/0000-0002-7111-0077
   - family-names: Xie
     given-names: Yihui
     email: yihui@posit.co
@@ -334,19 +346,20 @@ references:
     given-names: Alan
   - family-names: Borges
     given-names: Barbara
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.shiny
   version: '>= 0.13'
 - type: software
   title: miniUI
   abstract: 'miniUI: Shiny UI Widgets for Small Screens'
   notes: Suggests
+  url: https://github.com/rstudio/miniUI
   repository: https://CRAN.R-project.org/package=miniUI
   authors:
   - family-names: Cheng
     given-names: Joe
-    email: joe@rstudio.com
-  year: '2024'
+    email: joe@posit.co
+  year: '2026'
   doi: 10.32614/CRAN.package.miniUI
   version: '>= 0.1.1'
 - type: software
@@ -368,7 +381,19 @@ references:
   - family-names: Ritchie
     given-names: Gary
     email: gary@posit.co
-  year: '2024'
+  year: '2026'
   doi: 10.32614/CRAN.package.rstudioapi
   version: '>= 0.5'
+- type: software
+  title: covr
+  abstract: 'covr: Test Coverage for Packages'
+  notes: Suggests
+  url: https://covr.r-lib.org
+  repository: https://CRAN.R-project.org/package=covr
+  authors:
+  - family-names: Hester
+    given-names: Jim
+    email: james.f.hester@gmail.com
+  year: '2026'
+  doi: 10.32614/CRAN.package.covr
 
