@@ -85,7 +85,8 @@
 #'
 #'
 #' All relations except 'weights' are computed on the unweighted graph: an edge attribute
-#' 'weight' is ignored. 'dist_resist', 'depend_curflow', 'dist_rwalk', 'depend_exp',
+#' 'weight' is ignored with a warning. Before version 2.0.0, 'dist_sp', 'dist_resist' and
+#' 'dist_lf' used it. For weighted shortest path distances use [igraph::distances()] directly. 'dist_resist', 'depend_curflow', 'dist_rwalk', 'depend_exp',
 #' 'depend_rsps', 'depend_rspn' and 'depend_netflow' with `netflowmode = "frac"` are only
 #' defined for connected graphs and raise an error otherwise.
 #'
@@ -170,7 +171,12 @@ indirect_relations <- function(g,
         }
     }
     # all relations except "weights" are defined on unweighted graphs
-    if (type != "weights") {
+    if (type != "weights" && "weight" %in% igraph::edge_attr_names(g)) {
+        warning(
+            'the edge attribute "weight" is ignored for type = "', type, '". ',
+            "Since netrankr 2.0.0 all relations except \"weights\" use the unweighted graph.",
+            call. = FALSE
+        )
         g <- strip_weights(g)
     }
 

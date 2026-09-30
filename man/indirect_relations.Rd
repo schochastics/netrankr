@@ -115,7 +115,8 @@ are closely related to the random walk interpretation of current flows.
 See (Kivimäki et al., 2016) for technical details.
 
 All relations except 'weights' are computed on the unweighted graph: an edge attribute
-'weight' is ignored. 'dist_resist', 'depend_curflow', 'dist_rwalk', 'depend_exp',
+'weight' is ignored with a warning. Before version 2.0.0, 'dist_sp', 'dist_resist' and
+'dist_lf' used it. For weighted shortest path distances use \code{\link[igraph:distances]{igraph::distances()}} directly. 'dist_resist', 'depend_curflow', 'dist_rwalk', 'depend_exp',
 'depend_rsps', 'depend_rspn' and 'depend_netflow' with \code{netflowmode = "frac"} are only
 defined for connected graphs and raise an error otherwise.
 

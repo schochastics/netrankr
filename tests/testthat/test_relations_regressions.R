@@ -13,17 +13,14 @@ test_that("edge weights are ignored by all types except 'weights'", {
     gw <- g
     igraph::E(gw)$weight <- seq_len(igraph::ecount(g))
     for (type in c("dist_sp", "adjacency", "depend_sp", "dist_resist", "depend_curflow", "dist_rwalk", "depend_exp")) {
-        expect_equal(indirect_relations(gw, type), indirect_relations(g, type), info = type)
+        expect_warning(rel <- indirect_relations(gw, type), "ignored", info = type)
+        expect_equal(rel, indirect_relations(g, type), info = type)
     }
-    expect_equal(
-        indirect_relations(gw, "walks", FUN = walks_exp),
-        indirect_relations(g, "walks", FUN = walks_exp)
-    )
-    expect_equal(
-        indirect_relations(gw, "depend_rsps", rspxparam = 1),
-        indirect_relations(g, "depend_rsps", rspxparam = 1)
-    )
-    W <- indirect_relations(gw, "weights")
+    expect_warning(rel <- indirect_relations(gw, "walks", FUN = walks_exp), "ignored")
+    expect_equal(rel, indirect_relations(g, "walks", FUN = walks_exp))
+    expect_warning(rel <- indirect_relations(gw, "depend_rsps", rspxparam = 1), "ignored")
+    expect_equal(rel, indirect_relations(g, "depend_rsps", rspxparam = 1))
+    expect_no_warning(W <- indirect_relations(gw, "weights"))
     el <- igraph::as_edgelist(gw, names = FALSE)
     expect_equal(W[el], igraph::E(gw)$weight)
     expect_equal(W, t(W))

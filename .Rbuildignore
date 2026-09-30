@@ -34,3 +34,5 @@ figures/
 ^_quarto\.yml$
 ^\.quarto$
 ^methodshub
+^\.claude$
+^revdep$
