@@ -61,8 +61,8 @@ rank_intervals(P)
     ## node:K rank interval: [3, 11]
 
 The package uses the convention, that higher numerical ranks correspond
-to top ranked position. The lowest possible rank is thus 1. The column
-`mid_point` should not be confused with the *expected rank* of nodes,
+to top ranked position. The lowest possible rank is thus 1. The midpoint
+of an interval should not be confused with the *expected rank* of nodes,
 which is calculated with the function
 [`exact_rank_prob()`](https://schochastics.github.io/netrankr/reference/exact_rank_prob.md).
 See

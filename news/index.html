@@ -112,6 +112,13 @@
 <li>
 <code><a href="../reference/index_builder.html">index_builder()</a></code>: fixed the generated code for <code>"dist_walk"</code> (used the log forest parameter) and without pipes (ignored the network name), the alpha sliders (duplicated input ids) and presets resetting the transformation. It checks for all required packages</li>
 <li>
+<strong>bug fix</strong>: for partial rankings with structurally equivalent nodes, <code><a href="../reference/exact_rank_prob.html">exact_rank_prob()</a></code> and <code><a href="../reference/mcmc_rank_prob.html">mcmc_rank_prob()</a></code> mapped expected ranks back to all nodes with a heuristic. They are now exact: equivalent nodes are tied at the highest rank of their class, as for linear orders</li>
+<li>
+<code><a href="../reference/neighborhood_inclusion.html">neighborhood_inclusion()</a></code> builds its sparse result in one go (2-4x faster)</li>
+<li>
+<code>indirect_relations(type = "depend_netflow")</code> computes each maximum flow once instead of twice</li>
+<li>native routines are registered (<code>useDynLib(netrankr, .registration = TRUE)</code>)</li>
+<li>
 <code><a href="../reference/threshold_graph.html">threshold_graph()</a></code> and <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> validate their input; <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> rejects directed graphs (it returned complex numbers) and returns 0 for empty graphs</li>
 </ul></div>
     <div class="section level2">

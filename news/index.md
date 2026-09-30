@@ -101,6 +101,19 @@
   parameter) and without pipes (ignored the network name), the alpha
   sliders (duplicated input ids) and presets resetting the
   transformation. It checks for all required packages
+- **bug fix**: for partial rankings with structurally equivalent nodes,
+  [`exact_rank_prob()`](https://schochastics.github.io/netrankr/reference/exact_rank_prob.md)
+  and
+  [`mcmc_rank_prob()`](https://schochastics.github.io/netrankr/reference/mcmc_rank_prob.md)
+  mapped expected ranks back to all nodes with a heuristic. They are now
+  exact: equivalent nodes are tied at the highest rank of their class,
+  as for linear orders
+- [`neighborhood_inclusion()`](https://schochastics.github.io/netrankr/reference/neighborhood_inclusion.md)
+  builds its sparse result in one go (2-4x faster)
+- `indirect_relations(type = "depend_netflow")` computes each maximum
+  flow once instead of twice
+- native routines are registered
+  (`useDynLib(netrankr, .registration = TRUE)`)
 - [`threshold_graph()`](https://schochastics.github.io/netrankr/reference/threshold_graph.md)
   and
   [`spectral_gap()`](https://schochastics.github.io/netrankr/reference/spectral_gap.md)
