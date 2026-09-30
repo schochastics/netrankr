@@ -102,6 +102,15 @@
 <code><a href="../reference/hyperbolic_index.html">hyperbolic_index()</a></code> validates its input, rejects directed graphs and returns 0 for isolated nodes</li>
 <li>
 <code>aggregate_positions(type = "self")</code> works on <code>Matrix</code> objects</li>
+<li>
+<strong>bug fix</strong>: the random failure scenario of <code><a href="../reference/swan_combinatory.html">swan_combinatory()</a></code> only removed <code>k</code> nodes (the number of repetitions) instead of all nodes, and failed for <code>k &gt; n</code>
+</li>
+<li>
+<code><a href="../reference/swan_combinatory.html">swan_combinatory()</a></code> and <code><a href="../reference/swan_connectivity.html">swan_connectivity()</a></code> count connected pairs via components instead of all shortest paths; all <code>swan_*()</code> functions validate their input and document their behaviour on disconnected graphs</li>
+<li>
+<strong>bug fix</strong>: <code><a href="../reference/majorization_gap.html">majorization_gap()</a></code> recycled vectors for disconnected graphs, and with <code>norm = TRUE</code> could exceed 1. The gap is now normalised by the total number of edges</li>
+<li>
+<code><a href="../reference/threshold_graph.html">threshold_graph()</a></code> and <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> validate their input; <code><a href="../reference/spectral_gap.html">spectral_gap()</a></code> rejects directed graphs (it returned complex numbers) and returns 0 for empty graphs</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.4" id="netrankr-124">netrankr 1.2.4<a class="anchor" aria-label="anchor" href="#netrankr-124"></a></h2><p class="text-muted">CRAN release: 2025-02-05</p>

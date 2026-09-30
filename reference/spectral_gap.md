@@ -27,8 +27,9 @@ Numeric value
 
 ## Details
 
-The spectral gap is bounded between 0 and 1 if `method="frac"`. The
-closer the value to one, the bigger the gap.
+The spectral gap is bounded between 0 and 1 if `method="frac"`, except
+for complete graphs where the second largest eigenvalue is negative. The
+closer the value to one, the bigger the gap. Edge weights are ignored.
 
 ## Author
 

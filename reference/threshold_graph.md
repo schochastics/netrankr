@@ -22,7 +22,7 @@ threshold_graph(n, p, bseq)
 
 - bseq:
 
-  (0,1)-vector a binary sequence that produces a threshold grah. See
+  (0,1)-vector a binary sequence that produces a threshold graph. See
   details
 
 ## Value

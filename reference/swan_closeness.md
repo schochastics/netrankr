@@ -1,7 +1,7 @@
 # Impact on closeness when a node is removed
 
 `swan_closeness` measures the change in the sum of the inverse of
-distances between all node pairs when excluding that node.#'
+distances between all node pairs when excluding that node.
 
 ## Usage
 

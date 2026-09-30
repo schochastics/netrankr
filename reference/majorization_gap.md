@@ -35,6 +35,9 @@ degree sequence d as follows: \$\$d'\_k= \|\\ i : i\<k \land d_i\geq k-1
 \\ \| + \| \\ i : i\>k \land d_i\geq k \\ \|.\$\$ the majorization gap
 is then defined as \$\$1/2 \sum\_{k=1}^n \max\\d'\_k - d_k,0\\\$\$ The
 higher the value, the further away is a graph to be a threshold graph.
+If `norm = TRUE`, the gap is divided by the number of edges. For
+disconnected graphs, the gaps of all components are added up (and then
+normalised by the total number of edges).
 
 ## References
 

@@ -64,18 +64,24 @@ when excluding a node from the network.</p>
 
 
 <dl><dt id="arg-g">g<a class="anchor" aria-label="anchor" href="#arg-g"></a></dt>
-<dd><p>An <code>igraph</code> object representing the graph to analyze.
-<code>swan_efficiency</code> is based on geographic accessibility, similar to indices used for
-assessing transportation network performance, such as closeness accessibility.
-It quantifies the impact of node removal by calculating the change in the sum of
-distances between all node pairs.</p>
-<p>The code is an adaptation from the NetSwan package that was archived on CRAN.</p></dd>
+<dd><p>An <code>igraph</code> object representing the graph to analyze.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A numeric vector where each entry represents the <code>swan_efficiency</code> value for the
 corresponding node.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><code>swan_efficiency</code> is based on geographic accessibility, similar to indices used for
+assessing transportation network performance, such as closeness accessibility.
+It quantifies the impact of node removal by calculating the change in the sum of
+distances between all node pairs.</p>
+<p>As in NetSwan, the sum of distances is infinite if the graph is disconnected.
+The value of a node is therefore <code>Inf</code> if its removal disconnects the graph and
+<code>NaN</code> for all nodes if the graph is already disconnected.</p>
+<p>The code is an adaptation from the NetSwan package that was archived on CRAN.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

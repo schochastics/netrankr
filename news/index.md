@@ -82,6 +82,27 @@
   validates its input, rejects directed graphs and returns 0 for
   isolated nodes
 - `aggregate_positions(type = "self")` works on `Matrix` objects
+- **bug fix**: the random failure scenario of
+  [`swan_combinatory()`](https://schochastics.github.io/netrankr/reference/swan_combinatory.md)
+  only removed `k` nodes (the number of repetitions) instead of all
+  nodes, and failed for `k > n`
+- [`swan_combinatory()`](https://schochastics.github.io/netrankr/reference/swan_combinatory.md)
+  and
+  [`swan_connectivity()`](https://schochastics.github.io/netrankr/reference/swan_connectivity.md)
+  count connected pairs via components instead of all shortest paths;
+  all `swan_*()` functions validate their input and document their
+  behaviour on disconnected graphs
+- **bug fix**:
+  [`majorization_gap()`](https://schochastics.github.io/netrankr/reference/majorization_gap.md)
+  recycled vectors for disconnected graphs, and with `norm = TRUE` could
+  exceed 1. The gap is now normalised by the total number of edges
+- [`threshold_graph()`](https://schochastics.github.io/netrankr/reference/threshold_graph.md)
+  and
+  [`spectral_gap()`](https://schochastics.github.io/netrankr/reference/spectral_gap.md)
+  validate their input;
+  [`spectral_gap()`](https://schochastics.github.io/netrankr/reference/spectral_gap.md)
+  rejects directed graphs (it returned complex numbers) and returns 0
+  for empty graphs
 
 ## netrankr 1.2.4
 

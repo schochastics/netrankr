@@ -87,7 +87,10 @@ $$d'_k= |\{ i : i&lt;k \land d_i\geq k-1 \} | +
 | \{ i : i&gt;k \land d_i\geq k \} |.$$
 the majorization gap is then defined as
 $$1/2 \sum_{k=1}^n \max\{d'_k - d_k,0\}$$
-The higher the value, the further away is a graph to be a threshold graph.</p>
+The higher the value, the further away is a graph to be a threshold graph.
+If <code>norm = TRUE</code>, the gap is divided by the number of edges.
+For disconnected graphs, the gaps of all components are added up
+(and then normalised by the total number of edges).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

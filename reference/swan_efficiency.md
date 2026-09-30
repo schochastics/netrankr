@@ -14,18 +14,26 @@ swan_efficiency(g)
 - g:
 
   An `igraph` object representing the graph to analyze.
-  `swan_efficiency` is based on geographic accessibility, similar to
-  indices used for assessing transportation network performance, such as
-  closeness accessibility. It quantifies the impact of node removal by
-  calculating the change in the sum of distances between all node pairs.
-
-  The code is an adaptation from the NetSwan package that was archived
-  on CRAN.
 
 ## Value
 
 A numeric vector where each entry represents the `swan_efficiency` value
 for the corresponding node.
+
+## Details
+
+`swan_efficiency` is based on geographic accessibility, similar to
+indices used for assessing transportation network performance, such as
+closeness accessibility. It quantifies the impact of node removal by
+calculating the change in the sum of distances between all node pairs.
+
+As in NetSwan, the sum of distances is infinite if the graph is
+disconnected. The value of a node is therefore `Inf` if its removal
+disconnects the graph and `NaN` for all nodes if the graph is already
+disconnected.
+
+The code is an adaptation from the NetSwan package that was archived on
+CRAN.
 
 ## References
 
