@@ -50,6 +50,9 @@
   disconnected graphs
 * **bug fix**: `majorization_gap()` recycled vectors for disconnected graphs, and with `norm = TRUE`
   could exceed 1. The gap is now normalised by the total number of edges
+* `index_builder()`: fixed the generated code for `"dist_walk"` (used the log forest parameter) and without
+  pipes (ignored the network name), the alpha sliders (duplicated input ids) and presets resetting the
+  transformation. It checks for all required packages
 * `threshold_graph()` and `spectral_gap()` validate their input; `spectral_gap()` rejects directed graphs
   (it returned complex numbers) and returns 0 for empty graphs
 
