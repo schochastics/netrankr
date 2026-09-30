@@ -44,7 +44,7 @@ For each $0$, an isolated vertex is inserted and for each $1$ a vertex that conn
  g1 <- threshold_graph(500,0.4)
  g2 <- threshold_graph(500,0.05)
  
- c(round(graph.density(g1),2), round(graph.density(g2),2))
+ c(round(edge_density(g1),2), round(edge_density(g2),2))
 ```
 
 The class of threshold graphs includes various well-known graphs, for instance star shaped and complete networks. This graphs can be constructed with `p=0` and `p=1` respectively.

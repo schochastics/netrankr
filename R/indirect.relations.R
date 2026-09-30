@@ -158,7 +158,7 @@ indirect_relations <- function(g,
         rel <- igraph::distances(g, mode = "all")
         rel <- FUN(rel, ...)
     } else if (type == "weights") {
-        if (is.null(igraph::get.edge.attribute(g, "weight"))) {
+        if (is.null(igraph::edge_attr(g, "weight"))) {
             warning('no weight attribute present. using "adjacency" instead.\n')
             rel <- igraph::as_adjacency_matrix(g, type = "both", sparse = FALSE, attr = NULL)
             rel <- FUN(rel, ...)

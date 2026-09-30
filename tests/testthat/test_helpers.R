@@ -1,4 +1,3 @@
-context("helper functions")
 library(igraph)
 library(magrittr)
 library(Matrix)

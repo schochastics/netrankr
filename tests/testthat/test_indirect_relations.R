@@ -1,4 +1,3 @@
-context("indirect relations")
 library(igraph)
 library(magrittr)
 library(Matrix)

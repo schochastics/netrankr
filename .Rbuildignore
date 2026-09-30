@@ -4,7 +4,7 @@
 ^README-.*\.png$
 ^docs$
 _pkgdown.yaml
-logo.*
+^logo\..*$
 index.Rmd
 index.md
 dbces-color.png
@@ -25,7 +25,7 @@ figures/
 ^data-raw$
 ^CRAN-SUBMISSION$
 ^codecov\.yml$
-.covrignore
+^\.covrignore$
 ^CITATION\.cff$
 ^install\.R$
 ^postBuild$

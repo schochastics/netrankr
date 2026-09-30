@@ -1,4 +1,3 @@
-context("approximate probabilistic centrality")
 library(igraph)
 library(magrittr)
 library(Matrix)

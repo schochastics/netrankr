@@ -1,4 +1,3 @@
-context("threshold graphs")
 library(igraph)
 library(magrittr)
 library(Matrix)

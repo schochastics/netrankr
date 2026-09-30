@@ -11,3 +11,4 @@ vignettes/*.html
 CRAN-RELEASE
 pkgdown/
 docs
+.quarto/

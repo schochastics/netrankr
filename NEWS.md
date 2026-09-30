@@ -1,3 +1,10 @@
+# netrankr (development version)
+
+* require R >= 3.5.0 and igraph >= 2.1.0
+* tests use testthat 3rd edition
+* replaced remaining deprecated igraph calls (`get.edge.attribute()`, `graph.density()`, `get.edgelist()`)
+* removed unused OpenMP flags from Makevars
+
 # netrankr 1.2.4
 
 * added functions from archived NetSwan package
