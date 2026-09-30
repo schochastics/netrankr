@@ -1,4 +1,3 @@
-context("dominance")
 library(igraph)
 library(magrittr)
 library(Matrix)

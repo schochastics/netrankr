@@ -1,4 +1,3 @@
-context("build centrality indices")
 library(igraph)
 library(magrittr)
 library(Matrix)

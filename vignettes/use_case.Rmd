@@ -356,7 +356,7 @@ x <- V(florentine_m)$wealth
 x[9] <- x[9] - 50
 x[14] <- x[14] - 50
 y <- colSums(D)
-el <- get.edgelist(d, names = F)
+el <- as_edgelist(d, names = FALSE)
 E(d)$color <- "gray"
 col <- apply(el, 1, function(x) V(florentine_m)$wealth[x[1]] > V(florentine_m)$wealth[x[2]])
 # wrong:41
